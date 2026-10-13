@@ -143,7 +143,7 @@ nav .links + .lang{margin-left:auto}
   <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a></div>
   <button class="lang" id="lang" title="English / Italiano"></button>
   <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px"></a>
-  <a class="btn main" href="#download" style="padding:8px 16px" data-i="dl_short"></a>
+  <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-win64.zip" style="padding:8px 16px" data-i="dl_short"></a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -279,7 +279,8 @@ const T = {
   locale:'it-IT'
  }
 };
-let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s) return s; }catch(e){} return (navigator.language||'en').toLowerCase().startsWith('it') ? 'it' : 'en'; })();
+// inglese di default; l'italiano solo se scelto con il pulsante (e allora si ricorda)
+let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s==='it'||s==='en') return s; }catch(e){} return 'en'; })();
 const t = k => T[LANG][k];
 function applyLang(){
   document.documentElement.lang = LANG;
