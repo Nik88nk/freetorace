@@ -245,66 +245,68 @@ body.fs{overflow:hidden}
 @keyframes dl{from{margin-left:0}to{margin-left:60%}}
 </style>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"></script>
+<script>try{ const l=localStorage.getItem('ftr.lang'); if(l==='it'||l==='en') localStorage.setItem('f1c.lang', l); else if(!localStorage.getItem('f1c.lang')) localStorage.setItem('f1c.lang','en'); }catch(e){}</script>
 </head>
 <body>
 <div id="demoLoad"><img src="../img/logo.png" alt=""><div style="font-size:22px;font-weight:700"><span style="color:#e10600">FREE</span> TO RACE · DEMO</div><div class="bar"><i></i></div><div id="demoMsg" style="color:#8b94a7"></div></div>
 <div id="demoBar"><b>DEMO</b><span id="demoTxt"></span><span class="grow"></span><a class="alt" href="../" id="demoSite"></a><a href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-win64.zip" id="demoDl"></a></div>
 <header>
-  <div class="brand" title="Free to Race · progetto non ufficiale" style="display:flex;align-items:center;gap:8px"><img src="../img/logo.png" alt="" style="width:28px;height:28px"><span><b>FREE</b> TO RACE</span></div>
-  <div class="event"><span class="t" id="ev">—</span><span class="s" id="ses">nessuna sessione</span></div>
+  <div class="brand" title="Free to Race · progetto non ufficiale" data-en-title="Free to Race · unofficial project" style="display:flex;align-items:center;gap:8px"><img src="../img/logo.png" alt="" style="width:28px;height:28px"><span><b>FREE</b> TO RACE</span></div>
+  <div class="event"><span class="t" id="ev">—</span><span class="s" id="ses" data-en="no session">nessuna sessione</span></div>
   <div class="lapbox" id="lap"></div>
   <div class="pill" id="track"></div>
   <div class="chip-fl" id="flchip" style="display:none"></div>
   <div class="chips" id="wx"></div>
   <div class="grow"></div>
-  <button id="goFs" class="fsbtn" title="Pista a schermo intero">⛶ Schermo intero</button>
-  <button id="openChooser">Scegli sessione</button>
+  <button id="langBtn" title="Language · Lingua">EN</button>
+  <button id="goFs" class="fsbtn" title="Pista a schermo intero" data-en-title="Track in full screen" data-en="⛶ Full screen">⛶ Schermo intero</button>
+  <button id="openChooser" data-en="Choose session">Scegli sessione</button>
 </header>
 
 <main>
   <div class="towerwrap">
     <section class="panel">
-      <h3>Classifica
-        <span class="right" id="towerModes"><button data-tm="race" class="on">Tempi e settori</button><button data-tm="spd">Velocità</button></span>
+      <h3><span data-en="Standings">Classifica</span>
+        <span class="right" id="towerModes"><button data-tm="race" class="on" data-en="Times &amp; sectors">Tempi e settori</button><button data-tm="spd" data-en="Speed">Velocità</button></span>
       </h3>
-      <table class="tower"><thead id="towerHead"></thead><tbody id="tower"><tr><td class="empty">Premi «Scegli sessione» per iniziare</td></tr></tbody></table>
+      <table class="tower"><thead id="towerHead"></thead><tbody id="tower"><tr><td class="empty" data-en="Press “Choose session” to start">Premi «Scegli sessione» per iniziare</td></tr></tbody></table>
       <div class="help" id="towerHelp"></div>
     </section>
   </div>
 
   <div>
     <div class="tabs" id="tabs">
-      <button data-tab="gara" class="on">Gara</button>
-      <button data-tab="gomme">Gomme e strategia</button>
-      <button data-tab="pilota" id="tabPilota">Pilota</button>
-      <button data-tab="confronto">Confronto</button>
-      <button data-tab="dg">Direzione gara</button>
-      <button data-tab="pista" id="tabPista">Pista</button>
+      <button data-tab="gara" class="on" data-en="Race">Gara</button>
+      <button data-tab="gomme" data-en="Tyres &amp; strategy">Gomme e strategia</button>
+      <button data-tab="pilota" id="tabPilota" data-en="Driver">Pilota</button>
+      <button data-tab="confronto" data-en="Compare">Confronto</button>
+      <button data-tab="dg" data-en="Race control">Direzione gara</button>
+      <button data-tab="pista" id="tabPista" data-en="Track">Pista</button>
     </div>
 
     <div class="pane on" id="p-gara">
       <div class="cards" id="garaCards"></div>
       <section class="panel" id="garaChart">
-        <h3><button id="foldGara" class="fold" title="Compatta o espandi">▾</button>Andamento della gara
-          <span class="right"><button data-chart="gap" class="on">Distacco dal primo</button><button data-chart="pos">Posizioni</button><button data-chart="lt">Tempi sul giro</button></span>
+        <h3><button id="foldGara" class="fold" title="Compatta o espandi" data-en-title="Collapse or expand">▾</button><span data-en="Race progress">Andamento della gara</span>
+          <span class="right"><button data-chart="gap" class="on" data-en="Gap to leader">Distacco dal primo</button><button data-chart="pos" data-en="Positions">Posizioni</button><button data-chart="lt" data-en="Lap times">Tempi sul giro</button></span>
         </h3>
         <div class="foldbody"><div class="chartwrap"><canvas id="cGara"></canvas><div class="tip"></div></div>
         <div class="legend" id="legGara"></div></div>
       </section>
       <section class="panel" id="battPanel">
-        <h3>Battaglie in pista <span class="right dim" style="font-size:12px">chi insegue · distacco · tendenza · cosa succede ai box</span></h3>
+        <h3><span data-en="Battles on track">Battaglie in pista</span> <span class="right dim" style="font-size:12px" data-en="chaser · gap · trend · what happens at the stops">chi insegue · distacco · tendenza · cosa succede ai box</span></h3>
         <div id="batt"></div>
-        <div class="help">«Undercut»: chi insegue si ferma adesso e chi è davanti resta fuori ancora 1, 2 o 3 giri prima di fermarsi a sua volta. Il calcolo usa il passo attuale dei due, il degrado della gomma di chi resta fuori e quanto valgono le gomme nuove misurato in questa gara. Il giro di uscita, a gomme fredde, non conta come guadagno. Provato sulle soste di oggi a Singapore: ha sempre indovinato l’esito, con un errore di 0,1–1,7 s (tende a essere un po’ ottimista per chi insegue, perché non vede il traffico). Compare solo se chi insegue deve ancora fermarsi.</div>
+        <div class="help" data-en="“Undercut”: the chasing car stops now and the car ahead stays out 1, 2 or 3 more laps before stopping too. The calculation uses the current pace of both, the tyre degradation of the car staying out and how much fresh tyres are worth, measured in this race. The out lap, on cold tyres, does not count as a gain. Tested on the Singapore stops: it always called the outcome right, with an error of 0.1–1.7 s (a little optimistic for the chaser, because it does not see traffic). Shown only if the chaser still has to stop.">«Undercut»: chi insegue si ferma adesso e chi è davanti resta fuori ancora 1, 2 o 3 giri prima di fermarsi a sua volta. Il calcolo usa il passo attuale dei due, il degrado della gomma di chi resta fuori e quanto valgono le gomme nuove misurato in questa gara. Il giro di uscita, a gomme fredde, non conta come guadagno. Provato sulle soste di oggi a Singapore: ha sempre indovinato l’esito, con un errore di 0,1–1,7 s (tende a essere un po’ ottimista per chi insegue, perché non vede il traffico). Compare solo se chi insegue deve ancora fermarsi.</div>
       </section>
       <section class="panel" id="pacePanel">
-        <h3>Ritmo e punti di forza <span class="right dim" style="font-size:12px">passo = media degli ultimi 10 giri puliti (senza box, SC, VSC e giri anomali) · settori e velocità: posizione nel gruppo sugli stessi giri</span></h3>
+        <h3><span data-en="Pace and strengths">Ritmo e punti di forza</span> <span class="right dim" style="font-size:12px" data-en="pace = average of the last 10 clean laps (no pit stops, SC, VSC or anomalous laps) · sectors and speed: rank in the field on the same laps">passo = media degli ultimi 10 giri puliti (senza box, SC, VSC e giri anomali) · settori e velocità: posizione nel gruppo sugli stessi giri</span></h3>
         <div id="pace"></div>
       </section>
     </div>
 
     <div class="pane" id="p-gomme">
       <section class="panel">
-        <h3>Strategia gomme e soste previste <span class="right dim" style="font-size:12px">clic su uno stint per i dettagli</span></h3>
+        <h3><span data-en="Tyre strategy and expected stops">Strategia gomme e soste previste</span> <span class="right dim" style="font-size:12px" data-en="click a stint for details">clic su uno stint per i dettagli</span></h3>
         <div class="strat" id="strat"></div>
         <div class="help" id="stratHelp"></div>
       </section>
@@ -319,33 +321,33 @@ body.fs{overflow:hidden}
     <div class="pane" id="p-dg">
       <div class="two">
         <section class="panel">
-          <h3>Direzione gara <span class="right" id="rcFilters"><button data-rf="all" class="on">Tutti</button><button data-rf="flag">Bandiere e SC</button><button data-rf="pen">Penalità</button><button data-rf="inv">Indagini</button><button data-rf="lim">Limiti pista</button></span></h3>
+          <h3><span data-en="Race control">Direzione gara</span> <span class="right" id="rcFilters"><button data-rf="all" class="on" data-en="All">Tutti</button><button data-rf="flag" data-en="Flags &amp; SC">Bandiere e SC</button><button data-rf="pen" data-en="Penalties">Penalità</button><button data-rf="inv" data-en="Investigations">Indagini</button><button data-rf="lim" data-en="Track limits">Limiti pista</button></span></h3>
           <div class="feed" id="rcm"></div>
         </section>
         <div style="display:flex;flex-direction:column;gap:14px">
           <section class="panel"><h3>Team radio</h3><div class="feed" id="radio" style="max-height:300px"></div></section>
-          <section class="panel"><h3>Meteo</h3><div class="chartwrap sm"><canvas id="cWx"></canvas><div class="tip"></div></div><div class="legend" id="legWx"></div></section>
+          <section class="panel"><h3 data-en="Weather">Meteo</h3><div class="chartwrap sm"><canvas id="cWx"></canvas><div class="tip"></div></div><div class="legend" id="legWx"></div></section>
         </div>
       </div>
     </div>
 
     <div class="pane" id="p-pista">
-      <section class="panel"><h3>Pista <span class="right" id="mapModes" style="display:none"><button data-mm="stima" class="on">Stimate</button><button data-mm="vere">Vere</button></span></h3><div class="mapwrap"><canvas id="map"></canvas></div><div style="height:70px;padding:0 14px"><canvas id="strip"></canvas></div><div class="help" id="mapInfo"></div></section>
+      <section class="panel"><h3><span data-en="Track">Pista</span> <span class="right" id="mapModes" style="display:none"><button data-mm="stima" class="on" data-en="Estimated">Stimate</button><button data-mm="vere" data-en="Real">Vere</button></span></h3><div class="mapwrap"><canvas id="map"></canvas></div><div style="height:70px;padding:0 14px"><canvas id="strip"></canvas></div><div class="help" id="mapInfo"></div></section>
     </div>
   </div>
 </main>
 
 <footer>
-  <span class="status" id="srcStatus">Nessuna sessione aperta</span>
+  <span class="status" id="srcStatus" data-en="No session open">Nessuna sessione aperta</span>
   <span id="replayCtl" style="display:none;flex:1;align-items:center;gap:8px">
     <button id="pp">⏸</button>
     <span id="speeds" class="row" style="gap:4px"></span>
-    <button id="toStart" title="Vai alla partenza">Partenza</button>
+    <button id="toStart" title="Vai alla partenza" data-en-title="Go to the start" data-en="Start">Partenza</button>
     <input type="range" id="slider" min="0" max="1000" value="0">
     <span id="tlabel" class="status tn"></span>
   </span>
   <span id="liveCtl" style="display:none;align-items:center;gap:8px">
-    Ritardo per allinearsi alla TV:
+    <span data-en="Delay to sync with your TV:">Ritardo per allinearsi alla TV:</span>
     <button data-d="-5">−5 s</button><b id="delay" class="tn">0 s</b><button data-d="5">+5 s</button><button data-d="30">+30 s</button><button data-d="0" data-reset="1">0</button>
   </span>
 </footer>
@@ -355,7 +357,7 @@ body.fs{overflow:hidden}
   <div id="fsTower"><div class="hd"><div class="t" id="fsEv"></div><div class="s" id="fsSes"></div></div><div id="fsRows"></div></div>
   <div id="fsMain">
     <canvas id="fsMap"></canvas>
-    <div id="fsTop"><div class="lapbox" id="fsLap"></div><div class="pill" id="fsTrack"></div><div class="chip-fl" id="fsFl" style="display:none"></div><button id="fsExit">✕ Esci (Esc)</button></div>
+    <div id="fsTop"><div class="lapbox" id="fsLap"></div><div class="pill" id="fsTrack"></div><div class="chip-fl" id="fsFl" style="display:none"></div><button id="fsExit" data-en="✕ Exit (Esc)">✕ Esci (Esc)</button></div>
     <div id="fsMsg"></div>
   </div>
   <div id="fsStripWrap"><canvas id="fsStrip"></canvas></div>
@@ -364,21 +366,21 @@ body.fs{overflow:hidden}
 
 <div id="chooser">
   <div class="box">
-    <div class="row" style="justify-content:space-between"><h2>Cosa vuoi guardare?</h2><button id="closeChooser">✕</button></div>
-    <h4>In diretta</h4>
-    <button class="big" id="goLive">● Segui la sessione in corso</button>
-    <div class="status" style="margin-top:6px">Tempi ufficiali F1, senza account. La diretta viene registrata: se chiudi e riapri, lo storico dei giri non si perde.</div>
-    <h4>Rivedi una sessione</h4>
-    <div id="sessList" class="status">caricamento…</div>
-    <h4>Scarica una sessione passata</h4>
+    <div class="row" style="justify-content:space-between"><h2 data-en="What do you want to watch?">Cosa vuoi guardare?</h2><button id="closeChooser">✕</button></div>
+    <h4 data-en="Live">In diretta</h4>
+    <button class="big" id="goLive" data-en="● Follow the current session">● Segui la sessione in corso</button>
+    <div class="status" style="margin-top:6px" data-en="Official F1 timing, no account needed. The live session is recorded: if you close and reopen, the lap history is not lost.">Tempi ufficiali F1, senza account. La diretta viene registrata: se chiudi e riapri, lo storico dei giri non si perde.</div>
+    <h4 data-en="Watch a session again">Rivedi una sessione</h4>
+    <div id="sessList" class="status" data-en="loading…">caricamento…</div>
+    <h4 data-en="Download a past session">Scarica una sessione passata</h4>
     <div class="row">
       <select id="year"></select>
       <select id="meet" style="flex:1"><option>…</option></select>
       <select id="sess"></select>
-      <button id="dl">Scarica e guarda</button>
+      <button id="dl" data-en="Download and watch">Scarica e guarda</button>
     </div>
     <div class="status" id="dlStatus" style="margin-top:6px"></div>
-    <p class="status" style="margin-top:22px;font-size:11px;line-height:1.4">Free to Race è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati sono quelli pubblici del servizio di cronometraggio. Disegni dei circuiti: MultiViewer.</p>
+    <p class="status" style="margin-top:22px;font-size:11px;line-height:1.4" data-en="Free to Race is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. The data is the public data of the official timing service. Circuit drawings: MultiViewer.">Free to Race è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati sono quelli pubblici del servizio di cronometraggio. Disegni dei circuiti: MultiViewer.</p>
   </div>
 </div>
 
@@ -390,18 +392,46 @@ const FLAG = {GREEN:'#22d36b',YELLOW:'#ffd12e','DOUBLE YELLOW':'#ffd12e',RED:'#e
 const NEUTRAL = {'4':'SC','5':'ROSSA','6':'VSC','7':'VSC'};
 const store = {get(k,d){try{return localStorage.getItem('f1c.'+k)??d}catch(e){return d}}, set(k,v){try{localStorage.setItem('f1c.'+k,v)}catch(e){}}};
 
+// ================= lingua =================
+// inglese o italiano: la prima volta segue la lingua del browser, poi il pulsante in alto
+let LANG = store.get('lang', /^it\b/i.test(navigator.language||'') ? 'it' : 'en');
+const L = (it, en) => LANG==='it' ? it : en;
+const LOC = () => L('it-IT', 'en-GB');
+const TYRE_EN = {SOFT:'Soft', MEDIUM:'Medium', HARD:'Hard', INTERMEDIATE:'Intermediate', WET:'Wet'};
+const tyreName = c => L((TYRE[c]||TYRE.UNKNOWN)[2], TYRE_EN[c]||'?');
+const TRACK_EN = {'1':'Track clear', '2':'Yellow flag', '4':'Safety Car', '5':'Red flag', '6':'Virtual Safety Car', '7':'VSC ending'};
+const trackName = c => L(TRACK[c][0], TRACK_EN[c]);
+const neuTag = c => c==='5' ? L('ROSSA','RED') : NEUTRAL[c];
+const SRV_EN = [['registrata in diretta','recorded live'], ['riconnessione...','reconnecting...'], ['connessione...','connecting...'], ['in diretta','live'], ['mappa non disponibile','map not available'],
+  ['in corso','in progress'], ['avvio','starting'], ['pronta','ready'], ['errore:','error:'], ['scaricata','downloaded'],
+  ["l'archivio non ha ancora i dati di questa sessione","the archive does not have this session's data yet"], ["sessione non trovata nell'archivio","session not found in the archive"]];
+const SRV = s => { if(LANG==='it' || !s) return s; s=String(s); for(const [a,b] of SRV_EN) s=s.replace(a,b); return s; };   // testi che arrivano dal programma
+function applyLang(){
+  document.documentElement.lang = LANG;
+  $$('[data-en]').forEach(el => { if(el._it==null) el._it = el.innerHTML; el.innerHTML = L(el._it, el.dataset.en); });
+  $$('[data-en-title]').forEach(el => { if(el._itT==null) el._itT = el.title; el.title = L(el._itT, el.dataset.enTitle); });
+  $('#langBtn').textContent = L('EN', 'IT');
+  document.dispatchEvent(new Event('langchange'));
+}
+applyLang();
+$('#langBtn').onclick = () => { LANG = L('en','it'); store.set('lang', LANG); try{ localStorage.setItem('ftr.lang', LANG); }catch(e){}
+  applyLang(); lastRadioKey=''; if(S) renderAll(); };
+
 let S=null, H=null, sel=[], focus=null, towerMode=store.get('tm','race')==='spd'?'spd':'race', tab=store.get('tab','gara'), chartMode='gap', rcFilter='all';
 let stintSel=null, cmpA=null, cmpB=null, circuit=null, circuitKey=null, lastRadioKey='', prev=null;
 
 const DEMO_T = {
   en:{txt:'NAME replay, running in your browser. Download the free program to follow races live.', dl:'⬇ Download for Windows', site:'Website', load:'Loading the demo… the first time it takes a few seconds.', err:'The demo could not start in this browser. Try a recent Chrome, Edge or Firefox.'},
   it:{txt:'Replay del NAME, nel tuo browser. Scarica il programma gratuito per seguire le gare in diretta.', dl:'⬇ Scarica per Windows', site:'Sito', load:'Carico la demo… la prima volta ci vuole qualche secondo.', err:'La demo non è partita in questo browser. Prova un Chrome, Edge o Firefox recente.'}};
-const DEMO_L = (()=>{ try{ return localStorage.getItem('ftr.lang')==='it'?'it':'en'; }catch(e){ return 'en'; } })();
 const DEMO_NAME = {en:'2026 Italian Grand Prix', it:'Gran Premio d’Italia 2026'};
-document.getElementById('demoTxt').textContent = DEMO_T[DEMO_L].txt.replace('NAME', DEMO_NAME[DEMO_L]);
-document.getElementById('demoDl').textContent = DEMO_T[DEMO_L].dl;
-document.getElementById('demoSite').textContent = DEMO_T[DEMO_L].site;
-document.getElementById('demoMsg').textContent = DEMO_T[DEMO_L].load;
+function demoTexts(){   // la barra segue la lingua del programma (pulsante EN/IT)
+  const t = DEMO_T[LANG];
+  document.getElementById('demoTxt').textContent = t.txt.replace('NAME', DEMO_NAME[LANG]);
+  document.getElementById('demoDl').textContent = t.dl;
+  document.getElementById('demoSite').textContent = t.site;
+  const m = document.getElementById('demoMsg'); if(m && !m.dataset.err) m.textContent = t.load;
+}
+demoTexts(); document.addEventListener('langchange', demoTexts);
 let pyHandle = null;
 const PY_READY = (async () => {
   try{
@@ -416,7 +446,7 @@ const PY_READY = (async () => {
     const shim = py.pyimport('demo_shim');
     pyHandle = (p, b) => shim.handle(p, b);
     document.getElementById('demoLoad').remove();
-  }catch(e){ console.error(e); document.getElementById('demoMsg').textContent = DEMO_T[DEMO_L].err; throw e; }
+  }catch(e){ console.error(e); const m=document.getElementById('demoMsg'); m.dataset.err='1'; m.textContent = DEMO_T[LANG].err; throw e; }
 })();
 async function api(path, body){
   await PY_READY;
@@ -431,7 +461,7 @@ const fmtD = (v,dec=3) => v==null||isNaN(v) ? '' : (v>0?'+':v<0?'−':'±')+Math
 const num = s => { const v=parseFloat(String(s||'').replace('+','')); return isNaN(v)?null:v; };
 const secsOf = s => { if(!s) return null; const p=String(s).split(':'); return p.length>1 ? (+p[0])*60+parseFloat(p[1]) : parseFloat(p[0]); };
 const D = n => (S && S.drivers.find(d=>d.num===n)) || {tla:n, color:'#888', team:''};
-const tyreIcon = (c, sm) => { const [col,l]=TYRE[c]||TYRE.UNKNOWN; return `<i class="ti${sm?' sm':''}" style="border-color:${col};color:${col}" title="${(TYRE[c]||TYRE.UNKNOWN)[2]}">${l}</i>`; };
+const tyreIcon = (c, sm) => { const [col,l]=TYRE[c]||TYRE.UNKNOWN; return `<i class="ti${sm?' sm':''}" style="border-color:${col};color:${col}" title="${tyreName(c)}">${l}</i>`; };
 const segColor = s => s===2051?'var(--purple)':s===2049?'var(--green)':s===2064?'var(--blue)':s?'var(--yellow)':'#2b313c';
 const isRace = () => S && S.type==='Race';
 function lapStatus(){   // giro -> stato pista, dalle registrazioni del pilota con piu' giri
@@ -443,7 +473,7 @@ function lapStatus(){   // giro -> stato pista, dalle registrazioni del pilota c
 function neutralBands(){
   const ls=lapStatus(), out=[]; let cur=null;
   for(const k of Object.keys(ls).map(Number).sort((a,b)=>a-b)){
-    const c=ls[k], tag=NEUTRAL[c];
+    const c=ls[k], tag=NEUTRAL[c]&&neuTag(c);
     if(tag){ if(cur && cur.tag===tag && cur.x1===k-1) cur.x1=k; else { cur={x0:k,x1:k,tag,red:c==='5'}; out.push(cur); } }
     else cur=null;
   }
@@ -453,24 +483,27 @@ function neutralBands(){
 // ================= testata =================
 function renderHeader(){
   $('#ev').textContent = S.meeting || '—';
-  $('#ses').textContent = S.session ? `${S.session} · ${S.location||''}` + (S.part?` · Q${S.part}`:'') : 'nessuna sessione';
-  if(isRace() && S.lap) $('#lap').innerHTML = `<span class="lbl">Giro</span>${S.lap}<small> / ${S.totalLaps||'?'}</small>`;
-  else $('#lap').innerHTML = S.remaining!=null ? `<span class="lbl">Tempo rimasto</span>${fmtT(S.remaining)}` : '';
+  $('#ses').textContent = S.session ? `${S.session} · ${S.location||''}` + (S.part?` · Q${S.part}`:'') : L('nessuna sessione','no session');
+  if(isRace() && S.lap) $('#lap').innerHTML = `<span class="lbl">${L('Giro','Lap')}</span>${S.lap}<small> / ${S.totalLaps||'?'}</small>`;
+  else $('#lap').innerHTML = S.remaining!=null ? `<span class="lbl">${L('Tempo rimasto','Time left')}</span>${fmtT(S.remaining)}` : '';
   const t = TRACK[S.track.code], p=$('#track');
-  if(t){ p.style.display=''; p.textContent=t[0]; p.style.background=t[1]; p.style.color=t[2]; } else p.style.display='none';
+  if(t){ p.style.display=''; p.textContent=trackName(S.track.code); p.style.background=t[1]; p.style.color=t[2]; } else p.style.display='none';
   const w = S.weather||{};
-  $('#wx').innerHTML = w.air ? `<span>Aria <b>${w.air}°</b></span><span>Asfalto <b>${w.track}°</b></span><span>Umidità <b>${Math.round(w.hum)}%</b></span><span>Vento <b>${w.wind} m/s</b></span><span>${w.rain && w.rain!=='0' ? '<b style="color:#5aa9ff">PIOGGIA</b>' : 'Asciutto'}</span>` : '';
+  $('#wx').innerHTML = w.air ? `<span>${L('Aria','Air')} <b>${w.air}°</b></span><span>${L('Asfalto','Track')} <b>${w.track}°</b></span><span>${L('Umidità','Humidity')} <b>${Math.round(w.hum)}%</b></span><span>${L('Vento','Wind')} <b>${w.wind} m/s</b></span><span>${w.rain && w.rain!=='0' ? L('<b style="color:#5aa9ff">PIOGGIA</b>','<b style="color:#5aa9ff">RAIN</b>') : L('Asciutto','Dry')}</span>` : '';
   const f = H && H.fastest;
-  if(f){ const d=D(f.num); $('#flchip').style.display=''; $('#flchip').innerHTML=`<i></i><span>Giro veloce <b style="color:${d.color}">${esc(d.tla)}</b> <b class="tn">${fmtLap(f.t)}</b> <span class="dim">giro ${f.lap}</span></span>`; }
+  if(f){ const d=D(f.num); $('#flchip').style.display=''; $('#flchip').innerHTML=`<i></i><span>${L('Giro veloce','Fastest lap')} <b style="color:${d.color}">${esc(d.tla)}</b> <b class="tn">${fmtLap(f.t)}</b> <span class="dim">${L('giro','lap')} ${f.lap}</span></span>`; }
   else $('#flchip').style.display='none';
 }
 
 // ================= classifica =================
-const HEADS = {
-  race: ['<th class="p">P</th><th class="bar"></th><th>Pilota</th><th class="num" id="hGap">Distacco</th><th class="num" id="hInt">Davanti</th><th class="num secgap">S1</th><th class="num">S2</th><th class="num">S3</th><th class="num">Ultimo giro</th><th class="num">Migliore</th><th>Gomma</th><th class="num">Soste</th><th class="num" title="Posizione tenendo conto delle soste che mancano">Virtuale</th><th class="chg"></th>'],
-  spd:  ['<th class="p">P</th><th class="bar"></th><th>Pilota</th><th class="num">Intermedio 1</th><th class="num">Intermedio 2</th><th class="num">Traguardo</th><th class="num">Speed trap</th>'],
-};
-const HELP = {
+const HEADS = () => ({
+  race: [`<th class="p">P</th><th class="bar"></th><th>${L('Pilota','Driver')}</th><th class="num" id="hGap">${L('Distacco','Gap')}</th><th class="num" id="hInt">${L('Davanti','Interval')}</th><th class="num secgap">S1</th><th class="num">S2</th><th class="num">S3</th><th class="num">${L('Ultimo giro','Last lap')}</th><th class="num">${L('Migliore','Best')}</th><th>${L('Gomma','Tyre')}</th><th class="num">${L('Soste','Stops')}</th><th class="num" title="${L('Posizione tenendo conto delle soste che mancano','Position counting the stops still to make')}">${L('Virtuale','Virtual')}</th><th class="chg"></th>`],
+  spd:  [`<th class="p">P</th><th class="bar"></th><th>${L('Pilota','Driver')}</th><th class="num">${L('Intermedio 1','Intermediate 1')}</th><th class="num">${L('Intermedio 2','Intermediate 2')}</th><th class="num">${L('Traguardo','Finish line')}</th><th class="num">Speed trap</th>`],
+});
+const HELP = () => LANG==='en' ? {
+  race: 'Gap in <span class="yl">yellow</span> = within one second of the car ahead. Times: <span class="ob">purple</span> fastest of all, <span class="pb">green</span> personal best; under the last lap, the difference from the personal best. Bars = mini-sectors of the current lap: <i style="background:var(--purple)"></i>fastest of all <i style="background:var(--green)"></i>personal best <i style="background:var(--yellow)"></i>slower <i style="background:var(--blue)"></i>pit lane; in grey the sector from the previous lap.',
+  spd: 'Speed in km/h at the last pass; below, the best one and the rank in the field.',
+} : {
   race: 'Distacco in <span class="yl">giallo</span> = entro un secondo da chi precede. Tempi: <span class="ob">viola</span> il più veloce di tutti, <span class="pb">verde</span> il suo migliore; sotto l’ultimo giro, lo scarto dal suo migliore. Barrette = minisettori del giro in corso: <i style="background:var(--purple)"></i>più veloce di tutti <i style="background:var(--green)"></i>suo migliore <i style="background:var(--yellow)"></i>più lento <i style="background:var(--blue)"></i>corsia box; in grigio il settore del giro prima.',
   spd: 'Velocità in km/h all’ultimo passaggio; sotto, la sua migliore e la posizione nel gruppo.',
 };
@@ -487,13 +520,13 @@ function cellSpeed(sp){
   return `<td class="num"><span class="${cls}">${esc(sp.v)}</span><span class="sub">${sp.best?esc(sp.best)+(sp.bestPos?` · ${sp.bestPos}°`:''):''}</span></td>`;
 }
 function renderTower(){
-  $('#towerHead').innerHTML = '<tr>'+HEADS[towerMode][0]+'</tr>';
-  $('#towerHelp').innerHTML = HELP[towerMode];
+  $('#towerHead').innerHTML = '<tr>'+HEADS()[towerMode][0]+'</tr>';
+  $('#towerHelp').innerHTML = HELP()[towerMode];
   const race = isRace(), tb=$('#tower');
   const oldTop = {}; tb.querySelectorAll('tr[data-n]').forEach(tr=>oldTop[tr.dataset.n]=tr.getBoundingClientRect().top);
   const orderKey = S.drivers.map(d=>d.num).join(',');
   const rows = S.drivers.map(d => {
-    const tags = (d.retired||d.stopped ? '<span class="tag ret">RIT</span>' : '') + (d.inPit ? '<span class="tag pit">BOX</span>' : d.pitOut ? '<span class="tag pit">USCITA</span>' : '') + (d.out ? '<span class="tag out">ELIMINATO</span>' : '') + (H&&H.fastest&&H.fastest.num===d.num&&race ? '<span class="tag fl" title="Giro più veloce">GV</span>':'');
+    const tags = (d.retired||d.stopped ? `<span class="tag ret">${L('RIT','RET')}</span>` : '') + (d.inPit ? `<span class="tag pit">${L('BOX','PIT')}</span>` : d.pitOut ? `<span class="tag pit">${L('USCITA','OUT')}</span>` : '') + (d.out ? `<span class="tag out">${L('ELIMINATO','OUT')}</span>` : '') + (H&&H.fastest&&H.fastest.num===d.num&&race ? `<span class="tag fl" title="${L('Giro più veloce','Fastest lap')}">${L('GV','FL')}</span>`:'');
     let cls = sel.length ? (sel.includes(d.num)?'sel':'dimrow') : '';
     if(focus===d.num) cls+=' focus';
     if(S.cut && !race){ if(d.pos===S.cut) cls+=' cutline'; if(d.pos>S.cut && !d.out) cls+=' danger'; }
@@ -505,23 +538,23 @@ function renderTower(){
     let chg='';
     if(race && d.grid && d.pos<99){ const k=parseInt(d.grid)-d.pos; if(k>0) chg=`<span class="up">▲${k}</span>`; else if(k<0) chg=`<span class="down">▼${-k}</span>`; }
     const st = d.stints[d.stints.length-1];
-    const tyre = st ? `<span class="tyre" title="${(TYRE[st.c]||TYRE.UNKNOWN)[2]} ${st.new?'nuova':'usata'} · ${d.stints.length}° set">${tyreIcon(st.c)}<span>${st.age}<span class="sub">${st.new?'nuova':'usata'}</span></span></span>` : '';
+    const tyre = st ? `<span class="tyre" title="${tyreName(st.c)} ${st.new?L('nuova','new'):L('usata','used')} · ${L(d.stints.length+'° set','set '+d.stints.length)}">${tyreIcon(st.c)}<span>${st.age}<span class="sub">${st.new?L('nuova','new'):L('usata','used')}</span></span></span>` : '';
     const lp = d.lastPit;
     const v = race && H && H.virtual ? H.virtual[d.num] : null;
-    const virt = v ? `<span class="${v.pos<d.pos?'up':v.pos>d.pos?'down':'dim'}" title="${v.owed?'deve ancora fermarsi: + '+H.pitLoss.toFixed(0)+' s':'nessuna sosta prevista'}">P${v.pos}</span><span class="sub">${v.owed?'1 sosta':''}</span>` : '';
+    const virt = v ? `<span class="${v.pos<d.pos?'up':v.pos>d.pos?'down':'dim'}" title="${v.owed?L('deve ancora fermarsi: + ','still has to stop: + ')+H.pitLoss.toFixed(0)+' s':L('nessuna sosta prevista','no stop expected')}">P${v.pos}</span><span class="sub">${v.owed?L('1 sosta','1 stop'):''}</span>` : '';
     return `<tr data-n="${d.num}" class="${cls}">${head}
       <td class="num">${d.pos===1 && race ? '<span class="dim">Leader</span>' : esc(d.gap)}</td>
       <td class="num ${close?'yl':''}">${(race||S.part)&&d.pos>1?esc(d.int):''}</td>
       ${[0,1,2].map(i=>cellSector(d.sectors[i])).join('').replace('<td class="num sec">','<td class="num sec secgap">')}
       <td class="num"><span class="${d.lastOb?'ob':d.lastPb?'pb':''}">${esc(d.last)}</span><span class="sub">${d.lastDelta!=null&&d.lastDelta>0.0005?fmtD(d.lastDelta):''}</span></td>
-      <td class="num"><span class="${d.bestOb?'ob':''}">${esc(d.best)}</span><span class="sub">${d.bestLap?'giro '+d.bestLap:''}</span></td>
+      <td class="num"><span class="${d.bestOb?'ob':''}">${esc(d.best)}</span><span class="sub">${d.bestLap?L('giro ','lap ')+d.bestLap:''}</span></td>
       <td>${tyre}</td>
       <td class="num">${d.pits||''}<span class="sub">${lp&&lp.lane?lp.lane.toFixed(1)+' s':''}</span></td>
       <td class="num">${virt}</td>
       <td class="chg">${chg}</td></tr>`;
   });
-  tb.innerHTML = rows.join('') || '<tr><td class="empty">In attesa dei dati…</td></tr>';
-  if(towerMode==='race'){ $('#hGap').textContent = race ? 'Distacco' : 'Dal primo'; $('#hInt').textContent = race||S.part ? 'Davanti' : ''; }
+  tb.innerHTML = rows.join('') || L('<tr><td class="empty">In attesa dei dati…</td></tr>','<tr><td class="empty">Waiting for data…</td></tr>');
+  if(towerMode==='race'){ $('#hGap').textContent = race ? L('Distacco','Gap') : L('Dal primo','To P1'); $('#hInt').textContent = race||S.part ? L('Davanti','Interval') : ''; }
   if(renderTower.order && renderTower.order!==orderKey){   // animazione dei cambi di posizione
     tb.querySelectorAll('tr[data-n]').forEach(tr=>{ const o=oldTop[tr.dataset.n]; if(o==null) return; const dy=o-tr.getBoundingClientRect().top;
       if(Math.abs(dy)>2){ tr.style.transition='none'; tr.style.transform=`translateY(${dy}px)`; requestAnimationFrame(()=>requestAnimationFrame(()=>{ tr.style.transition='transform .7s ease'; tr.style.transform=''; })); } });
@@ -548,8 +581,8 @@ function lineChart(cv, o){
   const [g,W,Hh] = setupCanvas(cv); g.clearRect(0,0,W,Hh);
   const series = o.series.filter(s=>s.pts.length);
   cv._meta = null;
-  if(!series.length){ g.fillStyle='#8b94a7'; g.font='13px Titillium Web'; g.textAlign='center'; g.fillText(o.empty||'Nessun dato', W/2, Hh/2); g.textAlign='left'; return; }
-  const L=o.left||52, R=o.right||46, T=16, B=24;
+  if(!series.length){ g.fillStyle='#8b94a7'; g.font='13px Titillium Web'; g.textAlign='center'; g.fillText(o.empty||L('Nessun dato','No data'), W/2, Hh/2); g.textAlign='left'; return; }
+  const LM=o.left||52, R=o.right||46, T=16, B=24;
   let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
   for(const s of series) for(const [x,y] of s.pts){ x0=Math.min(x0,x); x1=Math.max(x1,x); y0=Math.min(y0,y); y1=Math.max(y1,y); }
   if(o.x0!=null) x0=o.x0; if(o.x1!=null) x1=Math.max(o.x1,x1);
@@ -557,21 +590,21 @@ function lineChart(cv, o){
   if(o.sym){ const m=Math.max(Math.abs(y0),Math.abs(y1),0.5); y0=-m; y1=m; }
   if(x1===x0) x1=x0+1; if(y1===y0){ y1=y0+1; }
   const pad=(y1-y0)*0.04; if(!o.tight){ y0-=pad; y1+=pad; }
-  const X = x => L + (x-x0)/(x1-x0)*(W-L-R);
+  const X = x => LM + (x-x0)/(x1-x0)*(W-LM-R);
   const Y = y => { const c=Math.min(Math.max(y,y0),y1); return o.invert ? T+(c-y0)/(y1-y0)*(Hh-T-B) : Hh-B-(c-y0)/(y1-y0)*(Hh-T-B); };
   // fasce SC / VSC / rossa
   g.font='bold 10px Titillium Web';
   for(const b of (o.bands||[])){
-    const a=X(b.x0-0.5), z=X(b.x1+0.5); if(z<L||a>W-R) continue;
-    g.fillStyle = b.red?'rgba(255,59,59,.16)':b.color||'rgba(255,159,26,.12)'; g.fillRect(Math.max(L,a),T,Math.min(W-R,z)-Math.max(L,a),Hh-T-B);
-    g.fillStyle = b.red?'#ff6b6b':'#ffb44d'; g.fillText(b.tag||'', Math.max(L,a)+3, T+10);
+    const a=X(b.x0-0.5), z=X(b.x1+0.5); if(z<LM||a>W-R) continue;
+    g.fillStyle = b.red?'rgba(255,59,59,.16)':b.color||'rgba(255,159,26,.12)'; g.fillRect(Math.max(LM,a),T,Math.min(W-R,z)-Math.max(LM,a),Hh-T-B);
+    g.fillStyle = b.red?'#ff6b6b':'#ffb44d'; g.fillText(b.tag||'', Math.max(LM,a)+3, T+10);
   }
   // griglia
   g.strokeStyle='#222833'; g.fillStyle='#8b94a7'; g.font='11px Titillium Web'; g.lineWidth=1;
   const ys = o.ystep || niceStep(y1-y0, 6);
-  for(let v=Math.ceil(y0/ys)*ys; v<=y1+1e-9; v+=ys){ if(o.skipY && o.skipY(v)) continue; g.beginPath(); g.moveTo(L,Y(v)); g.lineTo(W-R,Y(v)); g.stroke(); g.fillText(o.yFmt?o.yFmt(v):v, 4, Y(v)+4); }
-  if(o.zero){ g.strokeStyle='#59627a'; g.beginPath(); g.moveTo(L,Y(0)); g.lineTo(W-R,Y(0)); g.stroke(); }
-  const xs = Math.max(1, niceStep(x1-x0, Math.max(2, Math.floor((W-L-R)/70))));
+  for(let v=Math.ceil(y0/ys)*ys; v<=y1+1e-9; v+=ys){ if(o.skipY && o.skipY(v)) continue; g.beginPath(); g.moveTo(LM,Y(v)); g.lineTo(W-R,Y(v)); g.stroke(); g.fillText(o.yFmt?o.yFmt(v):v, 4, Y(v)+4); }
+  if(o.zero){ g.strokeStyle='#59627a'; g.beginPath(); g.moveTo(LM,Y(0)); g.lineTo(W-R,Y(0)); g.stroke(); }
+  const xs = Math.max(1, niceStep(x1-x0, Math.max(2, Math.floor((W-LM-R)/70))));
   for(let v=Math.ceil(x0/xs)*xs; v<=x1; v+=xs){ g.fillStyle='#8b94a7'; g.fillText(o.xFmt?o.xFmt(v):v, X(v)-8, Hh-7); }
   // linee
   const ordered = series.slice().sort((a,b)=>(a.w||1.5)-(b.w||1.5));
@@ -586,7 +619,7 @@ function lineChart(cv, o){
     if(s.label && (s.alpha??1)>0.5){ const [lx,ly]=s.pts[s.pts.length-1]; g.fillStyle=s.color; g.font=((s.w||1.5)>2?'bold ':'')+'11px Titillium Web'; g.fillText(s.label, X(lx)+4, Y(ly)+4); }
   }
   g.globalAlpha=1;
-  cv._meta = {X, Y, x0, x1, L, R, W, series, o};
+  cv._meta = {X, Y, x0, x1, L:LM, R, W, series, o};
 }
 function attachTip(cv){
   const tip = cv.parentElement.querySelector('.tip');
@@ -598,7 +631,7 @@ function attachTip(cv){
     for(const s of m.series){ const p = s.pts.find(p=>p[0]===x); if(p && (s.alpha??1)>0.5) rows.push([s, p[1]]); }
     if(!rows.length){ tip.style.display='none'; return; }
     if(m.o.sortTip) rows.sort((a,b)=> m.o.invert ? a[1]-b[1] : b[1]-a[1]);
-    tip.innerHTML = `<b>${m.o.xFmt?m.o.xFmt(x):'Giro '+x}</b>` + rows.slice(0,12).map(([s,v])=>`<div><span style="color:${s.color};font-weight:700">${esc(s.label||s.name||'')}</span> ${m.o.tipFmt?m.o.tipFmt(v,s,x):v}</div>`).join('');
+    tip.innerHTML = `<b>${m.o.xFmt?m.o.xFmt(x):L('Giro ','Lap ')+x}</b>` + rows.slice(0,12).map(([s,v])=>`<div><span style="color:${s.color};font-weight:700">${esc(s.label||s.name||'')}</span> ${m.o.tipFmt?m.o.tipFmt(v,s,x):v}</div>`).join('');
     tip.style.display='block';
     const tx = mx+14 + 160 > r.width ? mx-170 : mx+14; tip.style.left = tx+'px'; tip.style.top = '10px';
   });
@@ -626,22 +659,22 @@ function renderGara(){
   const battles=(H.battles||[]).map(b=>`<div><b style="color:${D(b.ahead).color}">${esc(D(b.ahead).tla)}</b> ← <b style="color:${D(b.num).color}">${esc(D(b.num).tla)}</b> <span class="dim">${b.int.toFixed(2)} s</span></div>`).join('');
   const sc = bands.filter(b=>b.tag==='SC').length, vsc=bands.filter(b=>b.tag==='VSC').length;
   $('#garaCards').innerHTML = `
-    <div class="card"><div class="k">Giro più veloce</div><div class="v ob">${f?fmtLap(f.t):'—'}</div><div class="d">${f?`<b style="color:${fd.color}">${esc(fd.tla)}</b> al giro ${f.lap}`:''}</div></div>
-    <div class="card"><div class="k">In testa</div><div class="v" style="color:${leader?leader.color:''}">${leader?esc(leader.tla):'—'}</div><div class="d">${race&&S.lap?`giro ${S.lap} di ${S.totalLaps}, mancano ${Math.max(0,(S.totalLaps||0)-S.lap)}`:''}</div></div>
-    <div class="card"><div class="k">Neutralizzazioni</div><div class="v">${sc} SC · ${vsc} VSC</div><div class="d">${bands.map(b=>`${b.tag} giri ${b.x0}${b.x1>b.x0?'–'+b.x1:''}`).join(', ')||'nessuna finora'}</div></div>
-    <div class="card"><div class="k">Gomme nuove valgono</div><div class="v">${H.freshGain!=null?H.freshGain.toFixed(2)+' s/giro':'—'}</div><div class="d">${H.freshGain!=null?'misurato sulle soste di questa gara':'si misura dopo le prime soste'}</div></div>`;
+    <div class="card"><div class="k">${L('Giro più veloce','Fastest lap')}</div><div class="v ob">${f?fmtLap(f.t):'—'}</div><div class="d">${f?`<b style="color:${fd.color}">${esc(fd.tla)}</b> ${L('al giro','on lap')} ${f.lap}`:''}</div></div>
+    <div class="card"><div class="k">${L('In testa','Leading')}</div><div class="v" style="color:${leader?leader.color:''}">${leader?esc(leader.tla):'—'}</div><div class="d">${race&&S.lap?L(`giro ${S.lap} di ${S.totalLaps}, mancano ${Math.max(0,(S.totalLaps||0)-S.lap)}`, `lap ${S.lap} of ${S.totalLaps}, ${Math.max(0,(S.totalLaps||0)-S.lap)} to go`):''}</div></div>
+    <div class="card"><div class="k">${L('Neutralizzazioni','Neutralisations')}</div><div class="v">${sc} SC · ${vsc} VSC</div><div class="d">${bands.map(b=>`${b.tag} ${L('giri','laps')} ${b.x0}${b.x1>b.x0?'–'+b.x1:''}`).join(', ')||L('nessuna finora','none so far')}</div></div>
+    <div class="card"><div class="k">${L('Gomme nuove valgono','Fresh tyres are worth')}</div><div class="v">${H.freshGain!=null?H.freshGain.toFixed(2)+L(' s/giro',' s/lap'):'—'}</div><div class="d">${H.freshGain!=null?L('misurato sulle soste di questa gara','measured on the stops in this race'):L('si misura dopo le prime soste','measured after the first stops')}</div></div>`;
   renderBattles(); renderPace();
   const cfg = {
-    gap:{key:'gap', invert:true, y0:0, yFmt:v=>'+'+Math.round(v)+'s', tipFmt:v=>v===0?'leader':'+'+v.toFixed(1)+' s', legend:'Secondi di distacco dal primo alla fine di ogni giro: in alto chi è davanti. Le fasce arancioni sono Safety Car e VSC.'},
-    pos:{key:'pos', invert:true, y0:1, ystep:1, tight:true, skipY:v=>v!==1&&v%5!==0, yFmt:v=>'P'+v, tipFmt:v=>'P'+v, legend:'Posizione alla fine di ogni giro: dove le linee si incrociano c’è un sorpasso o una sosta.'},
-    lt:{key:'t', invert:true, yFmt:lapAxis, tipFmt:v=>fmtLap(v), legend:'Tempo di ogni giro (esclusi giri di entrata e uscita dai box): più in alto = più veloce.'},
+    gap:{key:'gap', invert:true, y0:0, yFmt:v=>'+'+Math.round(v)+'s', tipFmt:v=>v===0?'leader':'+'+v.toFixed(1)+' s', legend:L('Secondi di distacco dal primo alla fine di ogni giro: in alto chi è davanti. Le fasce arancioni sono Safety Car e VSC.','Seconds behind the leader at the end of each lap: the car ahead is at the top. Orange bands are Safety Car and VSC.')},
+    pos:{key:'pos', invert:true, y0:1, ystep:1, tight:true, skipY:v=>v!==1&&v%5!==0, yFmt:v=>'P'+v, tipFmt:v=>'P'+v, legend:L('Posizione alla fine di ogni giro: dove le linee si incrociano c’è un sorpasso o una sosta.','Position at the end of each lap: where the lines cross there is an overtake or a pit stop.')},
+    lt:{key:'t', invert:true, yFmt:lapAxis, tipFmt:v=>fmtLap(v), legend:L('Tempo di ogni giro (esclusi giri di entrata e uscita dai box): più in alto = più veloce.','Time of each lap (in and out laps excluded): higher = faster.')},
   }[chartMode];
   let series = driverSeries(cfg.key, chartMode==='lt' ? r=>!r.pin&&!r.pout : null);
   let y1;
   if(chartMode==='gap'){ const all=series.flatMap(s=>s.pts.map(p=>p[1])).sort((a,b)=>a-b); y1 = all.length ? Math.min(all[all.length-1], Math.max(30, all[Math.floor(all.length*0.9)]*1.3)) : 10; }
   if(chartMode==='lt'){ const all=series.flatMap(s=>s.pts.map(p=>p[1])).sort((a,b)=>a-b); if(all.length){ const med=all[Math.floor(all.length/2)]; cfg.y0=Math.max(all[0]-0.3, med-4); y1=med+5; } }
   if(chartMode==='pos') y1 = S.drivers.length;
-  lineChart($('#cGara'), {...cfg, y1, series, bands, sortTip:true, empty:'Il grafico si riempie giro dopo giro.'});
+  lineChart($('#cGara'), {...cfg, y1, series, bands, sortTip:true, empty:L('Il grafico si riempie giro dopo giro.','The chart fills up lap after lap.')});
   $('#legGara').textContent = cfg.legend;
 }
 
@@ -655,29 +688,29 @@ function renderBattles(){
   const ST = {attacco:['<b class="yl">in zona attacco</b>',''], 'aggancia':['',''], 'non raggiunge':['',''], 'si allontana':['',''], stabile:['','']};
   const rows=(H.pairs||[]).map(p=>{
     const a=D(p.ahead), b=D(p.num);
-    let trend='<span class="dim">dati insufficienti</span>';
-    if(p.state==='attacco') trend='<b class="yl">entro 1 s: può attaccare</b>';
-    else if(p.state==='aggancia') trend=`guadagna <b>${(-p.slope).toFixed(2)} s</b> a giro: <b class="pb">lo aggancia tra ${p.lapsTo} ${p.lapsTo===1?'giro':'giri'}</b>`;
-    else if(p.state==='non raggiunge') trend=`guadagna ${(-p.slope).toFixed(2)} s a giro, <span class="dim">ma non lo aggancia prima della fine</span>`;
-    else if(p.state==='si allontana') trend=`<span class="dim">perde ${p.slope.toFixed(2)} s a giro</span>`;
-    else if(p.state==='stabile') trend='<span class="dim">distacco stabile</span>';
+    let trend=L('<span class="dim">dati insufficienti</span>','<span class="dim">not enough data</span>');
+    if(p.state==='attacco') trend=L('<b class="yl">entro 1 s: può attaccare</b>','<b class="yl">within 1 s: can attack</b>');
+    else if(p.state==='aggancia') trend=L(`guadagna <b>${(-p.slope).toFixed(2)} s</b> a giro: <b class="pb">lo aggancia tra ${p.lapsTo} ${p.lapsTo===1?'giro':'giri'}</b>`, `gains <b>${(-p.slope).toFixed(2)} s</b> per lap: <b class="pb">catches up in ${p.lapsTo} ${p.lapsTo===1?'lap':'laps'}</b>`);
+    else if(p.state==='non raggiunge') trend=L(`guadagna ${(-p.slope).toFixed(2)} s a giro, <span class="dim">ma non lo aggancia prima della fine</span>`, `gains ${(-p.slope).toFixed(2)} s per lap, <span class="dim">but does not catch up before the end</span>`);
+    else if(p.state==='si allontana') trend=L(`<span class="dim">perde ${p.slope.toFixed(2)} s a giro</span>`, `<span class="dim">loses ${p.slope.toFixed(2)} s per lap</span>`);
+    else if(p.state==='stabile') trend=L('<span class="dim">distacco stabile</span>','<span class="dim">gap stable</span>');
     let uc='';
     if(p.undercut){
       const m=p.undercut.margins;
-      const cell=(x,k)=>`<span title="se ${esc(a.tla)} resta fuori ${k} ${k===1?'giro':'giri'}" class="${Math.abs(x)<1?'yl':x<0?'pb':'dim'}">${k}g: ${x<0?'davanti di '+(-x).toFixed(1):'dietro di '+x.toFixed(1)}${Math.abs(x)<1?' (in bilico)':''}</span>`;
-      uc = `<div style="margin-top:3px">Undercut: ${p.undercut.need&&p.undercut.need<=3?`<b class="pb">riesce se ${esc(a.tla)} resta fuori ${p.undercut.need} ${p.undercut.need===1?'giro':'giri'}</b>`:p.undercut.need?`riesce solo se ${esc(a.tla)} resta fuori ${p.undercut.need} giri`:'<span class="dim">non riesce</span>'} &nbsp;·&nbsp; ${m.map((x,i)=>cell(x,i+1)).join(' · ')}</div>`;
+      const cell=(x,k)=>`<span title="${L(`se ${esc(a.tla)} resta fuori ${k} ${k===1?'giro':'giri'}`, `if ${esc(a.tla)} stays out ${k} ${k===1?'lap':'laps'}`)}" class="${Math.abs(x)<1?'yl':x<0?'pb':'dim'}">${k}${L('g','L')}: ${x<0?L('davanti di ','ahead by ')+(-x).toFixed(1):L('dietro di ','behind by ')+x.toFixed(1)}${Math.abs(x)<1?L(' (in bilico)',' (too close)'):''}</span>`;
+      uc = `<div style="margin-top:3px">Undercut: ${p.undercut.need&&p.undercut.need<=3?L(`<b class="pb">riesce se ${esc(a.tla)} resta fuori ${p.undercut.need} ${p.undercut.need===1?'giro':'giri'}</b>`, `<b class="pb">works if ${esc(a.tla)} stays out ${p.undercut.need} ${p.undercut.need===1?'lap':'laps'}</b>`):p.undercut.need?L(`riesce solo se ${esc(a.tla)} resta fuori ${p.undercut.need} giri`, `works only if ${esc(a.tla)} stays out ${p.undercut.need} laps`):L('<span class="dim">non riesce</span>','<span class="dim">does not work</span>')} &nbsp;·&nbsp; ${m.map((x,i)=>cell(x,i+1)).join(' · ')}</div>`;
     }
-    return `<div class="msg" style="align-items:flex-start"><span style="width:118px;flex:none"><b style="color:${b.color}">${esc(b.tla)}</b> <span class="dim">→</span> <b style="color:${a.color}">${esc(a.tla)}</b><span class="sub">P${S.drivers.find(x=>x.num===p.num)?.pos??''} su P${S.drivers.find(x=>x.num===p.ahead)?.pos??''}</span></span>
+    return `<div class="msg" style="align-items:flex-start"><span style="width:118px;flex:none"><b style="color:${b.color}">${esc(b.tla)}</b> <span class="dim">→</span> <b style="color:${a.color}">${esc(a.tla)}</b><span class="sub">P${S.drivers.find(x=>x.num===p.num)?.pos??''}${L(' su ',' on ')}P${S.drivers.find(x=>x.num===p.ahead)?.pos??''}</span></span>
       <span class="tn" style="width:62px;flex:none;font-weight:700">${p.int.toFixed(2)} s</span><span style="flex:1">${trend}${uc}</span></div>`;
   }).join('');
-  box.innerHTML = rows || '<div class="empty">Nessuna auto entro 8 s da quella davanti</div>';
+  box.innerHTML = rows || L('<div class="empty">Nessuna auto entro 8 s da quella davanti</div>','<div class="empty">No car within 8 s of the one ahead</div>');
 }
 function renderPace(){
   const box=$('#pace'); if(!box) return;
-  const list=H.pace||[]; if(!list.length){ box.innerHTML='<div class="empty">Servono almeno 3 giri puliti</div>'; return; }
+  const list=H.pace||[]; if(!list.length){ box.innerHTML=L('<div class="empty">Servono almeno 3 giri puliti</div>','<div class="empty">At least 3 clean laps needed</div>'); return; }
   const best=list[0].avg, worst=list[list.length-1].avg;
   const rk = v => v==null?'<td class="dim">—</td>':`<td><span class="rk" style="background:${v<=3?'#7b4bd6':v<=8?'#1f7a46':v<=15?'#3a4150':'#2a2f3a'}">${v}°</span></td>`;
-  box.innerHTML = `<div class="scroll" style="max-height:none"><table class="laps"><thead><tr><th>Pilota</th><th>Passo</th><th style="text-align:left;width:38%">Distacco dal più veloce</th><th>S1</th><th>S2</th><th>S3</th><th>Velocità</th></tr></thead><tbody>
+  box.innerHTML = `<div class="scroll" style="max-height:none"><table class="laps"><thead><tr><th>${L('Pilota','Driver')}</th><th>${L('Passo','Pace')}</th><th style="text-align:left;width:38%">${L('Distacco dal più veloce','Gap to the fastest')}</th><th>S1</th><th>S2</th><th>S3</th><th>${L('Velocità','Speed')}</th></tr></thead><tbody>
     ${list.map(p=>{ const d=D(p.num), dl=p.avg-best, w=worst>best?(dl/(worst-best))*100:0;
       const sp=(d.speeds&&d.speeds.ST)||{};
       return `<tr><td><b style="color:${d.color}">${esc(d.tla)}</b></td><td>${fmtLap(p.avg)}</td>
@@ -701,34 +734,34 @@ function renderGomme(){
   const comps = ['SOFT','MEDIUM','HARD','INTERMEDIATE','WET'];
   const paceRef = Math.min(...Object.values(pace).map(avg));
   $('#tyreCards').innerHTML = `
-    <div class="card"><div class="k">In pista adesso</div><div class="chips2">${comps.filter(c=>cur[c]).map(c=>`<span>${tyreIcon(c,1)} ${cur[c]}</span>`).join('')||'—'}</div></div>
-    <div class="card"><div class="k">Durata media degli stint finiti</div><div class="chips2">${comps.filter(c=>done[c]).map(c=>`<span>${tyreIcon(c,1)} ${avg(done[c]).toFixed(0)} giri</span>`).join('')||'<span class="dim">nessuno stint concluso</span>'}</div></div>
-    <div class="card"><div class="k">Passo medio per mescola</div><div class="chips2">${comps.filter(c=>pace[c]).map(c=>`<span>${tyreIcon(c,1)} ${fmtLap(avg(pace[c]))}${avg(pace[c])-paceRef>0.001?' <span class="dim">'+fmtD(avg(pace[c])-paceRef,2)+'</span>':''}</span>`).join('')||'<span class="dim">servono almeno 3 giri puliti</span>'}</div></div>
-    <div class="card"><div class="k">Tempo perso per una sosta</div><div class="v">${H.pitLoss.toFixed(1)} s</div><div class="d">${H.pitLossMeasured?'misurato sulle soste di questa gara':'valore tipico: diventa misurato alla prima sosta'}</div></div>
-    ${race&&H.proj?`<div class="card" style="grid-column:span 2"><div class="k">Prossime soste previste</div><div class="chips2">${Object.entries(H.proj).filter(([n,p])=>p.status!=='fine').sort((a,b)=>a[1].lap-b[1].lap).slice(0,10).map(([n,p])=>`<span><b style="color:${D(n).color}">${esc(D(n).tla)}</b> ${p.status==='open'?'<b class="yl">ora</b>':'giro '+p.lap}</span>`).join('')||'<span class="dim">nessuna</span>'}</div></div>`:''}
-    ${race?`<div class="card"><div class="k">Devono ancora usare 2 mescole</div><div class="d" style="font-size:14px">${(H.two||[]).map(n=>`<b style="color:${D(n).color}">${esc(D(n).tla)}</b>`).join(' ')||'nessuno'}</div></div>`:''}`;
+    <div class="card"><div class="k">${L('In pista adesso','On track now')}</div><div class="chips2">${comps.filter(c=>cur[c]).map(c=>`<span>${tyreIcon(c,1)} ${cur[c]}</span>`).join('')||'—'}</div></div>
+    <div class="card"><div class="k">${L('Durata media degli stint finiti','Average length of finished stints')}</div><div class="chips2">${comps.filter(c=>done[c]).map(c=>`<span>${tyreIcon(c,1)} ${avg(done[c]).toFixed(0)} ${L('giri','laps')}</span>`).join('')||L('<span class="dim">nessuno stint concluso</span>','<span class="dim">no stint finished yet</span>')}</div></div>
+    <div class="card"><div class="k">${L('Passo medio per mescola','Average pace per compound')}</div><div class="chips2">${comps.filter(c=>pace[c]).map(c=>`<span>${tyreIcon(c,1)} ${fmtLap(avg(pace[c]))}${avg(pace[c])-paceRef>0.001?' <span class="dim">'+fmtD(avg(pace[c])-paceRef,2)+'</span>':''}</span>`).join('')||L('<span class="dim">servono almeno 3 giri puliti</span>','<span class="dim">at least 3 clean laps needed</span>')}</div></div>
+    <div class="card"><div class="k">${L('Tempo perso per una sosta','Time lost per pit stop')}</div><div class="v">${H.pitLoss.toFixed(1)} s</div><div class="d">${H.pitLossMeasured?L('misurato sulle soste di questa gara','measured on the stops in this race'):L('valore tipico: diventa misurato alla prima sosta','typical value: measured from the first stop')}</div></div>
+    ${race&&H.proj?`<div class="card" style="grid-column:span 2"><div class="k">${L('Prossime soste previste','Next expected stops')}</div><div class="chips2">${Object.entries(H.proj).filter(([n,p])=>p.status!=='fine').sort((a,b)=>a[1].lap-b[1].lap).slice(0,10).map(([n,p])=>`<span><b style="color:${D(n).color}">${esc(D(n).tla)}</b> ${p.status==='open'?L('<b class="yl">ora</b>','<b class="yl">now</b>'):L('giro ','lap ')+p.lap}</span>`).join('')||L('<span class="dim">nessuna</span>','<span class="dim">none</span>')}</div></div>`:''}
+    ${race?`<div class="card"><div class="k">${L('Devono ancora usare 2 mescole','Still have to use 2 compounds')}</div><div class="d" style="font-size:14px">${(H.two||[]).map(n=>`<b style="color:${D(n).color}">${esc(D(n).tla)}</b>`).join(' ')||L('nessuno','nobody')}</div></div>`:''}`;
 
   const bands = neutralBands();
   const pct = l => (l/total*100).toFixed(3)+'%';
   const step = total>40?10:5;
   let axis=''; for(let l=0;l<=total;l+=step) axis+=`<span style="left:${pct(l)}">${l}</span>`;
-  const bandHtml = bands.map(b=>`<div class="band ${b.red?'red':''}" style="left:${pct(b.x0-1)};width:${pct(b.x1-b.x0+1)}" title="${b.tag} giri ${b.x0}–${b.x1}"></div>`).join('');
+  const bandHtml = bands.map(b=>`<div class="band ${b.red?'red':''}" style="left:${pct(b.x0-1)};width:${pct(b.x1-b.x0+1)}" title="${b.tag} ${L('giri','laps')} ${b.x0}–${b.x1}"></div>`).join('');
   const nowL = S.lap||0;
   const rows = S.drivers.map(d => {
     const st = H.stints[d.num]||[];
     const faded = sel.length && !sel.includes(d.num);
     const done = st.reduce((a,s)=>a+s.laps,0);
     const bars = st.map((s,i)=>{
-      const [c,l,name]=TYRE[s.c]||TYRE.UNKNOWN;
+      const [c,l]=TYRE[s.c]||TYRE.UNKNOWN, name=tyreName(s.c);
       const bg = s.new ? c : `repeating-linear-gradient(135deg, ${c} 0 7px, ${c}99 7px 10px)`;
       const w = Math.max(s.laps, 0.5);
       const txt = s.laps>=8 ? `${l} ${s.from+1}–${s.from+s.laps}` : s.laps>=3 ? `${l} ${s.laps}` : '';
       const isSel = stintSel && stintSel.n===d.num && stintSel.i===i;
-      return `<div class="st${isSel?' selst':''}" data-n="${d.num}" data-i="${i}" style="left:${pct(s.from)};width:${pct(w)};background:${bg}" title="${name} ${s.new?'nuova':'usata ('+s.startAge+' giri)'} · giri ${s.from+1}–${s.from+s.laps} (${s.laps})${s.avg?' · passo '+fmtLap(s.avg):''}">${txt}</div>`;
+      return `<div class="st${isSel?' selst':''}" data-n="${d.num}" data-i="${i}" style="left:${pct(s.from)};width:${pct(w)};background:${bg}" title="${name} ${s.new?L('nuova','new'):L('usata (','used (')+s.startAge+L(' giri)',' laps)')} · ${L('giri','laps')} ${s.from+1}–${s.from+s.laps} (${s.laps})${s.avg?L(' · passo ',' · pace ')+fmtLap(s.avg):''}">${txt}</div>`;
     }).join('');
     const ls = {}; (H.laps[d.num]||[]).forEach(r=>ls[r.lap]=r);
     const pits = (H.pits[d.num]||[]).map(p=>{ const neu = ls[p.lap] && NEUTRAL[ls[p.lap].ts];
-      return `<div class="pm ${neu?'neu':''}" style="left:${pct(p.lap)}" title="Sosta al giro ${p.lap}: corsia ${p.lane?p.lane.toFixed(1)+' s':'?'}${p.stop?', da fermo '+p.stop.toFixed(1)+' s':''}${neu?' (in regime di '+NEUTRAL[ls[p.lap].ts]+')':''}"></div><span class="pml" style="left:${pct(p.lap)}">${p.lane?p.lane.toFixed(1):''}</span>`; }).join('');
+      return `<div class="pm ${neu?'neu':''}" style="left:${pct(p.lap)}" title="${L('Sosta al giro','Stop on lap')} ${p.lap}: ${L('corsia','pit lane')} ${p.lane?p.lane.toFixed(1)+' s':'?'}${p.stop?L(', da fermo ',', stationary ')+p.stop.toFixed(1)+' s':''}${neu?L(' (in regime di ',' (under ')+neuTag(ls[p.lap].ts)+')':''}"></div><span class="pml" style="left:${pct(p.lap)}">${p.lane?p.lane.toFixed(1):''}</span>`; }).join('');
     const future = race && done<total ? `<div class="future" style="left:${pct(done)};right:0"></div>` : '';
     // proiezione della prossima sosta
     const pr = race && H.proj ? H.proj[d.num] : null, cs = st[st.length-1];
@@ -736,49 +769,49 @@ function renderGomme(){
     if(pr && cs){
       const col = (TYRE[cs.c]||TYRE.UNKNOWN)[0];
       if(pr.status==='fine'){
-        ghost = `<div class="ghost" style="left:${pct(done)};width:${pct(Math.max(0,total-done))};border-color:${col}" title="Con questa gomma dovrebbe arrivare in fondo"></div>`;
-        prTxt = `<b class="pb">Può arrivare in fondo</b>`;
+        ghost = `<div class="ghost" style="left:${pct(done)};width:${pct(Math.max(0,total-done))};border-color:${col}" title="${L('Con questa gomma dovrebbe arrivare in fondo','On this tyre it should make it to the end')}"></div>`;
+        prTxt = L('<b class="pb">Può arrivare in fondo</b>','<b class="pb">Can make it to the end</b>');
       } else {
-        ghost = `<div class="win" style="left:${pct(pr.from-1)};width:${pct(pr.to-pr.from+1)}" title="Finestra stimata: giri ${pr.from}–${pr.to}"></div>
+        ghost = `<div class="win" style="left:${pct(pr.from-1)};width:${pct(pr.to-pr.from+1)}" title="${L('Finestra stimata: giri','Estimated window: laps')} ${pr.from}–${pr.to}"></div>
           <div class="ghost" style="left:${pct(done)};width:${pct(Math.max(0,pr.lap-done))};border-color:${col}"></div>
-          <div class="pp" style="left:${pct(pr.lap)}" title="Sosta prevista al giro ${pr.lap}">▼</div><span class="ppl" style="left:${pct(pr.lap)}">${pr.lap}</span>`;
-        prTxt = pr.status==='open' ? `<b class="yl">Finestra aperta</b> · giro ~${pr.lap}` : `Sosta prevista: <b>giro ~${pr.lap}</b> <span class="dim">(tra ${pr.left})</span>`;
-        if(pr.must) prTxt += ' <span class="dim">· 2ª mescola</span>';
+          <div class="pp" style="left:${pct(pr.lap)}" title="${L('Sosta prevista al giro','Stop expected on lap')} ${pr.lap}">▼</div><span class="ppl" style="left:${pct(pr.lap)}">${pr.lap}</span>`;
+        prTxt = pr.status==='open' ? L(`<b class="yl">Finestra aperta</b> · giro ~${pr.lap}`, `<b class="yl">Window open</b> · lap ~${pr.lap}`) : L(`Sosta prevista: <b>giro ~${pr.lap}</b> <span class="dim">(tra ${pr.left})</span>`, `Expected stop: <b>lap ~${pr.lap}</b> <span class="dim">(in ${pr.left})</span>`);
+        if(pr.must) prTxt += L(' <span class="dim">· 2ª mescola</span>',' <span class="dim">· 2nd compound</span>');
       }
     }
     const rj = H.rejoin[d.num];
     let rjTxt = '';
     if(race && rj && !d.inPit && !d.retired && !(pr && pr.status==='fine')){
       const b = rj.behind && D(rj.behind);
-      rjTxt = `Se si ferma ora: <b>P${rj.pos}</b>${b?` davanti a <b style="color:${b.color}">${esc(b.tla)}</b> (${rj.toBehind.toFixed(1)} s)`:''}`;
+      rjTxt = `${L('Se si ferma ora','Stopping now')}: <b>P${rj.pos}</b>${b?` ${L('davanti a','ahead of')} <b style="color:${b.color}">${esc(b.tla)}</b> (${rj.toBehind.toFixed(1)} s)`:''}`;
     }
-    if(d.retired||d.stopped){ prTxt='ritirato'; rjTxt=''; ghost=''; }
-    if(d.inPit) rjTxt='<b style="color:var(--blue)">ai box adesso</b>';
+    if(d.retired||d.stopped){ prTxt=L('ritirato','retired'); rjTxt=''; ghost=''; }
+    if(d.inPit) rjTxt=L('<b style="color:var(--blue)">ai box adesso</b>','<b style="color:var(--blue)">in the pits now</b>');
     return `<div class="srow ${faded?'faded':''}"><span class="sp">${d.pos<99?d.pos:''}</span><span class="n" style="color:${d.color}">${esc(d.tla)}</span>
-      <div class="track"><div class="lane"></div>${bandHtml}${future}${ghost}${bars}${pits}${race&&nowL>1?`<div class="now" style="left:${pct(nowL-1)}" title="giri completati dal leader"></div>`:''}</div><div class="rj">${prTxt}${prTxt&&rjTxt?'<br>':''}${rjTxt}</div></div>`;
+      <div class="track"><div class="lane"></div>${bandHtml}${future}${ghost}${bars}${pits}${race&&nowL>1?`<div class="now" style="left:${pct(nowL-1)}" title="${L('giri completati dal leader','laps completed by the leader')}"></div>`:''}</div><div class="rj">${prTxt}${prTxt&&rjTxt?'<br>':''}${rjTxt}</div></div>`;
   }).join('');
   const ex = H.expected||{};
-  $('#stratHelp').innerHTML = race ? `<b>Come si stima la sosta:</b> durata tipica di uno stint su quella mescola — ${['SOFT','MEDIUM','HARD','INTERMEDIATE','WET'].filter(c=>ex[c]&&(cur[c]||done[c])).map(c=>`${tyreIcon(c,1)} ${Math.round(ex[c].laps)} giri <span class="dim">(${ex[c].basis==='gara'?'media di '+ex[c].n+' stint di questa gara':'valore tipico, nessuno stint ancora concluso'})</span>`).join(' · ')}. Tratteggio = gomma usata · ▼ = sosta prevista, fascia chiara = finestra ±3 giri · barra bianca = sosta fatta (arancio se sotto SC/VSC), con i secondi in corsia · «Se si ferma ora»: dove rientrerebbe perdendo ${H.pitLoss.toFixed(0)} s.` : 'Tratteggio = gomma usata · barra bianca = sosta, con i secondi in corsia.';
-  $('#strat').innerHTML = `<div class="axis">${axis}</div>${rows}` || '<div class="empty">Nessun dato sulle gomme</div>';
+  $('#stratHelp').innerHTML = LANG==='en' ? (race ? `<b>How the stop is estimated:</b> typical stint length on that compound — ${['SOFT','MEDIUM','HARD','INTERMEDIATE','WET'].filter(c=>ex[c]&&(cur[c]||done[c])).map(c=>`${tyreIcon(c,1)} ${Math.round(ex[c].laps)} laps <span class="dim">(${ex[c].basis==='gara'?'average of '+ex[c].n+' stints in this race':'typical value, no stint finished yet'})</span>`).join(' · ')}. Hatched = used tyre · ▼ = expected stop, light band = ±3 lap window · white bar = stop made (orange if under SC/VSC), with the seconds in the pit lane · “Stopping now”: where the car would rejoin losing ${H.pitLoss.toFixed(0)} s.` : 'Hatched = used tyre · white bar = stop, with the seconds in the pit lane.') : race ? `<b>Come si stima la sosta:</b> durata tipica di uno stint su quella mescola — ${['SOFT','MEDIUM','HARD','INTERMEDIATE','WET'].filter(c=>ex[c]&&(cur[c]||done[c])).map(c=>`${tyreIcon(c,1)} ${Math.round(ex[c].laps)} giri <span class="dim">(${ex[c].basis==='gara'?'media di '+ex[c].n+' stint di questa gara':'valore tipico, nessuno stint ancora concluso'})</span>`).join(' · ')}. Tratteggio = gomma usata · ▼ = sosta prevista, fascia chiara = finestra ±3 giri · barra bianca = sosta fatta (arancio se sotto SC/VSC), con i secondi in corsia · «Se si ferma ora»: dove rientrerebbe perdendo ${H.pitLoss.toFixed(0)} s.` : 'Tratteggio = gomma usata · barra bianca = sosta, con i secondi in corsia.';
+  $('#strat').innerHTML = `<div class="axis">${axis}</div>${rows}` || L('<div class="empty">Nessun dato sulle gomme</div>','<div class="empty">No tyre data</div>');
   renderStintInfo();
 }
 $('#strat').addEventListener('click', e => { const b=e.target.closest('.st'); if(!b) return; stintSel={n:b.dataset.n, i:+b.dataset.i}; renderGomme(); });
 function renderStintInfo(){
   const box=$('#stintInfo');
   if(!stintSel || !H.stints[stintSel.n] || !H.stints[stintSel.n][stintSel.i]){ box.style.display='none'; return; }
-  const d=D(stintSel.n), s=H.stints[stintSel.n][stintSel.i], [c,l,name]=TYRE[s.c]||TYRE.UNKNOWN;
+  const d=D(stintSel.n), s=H.stints[stintSel.n][stintSel.i], [c,l]=TYRE[s.c]||TYRE.UNKNOWN, name=tyreName(s.c);
   const laps=(H.laps[stintSel.n]||[]).filter(r=>r.lap>s.from && r.lap<=s.from+s.laps);
   const chips = laps.map(r=>{ let cls=''; if(r.t&&r.t===H.best.t) cls='ob'; else if(r.t&&H.bestDrv[stintSel.n]&&r.t===H.bestDrv[stintSel.n].t) cls='pb';
-    const note = r.pin?' IN':r.pout?' OUT':NEUTRAL[r.ts]?' '+NEUTRAL[r.ts]:'';
-    return `<span title="giro ${r.lap}"><span class="dim">${r.lap}</span> <span class="${cls}">${r.t?fmtLap(r.t):'—'}</span><span class="dim">${note}</span></span>`; }).join('');
-  const deg = s.deg==null ? 'servono 4 giri puliti' : s.deg>0 ? `perde ${s.deg.toFixed(3)} s a giro` : `migliora di ${(-s.deg).toFixed(3)} s a giro (pista che si gomma o serbatoio che si svuota)`;
+    const note = r.pin?' IN':r.pout?' OUT':NEUTRAL[r.ts]?' '+neuTag(r.ts):'';
+    return `<span title="${L('giro','lap')} ${r.lap}"><span class="dim">${r.lap}</span> <span class="${cls}">${r.t?fmtLap(r.t):'—'}</span><span class="dim">${note}</span></span>`; }).join('');
+  const deg = s.deg==null ? L('servono 4 giri puliti','4 clean laps needed') : s.deg>0 ? L(`perde ${s.deg.toFixed(3)} s a giro`, `loses ${s.deg.toFixed(3)} s per lap`) : L(`migliora di ${(-s.deg).toFixed(3)} s a giro (pista che si gomma o serbatoio che si svuota)`, `improves by ${(-s.deg).toFixed(3)} s per lap (track rubbering in or fuel burning off)`);
   box.style.display='';
-  box.innerHTML = `<h3><span style="color:${d.color}">${esc(d.tla)}</span> · ${tyreIcon(s.c,1)} ${name} ${s.new?'nuova':'usata'} · giri ${s.from+1}–${s.from+s.laps}<span class="right"><button id="closeStint">✕</button></span></h3>
+  box.innerHTML = `<h3><span style="color:${d.color}">${esc(d.tla)}</span> · ${tyreIcon(s.c,1)} ${name} ${s.new?L('nuova','new'):L('usata','used')} · ${L('giri','laps')} ${s.from+1}–${s.from+s.laps}<span class="right"><button id="closeStint">✕</button></span></h3>
     <div style="padding:10px 14px" class="cards">
-      <div class="card"><div class="k">Giri</div><div class="v">${s.laps}</div><div class="d">gomma montata con ${s.startAge} giri, ora ${s.age}</div></div>
-      <div class="card"><div class="k">Passo medio</div><div class="v">${s.avg?fmtLap(s.avg):'—'}</div><div class="d">su ${s.n} giri puliti (senza box, SC, VSC)</div></div>
-      <div class="card"><div class="k">Miglior giro</div><div class="v">${s.best?fmtLap(s.best):'—'}</div></div>
-      <div class="card"><div class="k">Degrado</div><div class="v">${s.deg==null?'—':fmtD(s.deg,3)+' s'}</div><div class="d">${deg}</div></div>
+      <div class="card"><div class="k">${L('Giri','Laps')}</div><div class="v">${s.laps}</div><div class="d">${L(`gomma montata con ${s.startAge} giri, ora ${s.age}`, `tyre fitted with ${s.startAge} laps, now ${s.age}`)}</div></div>
+      <div class="card"><div class="k">${L('Passo medio','Average pace')}</div><div class="v">${s.avg?fmtLap(s.avg):'—'}</div><div class="d">${L(`su ${s.n} giri puliti (senza box, SC, VSC)`, `on ${s.n} clean laps (no pit stops, SC, VSC)`)}</div></div>
+      <div class="card"><div class="k">${L('Miglior giro','Best lap')}</div><div class="v">${s.best?fmtLap(s.best):'—'}</div></div>
+      <div class="card"><div class="k">${L('Degrado','Degradation')}</div><div class="v">${s.deg==null?'—':fmtD(s.deg,3)+' s'}</div><div class="d">${deg}</div></div>
     </div>
     <div style="padding:0 14px 12px" class="chips2">${chips}</div>`;
   $('#closeStint').onclick = () => { stintSel=null; renderGomme(); };
@@ -788,13 +821,13 @@ function renderStintInfo(){
 function renderPilota(){
   const pane=$('#drvPane');
   const n = focus || (S.drivers[0]&&S.drivers[0].num);
-  $('#tabPilota').textContent = 'Pilota' + (n?' · '+D(n).tla:'');
-  if(!n || !H){ pane.innerHTML='<div class="empty">Clicca un pilota in classifica</div>'; return; }
+  $('#tabPilota').textContent = L('Pilota','Driver') + (n?' · '+D(n).tla:'');
+  if(!n || !H){ pane.innerHTML=L('<div class="empty">Clicca un pilota in classifica</div>','<div class="empty">Click a driver in the standings</div>'); return; }
   const d=D(n), laps=(H.laps[n]||[]), st=d.stints[d.stints.length-1], race=isRace();
   const ideal = d.sectors.length===3 && d.sectors.every(s=>s.best) ? d.sectors.reduce((a,s)=>a+secsOf(s.best),0) : null;
   const bestv = secsOf(d.best);
-  const secCards = d.sectors.map((sc,i)=>`<div><div class="k">Settore ${i+1}</div><div class="v tn ${sc.ob?'ob':sc.pb?'pb':''}">${esc(sc.v)||'<span class="dim">'+esc(sc.prev)+'</span>'}</div><div class="mini">${(sc.segs||[]).map(s=>`<i style="background:${segColor(s)}"></i>`).join('')}</div><div class="d">migliore ${esc(sc.best)}${sc.bestPos?` · ${sc.bestPos}° nel gruppo`:''}</div></div>`).join('');
-  const spd = ['I1','I2','FL','ST'].map(k=>{ const v=d.speeds[k]||{}; return `<div class="kv"><span class="dim">${{I1:'Intermedio 1',I2:'Intermedio 2',FL:'Traguardo',ST:'Speed trap'}[k]}</span><span><span class="${v.ob?'ob':v.pb?'pb':''}">${esc(v.v)}</span> <span class="dim">· max ${esc(v.best)}${v.bestPos?' ('+v.bestPos+'°)':''}</span></span></div>`; }).join('');
+  const secCards = d.sectors.map((sc,i)=>`<div><div class="k">${L('Settore','Sector')} ${i+1}</div><div class="v tn ${sc.ob?'ob':sc.pb?'pb':''}">${esc(sc.v)||'<span class="dim">'+esc(sc.prev)+'</span>'}</div><div class="mini">${(sc.segs||[]).map(s=>`<i style="background:${segColor(s)}"></i>`).join('')}</div><div class="d">${L('migliore','best')} ${esc(sc.best)}${sc.bestPos?L(` · ${sc.bestPos}° nel gruppo`, ` · #${sc.bestPos} in the field`):''}</div></div>`).join('');
+  const spd = ['I1','I2','FL','ST'].map(k=>{ const v=d.speeds[k]||{}; return `<div class="kv"><span class="dim">${{I1:L('Intermedio 1','Intermediate 1'),I2:L('Intermedio 2','Intermediate 2'),FL:L('Traguardo','Finish line'),ST:'Speed trap'}[k]}</span><span><span class="${v.ob?'ob':v.pb?'pb':''}">${esc(v.v)}</span> <span class="dim">· max ${esc(v.best)}${v.bestPos?' ('+v.bestPos+'°)':''}</span></span></div>`; }).join('');
   const clean = laps.filter(r=>r.t && !r.pin && !r.pout && !NEUTRAL[r.ts] && !r.partial);
   const last5 = clean.slice(-5);
   const rj = H.rejoin[n];
@@ -808,39 +841,39 @@ function renderPilota(){
       <div class="no" style="color:${d.color}">${esc(d.num)}</div>
       <div class="nm">${esc(d.first||'')} ${esc(d.last_name||d.tla)}<small>${esc(d.team)}</small></div>
       <div class="stats">
-        <div>P${d.pos<99?d.pos:'-'}<span>posizione${d.grid&&race?' · griglia '+d.grid:''}</span></div>
-        <div class="tn">${d.pos===1&&race?'—':esc(d.gap)||'—'}<span>${race?'dal primo':'dal primo'}</span></div>
-        <div>${st?tyreIcon(st.c)+' '+st.age:'—'}<span>gomma · giri</span></div>
-        <div>${d.pits}<span>soste</span></div>
+        <div>P${d.pos<99?d.pos:'-'}<span>${L('posizione','position')}${d.grid&&race?L(' · griglia ',' · grid ')+d.grid:''}</span></div>
+        <div class="tn">${d.pos===1&&race?'—':esc(d.gap)||'—'}<span>${L('dal primo','to leader')}</span></div>
+        <div>${st?tyreIcon(st.c)+' '+st.age:'—'}<span>${L('gomma · giri','tyre · laps')}</span></div>
+        <div>${d.pits}<span>${L('soste','stops')}</span></div>
       </div>
     </div>
   </section>
   <div class="g3">
-    <div class="card" style="grid-column:span 2"><div class="k">Giro in corso</div><div class="secbig">${secCards}</div></div>
-    <div class="card"><div class="k">Migliori</div>
-      <div class="kv"><span class="dim">Miglior giro</span><b class="${d.bestOb?'ob':''}">${esc(d.best)||'—'} <span class="dim">${d.bestLap?'giro '+d.bestLap:''}${d.bestPos?' · '+d.bestPos+'°':''}</span></b></div>
-      <div class="kv"><span class="dim">Giro ideale (somma migliori settori)</span><b>${ideal?fmtLap(ideal):'—'}</b></div>
-      <div class="kv"><span class="dim">Margine non sfruttato</span><b>${ideal&&bestv?fmtD(bestv-ideal):'—'}</b></div>
-      <div class="kv"><span class="dim">Passo ultimi ${last5.length} giri puliti</span><b>${last5.length?fmtLap(last5.reduce((a,r)=>a+r.t,0)/last5.length):'—'}</b></div>
-      ${race&&rj?`<div class="kv"><span class="dim">Se si fermasse ora</span><b>P${rj.pos}${rj.behind?' davanti a '+esc(D(rj.behind).tla):''}</b></div>`:''}
+    <div class="card" style="grid-column:span 2"><div class="k">${L('Giro in corso','Current lap')}</div><div class="secbig">${secCards}</div></div>
+    <div class="card"><div class="k">${L('Migliori','Bests')}</div>
+      <div class="kv"><span class="dim">${L('Miglior giro','Best lap')}</span><b class="${d.bestOb?'ob':''}">${esc(d.best)||'—'} <span class="dim">${d.bestLap?L('giro ','lap ')+d.bestLap:''}${d.bestPos?' · '+d.bestPos+'°':''}</span></b></div>
+      <div class="kv"><span class="dim">${L('Giro ideale (somma migliori settori)','Ideal lap (sum of best sectors)')}</span><b>${ideal?fmtLap(ideal):'—'}</b></div>
+      <div class="kv"><span class="dim">${L('Margine non sfruttato','Time left on the table')}</span><b>${ideal&&bestv?fmtD(bestv-ideal):'—'}</b></div>
+      <div class="kv"><span class="dim">${L(`Passo ultimi ${last5.length} giri puliti`, `Pace, last ${last5.length} clean laps`)}</span><b>${last5.length?fmtLap(last5.reduce((a,r)=>a+r.t,0)/last5.length):'—'}</b></div>
+      ${race&&rj?`<div class="kv"><span class="dim">${L('Se si fermasse ora','Stopping now')}</span><b>P${rj.pos}${rj.behind?L(' davanti a ',' ahead of ')+esc(D(rj.behind).tla):''}</b></div>`:''}
     </div>
-    <div class="card"><div class="k">Velocità (km/h)</div>${spd}</div>
+    <div class="card"><div class="k">${L('Velocità (km/h)','Speed (km/h)')}</div>${spd}</div>
   </div>
-  <section class="panel"><h3>Tempi sul giro <span class="right dim">punti colorati per mescola · fasce = SC/VSC · ◆ = sosta</span></h3>
+  <section class="panel"><h3>${L('Tempi sul giro','Lap times')} <span class="right dim">${L('punti colorati per mescola · fasce = SC/VSC · ◆ = sosta','dots coloured by compound · bands = SC/VSC · ◆ = pit stop')}</span></h3>
     <div class="chartwrap sm"><canvas id="cDrv"></canvas><div class="tip"></div></div></section>
-  <section class="panel"><h3>Giro per giro <span class="right dim"><span class="ob">viola</span>&nbsp;migliore di tutti · <span class="pb">verde</span>&nbsp;suo migliore</span></h3>
-    <div class="scroll"><table class="laps"><thead><tr><th>Giro</th><th>Tempo</th><th>S1</th><th>S2</th><th>S3</th><th>Gomma</th><th>Pos</th><th>Distacco</th><th>Davanti</th><th>Speed trap</th><th>Note</th></tr></thead><tbody>
+  <section class="panel"><h3>${L('Giro per giro','Lap by lap')} <span class="right dim">${L('<span class="ob">viola</span>&nbsp;migliore di tutti · <span class="pb">verde</span>&nbsp;suo migliore','<span class="ob">purple</span>&nbsp;fastest of all · <span class="pb">green</span>&nbsp;personal best')}</span></h3>
+    <div class="scroll"><table class="laps"><thead><tr>${L('<th>Giro</th><th>Tempo</th><th>S1</th><th>S2</th><th>S3</th><th>Gomma</th><th>Pos</th><th>Distacco</th><th>Davanti</th><th>Speed trap</th><th>Note</th>','<th>Lap</th><th>Time</th><th>S1</th><th>S2</th><th>S3</th><th>Tyre</th><th>Pos</th><th>Gap</th><th>Interval</th><th>Speed trap</th><th>Notes</th>')}</tr></thead><tbody>
     ${lapsRev.map(r=>`<tr class="${NEUTRAL[r.ts]?'neu':''}"><td>${r.lap}</td>${cellC(r,'t')}${cellC(r,'s1')}${cellC(r,'s2')}${cellC(r,'s3')}
       <td>${r.c?tyreIcon(r.c,1)+' '+(r.age??''):''}</td><td>${r.pos??''}</td><td>${r.gap==null?'':r.gap===0?'leader':'+'+r.gap.toFixed(3)}</td><td>${r.int==null?'':'+'+r.int.toFixed(3)}</td><td>${r.sp&&r.sp.ST?r.sp.ST:''}</td>
-      <td>${r.pin?'<span class="badge in">ENTRA BOX</span> ':''}${r.pout?'<span class="badge outl">ESCE BOX</span> ':''}${NEUTRAL[r.ts]?`<span class="badge ${r.ts==='5'?'red':'sc'}">${NEUTRAL[r.ts]}</span>`:''}${r.partial?'<span class="dim">parziale</span>':''}</td></tr>`).join('') || '<tr><td colspan="11" class="empty">Nessun giro completato da quando è aperta la sessione</td></tr>'}
+      <td>${r.pin?L('<span class="badge in">ENTRA BOX</span> ','<span class="badge in">PIT IN</span> '):''}${r.pout?L('<span class="badge outl">ESCE BOX</span> ','<span class="badge outl">PIT OUT</span> '):''}${NEUTRAL[r.ts]?`<span class="badge ${r.ts==='5'?'red':'sc'}">${neuTag(r.ts)}</span>`:''}${r.partial?L('<span class="dim">parziale</span>','<span class="dim">partial</span>'):''}</td></tr>`).join('') || L('<tr><td colspan="11" class="empty">Nessun giro completato da quando è aperta la sessione</td></tr>','<tr><td colspan="11" class="empty">No lap completed since the session was opened</td></tr>')}
     </tbody></table></div></section>`;
   const pts = laps.filter(r=>r.t && !r.partial);
   const med = clean.length ? clean.map(r=>r.t).sort((a,b)=>a-b)[Math.floor(clean.length/2)] : null;
   const cv=$('#cDrv'); attachTip(cv);
   lineChart(cv, {series:[{name:d.tla, label:'', color:d.color, w:1.4, alpha:1, pts:pts.map(r=>[r.lap,r.t]), dots:true, r:3.5, dotColor:i=>comp(pts[i].c)}],
     bands:neutralBands(), invert:true, y0: med?Math.min(...clean.map(r=>r.t))-0.3:undefined, y1: med?med+4:undefined,
-    yFmt:lapAxis, tipFmt:(v,s,x)=>{ const r=laps.find(q=>q.lap===x); return fmtLap(v)+(r&&r.c?' · '+(TYRE[r.c]||TYRE.UNKNOWN)[2]+' '+r.age:'')+(r&&r.pin?' · entra box':'')+(r&&r.pout?' · esce box':''); },
-    empty:'Nessun giro ancora'});
+    yFmt:lapAxis, tipFmt:(v,s,x)=>{ const r=laps.find(q=>q.lap===x); return fmtLap(v)+(r&&r.c?' · '+tyreName(r.c)+' '+r.age:'')+(r&&r.pin?L(' · entra box',' · pit in'):'')+(r&&r.pout?L(' · esce box',' · pit out'):''); },
+    empty:L('Nessun giro ancora','No laps yet')});
   // segna le soste
   const m=cv._meta; if(m){ const g=cv.getContext('2d'); g.fillStyle='#fff'; for(const p of (H.pits[n]||[])){ const x=m.X(p.lap); g.beginPath(); g.moveTo(x,6); g.lineTo(x+5,11); g.lineTo(x,16); g.lineTo(x-5,11); g.fill(); } }
 }
@@ -865,27 +898,27 @@ function renderConfronto(){
     const td_=(v)=>`<td class="${v==null?'':v<0?'pb':v>0?'down':''}">${v==null?'—':fmtD(v,3)}</td>`;
     return `<tr class="${NEUTRAL[x.ts]?'neu':''}"><td>${k}</td><td>${x.t?fmtLap(x.t):'—'}</td><td>${y.t?fmtLap(y.t):'—'}</td>${td_(dd(x.t,y.t))}${td_(dd(x.s1,y.s1))}${td_(dd(x.s2,y.s2))}${td_(dd(x.s3,y.s3))}</tr>`; }).join('');
   pane.innerHTML = `
-  <section class="panel"><h3>Confronto
-    <span class="right"><select id="cmpA" style="border-color:${a.color}">${opts(A)}</select> contro <select id="cmpB" style="border-color:${b.color}">${opts(B)}</select></span></h3>
-    <div style="padding:10px 14px"><table class="laps"><thead><tr><th></th><th style="color:${a.color}">${esc(a.tla)}</th><th style="color:${b.color}">${esc(b.tla)}</th><th>Scarto</th></tr></thead><tbody>
-      ${cmpRow('Posizione', a.pos<99?a.pos:null, b.pos<99?b.pos:null, v=>'P'+v, true, 0)}
-      ${cmpRow('Ultimo giro', secsOf(a.last), secsOf(b.last), fmtLap)}
-      ${cmpRow('Miglior giro', secsOf(a.best), secsOf(b.best), fmtLap)}
-      ${cmpRow('Passo ultimi 5 giri puliti', pa, pb_, fmtLap)}
-      ${[0,1,2].map(i=>cmpRow('Miglior settore '+(i+1), secBest(a,i), secBest(b,i), v=>v.toFixed(3))).join('')}
-      ${cmpRow('Velocità max speed trap', spBest(a,'ST'), spBest(b,'ST'), v=>v+' km/h', false, 0)}
-      ${cmpRow('Soste', a.pits, b.pits, v=>v, true, 0)}
+  <section class="panel"><h3>${L('Confronto','Compare')}
+    <span class="right"><select id="cmpA" style="border-color:${a.color}">${opts(A)}</select> ${L('contro','vs')} <select id="cmpB" style="border-color:${b.color}">${opts(B)}</select></span></h3>
+    <div style="padding:10px 14px"><table class="laps"><thead><tr><th></th><th style="color:${a.color}">${esc(a.tla)}</th><th style="color:${b.color}">${esc(b.tla)}</th><th>${L('Scarto','Difference')}</th></tr></thead><tbody>
+      ${cmpRow(L('Posizione','Position'), a.pos<99?a.pos:null, b.pos<99?b.pos:null, v=>'P'+v, true, 0)}
+      ${cmpRow(L('Ultimo giro','Last lap'), secsOf(a.last), secsOf(b.last), fmtLap)}
+      ${cmpRow(L('Miglior giro','Best lap'), secsOf(a.best), secsOf(b.best), fmtLap)}
+      ${cmpRow(L('Passo ultimi 5 giri puliti','Pace, last 5 clean laps'), pa, pb_, fmtLap)}
+      ${[0,1,2].map(i=>cmpRow(L('Miglior settore ','Best sector ')+(i+1), secBest(a,i), secBest(b,i), v=>v.toFixed(3))).join('')}
+      ${cmpRow(L('Velocità max speed trap','Top speed (speed trap)'), spBest(a,'ST'), spBest(b,'ST'), v=>v+' km/h', false, 0)}
+      ${cmpRow(L('Soste','Stops'), a.pits, b.pits, v=>v, true, 0)}
     </tbody></table></div></section>
-  <section class="panel"><h3>Distacco tra i due <span class="right dim">sopra lo zero ${esc(a.tla)} è davanti</span></h3><div class="chartwrap sm"><canvas id="cCmp1"></canvas><div class="tip"></div></div></section>
-  <section class="panel"><h3>Tempi sul giro</h3><div class="chartwrap sm"><canvas id="cCmp2"></canvas><div class="tip"></div></div></section>
-  <section class="panel"><h3>Ultimi giri a confronto <span class="right dim">scarti di ${esc(a.tla)} rispetto a ${esc(b.tla)}: <span class="pb">verde</span> = ${esc(a.tla)} più veloce</span></h3>
-    <div class="scroll"><table class="laps"><thead><tr><th>Giro</th><th style="color:${a.color}">${esc(a.tla)}</th><th style="color:${b.color}">${esc(b.tla)}</th><th>Giro</th><th>S1</th><th>S2</th><th>S3</th></tr></thead><tbody>${rows||'<tr><td colspan="7" class="empty">Nessun giro in comune</td></tr>'}</tbody></table></div></section>`;
+  <section class="panel"><h3>${L('Distacco tra i due','Gap between the two')} <span class="right dim">${L(`sopra lo zero ${esc(a.tla)} è davanti`, `above zero ${esc(a.tla)} is ahead`)}</span></h3><div class="chartwrap sm"><canvas id="cCmp1"></canvas><div class="tip"></div></div></section>
+  <section class="panel"><h3>${L('Tempi sul giro','Lap times')}</h3><div class="chartwrap sm"><canvas id="cCmp2"></canvas><div class="tip"></div></div></section>
+  <section class="panel"><h3>${L('Ultimi giri a confronto','Last laps compared')} <span class="right dim">${L(`scarti di ${esc(a.tla)} rispetto a ${esc(b.tla)}: <span class="pb">verde</span> = ${esc(a.tla)} più veloce`, `${esc(a.tla)} relative to ${esc(b.tla)}: <span class="pb">green</span> = ${esc(a.tla)} faster`)}</span></h3>
+    <div class="scroll"><table class="laps"><thead><tr><th>${L('Giro','Lap')}</th><th style="color:${a.color}">${esc(a.tla)}</th><th style="color:${b.color}">${esc(b.tla)}</th><th>${L('Giro','Lap')}</th><th>S1</th><th>S2</th><th>S3</th></tr></thead><tbody>${rows||L('<tr><td colspan="7" class="empty">Nessun giro in comune</td></tr>','<tr><td colspan="7" class="empty">No laps in common</td></tr>')}</tbody></table></div></section>`;
   $('#cmpA').onchange = e => { cmpA=e.target.value; renderConfronto(); };
   $('#cmpB').onchange = e => { cmpB=e.target.value; renderConfronto(); };
   const gaps = common.filter(k=>la[k].gap!=null&&lb[k].gap!=null).map(k=>[k, lb[k].gap-la[k].gap]);
   const c1=$('#cCmp1'), c2=$('#cCmp2'); attachTip(c1); attachTip(c2);
-  lineChart(c1, {series:[{name:a.tla+' su '+b.tla, label:'', color:a.color, w:2.2, pts:gaps, dots:true, r:2.5}], zero:true, sym:true, bands:neutralBands(),
-    yFmt:v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<10?1:0)+'s', tipFmt:v=>v>=0?`${esc(a.tla)} davanti di ${v.toFixed(3)} s`:`${esc(b.tla)} davanti di ${(-v).toFixed(3)} s`, empty:'Servono giri in comune'});
+  lineChart(c1, {series:[{name:a.tla+L(' su ',' vs ')+b.tla, label:'', color:a.color, w:2.2, pts:gaps, dots:true, r:2.5}], zero:true, sym:true, bands:neutralBands(),
+    yFmt:v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<10?1:0)+'s', tipFmt:v=>v>=0?`${esc(a.tla)} ${L('davanti di','ahead by')} ${v.toFixed(3)} s`:`${esc(b.tla)} ${L('davanti di','ahead by')} ${(-v).toFixed(3)} s`, empty:L('Servono giri in comune','Laps in common needed')});
   const lt = (L,col,lbl) => ({name:lbl,label:lbl,color:col,w:2,pts:Object.values(L).filter(r=>r.t&&!r.pin&&!r.pout&&!r.partial).map(r=>[r.lap,r.t]), dots:true, r:2.5});
   const all=[...Object.values(la),...Object.values(lb)].filter(r=>r.t&&!r.pin&&!r.pout&&!NEUTRAL[r.ts]).map(r=>r.t).sort((x,y)=>x-y);
   lineChart(c2, {series:[lt(la,a.color,a.tla), lt(lb,b.color===a.color?'#ffffff':b.color,b.tla)], invert:true, bands:neutralBands(),
@@ -901,23 +934,23 @@ const rcKind = m => { const t=(m.msg||'').toUpperCase();
 function renderDG(){
   if(!H) return;
   const list = H.rcm.filter(m=>rcFilter==='all'||rcKind(m)[rcFilter]).slice().reverse();
-  $('#rcm').innerHTML = list.map(m => { const k=rcKind(m); const t=m.utc?new Date(m.utc+(m.utc.endsWith('Z')?'':'Z')).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}):'';
-    return `<div class="msg ${k.pen?'pen':''}"><span class="fl" style="background:${FLAG[m.flag]||(m.cat==='SafetyCar'?'#ff9f1a':'#3a4150')}"></span><span class="lp">${m.lap?'G'+m.lap:''}</span><span class="tm">${t}</span><span>${esc(m.msg)}</span></div>`; }).join('') || '<div class="empty">Nessun messaggio</div>';
+  $('#rcm').innerHTML = list.map(m => { const k=rcKind(m); const t=m.utc?new Date(m.utc+(m.utc.endsWith('Z')?'':'Z')).toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'}):'';
+    return `<div class="msg ${k.pen?'pen':''}"><span class="fl" style="background:${FLAG[m.flag]||(m.cat==='SafetyCar'?'#ff9f1a':'#3a4150')}"></span><span class="lp">${m.lap?L('G','L')+m.lap:''}</span><span class="tm">${t}</span><span>${esc(m.msg)}</span></div>`; }).join('') || L('<div class="empty">Nessun messaggio</div>','<div class="empty">No messages</div>');
   const key = S.radio.map(r=>r.url).join('|');
   if(key !== lastRadioKey){
     lastRadioKey = key;
     $('#radio').innerHTML = S.radio.slice().reverse().map(r => { const d=D(r.num);
-      const t = r.utc ? new Date(r.utc).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) : '';
-      return `<div class="radio"><button data-url="${esc(r.url)}">▶</button><b style="color:${d.color}">${esc(d.tla)}</b><span class="dim">${esc(d.team)}</span><span class="tm">${t}</span></div>`; }).join('') || '<div class="empty">Nessun team radio</div>';
+      const t = r.utc ? new Date(r.utc).toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'}) : '';
+      return `<div class="radio"><button data-url="${esc(r.url)}">▶</button><b style="color:${d.color}">${esc(d.tla)}</b><span class="dim">${esc(d.team)}</span><span class="tm">${t}</span></div>`; }).join('') || L('<div class="empty">Nessun team radio</div>','<div class="empty">No team radio</div>');
   }
   const wx = H.wx.filter(w=>w[0]);
   const t0 = wx.length ? new Date(wx[0][0]).getTime() : 0, mins = w => (new Date(w[0]).getTime()-t0)/60000;
   lineChart($('#cWx'), {series:[
-      {name:'Asfalto', label:'Asfalto', color:'#ff9f1a', w:2, pts:wx.filter(w=>w[2]!=null).map(w=>[Math.round(mins(w)),w[2]])},
-      {name:'Aria', label:'Aria', color:'#5aa9ff', w:2, pts:wx.filter(w=>w[1]!=null).map(w=>[Math.round(mins(w)),w[1]])}],
-    bands: (()=>{ const b=[]; let c=null; for(const w of wx){ const m=Math.round(mins(w)); if(w[3]){ if(c) c.x1=m; else { c={x0:m,x1:m,tag:'pioggia',color:'rgba(61,139,255,.18)'}; b.push(c);} } else c=null; } return b; })(),
-    xFmt:v=>v+' min', yFmt:v=>v+'°', tipFmt:v=>v.toFixed(1)+'°', empty:'Dati meteo in arrivo'});
-  $('#legWx').textContent = 'Temperature dall’apertura della sessione; in azzurro i momenti di pioggia.';
+      {name:L('Asfalto','Track'), label:L('Asfalto','Track'), color:'#ff9f1a', w:2, pts:wx.filter(w=>w[2]!=null).map(w=>[Math.round(mins(w)),w[2]])},
+      {name:L('Aria','Air'), label:L('Aria','Air'), color:'#5aa9ff', w:2, pts:wx.filter(w=>w[1]!=null).map(w=>[Math.round(mins(w)),w[1]])}],
+    bands: (()=>{ const b=[]; let c=null; for(const w of wx){ const m=Math.round(mins(w)); if(w[3]){ if(c) c.x1=m; else { c={x0:m,x1:m,tag:L('pioggia','rain'),color:'rgba(61,139,255,.18)'}; b.push(c);} } else c=null; } return b; })(),
+    xFmt:v=>v+' min', yFmt:v=>v+'°', tipFmt:v=>v.toFixed(1)+'°', empty:L('Dati meteo in arrivo','Weather data on the way')});
+  $('#legWx').textContent = L('Temperature dall’apertura della sessione; in azzurro i momenti di pioggia.','Temperatures since the session opened; rain periods in light blue.');
 }
 let player=null;
 $('#radio').addEventListener('click', e => { const b=e.target.closest('button[data-url]'); if(!b) return; if(player) player.pause(); player=new Audio(b.dataset.url); player.play(); });
@@ -1024,7 +1057,7 @@ function drawMap(){
   const fs=document.body.classList.contains('fs');
   if(!fs && tab!=='pista') return;
   const cv=$(fs?'#fsMap':'#map'), sc=fs?1.3:1;
-  if(!circuit || !circuit.mv){ const [g,W,Hh]=setupCanvas(cv); g.clearRect(0,0,W,Hh); g.fillStyle='#8b94a7'; g.font='14px Titillium Web'; g.textAlign='center'; g.fillText('Carico il disegno della pista…',W/2,Hh/2); g.textAlign='left'; return; }
+  if(!circuit || !circuit.mv){ const [g,W,Hh]=setupCanvas(cv); g.clearRect(0,0,W,Hh); g.fillStyle='#8b94a7'; g.font='14px Titillium Web'; g.textAlign='center'; g.fillText(L('Carico il disegno della pista…','Loading the track layout…'),W/2,Hh/2); g.textAlign='left'; return; }
   const r=cv.parentElement.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
   if(cv.width!==Math.round(r.width*dpr) || cv.height!==Math.round(r.height*dpr)){ cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); if(!fs) cv.style.height=r.height+'px'; }
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); const W=r.width, Hh=r.height;
@@ -1071,15 +1104,15 @@ function drawStrip(pos, finish, sel_){
   const cv=$(sel_); const r=cv.parentElement.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
   if(cv.width!==Math.round(r.width*dpr) || cv.height!==Math.round(r.height*dpr)){ cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); cv.style.height=r.height+'px'; }
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); const W=r.width, Hh=r.height; g.clearRect(0,0,W,Hh);
-  const L=10, R=10, y0=Hh-22;
-  g.fillStyle='#1b2029'; g.fillRect(L,y0-3,W-L-R,6);
+  const LM=10, R=10, y0=Hh-22;
+  g.fillStyle='#1b2029'; g.fillRect(LM,y0-3,W-LM-R,6);
   g.fillStyle='#8b94a7'; g.font='10px Titillium Web';
-  for(let i=0;i<=4;i++){ const x=L+(W-L-R)*i/4; g.fillRect(x,y0-7,1,14); g.textAlign=i===0?'left':i===4?'right':'center'; g.fillText(i===0?'traguardo':i===4?'giro completo':i*25+'% del giro', x, Hh-4); }
+  for(let i=0;i<=4;i++){ const x=LM+(W-LM-R)*i/4; g.fillRect(x,y0-7,1,14); g.textAlign=i===0?'left':i===4?'right':'center'; g.fillText(i===0?L('traguardo','finish line'):i===4?L('giro completo','full lap'):i*25+L('% del giro','% of lap'), x, Hh-4); }
   g.textAlign='left';
   const items=S.drivers.map(d=>({d, p:pos[d.num]})).filter(o=>o.p && o.p.frac!=null).map(o=>({...o, rel:((o.p.frac-finish)%1+1)%1})).sort((a,b)=>a.rel-b.rel);
   let lastX=-99, lane=0;
   for(const o of items){
-    const x=L+(W-L-R)*o.rel; lane = x-lastX<28 ? (lane+1)%3 : 0; lastX=x;
+    const x=LM+(W-LM-R)*o.rel; lane = x-lastX<28 ? (lane+1)%3 : 0; lastX=x;
     const on=sel.includes(o.d.num), faded=sel.length&&!on;
     g.globalAlpha=faded?.3:1; g.fillStyle=o.d.color; g.beginPath(); g.arc(x,y0,on?7:5,0,7); g.fill();
     g.font='bold 10px Titillium Web'; g.textAlign='center'; g.fillText(o.d.tla, x, y0-10-lane*11); g.textAlign='left';
@@ -1093,7 +1126,10 @@ function renderMap(){
   if(!real) mapMode='stima';
   $$('[data-mm]').forEach(x=>x.classList.toggle('on', x.dataset.mm===mapMode));
   const cal=circuit&&circuit.cal;
-  $('#mapInfo').innerHTML = mapMode==='vere' ? 'Posizioni vere (ci sono solo nelle sessioni scaricate dall’archivio).' :
+  $('#mapInfo').innerHTML = LANG==='en' ? (mapMode==='vere' ? 'Real positions (only available in sessions downloaded from the archive).' :
+    cal ? `<b>Estimated</b> positions from the timing passes (24 timed points per lap): between two passes the car moves with the speed profile of a real lap. Typical error around 10 m. ${cal.approx?'<b class="yl">Approximate calibration: no archived session on this circuit.</b>':'Calibration: '+esc(cal.source)+'.'}`
+        : `Calibrating the circuit: ${esc(SRV(S.calStatus||'in corso'))}… (downloading an archived session, less than a minute)`) :
+    mapMode==='vere' ? 'Posizioni vere (ci sono solo nelle sessioni scaricate dall’archivio).' :
     cal ? `Posizioni <b>stimate</b> dai passaggi sui minisettori (24 punti cronometrati per giro): tra un passaggio e l’altro l’auto avanza col profilo di velocità di un giro vero. Errore tipico circa 10 m. ${cal.approx?'<b class="yl">Taratura approssimata: nessuna sessione archiviata su questo circuito.</b>':'Taratura: '+esc(cal.source)+'.'}`
         : `Taratura del circuito ${esc(S.calStatus||'in corso')}… (scarico una sessione archiviata, meno di un minuto)`;
 }
@@ -1113,18 +1149,18 @@ function renderFs(){
   const race=isRace();
   $('#fsEv').textContent = S.meeting||'';
   $('#fsSes').textContent = (S.session||'') + (S.part?' · Q'+S.part:'');
-  $('#fsLap').innerHTML = race&&S.lap ? `<span class="lbl">Giro</span>${S.lap}<small> / ${S.totalLaps||'?'}</small>` : (S.remaining!=null?`<span class="lbl">Tempo rimasto</span>${fmtT(S.remaining)}`:'');
+  $('#fsLap').innerHTML = race&&S.lap ? `<span class="lbl">${L('Giro','Lap')}</span>${S.lap}<small> / ${S.totalLaps||'?'}</small>` : (S.remaining!=null?`<span class="lbl">${L('Tempo rimasto','Time left')}</span>${fmtT(S.remaining)}`:'');
   const t=TRACK[S.track.code], p=$('#fsTrack');
-  if(t){ p.style.display=''; p.textContent=t[0]; p.style.background=t[1]; p.style.color=t[2]; } else p.style.display='none';
+  if(t){ p.style.display=''; p.textContent=trackName(S.track.code); p.style.background=t[1]; p.style.color=t[2]; } else p.style.display='none';
   const f=H&&H.fastest;
-  if(f){ const d=D(f.num); $('#fsFl').style.display=''; $('#fsFl').innerHTML=`<i></i><span>Giro veloce <b style="color:${d.color}">${esc(d.tla)}</b> <b>${fmtLap(f.t)}</b></span>`; } else $('#fsFl').style.display='none';
-  const m=S.rcmLast; $('#fsMsg').innerHTML = m ? `<b>${m.lap?'G'+m.lap:''} DIREZIONE GARA</b>${esc(m.msg)}` : '';
+  if(f){ const d=D(f.num); $('#fsFl').style.display=''; $('#fsFl').innerHTML=`<i></i><span>${L('Giro veloce','Fastest lap')} <b style="color:${d.color}">${esc(d.tla)}</b> <b>${fmtLap(f.t)}</b></span>`; } else $('#fsFl').style.display='none';
+  const m=S.rcmLast; $('#fsMsg').innerHTML = m ? `<b>${m.lap?L('G','L')+m.lap:''} ${L('DIREZIONE GARA','RACE CONTROL')}</b>${esc(m.msg)}` : '';
   $('#fsRows').innerHTML = S.drivers.map(d=>{
     const iv=num(d.int), close=race&&iv!=null&&iv<1&&d.pos>1;
     const st=d.stints[d.stints.length-1];
     const segs=d.sectors.flatMap(sc=>sc.segs||[]).map(x=>`<i style="background:${segColor(x)}"></i>`).join('');
     const cls = sel.length ? (sel.includes(d.num)?'sel':'dimrow') : '';
-    const gap = d.retired||d.stopped ? '<span class="dim">RIT</span>' : d.inPit ? '<span style="color:var(--blue)">BOX</span>' : d.pos===1&&race ? '<span class="dim">Leader</span>' : esc(d.gap);
+    const gap = d.retired||d.stopped ? L('<span class="dim">RIT</span>','<span class="dim">RET</span>') : d.inPit ? L('<span style="color:var(--blue)">BOX</span>','<span style="color:var(--blue)">PIT</span>') : d.pos===1&&race ? '<span class="dim">Leader</span>' : esc(d.gap);
     return `<div class="fr ${cls}" data-n="${d.num}"><span class="p">${d.pos<99?d.pos:''}</span><i class="b" style="background:${d.color}"></i><span class="n">${esc(d.tla)}</span>
       <span class="g ${close?'yl':''}">${gap}${race&&d.pos>1&&!d.inPit?`<small>${esc(d.int)}</small>`:''}</span>
       <span class="ty">${st?tyreIcon(st.c,1)+' '+st.age:''}</span><span class="ms">${segs}</span></div>`;
@@ -1151,13 +1187,13 @@ function toast(title, text, color){
 }
 function notify(){
   if(!prev || prev.session!==S.session){ prev=S; return; }
-  if(prev.track.code!==S.track.code && TRACK[S.track.code] && S.track.code!=='2') toast(TRACK[S.track.code][0], 'Stato della pista cambiato', TRACK[S.track.code][1]);
-  if(S.rcmLast && S.rcmCount>prev.rcmCount){ const m=S.rcmLast, k=rcKind(m); if(k.pen) toast('Penalità', m.msg, '#ff3b3b'); else if(/SAFETY CAR|RED FLAG/.test((m.msg||'').toUpperCase())) toast('Direzione gara', m.msg, '#ff9f1a'); }
+  if(prev.track.code!==S.track.code && TRACK[S.track.code] && S.track.code!=='2') toast(trackName(S.track.code), L('Stato della pista cambiato','Track status changed'), TRACK[S.track.code][1]);
+  if(S.rcmLast && S.rcmCount>prev.rcmCount){ const m=S.rcmLast, k=rcKind(m); if(k.pen) toast(L('Penalità','Penalty'), m.msg, '#ff3b3b'); else if(/SAFETY CAR|RED FLAG/.test((m.msg||'').toUpperCase())) toast(L('Direzione gara','Race control'), m.msg, '#ff9f1a'); }
   const pp = {}; prev.drivers.forEach(d=>pp[d.num]=d);
   for(const d of S.drivers){ const o=pp[d.num]; if(!o) continue;
-    if(d.lastOb && !o.lastOb && isRace()) toast('Giro più veloce', `${d.tla} ${d.last}`, '#b46cff');
-    if(sel.includes(d.num) && o.pos<99 && d.pos<o.pos && !d.pitOut){ const passed=S.drivers.find(x=>x.pos===d.pos+0 && x.num!==d.num) ; const beh=S.drivers.find(x=>x.pos===d.pos+1); toast('Sorpasso', `${d.tla} sale in P${d.pos}${beh?' su '+beh.tla:''}`, d.color); }
-    if(sel.includes(d.num) && d.inPit && !o.inPit) toast('Ai box', `${d.tla} entra ai box`, '#3d8bff');
+    if(d.lastOb && !o.lastOb && isRace()) toast(L('Giro più veloce','Fastest lap'), `${d.tla} ${d.last}`, '#b46cff');
+    if(sel.includes(d.num) && o.pos<99 && d.pos<o.pos && !d.pitOut){ const passed=S.drivers.find(x=>x.pos===d.pos+0 && x.num!==d.num) ; const beh=S.drivers.find(x=>x.pos===d.pos+1); toast(L('Sorpasso','Overtake'), L(`${d.tla} sale in P${d.pos}${beh?' su '+beh.tla:''}`, `${d.tla} up to P${d.pos}${beh?' on '+beh.tla:''}`), d.color); }
+    if(sel.includes(d.num) && d.inPit && !o.inPit) toast(L('Ai box','Pit stop'), L(`${d.tla} entra ai box`, `${d.tla} pits`), '#3d8bff');
   }
   prev=S;
 }
@@ -1167,7 +1203,7 @@ function renderControls(){
   const src = S.source||{};
   $('#replayCtl').style.display = src.kind==='replay'?'flex':'none';
   $('#liveCtl').style.display = src.kind==='live'?'flex':'none';
-  if(src.kind==='live'){ $('#srcStatus').innerHTML = `<span class="dot"></span>Diretta · ${esc(src.status)}`; $('#delay').textContent = Math.round(src.delay)+' s'; }
+  if(src.kind==='live'){ $('#srcStatus').innerHTML = `<span class="dot"></span>${L('Diretta','Live')} · ${esc(SRV(src.status))}`; $('#delay').textContent = Math.round(src.delay)+' s'; }
   else if(src.kind==='replay'){
     $('#srcStatus').textContent = 'Replay';
     $('#pp').textContent = src.paused ? '▶' : '⏸';
@@ -1176,7 +1212,7 @@ function renderControls(){
     const sp=[1,2,5,10,30,60].map(v=>`<button data-speed="${v}" class="${src.speed==v?'on':''}">${v}×</button>`).join('');
     if($('#speeds').innerHTML!==sp) $('#speeds').innerHTML = sp;
     $('#toStart').style.display = src.start!=null ? '' : 'none';
-  } else $('#srcStatus').textContent = 'Nessuna sessione aperta';
+  } else $('#srcStatus').textContent = L('Nessuna sessione aperta','No session open');
 }
 let sliding=false;
 $('#slider').addEventListener('input', ()=> sliding=true);
@@ -1192,13 +1228,13 @@ async function openChooser(){
   $('#chooser').classList.add('show');
   try{
     const list = await api('/api/sessions');
-    $('#sessList').innerHTML = list.map(s => `<div class="sess" data-path="${esc(s.path)}"><span>${esc(s.name.replace(/_/g,' '))}</span><small class="dim">${esc(s.origin)} · ${new Date(s.mtime*1000).toLocaleDateString('it-IT')}</small></div>`).join('') || 'Nessuna sessione salvata: scaricane una qui sotto.';
-  }catch(e){ $('#sessList').textContent = 'Errore: '+e.message; }
+    $('#sessList').innerHTML = list.map(s => `<div class="sess" data-path="${esc(s.path)}"><span>${esc(s.name.replace(/_/g,' '))}</span><small class="dim">${esc(SRV(s.origin))} · ${new Date(s.mtime*1000).toLocaleDateString(LOC())}</small></div>`).join('') || L('Nessuna sessione salvata: scaricane una qui sotto.','No saved sessions: download one below.');
+  }catch(e){ $('#sessList').textContent = L('Errore: ','Error: ')+SRV(e.message); }
   if(!$('#year').options.length){ const y=new Date().getFullYear(); for(let v=y; v>=2018; v--) $('#year').add(new Option(v,v)); loadCal(); }
 }
 let cal=[];
 async function loadCal(){
-  $('#meet').innerHTML='<option>caricamento…</option>'; $('#sess').innerHTML='';
+  $('#meet').innerHTML=L('<option>caricamento…</option>','<option>loading…</option>'); $('#sess').innerHTML='';
   try{ cal = (await api('/api/calendar?year='+$('#year').value)).reverse(); }catch(e){ cal=[]; }
   $('#meet').innerHTML = cal.map((m,i)=>`<option value="${i}">${esc(m.name)} · ${esc(m.location)}</option>`).join('');
   fillSess();
@@ -1207,15 +1243,15 @@ function fillSess(){ const m=cal[$('#meet').value]; $('#sess').innerHTML = m ? m
 $('#year').onchange = loadCal; $('#meet').onchange = fillSess;
 $('#dl').onclick = async () => {
   const m=cal[$('#meet').value]; if(!m) return;
-  $('#dlStatus').textContent = 'Scarico la sessione dall’archivio pubblico… (può volerci un minuto)';
+  $('#dlStatus').textContent = L('Scarico la sessione dall’archivio pubblico… (può volerci un minuto)','Downloading the session from the public archive… (it can take a minute)');
   try{ const s = await api('/api/import',{year:$('#year').value, meeting:m.key, session:$('#sess').value}); await play({kind:'replay', path:s.path}); $('#dlStatus').textContent=''; }
-  catch(e){ $('#dlStatus').textContent = 'Errore: '+e.message; }
+  catch(e){ $('#dlStatus').textContent = L('Errore: ','Error: ')+SRV(e.message); }
 };
 $('#sessList').addEventListener('click', e => { const s=e.target.closest('[data-path]'); if(s) play({kind:'replay', path:s.dataset.path}); });
 $('#goLive').onclick = () => play({kind:'live', delay:0});
 $('#openChooser').onclick = openChooser;
 $('#closeChooser').onclick = () => $('#chooser').classList.remove('show');
-async function play(body){ for(const k in anchors) delete anchors[k]; for(const k in disp) delete disp[k]; clk.base=null; sel=[]; focus=null; stintSel=null; cmpA=cmpB=null; circuitKey=null; lastRadioKey=''; prev=null; H=null; $('#sessList').textContent='apro…'; await api('/api/play', body); $('#chooser').classList.remove('show'); await refreshHistory(); tick(); }
+async function play(body){ for(const k in anchors) delete anchors[k]; for(const k in disp) delete disp[k]; clk.base=null; sel=[]; focus=null; stintSel=null; cmpA=cmpB=null; circuitKey=null; lastRadioKey=''; prev=null; H=null; $('#sessList').textContent=L('apro…','opening…'); await api('/api/play', body); $('#chooser').classList.remove('show'); await refreshHistory(); tick(); }
 
 // ================= ciclo =================
 function keepScroll(paneSel, fn){   // le tabelle si ridisegnano senza perdere il punto in cui si era
@@ -1231,13 +1267,13 @@ function renderAll(){
   else if(tab==='pilota') keepScroll('#drvPane', renderPilota);
   else if(tab==='confronto'){ if(!(document.activeElement && document.activeElement.closest && document.activeElement.closest('#cmpPane select'))) keepScroll('#cmpPane', renderConfronto); }
   else if(tab==='dg') renderDG();
-  $('#tabPilota').textContent = 'Pilota' + (focus?' · '+D(focus).tla:'');
+  $('#tabPilota').textContent = L('Pilota','Driver') + (focus?' · '+D(focus).tla:'');
 }
 let busy=false;
 async function tick(){
   if(busy) return; busy=true;
   try{ S = await api('/api/state'); S._recv = performance.now(); syncTrack(); notify(); renderAll(); }
-  catch(e){ $('#srcStatus').textContent='…'; }
+  catch(e){ $('#srcStatus').textContent=L('…','…'); }
   finally{ busy=false; }
 }
 async function refreshHistory(){ try{ H = await api('/api/history'); }catch(e){} }
@@ -1253,11 +1289,11 @@ async function askShortcut(){
   let q; try{ q = await api('/api/setup'); }catch(e){ return; }
   if(!q.askShortcut) return;
   const t=document.createElement('div'); t.className='toast'; t.style.borderLeftColor='var(--accent)';
-  t.innerHTML='<b>Benvenuto in Free to Race</b>Vuoi un’icona sul desktop per aprirlo con un doppio clic?<div class="row" style="margin-top:8px"><button class="on" data-sc="1">Sì, creala</button><button data-sc="0">No, grazie</button></div>';
+  t.innerHTML=L('<b>Benvenuto in Free to Race</b>Vuoi un’icona sul desktop per aprirlo con un doppio clic?<div class="row" style="margin-top:8px"><button class="on" data-sc="1">Sì, creala</button><button data-sc="0">No, grazie</button></div>','<b>Welcome to Free to Race</b>Would you like a desktop icon to open it with a double click?<div class="row" style="margin-top:8px"><button class="on" data-sc="1">Yes, create it</button><button data-sc="0">No, thanks</button></div>');
   $('#toasts').appendChild(t);
   t.addEventListener('click', async e=>{ const b=e.target.closest('[data-sc]'); if(!b) return;
-    try{ await api('/api/shortcut',{create:b.dataset.sc==='1'}); t.innerHTML = b.dataset.sc==='1' ? '<b>Fatto</b>L’icona «Free to Race» è sul desktop.' : '<b>Va bene</b>Non te lo chiederò più.'; }
-    catch(err){ t.innerHTML='<b>Non sono riuscito</b>'+esc(err.message); }
+    try{ await api('/api/shortcut',{create:b.dataset.sc==='1'}); t.innerHTML = b.dataset.sc==='1' ? L('<b>Fatto</b>L’icona «Free to Race» è sul desktop.','<b>Done</b>The “Free to Race” icon is on your desktop.') : L('<b>Va bene</b>Non te lo chiederò più.','<b>OK</b>I won’t ask again.'); }
+    catch(err){ t.innerHTML=L('<b>Non sono riuscito</b>','<b>Something went wrong</b>')+esc(err.message); }
     setTimeout(()=>t.remove(), 4000); });
 }
 </script>
