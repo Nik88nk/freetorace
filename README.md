@@ -2,7 +2,7 @@
 
 **Free F1 live timing, tyre strategy, pit-stop forecasts and a live track map. Runs on your PC, no subscription.**
 
-🌐 Website: <https://nik88nk.github.io/freetorace/> · ☕ Support: <https://ko-fi.com/freetorace>
+🌐 Website: <https://free-to-race.com/> · ☕ Support: <https://ko-fi.com/freetorace>
 
 ## Download
 
