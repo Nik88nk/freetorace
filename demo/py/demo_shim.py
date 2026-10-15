@@ -9,11 +9,18 @@ from datetime import timedelta
 threading.Thread.start = lambda self: None   # nel browser niente thread: il replay avanza a ogni richiesta
 
 import f1cruscotto as f
+import os
+import shutil
+import telemetria
 
 FOLDER = "/data/race"
 with open("/data/circuit.json", encoding="utf-8") as fh:
     CIRCUIT = json.load(fh)
 f.SOURCE = f.Replay(FOLDER)
+_path = (f.ENGINE.state.get("SessionInfo") or {}).get("Path")
+if _path and os.path.exists("/data/tele.bin"):       # telemetria gia' scaricata, messa dove la cerca il programma
+    os.makedirs(telemetria.DIR, exist_ok=True)
+    shutil.copyfile("/data/tele.bin", telemetria._file(_path))
 _last = time.monotonic()
 
 
@@ -44,6 +51,10 @@ def _route(path, body):
         return f.ENGINE.history()
     if u.path == "/api/circuit":
         return CIRCUIT
+    if u.path == "/api/telemetry":
+        return f.telemetry(urllib.parse.parse_qs(u.query))
+    if u.path == "/api/update":          # la demo e' sempre l'ultima versione
+        return {"current": f.APP_VERSION, "latest": f.APP_VERSION, "newer": False}
     if u.path == "/api/setup":
         return {"askShortcut": False}
     if u.path == "/api/sessions":

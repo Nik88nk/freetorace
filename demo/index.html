@@ -98,6 +98,16 @@ table{width:100%;border-collapse:collapse}
 .card .d{font-size:12px;color:var(--dim)}
 .chartwrap{position:relative;height:320px}
 .chartwrap.sm{height:220px}
+#updBar{align-items:center;gap:12px;flex-wrap:wrap;padding:7px 18px;background:#122036;border-bottom:1px solid #2a3c5a;font-size:13px}
+#updBar .grow{flex:1}
+#updBar a{color:#fff;font-weight:700;text-decoration:none}
+#updBar a.dl{background:var(--accent);padding:4px 12px;border-radius:6px}
+#updBar button{background:transparent;border:none;color:var(--dim);cursor:pointer}
+.ttop{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;padding:0 14px 6px;align-items:center}
+.tcharts{padding:0 14px 14px}
+.tchart{position:relative;border-bottom:1px solid var(--line2)}
+.tmap{height:210px;position:relative}
+.tread{font-size:13px;line-height:1.6;padding:8px 0;min-height:96px}
 canvas{display:block;width:100%}
 .tip{position:absolute;pointer-events:none;background:rgba(10,12,16,.95);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12px;display:none;z-index:3;min-width:120px;font-variant-numeric:tabular-nums}
 .tip b{display:block;margin-bottom:2px}
@@ -248,6 +258,7 @@ body.fs{overflow:hidden}
 <script>try{ const l=localStorage.getItem('ftr.lang'); if(l==='it'||l==='en') localStorage.setItem('f1c.lang', l); else if(!localStorage.getItem('f1c.lang')) localStorage.setItem('f1c.lang','en'); }catch(e){}</script>
 </head>
 <body>
+<div id="updBar" style="display:none"></div>
 <div id="demoLoad"><img src="../img/logo.png" alt=""><div style="font-size:22px;font-weight:700"><span style="color:#e10600">FREE</span> TO RACE · DEMO</div><div class="bar"><i></i></div><div id="demoMsg" style="color:#8b94a7"></div></div>
 <div id="demoBar"><b>DEMO</b><span id="demoTxt"></span><span class="grow"></span><a class="alt" href="../" id="demoSite"></a><a href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-win64.zip" id="demoDl"></a></div>
 <header>
@@ -280,6 +291,7 @@ body.fs{overflow:hidden}
       <button data-tab="gomme" data-en="Tyres &amp; strategy">Gomme e strategia</button>
       <button data-tab="pilota" id="tabPilota" data-en="Driver">Pilota</button>
       <button data-tab="confronto" data-en="Compare">Confronto</button>
+      <button data-tab="tele" data-en="Telemetry">Telemetria</button>
       <button data-tab="dg" data-en="Race control">Direzione gara</button>
       <button data-tab="pista" id="tabPista" data-en="Track">Pista</button>
     </div>
@@ -317,6 +329,8 @@ body.fs{overflow:hidden}
     <div class="pane" id="p-pilota"><div id="drvPane"></div></div>
 
     <div class="pane" id="p-confronto"><div id="cmpPane"></div></div>
+
+    <div class="pane" id="p-tele"><div id="telPane"></div></div>
 
     <div class="pane" id="p-dg">
       <div class="two">
@@ -380,7 +394,8 @@ body.fs{overflow:hidden}
       <button id="dl" data-en="Download and watch">Scarica e guarda</button>
     </div>
     <div class="status" id="dlStatus" style="margin-top:6px"></div>
-    <p class="status" style="margin-top:22px;font-size:11px;line-height:1.4" data-en="Free to Race is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. The data is the public data of the official timing service. Circuit drawings: MultiViewer.">Free to Race è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati sono quelli pubblici del servizio di cronometraggio. Disegni dei circuiti: MultiViewer.</p>
+    <div class="row" style="margin-top:18px;justify-content:space-between"><span class="status" id="verTxt"></span><button id="chkUpd" data-en="Check for updates">Controlla aggiornamenti</button></div>
+    <p class="status" style="margin-top:12px;font-size:11px;line-height:1.4" data-en="Free to Race is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. The data is the public data of the official timing service. Circuit drawings: MultiViewer.">Free to Race è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati sono quelli pubblici del servizio di cronometraggio. Disegni dei circuiti: MultiViewer.</p>
   </div>
 </div>
 
@@ -402,7 +417,8 @@ const tyreName = c => L((TYRE[c]||TYRE.UNKNOWN)[2], TYRE_EN[c]||'?');
 const TRACK_EN = {'1':'Track clear', '2':'Yellow flag', '4':'Safety Car', '5':'Red flag', '6':'Virtual Safety Car', '7':'VSC ending'};
 const trackName = c => L(TRACK[c][0], TRACK_EN[c]);
 const neuTag = c => c==='5' ? L('ROSSA','RED') : NEUTRAL[c];
-const SRV_EN = [['registrata in diretta','recorded live'], ['riconnessione...','reconnecting...'], ['connessione...','connecting...'], ['in diretta','live'], ['mappa non disponibile','map not available'],
+const SRV_EN = [["l'archivio non ha la telemetria di questa sessione",'the F1 archive has no telemetry for this session'],
+  ['archivio F1 non raggiungibile, riprova tra qualche minuto','F1 archive not reachable, try again in a few minutes'], ['registrata in diretta','recorded live'], ['riconnessione...','reconnecting...'], ['connessione...','connecting...'], ['in diretta','live'], ['mappa non disponibile','map not available'],
   ['in corso','in progress'], ['avvio','starting'], ['pronta','ready'], ['errore:','error:'], ['scaricata','downloaded'],
   ["l'archivio non ha ancora i dati di questa sessione","the archive does not have this session's data yet"], ["sessione non trovata nell'archivio","session not found in the archive"]];
 const SRV = s => { if(LANG==='it' || !s) return s; s=String(s); for(const [a,b] of SRV_EN) s=s.replace(a,b); return s; };   // testi che arrivano dal programma
@@ -437,8 +453,9 @@ const PY_READY = (async () => {
   try{
     const py = await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.28.3/full/'});
     py.FS.mkdirTree('/app'); py.FS.mkdirTree('/data/race');
-    for(const n of ['f1cruscotto.pyc','pista.pyc','demo_shim.py']) py.FS.writeFile('/app/'+n, new Uint8Array(await (await fetch('py/'+n)).arrayBuffer()));
+    for(const n of ['f1cruscotto.pyc','pista.pyc','telemetria.pyc','demo_shim.py']) py.FS.writeFile('/app/'+n, new Uint8Array(await (await fetch('py/'+n)).arrayBuffer()));
     py.FS.writeFile('/data/circuit.json', await (await fetch('data/circuit.json')).text());
+    py.FS.writeFile('/data/tele.bin', new Uint8Array(await (await fetch('data/tele.bin')).arrayBuffer()));
     let raw = new Uint8Array(await (await fetch('data/race.jsonl.gz')).arrayBuffer());
     if(raw[0]===0x1f && raw[1]===0x8b) raw = new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
     py.FS.writeFile('/data/race/live.jsonl', raw);
@@ -919,11 +936,193 @@ function renderConfronto(){
   const c1=$('#cCmp1'), c2=$('#cCmp2'); attachTip(c1); attachTip(c2);
   lineChart(c1, {series:[{name:a.tla+L(' su ',' vs ')+b.tla, label:'', color:a.color, w:2.2, pts:gaps, dots:true, r:2.5}], zero:true, sym:true, bands:neutralBands(),
     yFmt:v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<10?1:0)+'s', tipFmt:v=>v>=0?`${esc(a.tla)} ${L('davanti di','ahead by')} ${v.toFixed(3)} s`:`${esc(b.tla)} ${L('davanti di','ahead by')} ${(-v).toFixed(3)} s`, empty:L('Servono giri in comune','Laps in common needed')});
-  const lt = (L,col,lbl) => ({name:lbl,label:lbl,color:col,w:2,pts:Object.values(L).filter(r=>r.t&&!r.pin&&!r.pout&&!r.partial).map(r=>[r.lap,r.t]), dots:true, r:2.5});
+  const lt = (byLap,col,lbl) => ({name:lbl,label:lbl,color:col,w:2,pts:Object.values(byLap).filter(r=>r.t&&!r.pin&&!r.pout&&!r.partial).map(r=>[r.lap,r.t]), dots:true, r:2.5});
   const all=[...Object.values(la),...Object.values(lb)].filter(r=>r.t&&!r.pin&&!r.pout&&!NEUTRAL[r.ts]).map(r=>r.t).sort((x,y)=>x-y);
   lineChart(c2, {series:[lt(la,a.color,a.tla), lt(lb,b.color===a.color?'#ffffff':b.color,b.tla)], invert:true, bands:neutralBands(),
     y0: all.length?all[0]-0.3:undefined, y1: all.length?all[Math.floor(all.length/2)]+3:undefined, yFmt:lapAxis, tipFmt:v=>fmtLap(v)});
 }
+
+// ================= Telemetria =================
+// Due giri a confronto lungo il giro: velocita', distacco, gas, freno, marcia; pista colorata con chi e' piu' veloce.
+// I dati vengono dall'archivio F1 (si scaricano una volta per sessione): nella diretta gratuita non ci sono.
+const tel = {a:null, la:null, b:null, lb:null, data:null, key:'', status:'', hover:null, retry:null, sess:''};
+function telLaps(n){ return (H && H.laps[n] || []).filter(r=>r.t && !r.partial && !r.pin && !r.pout); }
+function telBest(n){ const ls=telLaps(n); return ls.length ? ls.reduce((a,r)=>r.t<a.t?r:a).lap : null; }
+function telDefaults(){
+  if(!S || !S.drivers.length) return;
+  const sk = S.meeting+'|'+S.session;
+  if(tel.sess!==sk){ Object.assign(tel, {a:null, la:null, b:null, lb:null, data:null, key:'', sess:sk}); }
+  const withLaps = S.drivers.filter(d=>telLaps(d.num).length);
+  if(!withLaps.length) return;
+  if(!tel.a || !telLaps(tel.a).length) tel.a = (focus && telLaps(focus).length ? focus : withLaps[0].num);
+  if(!tel.b || !telLaps(tel.b).length || tel.b===tel.a){ const s2 = sel.find(n=>n!==tel.a && telLaps(n).length); tel.b = s2 || (withLaps.find(d=>d.num!==tel.a)||{}).num; }
+  if(tel.la==null || !telLaps(tel.a).some(r=>r.lap===tel.la)) tel.la = telBest(tel.a);
+  if(tel.lb==null || !telLaps(tel.b).some(r=>r.lap===tel.lb)) tel.lb = telBest(tel.b);
+}
+function telColors(){ const ca=D(tel.a).color, cb=D(tel.b).color; return [ca, cb===ca ? '#ffffff' : cb]; }
+function renderTele(){
+  const pane=$('#telPane');
+  if(!S || !H){ pane.innerHTML=''; return; }
+  if(S.source && S.source.kind==='live'){ pane.innerHTML=`<div class="empty">${L('La telemetria c’è solo nelle sessioni passate: la diretta gratuita non la comprende. Dopo la sessione, aprila da «Scegli sessione».','Telemetry is only available for past sessions: the free live feed does not include it. After the session, open it from “Choose session”.')}</div>`; pane.dataset.k=''; return; }
+  telDefaults();
+  if(!tel.a){ pane.innerHTML=`<div class="empty">${L('Nessun giro completato ancora','No laps completed yet')}</div>`; pane.dataset.k=''; return; }
+  if(!tel.b){ pane.innerHTML=`<div class="empty">${L('Per il confronto serve un secondo pilota con almeno un giro completato.','The comparison needs a second driver with at least one completed lap.')}</div>`; pane.dataset.k=''; return; }
+  loadCircuit();
+  const opts = cur => S.drivers.filter(d=>telLaps(d.num).length).map(d=>`<option value="${d.num}" ${d.num===cur?'selected':''}>P${d.pos<99?d.pos:'-'} ${esc(d.tla)}</option>`).join('');
+  const lopts = (n, l) => { const best=telBest(n); return telLaps(n).slice().reverse().map(r=>`<option value="${r.lap}" ${r.lap===l?'selected':''}>${L('Giro','Lap')} ${r.lap} · ${fmtLap(r.t)}${r.lap===best?' ★':''}${r.c?' · '+(TYRE[r.c]||TYRE.UNKNOWN)[1]:''}</option>`).join(''); };
+  const [ca, cb] = telColors();
+  const head = `<section class="panel"><h3>${L('Telemetria','Telemetry')} <span class="right dim" style="font-size:12px">${L('★ = giro più veloce del pilota','★ = driver’s fastest lap')}</span></h3>
+    <div class="row" style="padding:10px 14px;gap:10px;flex-wrap:wrap">
+      <select id="telA" style="border-color:${ca}">${opts(tel.a)}</select><select id="telLA">${lopts(tel.a, tel.la)}</select>
+      <span class="dim">${L('contro','vs')}</span>
+      <select id="telB" style="border-color:${cb}">${opts(tel.b)}</select><select id="telLB">${lopts(tel.b, tel.lb)}</select>
+      <span id="telSum" class="tn" style="margin-left:auto"></span>
+    </div><div id="telBody"></div></section>`;
+  const key = [S.session, tel.a, tel.la, tel.b, tel.lb].join('|');
+  const ctrlKey = key + '|' + telLaps(tel.a).length + '|' + telLaps(tel.b).length + '|' + LANG;
+  if(pane.dataset.k !== ctrlKey){ pane.innerHTML = head; pane.dataset.k = ctrlKey; pane.dataset.drawn='';
+    $('#telA').onchange = e => { tel.a=e.target.value; tel.la=null; renderTele(); };
+    $('#telB').onchange = e => { tel.b=e.target.value; tel.lb=null; renderTele(); };
+    $('#telLA').onchange = e => { tel.la=+e.target.value; renderTele(); };
+    $('#telLB').onchange = e => { tel.lb=+e.target.value; renderTele(); }; }
+  if(tel.key !== key){ tel.key = key; tel.data = null; tel.status = ''; telFetch(); }
+  telDraw();
+}
+async function telFetch(){
+  clearTimeout(tel.retry);
+  const key = tel.key;
+  let r; try{ r = await api(`/api/telemetry?a=${tel.a}&la=${tel.la}&b=${tel.b}&lb=${tel.lb}`); }catch(e){ r = {status:'errore: '+e.message}; }
+  if(key !== tel.key) return;
+  tel.status = r.status;
+  if(r.status==='pronta' && r.laps) tel.data = r;
+  else if(r.status==='in corso') tel.retry = setTimeout(telFetch, 2000);
+  const p=$('#telPane'); if(p) p.dataset.drawn='';
+  telDraw();
+}
+function telMsg(){
+  const s = tel.status||'';
+  if(s==='in corso' || s==='') return L('Scarico la telemetria dall’archivio F1… (una volta per sessione, qualche secondo)','Downloading telemetry from the F1 archive… (once per session, a few seconds)');
+  if(s==='unavailable') return L('La telemetria non è disponibile per questa sessione.','Telemetry is not available for this session.');
+  if(s==='nolap') return L('Per questo giro la telemetria non c’è: prova un altro giro.','No telemetry for this lap: try another one.');
+  if(s.startsWith('errore')) return L('Telemetria non disponibile: ','Telemetry not available: ') + esc(SRV(s.replace(/^errore:\s*/,'')));
+  return '';
+}
+function telDraw(){
+  const body=$('#telBody'); if(!body) return;
+  const d=tel.data;
+  if(!d){ body.innerHTML=`<div class="empty">${telMsg()}</div>`; $('#telSum').innerHTML=''; return; }
+  const [ca, cb] = telColors(), A=d.laps[0], B=d.laps[1];
+  const ta=A.t[A.t.length-1], tb=B.t[B.t.length-1];
+  $('#telSum').innerHTML = `<b style="color:${ca}">${esc(D(tel.a).tla)}</b> ${fmtLap(ta)} &nbsp; <b style="color:${cb}">${esc(D(tel.b).tla)}</b> ${fmtLap(tb)} &nbsp; <span class="dim">${L('scarto','gap')}</span> <b>${fmtD(tb-ta)}</b>`;
+  if(!$('#telPane').dataset.drawn){
+    $('#telPane').dataset.drawn='1';
+    body.innerHTML = `<div class="ttop"><div class="tmap"><canvas id="telMap"></canvas></div>
+        <div><div id="telRead" class="tread"></div>
+        <div class="help" style="padding:0">${L('Distacco: sopra lo zero','Gap: above zero')} <b style="color:${cb}">${esc(D(tel.b).tla)}</b> ${L('è dietro a','is behind')} <b style="color:${ca}">${esc(D(tel.a).tla)}</b>. ${L('Sulla pista, il colore di chi è più veloce in ogni tratto. Distanze ricavate dalla velocità, precise a qualche metro.','On the track, the colour of whoever is faster in each section. Distances come from the speed trace, accurate to a few metres.')}</div></div></div>
+      <div class="tcharts">
+        <div class="tchart" style="height:230px"><canvas data-ch="speed"></canvas></div>
+        <div class="tchart" style="height:120px"><canvas data-ch="delta"></canvas></div>
+        <div class="tchart" style="height:90px"><canvas data-ch="throttle"></canvas></div>
+        <div class="tchart" style="height:60px"><canvas data-ch="brake"></canvas></div>
+        <div class="tchart" style="height:90px"><canvas data-ch="gear"></canvas></div></div>`;
+    $$('#telBody canvas[data-ch]').forEach(cv => {
+      cv.addEventListener('mousemove', e => { const r=cv.getBoundingClientRect(), lm=44, rm=10; tel.hover=Math.min(1,Math.max(0,(e.clientX-r.left-lm)/(r.width-lm-rm))); telPaint(); });
+      cv.addEventListener('mouseleave', () => { tel.hover=null; telPaint(); });
+    });
+  }
+  telPaint();
+}
+function telTrack(){
+  // posizione di curve e punti del tracciato in frazione di giro dal traguardo
+  if(!circuit || !circuit.mv) return null;
+  if(telTrack.c === circuit) return telTrack.v;
+  const mv=circuit.mv, n=mv.x.length, cum=[0];
+  for(let i=1;i<=n;i++){ const j=i%n; cum.push(cum[i-1]+Math.hypot(mv.x[j]-mv.x[i-1], mv.y[j]-mv.y[i-1])); }
+  const tot=cum[n], cal=circuit.cal, finish = cal ? cal.bounds[cal.refDur.length-1] : 0;
+  const rel = cum.slice(0,n).map(c => ((c/tot - finish)%1+1)%1);
+  const corners = (mv.corners||[]).filter(c=>c.trackPosition).map(c=>{ let bi=0, bd=Infinity;
+    for(let i=0;i<n;i++){ const q=(mv.x[i]-c.trackPosition.x)**2+(mv.y[i]-c.trackPosition.y)**2; if(q<bd){ bd=q; bi=i; } }
+    return {n:c.number+(c.letter||''), f:rel[bi]}; });
+  telTrack.c = circuit; telTrack.v = {rel, corners};
+  return telTrack.v;
+}
+function telPaint(){
+  const d=tel.data; if(!d || !$('#telBody')) return;
+  const [ca, cb] = telColors(), A=d.laps[0], B=d.laps[1], grid=d.grid, tt=telTrack();
+  const cfg = {speed:{ys:[A.speed,B.speed], lbl:L('Velocità km/h','Speed km/h')},
+               delta:{ys:[B.delta], lbl:L('Distacco s','Gap s'), zero:true, col:[cb]},
+               throttle:{ys:[A.throttle,B.throttle], lbl:L('Gas %','Throttle %'), y0:0, y1:100},
+               brake:{ys:[A.brake.map(v=>v>0?1:0),B.brake.map(v=>v>0?1:0)], lbl:L('Freno','Brake'), y0:0, y1:1, step:true},
+               gear:{ys:[A.gear,B.gear], lbl:L('Marcia','Gear'), y0:1, y1:8, step:true}};
+  $$('#telBody canvas[data-ch]').forEach(cv => {
+    const c=cfg[cv.dataset.ch]; const [g,W,Hh]=setupCanvas(cv); g.clearRect(0,0,W,Hh);
+    const lm=44, rm=10, tm=14, bm=cv.dataset.ch==='gear'?18:4;
+    let y0=c.y0, y1=c.y1;
+    if(y0==null){ const all=c.ys.flat(); y0=Math.min(...all); y1=Math.max(...all); if(c.zero){ const m=Math.max(Math.abs(y0),Math.abs(y1),0.1); y0=-m; y1=m; } else { const p=(y1-y0)*0.06; y0-=p; y1+=p; } }
+    const X = f => lm + f*(W-lm-rm), Y = v => tm + (1-(v-y0)/((y1-y0)||1))*(Hh-tm-bm);
+    g.fillStyle='#8b94a7'; g.font='10px Titillium Web'; g.fillText(c.lbl, lm, 10);
+    g.strokeStyle='#222833'; g.lineWidth=1;
+    if(tt) for(const k of tt.corners){ g.beginPath(); g.moveTo(X(k.f), tm); g.lineTo(X(k.f), Hh-bm); g.stroke(); if(cv.dataset.ch==='gear'){ g.fillStyle='#5d6577'; g.textAlign='center'; g.fillText(k.n, X(k.f), Hh-4); g.textAlign='left'; } }
+    if(!c.step){ g.fillStyle='#5d6577'; g.fillText(c.zero?fmtD(y1,2):Math.round(y1), 4, tm+8); g.fillText(c.zero?fmtD(y0,2):Math.round(y0), 4, Hh-bm); }
+    if(c.zero){ g.strokeStyle='#59627a'; g.beginPath(); g.moveTo(lm,Y(0)); g.lineTo(W-rm,Y(0)); g.stroke(); }
+    const cols = c.col || [ca, cb];
+    c.ys.forEach((ys,si) => { g.strokeStyle=cols[si]; g.lineWidth=1.6; g.globalAlpha = si ? .9 : 1; g.beginPath();
+      ys.forEach((v,i) => { const x=X(grid[i]), y=Y(v); if(!i) g.moveTo(x,y); else if(c.step){ g.lineTo(x, Y(ys[i-1])); g.lineTo(x,y); } else g.lineTo(x,y); });
+      g.stroke(); g.globalAlpha=1; });
+    if(tel.hover!=null){ g.strokeStyle='#ffffffaa'; g.lineWidth=1; g.beginPath(); g.moveTo(X(tel.hover), tm); g.lineTo(X(tel.hover), Hh-bm); g.stroke(); }
+  });
+  telPaintMap(ca, cb);
+  const i = tel.hover==null ? null : Math.round(tel.hover*(grid.length-1));
+  $('#telRead').innerHTML = i==null ? `<span class="dim">${L('Passa sopra i grafici per leggere i valori','Hover over the charts to read the values')}</span>` :
+    `<div class="dim">${Math.round(grid[i]*d.length)} m</div>` + [[A,ca,tel.a],[B,cb,tel.b]].map(([x,col,n])=>`<div><b style="color:${col}">${esc(D(n).tla)}</b> ${Math.round(x.speed[i])} km/h · ${L('marcia','gear')} ${Math.round(x.gear[i])} · ${L('gas','throttle')} ${Math.round(x.throttle[i])}%${x.brake[i]>0?' · <b style="color:#ff6b6b">'+L('freno','brake')+'</b>':''}</div>`).join('') +
+    `<div>${L('Distacco','Gap')} <b>${fmtD(B.delta[i])}</b></div>`;
+}
+function telPaintMap(ca, cb){
+  const cv=$('#telMap'); if(!cv) return;
+  const [g,W,Hh]=setupCanvas(cv); g.clearRect(0,0,W,Hh);
+  const tt=telTrack(), d=tel.data;
+  if(!tt){ const none = (circuit && !circuit.mv) || (!circuit && loadCircuit.t && performance.now()-loadCircuit.t > 4000);
+    g.fillStyle='#8b94a7'; g.font='12px Titillium Web'; g.textAlign='center'; g.fillText(none ? L('Disegno della pista non disponibile','Track layout not available') : L('Carico il disegno della pista…','Loading the track layout…'), W/2, Hh/2); g.textAlign='left'; return; }
+  const mv=circuit.mv, rot=(mv.rotation||0)*Math.PI/180, co=Math.cos(rot), si=Math.sin(rot);
+  const pts=mv.x.map((x,i)=>[x*co-mv.y[i]*si, x*si+mv.y[i]*co]), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  const mx=Math.min(...xs), Mx=Math.max(...xs), my=Math.min(...ys), My=Math.max(...ys), pad=16;
+  const k=Math.min((W-2*pad)/((Mx-mx)||1),(Hh-2*pad)/((My-my)||1));
+  const P=p=>[pad+(p[0]-mx)*k+((W-2*pad)-(Mx-mx)*k)/2, Hh-pad-(p[1]-my)*k-((Hh-2*pad)-(My-my)*k)/2];
+  const scr=pts.map(P), n=scr.length, dl=d.laps[1].delta, m=dl.length-1;
+  g.lineCap='round'; g.strokeStyle='#05070a'; g.lineWidth=11; g.beginPath(); scr.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.closePath(); g.stroke();
+  for(let i=0;i<n;i++){ const p=scr[i], q=scr[(i+1)%n], j=Math.round(tt.rel[i]*m), j0=Math.max(0,j-3), j1=Math.min(m,j+3);
+    const slope=dl[j1]-dl[j0];   // il distacco di B cresce = A piu' veloce in quel tratto
+    g.strokeStyle = Math.abs(slope)<0.004 ? '#4a5263' : slope>0 ? ca : cb; g.lineWidth=6; g.beginPath(); g.moveTo(p[0],p[1]); g.lineTo(q[0],q[1]); g.stroke(); }
+  g.fillStyle='#8b94a7'; g.font='bold 9px Titillium Web'; g.textAlign='center';
+  for(const c of (mv.corners||[])){ if(!c.trackPosition) continue; const rp=[c.trackPosition.x*co-c.trackPosition.y*si, c.trackPosition.x*si+c.trackPosition.y*co], p=P(rp), ang=(c.angle||0)*Math.PI/180; g.fillText(c.number+(c.letter||''), p[0]+Math.cos(ang)*14, p[1]-Math.sin(ang)*14+3); }
+  g.textAlign='left';
+  if(tel.hover!=null){ let bi=0, bd=9; for(let i=0;i<n;i++){ const q=Math.abs(tt.rel[i]-tel.hover); if(q<bd){ bd=q; bi=i; } } const p=scr[bi]; g.fillStyle='#ffd12e'; g.strokeStyle='#05070a'; g.lineWidth=3; g.beginPath(); g.arc(p[0],p[1],7,0,7); g.stroke(); g.fill(); }
+}
+window.addEventListener('resize', () => { if(tab==='tele') telPaint(); });
+
+// ================= aggiornamenti =================
+// All'avvio il programma chiede a GitHub l'ultima versione (nessun dato inviato). Se ce n'e' una nuova,
+// una barra in alto; chiusa, torna solo per la versione dopo. Nella finestra delle sessioni: «Controlla aggiornamenti».
+async function checkUpdate(force){
+  let u; try{ u = await api('/api/update' + (force ? '?force=1' : '')); }catch(e){ return null; }
+  const bar = $('#updBar');
+  if(u.newer && (force || store.get('updSkip','') !== u.latest)){
+    bar.innerHTML = `<b>${L('Nuova versione','New version')} ${esc(u.latest)}</b><span class="dim">${L('hai la','you have')} ${esc(u.current)} · ${L('chiudi Free to Race ed estrai lo zip dove avevi messo la cartella FreeToRace, sovrascrivendo: registrazioni e impostazioni restano','close Free to Race and extract the zip where you put the FreeToRace folder, overwriting it: recordings and settings are kept')}</span><span class="grow"></span>`+
+      (u.page ? `<a href="${esc(u.page)}" target="_blank" rel="noopener">${L('Novità','What’s new')}</a>` : '') +
+      `<a class="dl" href="${esc(u.url)}">${L('⬇ Scarica','⬇ Download')}</a><button id="updX" title="${L('Non mostrare più per questa versione','Don’t show again for this version')}">✕</button>`;
+    bar.style.display = 'flex';
+    $('#updX').onclick = () => { store.set('updSkip', u.latest); bar.style.display = 'none'; };
+  }
+  return u;
+}
+$('#chkUpd').onclick = async () => {
+  $('#verTxt').textContent = L('controllo…','checking…');
+  const u = await checkUpdate(true);
+  if(!u || u.error) $('#verTxt').textContent = L('Non riesco a controllare: sei collegato a Internet?','Could not check: are you online?');
+  else $('#verTxt').textContent = u.newer ? `${L('Disponibile la','Available:')} ${u.latest} ${L('(vedi in alto)','(see the top of the page)')}` : `Free to Race ${u.current} · ${L('è l’ultima versione','you have the latest version')}`;
+};
+setTimeout(async () => { const u = await checkUpdate(false); if(u) $('#verTxt').textContent = `Free to Race ${u.current}`; }, 2500);
+document.addEventListener('langchange', () => { if($('#updBar').style.display==='flex') checkUpdate(false); });
 
 // ================= Direzione gara =================
 $('#rcFilters').addEventListener('click', e => { const b=e.target.closest('[data-rf]'); if(!b) return; rcFilter=b.dataset.rf; $$('[data-rf]').forEach(x=>x.classList.toggle('on',x===b)); renderDG(); });
@@ -978,7 +1177,7 @@ function geo(W,Hh,pad=40){
   const scr=mv.x.map((x,i)=>P(x,mv.y[i]));
   // la frazione del giro si misura sulla polilinea originale, come nel server
   const cumR=[0]; for(let i=1;i<=mv.x.length;i++){ const j=i%mv.x.length; cumR.push(cumR[i-1]+Math.hypot(mv.x[j]-mv.x[i-1],mv.y[j]-mv.y[i-1])); }
-  const at = f => { const L=cumR[cumR.length-1], d=((f%1)+1)%1*L; let lo=0, hi=cumR.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(cumR[m]<=d) lo=m; else hi=m; }
+  const at = f => { const tot=cumR[cumR.length-1], d=((f%1)+1)%1*tot; let lo=0, hi=cumR.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(cumR[m]<=d) lo=m; else hi=m; }
     const r=(d-cumR[lo])/((cumR[hi]-cumR[lo])||1), p=scr[lo], q=scr[hi%scr.length]; return [p[0]+(q[0]-p[0])*r, p[1]+(q[1]-p[1])*r]; };
   const fracOf = i => cumR[i]/cumR[cumR.length-1];
   const lane = circuit.cal && circuit.cal.pitLane && circuit.cal.pitLane.x.length>1 ? circuit.cal.pitLane.x.map((x,i)=>P(x,circuit.cal.pitLane.y[i])) : null;
@@ -1267,6 +1466,7 @@ function renderAll(){
   else if(tab==='pilota') keepScroll('#drvPane', renderPilota);
   else if(tab==='confronto'){ if(!(document.activeElement && document.activeElement.closest && document.activeElement.closest('#cmpPane select'))) keepScroll('#cmpPane', renderConfronto); }
   else if(tab==='dg') renderDG();
+  else if(tab==='tele' && !(document.activeElement && document.activeElement.closest && document.activeElement.closest('#telPane select'))) renderTele();
   $('#tabPilota').textContent = L('Pilota','Driver') + (focus?' · '+D(focus).tla:'');
 }
 let busy=false;
