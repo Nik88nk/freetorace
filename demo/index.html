@@ -98,6 +98,8 @@ table{width:100%;border-collapse:collapse}
 .card .d{font-size:12px;color:var(--dim)}
 .chartwrap{position:relative;height:320px}
 .chartwrap.sm{height:220px}
+.dlbar{height:6px;background:#1b2029;border-radius:3px;overflow:hidden;margin:6px 0}
+.dlbar i{display:block;height:6px;background:var(--accent);transition:width .5s}
 #updBar{align-items:center;gap:12px;flex-wrap:wrap;padding:7px 18px;background:#122036;border-bottom:1px solid #2a3c5a;font-size:13px}
 #updBar .grow{flex:1}
 #updBar a{color:#fff;font-weight:700;text-decoration:none}
@@ -1285,10 +1287,20 @@ function carPositions(){
   const out={}, G=mapGeo, cal=circuit&&circuit.cal; if(!G) return out;
   const nowP=performance.now(), dt=Math.min(0.1,(nowP-lastFrame)/1000); lastFrame=nowP;
   if(mapMode==='vere' && S.cars && Object.keys(S.cars).length){
-    for(const [n,p] of Object.entries(S.cars)){ if(p[0]===0&&p[1]===0) continue;
-      const tgt=G.P(p[0],p[1]), d=disp['v'+n];
+    // posizioni vere: punti con il loro orario; si disegna un po' indietro nel tempo, fra due punti noti,
+    // cosi' l'auto scorre invece di saltare a ogni aggiornamento
+    const want = 0.6 + 0.9*Math.max(1, clk.rate);     // circa un aggiornamento della pagina, in tempo di sessione
+    for(const [n,h] of Object.entries(S.cars)){
+      if(!h || !h.length) continue;
+      const T = clk.now() - Math.min(want, Math.max(0.3, (h[h.length-1][0]-h[0][0])*0.9));
+      let p;
+      if(T <= h[0][0]) p = h[0];
+      else if(T >= h[h.length-1][0]) p = h[h.length-1];
+      else { let i=1; while(i<h.length-1 && h[i][0]<T) i++; const a=h[i-1], b=h[i], r=(T-a[0])/((b[0]-a[0])||1); p=[T, a[1]+(b[1]-a[1])*r, a[2]+(b[2]-a[2])*r]; }
+      if(p[1]===0 && p[2]===0) continue;
+      const tgt=G.P(p[1],p[2]), d=disp['v'+n];
       if(!d || Math.hypot(tgt[0]-d.xy[0],tgt[1]-d.xy[1])>80) disp['v'+n]={xy:tgt};
-      else { const k=Math.min(1,dt*4); d.xy=[d.xy[0]+(tgt[0]-d.xy[0])*k, d.xy[1]+(tgt[1]-d.xy[1])*k]; }
+      else { const k=Math.min(1,dt*12); d.xy=[d.xy[0]+(tgt[0]-d.xy[0])*k, d.xy[1]+(tgt[1]-d.xy[1])*k]; }
       out[n]={xy:disp['v'+n].xy}; }
     return out;
   }
@@ -1506,9 +1518,20 @@ function fillSess(){ const m=cal[$('#meet').value]; $('#sess').innerHTML = m ? m
 $('#year').onchange = loadCal; $('#meet').onchange = fillSess;
 $('#dl').onclick = async () => {
   const m=cal[$('#meet').value]; if(!m) return;
-  $('#dlStatus').textContent = L('Scarico la sessione… (un paio di minuti: ci sono anche le posizioni delle auto)','Downloading the session… (a couple of minutes: car positions included)');
-  try{ const s = await api('/api/import',{year:$('#year').value, meeting:m.key, session:$('#sess').value}); await play({kind:'replay', path:s.path}); $('#dlStatus').textContent=''; }
-  catch(e){ $('#dlStatus').textContent = L('Errore: ','Error: ')+SRV(e.message); }
+  const box=$('#dlStatus'), btn=$('#dl'); btn.disabled=true;
+  const STEP = {meta:['Cerco la sessione…','Finding the session…'], laps:['Scarico i giri…','Downloading laps…'], extra:['Scarico gomme, soste e direzione gara…','Downloading tyres, stops and race control…'],
+                pos:['Posizioni delle auto','Car positions'], write:['Preparo il replay…','Preparing the replay…']};
+  const show = j => { const st=STEP[j.step]||STEP.meta; const txt = L(...st) + (j.step==='pos' && j.n ? ` ${j.i}/${j.n}` : '');
+    box.innerHTML = `<div class="dlbar"><i style="width:${Math.round((j.pct||0)*100)}%"></i></div><span>${esc(txt)}</span> <span class="dim">${L('(la prima volta uno o due minuti)','(one or two minutes the first time)')}</span>`; };
+  show({step:'meta', pct:0.01});
+  try{
+    const {job} = await api('/api/import',{year:$('#year').value, meeting:m.key, session:$('#sess').value});
+    let j;
+    while(true){ await new Promise(r=>setTimeout(r,700)); j = await api('/api/import?job='+job); if(j.state!=='running') break; show(j); }
+    if(j.state==='error') throw new Error(j.error);
+    show({step:'write', pct:1}); await play({kind:'replay', path:j.path}); box.textContent='';
+  }catch(e){ box.textContent = L('Errore: ','Error: ')+SRV(e.message); }
+  finally{ btn.disabled=false; }
 };
 $('#sessList').addEventListener('click', e => { const s=e.target.closest('[data-path]'); if(s) play({kind:'replay', path:s.dataset.path}); });
 $('#goLive').onclick = () => play({kind:'live', delay:0});
