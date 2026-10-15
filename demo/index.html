@@ -86,8 +86,8 @@ table{width:100%;border-collapse:collapse}
 .tower td.secgap{padding-left:12px}
 
 /* schede */
-.tabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
-.tabs button{padding:8px 16px;font-size:14px;border-radius:8px 8px 0 0;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--dim)}
+.tabs{display:flex;gap:2px;margin-bottom:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.tabs button{padding:8px 11px;font-size:14px;white-space:nowrap;flex:none;border-radius:8px 8px 0 0;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--dim)}
 .tabs button.on{color:var(--text);border-bottom-color:var(--accent);background:transparent}
 .pane{display:none;flex-direction:column;gap:14px}
 .pane.on{display:flex}
@@ -462,7 +462,7 @@ const PY_READY = (async () => {
   try{
     const py = await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.28.3/full/'});
     py.FS.mkdirTree('/app'); py.FS.mkdirTree('/data/race');
-    for(const n of ['f1cruscotto.pyc','pista.pyc','telemetria.pyc','demo_shim.py']) py.FS.writeFile('/app/'+n, new Uint8Array(await (await fetch('py/'+n)).arrayBuffer()));
+    for(const n of ['f1cruscotto.pyc','pista.pyc','telemetria.pyc','openf1.pyc','demo_shim.py']) py.FS.writeFile('/app/'+n, new Uint8Array(await (await fetch('py/'+n)).arrayBuffer()));
     py.FS.writeFile('/data/circuit.json', await (await fetch('data/circuit.json')).text());
     py.FS.writeFile('/data/tele.bin', new Uint8Array(await (await fetch('data/tele.bin')).arrayBuffer()));
     let raw = new Uint8Array(await (await fetch('data/race.jsonl.gz')).arrayBuffer());
@@ -1269,11 +1269,11 @@ const clk = {base:null, perf:0, rate:1,
 const anchors = {};   // num -> {idx, ev (ora del passaggio, tempo di sessione), pace}
 const disp = {};      // num -> {f (frazione mostrata), pit, xy}
 function syncTrack(){
-  if(!S || !S.clock || !S.track) return;
+  if(!S || !S.clock || !S.est) return;
   const src=S.source||{}, rate = src.kind==='replay' ? (src.paused?0:src.speed) : 1;
   const srv = Date.parse(S.clock)/1000;
   clk.sync(srv, rate);
-  for(const [n,t] of Object.entries(S.track)){
+  for(const [n,t] of Object.entries(S.est)){
     const ev = srv - t.age, a = anchors[n];
     if(!a || a.idx!==t.idx || Math.abs(a.ev-ev)>1) anchors[n] = {idx:t.idx, ev, pace:t.pace};
     else anchors[n].pace = t.pace;
@@ -1292,9 +1292,9 @@ function carPositions(){
       out[n]={xy:disp['v'+n].xy}; }
     return out;
   }
-  if(!cal || !S.track) return out;
+  if(!cal || !S.est) return out;
   const C = clk.now(), rate = clk.rate;
-  for(const [n,t] of Object.entries(S.track)){
+  for(const [n,t] of Object.entries(S.est)){
     if(t.out){ delete disp[n]; continue; }
     if(t.pit!=null && G.lane){ const f=(t.pit + (C - Date.parse(S.clock)/1000))/(cal.pitTime||25); disp[n]={pit:true}; out[n]={xy:G.laneAt(Math.min(0.98,Math.max(0,f))), pit:true}; continue; }
     const a=anchors[n]; if(!a) continue;
@@ -1383,16 +1383,17 @@ function drawStrip(pos, finish, sel_){
 }
 function renderMap(){
   loadCircuit();
-  const real = S.cars && Object.keys(S.cars).length;
-  $('#mapModes').style.display = real ? '' : 'none';
+  const real = S.cars && Object.keys(S.cars).length, est = S.est && Object.keys(S.est).length;
+  $('#mapModes').style.display = real && est ? '' : 'none';
   if(!real) mapMode='stima';
+  else if(!est) mapMode='vere';     // sessioni scaricate da OpenF1: ci sono solo le posizioni vere
   $$('[data-mm]').forEach(x=>x.classList.toggle('on', x.dataset.mm===mapMode));
   const cal=circuit&&circuit.cal;
-  $('#mapInfo').innerHTML = LANG==='en' ? (mapMode==='vere' ? 'Real positions (only available in sessions downloaded from the archive).' :
-    cal ? `<b>Estimated</b> positions from the timing passes (24 timed points per lap): between two passes the car moves with the speed profile of a real lap. Typical error around 10 m. ${cal.approx?'<b class="yl">Approximate calibration: no archived session on this circuit.</b>':'Calibration: '+esc(cal.source)+'.'}`
+  $('#mapInfo').innerHTML = LANG==='en' ? (mapMode==='vere' ? 'Real car positions, from the downloaded session.' :
+    cal ? `<b>Estimated</b> positions from the timing passes (24 timed points per lap): between two passes the car moves with the speed profile of a real lap. Typical error around 10 m. ${cal.approx?'<b class="yl">Approximate calibration'+(cal.source&&cal.source!=='approssimata'?' ('+esc(cal.source)+')':'')+': it becomes precise once Free to Race has followed a session on this circuit live.</b>':'Calibration: '+esc(cal.source)+'.'}`
         : `Calibrating the circuit: ${esc(SRV(S.calStatus||'in corso'))}… (downloading an archived session, less than a minute)`) :
-    mapMode==='vere' ? 'Posizioni vere (ci sono solo nelle sessioni scaricate dall’archivio).' :
-    cal ? `Posizioni <b>stimate</b> dai passaggi sui minisettori (24 punti cronometrati per giro): tra un passaggio e l’altro l’auto avanza col profilo di velocità di un giro vero. Errore tipico circa 10 m. ${cal.approx?'<b class="yl">Taratura approssimata: nessuna sessione archiviata su questo circuito.</b>':'Taratura: '+esc(cal.source)+'.'}`
+    mapMode==='vere' ? 'Posizioni vere delle auto, dalla sessione scaricata.' :
+    cal ? `Posizioni <b>stimate</b> dai passaggi sui minisettori (24 punti cronometrati per giro): tra un passaggio e l’altro l’auto avanza col profilo di velocità di un giro vero. Errore tipico circa 10 m. ${cal.approx?'<b class="yl">Taratura approssimata'+(cal.source&&cal.source!=='approssimata'?' ('+esc(cal.source)+')':'')+': diventa precisa dopo che Free to Race ha seguito in diretta una sessione su questo circuito.</b>':'Taratura: '+esc(cal.source)+'.'}`
         : `Taratura del circuito ${esc(S.calStatus||'in corso')}… (scarico una sessione archiviata, meno di un minuto)`;
 }
 $('#mapModes').addEventListener('click', e=>{ const b=e.target.closest('[data-mm]'); if(!b) return; mapMode=b.dataset.mm; renderMap(); });
@@ -1505,7 +1506,7 @@ function fillSess(){ const m=cal[$('#meet').value]; $('#sess').innerHTML = m ? m
 $('#year').onchange = loadCal; $('#meet').onchange = fillSess;
 $('#dl').onclick = async () => {
   const m=cal[$('#meet').value]; if(!m) return;
-  $('#dlStatus').textContent = L('Scarico la sessione dall’archivio pubblico… (può volerci un minuto)','Downloading the session from the public archive… (it can take a minute)');
+  $('#dlStatus').textContent = L('Scarico la sessione… (un paio di minuti: ci sono anche le posizioni delle auto)','Downloading the session… (a couple of minutes: car positions included)');
   try{ const s = await api('/api/import',{year:$('#year').value, meeting:m.key, session:$('#sess').value}); await play({kind:'replay', path:s.path}); $('#dlStatus').textContent=''; }
   catch(e){ $('#dlStatus').textContent = L('Errore: ','Error: ')+SRV(e.message); }
 };
