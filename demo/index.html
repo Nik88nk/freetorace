@@ -196,6 +196,14 @@ footer input[type=range]{flex:1;min-width:200px;accent-color:var(--accent)}
 .sess:hover{border-color:var(--accent)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .empty{padding:36px;text-align:center;color:var(--dim)}
+#tourShade{position:fixed;inset:0;z-index:40;pointer-events:auto}
+#tourHole{position:fixed;z-index:41;border-radius:10px;box-shadow:0 0 0 9999px rgba(4,6,10,.72);border:2px solid var(--accent);transition:all .25s ease;pointer-events:none}
+#tourTip{position:fixed;z-index:42;width:min(360px,calc(100vw - 32px));background:#11151d;border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:10px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.6);transition:top .25s ease,left .25s ease}
+#tourTip h4{margin:0 0 6px;font-size:17px}
+#tourTip p{margin:0;color:#c9cfdb;font-size:14px;line-height:1.45}
+#tourTip .row{margin-top:12px;display:flex;gap:8px;align-items:center}
+#tourTip .n{color:var(--dim);font-size:12px;margin-right:auto}
+#helpBtn{font-weight:900;width:34px}
 #toasts{position:fixed;right:18px;bottom:70px;z-index:9;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .toast{background:#0f1218;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;max-width:420px;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:tin .3s ease-out}
 .toast b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase}
@@ -269,6 +277,7 @@ body.fs{overflow:hidden}
   <div class="chip-fl" id="flchip" style="display:none"></div>
   <div class="chips" id="wx"></div>
   <div class="grow"></div>
+  <button id="helpBtn" title="Guida · Help">?</button>
   <button id="langBtn" title="Language · Lingua">EN</button>
   <button id="goFs" class="fsbtn" title="Pista a schermo intero" data-en-title="Track in full screen" data-en="⛶ Full screen">⛶ Schermo intero</button>
   <button id="openChooser" data-en="Choose session">Scegli sessione</button>
@@ -1100,6 +1109,60 @@ function telPaintMap(ca, cb){
 }
 window.addEventListener('resize', () => { if(tab==='tele') telPaint(); });
 
+// ================= guida per chi apre il programma la prima volta =================
+// Pochi passi, ognuno evidenzia una parte della pagina. Parte da sola la prima volta; il pulsante ? la riapre.
+// I passi il cui elemento non e' visibile (per esempio «Scegli sessione» nella demo) si saltano.
+const TOUR = [
+  {sel:null, t:['Benvenuto in Free to Race','Welcome to Free to Race'],
+   p:['Tempi, strategia e pista della F1, come li vede il muretto box. Ti mostro dove sono le cose in 30 secondi.','F1 timing, strategy and the track, the way the pit wall sees them. Here is where everything is, in 30 seconds.']},
+  {sel:'#openChooser', t:['Da qui si comincia','Start here'],
+   p:['Segui la sessione in diretta oppure rivedi una sessione passata: qualsiasi gara, qualifica o libera si scarica dall’archivio ufficiale.','Follow the session live, or replay a past one: any race, qualifying or practice can be downloaded from the official archive.']},
+  {sel:'footer', t:['Controlli','Controls'],
+   p:['Nel replay: pausa, velocità da 1× a 60× e barra del tempo per saltare dove vuoi. In diretta: il ritardo, per allinearti alla TV senza spoiler.','In a replay: pause, speed from 1× to 60× and a timeline to jump anywhere. Live: the delay, to sync with your TV with no spoilers.']},
+  {sel:'.towerwrap', t:['La classifica','The timing tower'],
+   p:['Distacchi, settori, gomme e soste. Le barrette colorate sono i minisettori del giro in corso. Clicca un pilota per evidenziarlo ovunque; clicca un altro pilota per confrontarli.','Gaps, sectors, tyres and stops. The coloured bars are the mini-sectors of the current lap. Click a driver to highlight them everywhere; click another to compare them.']},
+  {sel:'#tabs', t:['Le schede','The tabs'],
+   p:['Gara: andamento, battaglie e passo. Gomme e strategia: stint e soste previste. Pilota e Confronto. Telemetria: due giri a confronto. Direzione gara e radio. Pista: le auto sulla mappa.','Race: progress, battles and pace. Tyres & strategy: stints and expected stops. Driver and Compare. Telemetry: two laps side by side. Race control and radio. Track: the cars on the map.']},
+  {sel:'#goFs', t:['Schermo intero','Full screen'],
+   p:['Pista e tempi a tutto schermo: perfetto su un secondo monitor o sulla TV accanto alla gara.','Track and timing in full screen: perfect on a second monitor or next to the TV.']},
+  {sel:'#helpBtn', t:['Tutto qui','That’s it'],
+   p:['EN/IT cambia lingua. Con ? rivedi questa guida quando vuoi. Buona gara!','EN/IT switches language. Press ? to see this guide again any time. Enjoy the race!']},
+];
+function tourVisible(el){ if(!el) return false; const r=el.getBoundingClientRect(); return r.width>0 && r.height>0 && getComputedStyle(el).visibility!=='hidden'; }
+function startTour(force){
+  if(!force && store.get('tourDone','')==='1') return Promise.resolve();
+  return new Promise(done => {
+    const steps = TOUR.filter(st => !st.sel || tourVisible($(st.sel)));
+    const shade=document.createElement('div'); shade.id='tourShade';
+    const hole=document.createElement('div'); hole.id='tourHole';
+    const tip=document.createElement('div'); tip.id='tourTip';
+    document.body.append(shade, hole, tip);
+    let i=0;
+    const end = () => { shade.remove(); hole.remove(); tip.remove(); window.removeEventListener('resize', show); document.removeEventListener('keydown', key); store.set('tourDone','1'); done(); };
+    const key = e => { if(e.key==='Escape') end(); else if(e.key==='ArrowRight' || e.key==='Enter'){ e.preventDefault(); next(); } };
+    const next = () => { if(++i>=steps.length) end(); else show(); };
+    function show(){
+      const st=steps[i], el=st.sel && $(st.sel);
+      tip.innerHTML = `<h4>${esc(L(...st.t))}</h4><p>${esc(L(...st.p))}</p><div class="row"><span class="n">${i+1} / ${steps.length}</span>`+
+        (i<steps.length-1 ? `<button id="tourSkip">${L('Salta','Skip')}</button><button class="on" id="tourNext">${L('Avanti','Next')}</button>` : `<button class="on" id="tourNext">${L('Inizia','Start')}</button>`)+'</div>';
+      $('#tourNext').onclick = next; if($('#tourSkip')) $('#tourSkip').onclick = end;
+      const W=innerWidth, Hh=innerHeight, tw=tip.offsetWidth, th=tip.offsetHeight;
+      if(!el){ hole.style.cssText=`left:${W/2}px;top:${Hh/2}px;width:0;height:0;border:none`; tip.style.left=(W-tw)/2+'px'; tip.style.top=(Hh-th)/2+'px'; return; }
+      const r=el.getBoundingClientRect(), pad=6;
+      const top=Math.max(4,r.top-pad), left=Math.max(4,r.left-pad), w=Math.min(W-8,r.width+2*pad), h=Math.min(Hh-8-top+4,r.height+2*pad);
+      hole.style.cssText=`left:${left}px;top:${top}px;width:${w}px;height:${h}px`;
+      let ty = top+h+12 + th < Hh ? top+h+12 : top-th-12;          // sotto, se c'e' spazio, altrimenti sopra
+      if(ty < 8) ty = Math.min(Hh-th-8, Math.max(8, top+24));        // elemento alto quanto la pagina: dentro
+      const tx = Math.min(W-tw-16, Math.max(16, left + w/2 - tw/2));
+      tip.style.left=tx+'px'; tip.style.top=ty+'px';
+    }
+    window.addEventListener('resize', show); document.addEventListener('keydown', key);
+    shade.onclick = next;
+    show();
+  });
+}
+$('#helpBtn').onclick = () => startTour(true);
+
 // ================= aggiornamenti =================
 // All'avvio il programma chiede a GitHub l'ultima versione (nessun dato inviato). Se ce n'e' una nuova,
 // una barra in alto; chiusa, torna solo per la versione dopo. Nella finestra delle sessioni: «Controlla aggiornamenti».
@@ -1483,7 +1546,7 @@ $$('[data-tm]').forEach(x=>x.classList.toggle('on',x.dataset.tm===towerMode));
 setInterval(tick, 800);
 setInterval(async()=>{ await refreshHistory(); }, 3000);
 window.addEventListener('resize', renderAll);
-refreshHistory().then(tick).then(()=>{ if(!S || S.source.kind==='none') openChooser(); askShortcut(); });
+refreshHistory().then(tick).then(()=>startTour(false)).then(()=>{ if(!S || S.source.kind==='none') openChooser(); askShortcut(); });
 // prima apertura: icona sul desktop?
 async function askShortcut(){
   let q; try{ q = await api('/api/setup'); }catch(e){ return; }
