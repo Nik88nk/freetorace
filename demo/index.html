@@ -265,6 +265,7 @@ body.fs{overflow:hidden}
 @keyframes dl{from{margin-left:0}to{margin-left:60%}}
 </style>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"></script>
+<script>if(window.matchMedia('(max-width: 820px)').matches && !/full=1/.test(location.search)) location.replace('../live/?demo=1');</script>
 <script>try{ const l=localStorage.getItem('ftr.lang'); if(l==='it'||l==='en') localStorage.setItem('f1c.lang', l); else if(!localStorage.getItem('f1c.lang')) localStorage.setItem('f1c.lang','en'); }catch(e){}</script>
 </head>
 <body>
@@ -1118,7 +1119,7 @@ const TOUR = [
   {sel:null, t:['Benvenuto in Free to Race','Welcome to Free to Race'],
    p:['Tempi, strategia e pista della F1, come li vede il muretto box. Ti mostro dove sono le cose in 30 secondi.','F1 timing, strategy and the track, the way the pit wall sees them. Here is where everything is, in 30 seconds.']},
   {sel:'#openChooser', t:['Da qui si comincia','Start here'],
-   p:['Segui la sessione in diretta oppure rivedi una sessione passata: qualsiasi gara, qualifica o libera si scarica dall’archivio ufficiale.','Follow the session live, or replay a past one: any race, qualifying or practice can be downloaded from the official archive.']},
+   p:['Segui la sessione in diretta oppure rivedi una sessione passata: qualsiasi gara, qualifica o libera si può scaricare. Il programma resta aperto vicino all’orologio (icona Free to Race): tasto destro, Esci, per chiuderlo.','Follow the session live, or replay a past one: any race, qualifying or practice can be downloaded. The program stays open next to the clock (Free to Race icon): right-click, Quit, to close it.']},
   {sel:'footer', t:['Controlli','Controls'],
    p:['Nel replay: pausa, velocità da 1× a 60× e barra del tempo per saltare dove vuoi. In diretta: il ritardo, per allinearti alla TV senza spoiler.','In a replay: pause, speed from 1× to 60× and a timeline to jump anywhere. Live: the delay, to sync with your TV with no spoilers.']},
   {sel:'.towerwrap', t:['La classifica','The timing tower'],
