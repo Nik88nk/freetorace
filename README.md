@@ -6,7 +6,7 @@
 
 ## Download
 
-Get the latest `FreeToRace-win64.zip` from [Releases](https://github.com/Nik88nk/freetorace/releases/latest), unzip it anywhere and run `FreeToRace.exe`. The dashboard opens in your browser. On first run the program asks whether to create a desktop icon.
+Get the latest `FreeToRace-Setup.exe` from [Releases](https://github.com/Nik88nk/freetorace/releases/latest) and run it: it installs in a few seconds for your user only, no admin rights, with a Start menu entry and an optional desktop icon. The dashboard opens in your browser. New versions install with one click from the program (**Update now**). A portable `FreeToRace-win64.zip` is also published. Privacy and safety: <https://free-to-race.com/privacy/>.
 
 Windows 10/11. If Windows shows “Windows protected your PC”, click **More info**, then **Run anyway**: the program is not code-signed yet.
 

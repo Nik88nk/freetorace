@@ -143,7 +143,7 @@ nav .links + .lang{margin-left:auto}
   <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
   <button class="lang" id="lang" title="English / Italiano"></button>
   <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px"></a>
-  <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-win64.zip" style="padding:8px 16px" data-i="dl_short"></a>
+  <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short"></a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -151,7 +151,7 @@ nav .links + .lang{margin-left:auto}
     <h1 data-i="h1"></h1>
     <p class="lead" data-i="lead"></p>
     <div class="cta" id="download">
-      <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-win64.zip" data-i="dl"></a>
+      <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl"></a>
       <a class="btn" href="demo/" data-i="demo"></a>
       <a class="btn" href="live/" data-i="live_btn"></a>
       <a class="btn" href="#features" data-i="what"></a>
@@ -211,6 +211,7 @@ nav .links + .lang{margin-left:auto}
 <footer><div class="wrap">
   <p data-i="disc"></p>
   <p data-i="credits"></p>
+  <p><a href="privacy/" data-i="privacy"></a></p>
 </div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -223,12 +224,12 @@ const T = {
   h1:'The race, as the <b>pit wall</b> sees it.',
   lead:'Live timing, tyre strategy, pit-stop forecasts and a track map with every car moving: free, on your own PC, no subscription.',
   dl:'⬇ Download for Windows', what:'What it does', demo:'▶ Try the demo in your browser', live_btn:'📱 Live on your phone',
-  dl_note:'Version 0.3 · Windows 10/11 · unzip and run, nothing to install · unofficial fan project',
+  dl_note:'Version 0.4 · Windows 10/11 · installs in a few seconds, no admin rights, updates with one click · unofficial fan project',
   ss_q:'Windows says “Windows protected your PC”?',
-  ss_a:'It happens with new programs from small developers that are not code-signed yet. Click <b>More info</b>, then <b>Run anyway</b>. You only need to do it once.',
+  ss_a:'It happens with new programs from small developers that are not code-signed yet. Click <b>More info</b>, then <b>Run anyway</b>. You only need to do it once. <a href="privacy/">Privacy and safety</a>: what the program connects to and how to check the download.',
   f_h:'More than a timing tower', f_sub:'It takes the public data of the official timing and makes sense of it.',
   f1t:'Only here', f1h:'Every car on track, live', f1p:'Without a subscription, F1 does not send car positions. Free to Race shows them anyway, live, on a map of the circuit.',
-  f2t:'Strategy', f2h:'Pit-stop forecasts and undercut', f2p:'When each driver will stop, where they will rejoin, and whether an undercut works: “works if LEC stays out 2 laps”. Checked against real pit stops.',
+  f2t:'Strategy', f2h:'Who wins, pit stops and undercut', f2p:'Live win and podium chances, recalculated every lap. Where each driver would rejoin after a stop, the cheap stop under Safety Car, and the chance an undercut works. Checked on 41 races.',
   f3t:'Timing', f3h:'Sectors and mini-sectors', f3p:'Gaps, purple and green sectors, the mini-sectors of the current lap, tyres, pit stops and a virtual standing that accounts for stops still to come.',
   f4t:'Analysis', f4h:'Pace, degradation, head-to-head', f4p:'Pace over the last clean laps, degradation of each tyre, how much fresh tyres are worth, and lap-by-lap comparison of two drivers.',
   f5t:'TV', f5h:'In sync with your TV', f5p:'Set the delay and the timing arrives together with the pictures, no spoilers. Every live session is recorded.',
@@ -246,6 +247,7 @@ const T = {
   t_meta:(p,pts,w,nat)=>`${p} in the constructors · ${pts} points · ${w} ${w==='1'?'win':'wins'} · ${nat}`, d_meta:(p,w)=>`P${p} · ${w} wins`,
   err_cal:'Calendar not available right now.', err_st:'Standings not available right now.', loading:'Loading…',
   disc:'<b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.',
+  privacy:'Privacy and safety: no account, no data collected',
   credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   locale:'en-GB'
  },
@@ -254,12 +256,12 @@ const T = {
   h1:'La gara, come la vede il <b>muretto box</b>.',
   lead:'Tempi in diretta, strategia gomme, previsione delle soste e una pista con le auto in movimento: tutto gratis, sul tuo PC, senza abbonamenti.',
   dl:'⬇ Scarica per Windows', what:'Cosa fa', demo:'▶ Prova la demo nel browser', live_btn:'📱 In diretta sul telefono',
-  dl_note:'Versione 0.3 · Windows 10/11 · si scompatta e si avvia, niente da installare · progetto non ufficiale',
+  dl_note:'Versione 0.4 · Windows 10/11 · si installa in pochi secondi, senza diritti di amministratore, si aggiorna con un clic · progetto non ufficiale',
   ss_q:'Windows dice «Windows ha protetto il PC»?',
-  ss_a:'Succede con i programmi nuovi di piccoli sviluppatori, non ancora firmati. Clicca <b>Ulteriori informazioni</b> e poi <b>Esegui comunque</b>. Basta farlo una volta.',
+  ss_a:'Succede con i programmi nuovi di piccoli sviluppatori, non ancora firmati. Clicca <b>Ulteriori informazioni</b> e poi <b>Esegui comunque</b>. Basta farlo una volta. <a href="privacy/">Privacy e sicurezza</a>: a cosa si collega il programma e come controllare il file scaricato.',
   f_h:'Più di una torre dei tempi', f_sub:'Usa i dati pubblici del cronometraggio ufficiale e ci ragiona sopra.',
   f1t:'Solo qui', f1h:'Le auto in pista, in diretta', f1p:'Senza abbonamento la F1 non manda le posizioni delle auto. Free to Race te le mostra lo stesso, in diretta, sulla mappa del circuito.',
-  f2t:'Strategia', f2h:'Soste previste e undercut', f2p:'Quando si fermerà ogni pilota, dove rientrerà, e se un undercut riesce: «riesce se LEC resta fuori 2 giri». Provato sulle soste vere.',
+  f2t:'Strategia', f2h:'Chi vince, soste e undercut', f2p:'Probabilità di vittoria e di podio in diretta, ricalcolate a ogni giro. Dove rientrerebbe ogni pilota dopo una sosta, la sosta scontata con la Safety Car, la probabilità che un undercut riesca. Provato su 41 gare.',
   f3t:'Tempi', f3h:'Settori e minisettori', f3p:'Distacchi, settori viola e verdi, minisettori del giro in corso, gomme, soste e la classifica virtuale che tiene conto delle soste che mancano.',
   f4t:'Analisi', f4h:'Passo, degrado, confronti', f4p:'Passo sugli ultimi giri puliti, degrado di ogni gomma, quanto valgono le gomme nuove, confronto giro per giro fra due piloti.',
   f5t:'TV', f5h:'Sincronizzato con la tua TV', f5p:'Imposti il ritardo e i tempi arrivano insieme alle immagini, senza spoiler. Ogni diretta viene registrata.',
@@ -277,6 +279,7 @@ const T = {
   t_meta:(p,pts,w,nat)=>`${p}° nei costruttori · ${pts} punti · ${w} ${w==='1'?'vittoria':'vittorie'} · ${nat}`, d_meta:(p,w)=>`${p}° · ${w} vitt.`,
   err_cal:'Calendario non disponibile adesso.', err_st:'Classifiche non disponibili adesso.', loading:'Carico…',
   disc:'<b style="color:var(--text)">Free to Race</b> è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.',
+  privacy:'Privacy e sicurezza: niente account, nessun dato raccolto',
   credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   locale:'it-IT'
  }

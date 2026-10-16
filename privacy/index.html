@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy and safety · Free to Race</title>
+<link rel="icon" type="image/png" href="../img/logo.png">
+<meta name="description" content="Free to Race collects no data and needs no account. What the program connects to, where it keeps its files, why Windows may warn you and how to check the download.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d12;--panel:#14181f;--panel2:#1b2029;--line:#262c37;--line2:#1d222b;--text:#eef1f6;--dim:#8b94a7;--dim2:#5d6577;--accent:#e10600;--green:#22d36b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 "Titillium Web","Segoe UI",system-ui,sans-serif}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:10;background:rgba(8,9,13,.92);backdrop-filter:blur(8px);border-bottom:3px solid var(--accent)}
+nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.brand{font-weight:900;font-size:21px;font-style:italic;text-decoration:none;display:flex;align-items:center;gap:9px}
+.brand b{color:var(--accent)}
+.lang{margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:6px 10px;font:inherit;font-weight:700;cursor:pointer}
+h1{font-size:clamp(34px,5vw,48px);line-height:1.05;margin:44px 0 10px;font-weight:900;font-style:italic}
+.lead{font-size:20px;color:#c9cfdb;margin:0 0 30px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:0 0 16px}
+.card h2{margin:0 0 8px;font-size:22px}
+.card p,.card li{color:#c9cfdb}
+.card p{margin:0 0 10px}
+.card ul{margin:0 0 10px;padding-left:20px}
+.card li{margin:4px 0}
+.ok{display:inline-block;color:var(--green);font-weight:900;margin-right:6px}
+code{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:15px;word-break:break-all}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;overflow-x:auto;font-size:14px;margin:6px 0 10px}
+footer{color:var(--dim2);font-size:13px;padding:26px 0 40px;border-top:1px solid var(--line2);margin-top:30px}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="../"><img src="../img/logo.png" alt="" style="width:30px;height:30px"><span><b>FREE</b> TO RACE</span></a>
+  <button class="lang" id="lang"></button>
+</div></nav>
+<main class="wrap" id="page"></main>
+<script>
+const T = {
+en: `
+<h1>Privacy and safety</h1>
+<p class="lead">Free to Race needs no account and collects no data about you. Here is exactly what it connects to and what it keeps on your computer.</p>
+<div class="card"><h2>What it collects: nothing</h2>
+<p><span class="ok">✓</span>No account, no sign-in, no email.</p>
+<p><span class="ok">✓</span>No analytics, no advertising, no cookies, no tracking in the program, in the phone app or on this site.</p>
+<p><span class="ok">✓</span>Your settings (language, TV delay) stay on your device.</p></div>
+<div class="card"><h2>What it connects to</h2>
+<ul>
+<li><b>F1 live timing</b> (livetiming.formula1.com): the public timing feed, the same one the official live timing uses. Read only.</li>
+<li><b>OpenF1</b> (api.openf1.org): free public data, to replay past sessions.</li>
+<li><b>Jolpica</b> (api.jolpi.ca): the season calendar and standings.</li>
+<li><b>free-to-race.com</b>: track drawings and map calibrations.</li>
+<li><b>GitHub</b>, at most every 6 hours: “is there a newer version?”. Nothing about you is sent.</li>
+<li>This site and the phone app load their font from <b>Google Fonts</b>.</li>
+</ul>
+<p>Like any website, these services see the usual technical details of a connection (such as your IP address). Free to Race adds nothing to it.</p></div>
+<div class="card"><h2>What it keeps on your PC</h2>
+<p>Recordings of live sessions, downloaded sessions, settings and a log file, all in <code>%LOCALAPPDATA%\\FreeToRace</code>. Nothing is sent anywhere. To remove everything, uninstall the program and delete that folder.</p></div>
+<div class="card"><h2>Why Windows may warn you</h2>
+<p>Windows shows “Windows protected your PC” or “unknown publisher” for programs that are not signed with a paid code-signing certificate. Free to Race is a free project and is not signed yet. If you downloaded it from this site or from <code>github.com/Nik88nk/freetorace</code>, click <b>More info → Run anyway</b>.</p>
+<p>Coming soon: install with <code>winget install FreeToRace</code> and from the Microsoft Store, which check the program for you.</p></div>
+<div class="card"><h2>Check your download</h2>
+<p>Every release on GitHub has, next to <code>FreeToRace-Setup.exe</code>, a file <code>FreeToRace-Setup.exe.sha256</code> with its fingerprint. In PowerShell:</p>
+<pre>Get-FileHash .\\FreeToRace-Setup.exe -Algorithm SHA256</pre>
+<p>The two values must be the same. The one-click update inside the program does this check by itself and stops if they differ.</p></div>
+<div class="card"><h2>Questions or problems</h2>
+<p>Open an issue at <a href="https://github.com/Nik88nk/freetorace/issues" target="_blank" rel="noopener">github.com/Nik88nk/freetorace/issues</a>, or write on Instagram <a href="https://www.instagram.com/free.to.race/" target="_blank" rel="noopener">@free.to.race</a>.</p></div>
+<footer>Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.</footer>`,
+it: `
+<h1>Privacy e sicurezza</h1>
+<p class="lead">Free to Race non chiede account e non raccoglie dati su di te. Ecco esattamente a cosa si collega e cosa tiene sul tuo computer.</p>
+<div class="card"><h2>Cosa raccoglie: niente</h2>
+<p><span class="ok">✓</span>Niente account, niente accesso, niente email.</p>
+<p><span class="ok">✓</span>Niente statistiche, pubblicità, cookie o tracciamento: né nel programma, né nell’app per il telefono, né su questo sito.</p>
+<p><span class="ok">✓</span>Le tue impostazioni (lingua, ritardo per la TV) restano sul tuo dispositivo.</p></div>
+<div class="card"><h2>A cosa si collega</h2>
+<ul>
+<li><b>Cronometraggio F1</b> (livetiming.formula1.com): il flusso pubblico dei tempi, lo stesso del live timing ufficiale. Solo in lettura.</li>
+<li><b>OpenF1</b> (api.openf1.org): dati pubblici gratuiti, per rivedere le sessioni passate.</li>
+<li><b>Jolpica</b> (api.jolpi.ca): calendario e classifiche della stagione.</li>
+<li><b>free-to-race.com</b>: disegni delle piste e tarature della mappa.</li>
+<li><b>GitHub</b>, al massimo ogni 6 ore: «c’è una versione nuova?». Non viene inviato nulla su di te.</li>
+<li>Questo sito e l’app per il telefono caricano il carattere da <b>Google Fonts</b>.</li>
+</ul>
+<p>Come per qualsiasi sito, questi servizi vedono i normali dati tecnici di un collegamento (per esempio l’indirizzo IP). Free to Race non aggiunge nulla.</p></div>
+<div class="card"><h2>Cosa tiene sul tuo PC</h2>
+<p>Le registrazioni delle dirette, le sessioni scaricate, le impostazioni e un file di log, tutto in <code>%LOCALAPPDATA%\\FreeToRace</code>. Niente viene inviato altrove. Per togliere tutto: disinstalla il programma e cancella quella cartella.</p></div>
+<div class="card"><h2>Perché Windows può avvisarti</h2>
+<p>Windows mostra «PC protetto da Windows» o «autore sconosciuto» per i programmi che non hanno una firma digitale a pagamento. Free to Race è un progetto gratuito e non è ancora firmato. Se l’hai scaricato da questo sito o da <code>github.com/Nik88nk/freetorace</code>, scegli <b>Ulteriori informazioni → Esegui comunque</b>.</p>
+<p>In arrivo: l’installazione con <code>winget install FreeToRace</code> e dal Microsoft Store, che controllano il programma per te.</p></div>
+<div class="card"><h2>Controlla il file scaricato</h2>
+<p>Ogni versione su GitHub ha, accanto a <code>FreeToRace-Setup.exe</code>, un file <code>FreeToRace-Setup.exe.sha256</code> con la sua impronta. In PowerShell:</p>
+<pre>Get-FileHash .\\FreeToRace-Setup.exe -Algorithm SHA256</pre>
+<p>I due valori devono coincidere. L’aggiornamento con un clic dentro il programma fa questo controllo da solo e si ferma se non coincidono.</p></div>
+<div class="card"><h2>Domande o problemi</h2>
+<p>Apri una segnalazione su <a href="https://github.com/Nik88nk/freetorace/issues" target="_blank" rel="noopener">github.com/Nik88nk/freetorace/issues</a>, oppure scrivi su Instagram a <a href="https://www.instagram.com/free.to.race/" target="_blank" rel="noopener">@free.to.race</a>.</p></div>
+<footer>Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.</footer>`};
+let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s==='it'||s==='en') return s; }catch(e){} return /^it\b/i.test(navigator.language||'') ? 'it' : 'en'; })();
+function show(){
+  document.documentElement.lang = LANG;
+  document.getElementById('page').innerHTML = T[LANG];
+  document.getElementById('lang').textContent = LANG==='it' ? 'EN' : 'IT';
+  document.title = LANG==='it' ? 'Privacy e sicurezza · Free to Race' : 'Privacy and safety · Free to Race';
+}
+document.getElementById('lang').onclick = () => { LANG = LANG==='it' ? 'en' : 'it'; try{ localStorage.setItem('ftr.lang', LANG); }catch(e){} show(); };
+show();
+</script>
+</body>
+</html>
