@@ -71,9 +71,26 @@ nav em{font-style:normal}
 .msg{padding:9px 12px;border-bottom:1px solid var(--line2);display:flex;gap:8px;font-size:13px}
 .msg .f{width:6px;border-radius:2px;flex:none}
 .msg .w{color:var(--dim);font-size:11px;min-width:44px}
-.idle{padding:28px 18px;text-align:center}
-.idle h2{margin:0 0 6px;font-size:22px}
-.idle .cd{font-size:30px;font-weight:900;margin:12px 0}
+.idle{padding:26px 16px 18px;text-align:center}
+.idle .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
+.idle h2{margin:6px 0 4px;font-size:24px;line-height:1.15}
+.idle .when{color:var(--dim);font-size:14px}
+.cdg{display:flex;justify-content:center;gap:8px;margin:20px 0 22px}
+.cdg div{background:var(--panel2);border:1px solid var(--line);border-radius:12px;min-width:66px;padding:10px 4px 8px}
+.cdg b{display:block;font-size:34px;font-weight:900;line-height:1}
+.cdg small{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-top:5px}
+.idle .btn.big{display:block;max-width:320px;margin:0 auto;padding:14px 16px;font-size:16px}
+.idle .sub{color:var(--dim);font-size:12px;margin-top:6px}
+.idle .last{color:var(--dim2);font-size:12px;margin-top:22px}
+.idle .where{color:var(--dim);font-size:13px;margin-top:2px}
+.wk{max-width:360px;margin:24px auto 0;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.wk h4{margin:0;padding:10px 14px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line2)}
+.wk div{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line2);font-size:14px}
+.wk div:last-child{border-bottom:0}
+.wk .done{color:var(--dim2)}
+.wk .nx{background:#1a2030;font-weight:700}.wk .nx span:first-child{color:var(--accent)}
+.idle .acts{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.idle .acts .btn{margin:0;font-size:14px}
 .btn{display:inline-block;padding:10px 16px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);color:var(--text);text-decoration:none;font-weight:700;margin:4px}
 .btn.main{background:var(--accent);border-color:var(--accent)}
 .set{padding:14px 12px;border-bottom:1px solid var(--line2)}
@@ -102,10 +119,10 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 <div id="rpLoad" style="display:none"><img src="icon-192.png" alt=""><b>FREE TO RACE · DEMO</b><span id="rpMsg"></span></div>
 <main>
   <div class="pane on" id="p-times">
-    <div class="seg" id="gapMode"><button data-g="gap" class="on" data-t="gapLeader"></button><button data-g="int" data-t="gapAhead"></button></div>
-    <div class="head"><span>P</span><span></span><span data-t="driver"></span><span id="hGap" data-t="gap"></span><span data-t="last"></span><span data-t="tyre"></span></div>
-    <div id="rows"></div>
     <div id="idle"></div>
+    <div class="seg" id="gapMode"><button data-g="gap" class="on" data-t="gapLeader"></button><button data-g="int" data-t="gapAhead"></button></div>
+    <div class="head" id="timesHead"><span>P</span><span></span><span data-t="driver"></span><span id="hGap" data-t="gap"></span><span data-t="last"></span><span data-t="tyre"></span></div>
+    <div id="rows"></div>
   </div>
   <div class="pane" id="p-map"><div id="mapBox"><canvas id="map"></canvas></div><div class="note" id="mapNote"></div><div id="mapRows"></div></div>
   <div class="pane" id="p-rc"><div id="rc"></div></div>
@@ -114,7 +131,7 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
       <p class="dim" style="font-size:13px" data-t="delayP"></p></div>
     <div class="set"><h4 data-t="langH"></h4><div class="seg" style="padding:0"><button data-l="en">English</button><button data-l="it">Italiano</button></div></div>
     <div class="set"><h4 data-t="homeH"></h4><p class="dim" style="font-size:13px;margin:0" data-t="homeP"></p></div>
-    <div class="set"><a class="btn main" href="../" data-t="pc"></a> <a class="btn" href="https://ko-fi.com/freetorace" data-t="coffee"></a></div>
+    <div class="set"><a class="btn main" href="../" data-t="pc"></a> <a class="btn" href="https://ko-fi.com/freetorace" data-t="coffee"></a> <a class="btn" href="#" data-share="1" data-t="share"></a></div>
     <footer data-t="disc"></footer>
   </div>
 </main>
@@ -132,7 +149,7 @@ const T = {
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
   langH:'Language', homeH:'On your home screen', homeP:'Browser menu → “Add to Home screen”: it opens like an app.', pc:'Free to Race for PC', coffee:'☕ Buy me a coffee',
   disc:'Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. Live data straight from the public F1 live timing to your phone. Circuit drawings: MultiViewer.',
-  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', lap:'LAP', left:'LEFT',
+  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2026 Italian GP, the whole race on your phone', weekend:'Weekend schedule (your time)', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
   retired:'OUT', pit:'PIT', mapApprox:'Approximate map: it gets precise after the first session on this circuit.', mapNone:'Track layout not available.', mapOk:'Cars estimated from the official timing, about 10 m accuracy.', noMsg:'No messages yet.', locale:'en-GB',
   rpLoading:'Loading the demo race…', rpWhat:'2026 Italian GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
@@ -140,7 +157,7 @@ const T = {
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
   langH:'Lingua', homeH:'Sulla schermata Home', homeP:'Menu del browser → «Aggiungi a schermata Home»: si apre come un’app.', pc:'Free to Race per PC', coffee:'☕ Offrimi un caffè',
   disc:'Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati arrivano al telefono direttamente dal cronometraggio pubblico F1. Disegni dei circuiti: MultiViewer.',
-  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', lap:'GIRO', left:'MANCANO',
+  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP d’Italia 2026, tutta la gara sul telefono', weekend:'Programma del weekend (tua ora)', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
   retired:'RIT', pit:'BOX', mapApprox:'Mappa approssimata: diventa precisa dopo la prima sessione su questo circuito.', mapNone:'Disegno della pista non disponibile.', mapOk:'Auto stimate dal cronometraggio ufficiale, precisione circa 10 m.', noMsg:'Ancora nessun messaggio.', locale:'it-IT',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP d’Italia 2026', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
   track:{'1':'Pista libera','2':'Gialla','4':'Safety Car','5':'Bandiera rossa','6':'VSC','7':'Fine VSC'}}};
@@ -256,20 +273,23 @@ function drivers(){
 const segColor = s => s===2051?'var(--purple)':s===2049?'var(--green)':s===2064?'var(--blue)':s?'var(--yellow)':'#2b313c';
 function render(){
   const si = ST.SessionInfo || {}, m = si.Meeting || {}, race = si.Type==='Race';
-  $('#ev').textContent = m.Name || 'Free to Race';
-  $('#ses').textContent = [si.Name, m.Location].filter(Boolean).join(' · ') || 'Live';
-  const ts = String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
-  if(tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
-  const lc = ST.LapCount || {};
-  if(race && lc.CurrentLap) $('#lap').innerHTML = `${lc.CurrentLap}<span class="dim" style="font-size:13px">/${lc.TotalLaps||'?'}</span><small>${t('lap')}</small>`;
-  else { const r = remaining(); $('#lap').innerHTML = r!=null ? `${fmtT(r)}<small>${t('left')}</small>` : ''; }
   const live = isLive();
+  // in attesa la testata non mostra la sessione finita (giro 62/62 e simili): solo il nome
+  $('#ev').textContent = live && m.Name || 'Free to Race';
+  $('#ses').textContent = live ? ([si.Name, m.Location].filter(Boolean).join(' · ') || 'Live') : t('noSession');
+  const ts = String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
+  if(live && tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
+  const lc = ST.LapCount || {};
+  if(!live) $('#lap').innerHTML = '';
+  else if(race && lc.CurrentLap) $('#lap').innerHTML = `${lc.CurrentLap}<span class="dim" style="font-size:13px">/${lc.TotalLaps||'?'}</span><small>${t('lap')}</small>`;
+  else { const r = remaining(); $('#lap').innerHTML = r!=null ? `${fmtT(r)}<small>${t('left')}</small>` : ''; }
   if(connected && !DEMO) setConn(live ? t('live') : t('idleConn'), true);
   const ds = drivers();
   $('#gapMode').style.display = race && live ? '' : 'none';
+  $('#timesHead').style.display = live ? '' : 'none';
   $('#hGap').textContent = race ? t('gap') : t('gapBest');
   let ref = null; if(!race){ for(const d of ds){ const b=secs(d.best); if(b!=null && (ref==null || b<ref)) ref=b; } }
-  $('#rows').innerHTML = ds.map(d => {
+  $('#rows').innerHTML = !live ? '' : ds.map(d => {
     let g;
     if(race) g = d.pos===1 ? '<span class="dim">Leader</span>' : esc(gapMode==='int' ? d.int : d.gap);
     else { const b=secs(d.best); g = b==null ? '' : b===ref ? `<b>${esc(d.best)}</b>` : `+${(b-ref).toFixed(3)}<small>${esc(d.best)}</small>`; }
@@ -305,27 +325,83 @@ function isLive(){
 $$('#gapMode [data-g]').forEach(b => b.onclick = () => { gapMode=b.dataset.g; $$('#gapMode [data-g]').forEach(x=>x.classList.toggle('on',x===b)); render(); });
 
 // nessuna sessione in diretta: l'ultima e la prossima (calendario Jolpica)
-let nextSess = null;
+let nextSess = null, weekend = null;   // prossima sessione e programma del suo weekend
+const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};   // minuti, per il calendario
 async function loadNext(){
   try{ const r = await (await fetch('https://api.jolpi.ca/ergast/f1/current/races/?limit=40')).json(); const now=Date.now(), out=[];
     for(const race of r.MRData.RaceTable.Races){
-      for(const [k,lbl] of [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['',race.raceName?'Race':'']]){
+      const c = race.Circuit || {}, loc = c.Location || {};
+      const wk = {name:race.raceName, circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
+      for(const [k,lbl] of [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']]){
         const x = k ? race[k] : {date:race.date, time:race.time}; if(!x || !x.date) continue;
-        const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); if(d > now - 2*3600e3) out.push({d, name:race.raceName, s:lbl}); } }
-    out.sort((a,b)=>a.d-b.d); nextSess = out[0] || null; render();
+        const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); wk.sessions.push({d, s:lbl});
+        if(d > now - 2*3600e3) out.push({d, name:race.raceName, s:lbl, wk}); } }
+    out.sort((a,b)=>a.d-b.d); nextSess = out[0] || null; weekend = nextSess ? nextSess.wk : null;
+    if(weekend) weekend.sessions.sort((a,b)=>a.d-b.d);
+    render();
   }catch(e){}
 }
+// file .ics con tutte le sessioni del weekend e un promemoria 15 minuti prima: il telefono lo apre nel calendario
+function icsWeekend(){
+  const z = ms => new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+  const out = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Free to Race//Live//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  for(const x of weekend.sessions){
+    const name = `${weekend.name} · ${t('sess')[x.s]||x.s}`;
+    out.push('BEGIN:VEVENT', `UID:ftr-${x.d}-${x.s.replace(/\W/g,'')}@free-to-race.com`, `DTSTAMP:${z(Date.now())}`, `DTSTART:${z(x.d)}`, `DTEND:${z(x.d + (DUR[x.s]||60)*60e3)}`,
+      `SUMMARY:${name}`, `LOCATION:${[weekend.circuit, weekend.place].filter(Boolean).join(' - ').replace(/,/g,'\\,')}`, 'URL:https://free-to-race.com/live/', 'DESCRIPTION:Free to Race Live: https://free-to-race.com/live/',
+      'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:${name} ${t('calAlarm')}`,'TRIGGER:-PT15M','END:VALARM','END:VEVENT');
+  }
+  out.push('END:VCALENDAR');
+  return out.join('\r\n');
+}
+function addCalendar(){
+  if(!weekend) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([icsWeekend()], {type:'text/calendar'}));
+  a.download = weekend.name.replace(/[^\w]+/g,'_') + '.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+async function share(){
+  const url = 'https://free-to-race.com/live/';
+  if(navigator.share){ try{ await navigator.share({title:'Free to Race Live', text:t('shareTxt'), url}); }catch(e){} return; }   // annullato: niente
+  try{ await navigator.clipboard.writeText(url); toast(t('copied')); }catch(e){ prompt('', url); }
+}
+function toast(msg){
+  const d = document.createElement('div'); d.textContent = msg;
+  d.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;z-index:20;font-weight:700';
+  document.body.appendChild(d); setTimeout(()=>d.remove(), 1800);
+}
+document.addEventListener('click', e => {
+  if(e.target.closest('[data-share]')){ e.preventDefault(); share(); }
+  if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
+});
 function idleHtml(){
   const si = ST.SessionInfo || {}, m = si.Meeting || {};
-  let h = `<div class="idle"><h2>${t('noSession')}</h2>`;
-  if(m.Name) h += `<div class="dim">${t('last_')}: ${esc(m.Name)} · ${esc(si.Name||'')}</div>`;
-  if(nextSess){ const left = Math.max(0, (nextSess.d - Date.now())/1000), dd=Math.floor(left/86400);
-    h += `<div style="margin-top:18px" class="dim">${t('next')}</div><div style="font-weight:900;font-size:18px">${esc(nextSess.name)} · ${esc(nextSess.s)}</div>
-      <div class="dim">${new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'})}</div>
-      <div class="cd tn">${dd?dd+'d ':''}${fmtT(left%86400)}</div>`; }
-  return h + `<a class="btn" href="?demo=1">${t('demo')}</a></div>`;
+  let h = `<div class="idle">`;
+  if(nextSess){
+    h += `<div class="kick">${t('next')}</div><h2>${esc(nextSess.name)}</h2>${weekend && weekend.circuit ? `<div class="where">${esc(weekend.circuit)}${weekend.place?' · '+esc(weekend.place):''}</div>` : ''}
+      <div class="when">${esc(t('sess')[nextSess.s]||nextSess.s)} · ${new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'})}</div>
+      <div class="cdg tn" id="cdg">${cdHtml()}</div>`;
+  } else h += `<div class="kick">${t('noSession')}</div><div class="when" style="margin:14px 0 22px">${t('loadingCal')}</div>`;
+  h += `<a class="btn main big" href="?demo=1">${t('demo')}</a><div class="sub">${t('demoSub')}</div>`;
+  if(weekend){
+    const now = Date.now(), nx = weekend.sessions.find(y => y.d > now - 2*3600e3);
+    const fmt = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'});
+    h += `<div class="wk"><h4>${t('weekend')}</h4>${weekend.sessions.map(x => `<div class="${x===nx?'nx':x.d<now?'done':''}"><span>${esc(t('sess')[x.s]||x.s)}</span><span class="tn">${esc(fmt(x.d))}</span></div>`).join('')}</div>`;
+  }
+  h += `<div class="acts">${weekend?`<a class="btn" href="#" data-cal="1">${t('addCal')}</a>`:''}<a class="btn" href="#" data-share="1">${t('share')}</a></div>`;
+  if(m.Name) h += `<div class="last">${t('last_')}: ${esc(m.Name)} · ${esc(si.Name||'')}</div>`;
+  return h + `</div>`;
 }
-setInterval(()=>{ if(!isLive() && nextSess && tab==='times') $('#idle').innerHTML = idleHtml(); }, 1000);
+// conto alla rovescia: giorni, ore, minuti, secondi
+function cdHtml(){
+  const left = Math.max(0, Math.floor((nextSess.d - Date.now())/1000));
+  if(!left) return `<div style="min-width:220px"><b style="font-size:22px">${t('soon')}</b></div>`;
+  const parts = [[Math.floor(left/86400), t('days')], [Math.floor(left%86400/3600), t('hrs')], [Math.floor(left%3600/60), t('mins')], [left%60, t('secsU')]];
+  while(parts.length > 3 && parts[0][0] === 0) parts.shift();   // senza giorni: ore, minuti, secondi
+  return parts.map(([v,u],i)=>`<div><b>${i?String(v).padStart(2,'0'):v}</b><small>${u}</small></div>`).join('');
+}
+setInterval(()=>{ const c=$('#cdg'); if(c && nextSess && !isLive()) c.innerHTML = cdHtml(); }, 1000);
 
 // ---------------- direzione gara ----------------
 const FLAG = {GREEN:'#22d36b',YELLOW:'#ffd12e','DOUBLE YELLOW':'#ffd12e',RED:'#e10600',BLUE:'#3d8bff',CLEAR:'#22d36b',CHEQUERED:'#fff'};
