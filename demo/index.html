@@ -1359,7 +1359,7 @@ function geo(W,Hh,pad=40){
       const r=Math.max(0,Math.min(1,((xy[0]-p[0])*dx+(xy[1]-p[1])*dy)/l2)), x=p[0]+dx*r-xy[0], y=p[1]+dy*r-xy[1], d=x*x+y*y;
       if(d<best){ best=d; f=(cumR[i]+r*(cumR[i+1]-cumR[i]))/tot; } }
     return f; };
-  mapGeo={W,H:Hh,pad,P,scr,at,fracOf,fracAt,lane,laneAt};
+  mapGeo={W,H:Hh,pad,P,scr,at,fracOf,fracAt,lane,laneAt,k,cumR};
   return mapGeo;
 }
 function estFrac(cal, idx, age, pace){
@@ -1438,6 +1438,87 @@ function carPositions(){
   }
   return out;
 }
+// Disegno fisso della pista: asfalto alla larghezza vera (12-15 m, mai meno di quanto si legge), bordi chiari,
+// cordoli bianchi e rossi all'interno delle curve, corsia box come strada piu' stretta, traguardo a scacchi,
+// settori e numeri delle curve. Si disegna una volta su una tela a parte e si ricopia a ogni fotogramma;
+// si rifa' quando cambiano misura, circuito o taratura. Le coordinate di MultiViewer sono in decimetri.
+let mapBg = null;
+function trackLayer(g, G, W, Hh, sc, dpr, cal){
+  let ends=[0.34,0.67,1];
+  if(cal){ const ns=cal.nseg, N=cal.refDur.length; ends=[cal.bounds[ns[0]-1], cal.bounds[ns[0]+ns[1]-1], cal.bounds[N-1]]; }
+  const out = {finish: ends[2]};
+  if(!(mapBg && mapBg.G===G && mapBg.cal===cal && mapBg.sc===sc && mapBg.dpr===dpr)){
+    const cv=document.createElement('canvas'); cv.width=Math.round(W*dpr); cv.height=Math.round(Hh*dpr);
+    const b=cv.getContext('2d'); b.setTransform(dpr,0,0,dpr,0,0);
+    const n=G.scr.length, w=Math.max(9*sc, Math.min(26*sc, 130*G.k));
+    const path=pts=>{ b.beginPath(); pts.forEach((p,i)=>i?b.lineTo(p[0],p[1]):b.moveTo(p[0],p[1])); };
+    b.lineCap='round'; b.lineJoin='round';
+    // corsia box: strada piu' stretta, sotto il tracciato
+    // solo i punti vicini al tracciato (entro 80 m): alcune tarature hanno code che escono nel paddock
+    const lane = G.lane && G.lane.filter(q=>G.scr.some(p=>Math.hypot(p[0]-q[0],p[1]-q[1]) < 800*G.k));
+    if(lane && lane.length>1){
+      path(lane); b.strokeStyle='#05070a'; b.lineWidth=w*0.62+4; b.stroke();
+      b.strokeStyle='#4a5262'; b.lineWidth=w*0.62+1.5; b.stroke();
+      b.strokeStyle='#262b35'; b.lineWidth=w*0.62; b.stroke();
+      const h=Math.floor(lane.length/2), m=lane[h], a=lane[Math.max(0,h-2)], z=lane[Math.min(lane.length-1,h+2)];
+      const dx=z[0]-a[0], dy=z[1]-a[1], l=Math.hypot(dx,dy)||1;
+      b.save(); b.translate(m[0],m[1]); let ang=Math.atan2(dy,dx); if(Math.abs(ang)>Math.PI/2) ang+=Math.PI; b.rotate(ang);
+      b.fillStyle='#7fb2ff'; b.font='bold '+Math.round(9*sc)+'px Titillium Web'; b.textAlign='center'; b.fillText('PIT', 0, -w*0.31-4*sc); b.restore();
+    }
+    // asfalto: bordo scuro, linea chiara ai lati, settori in tre toni
+    path(G.scr); b.closePath(); b.strokeStyle='#05070a'; b.lineWidth=w+6; b.stroke();
+    b.strokeStyle='#6b7486'; b.lineWidth=w+2; b.stroke();
+    const secCol=['#3d4452','#333a46','#2a303a'], rel=f=>((f-out.finish)%1+1)%1;
+    const secOf=f=>{ if(!cal) return 1; const x=rel(f); return x<rel(ends[0])?0:x<rel(ends[1])?1:2; };   // senza taratura i settori non si sanno: un tono solo
+    let i0=0;
+    for(let i=1;i<=n;i++){   // tratti dello stesso settore in un'unica linea, senza giunture visibili
+      if(i<n && secOf(G.fracOf(i))===secOf(G.fracOf(i0))) continue;
+      const seg=[]; for(let j=i0;j<=Math.min(i,n);j++) seg.push(G.scr[j%n]);
+      path(seg); b.strokeStyle=secCol[secOf(G.fracOf(i0))]; b.lineWidth=w; b.stroke(); i0=i;
+    }
+    // normale verso l'interno della curva nel punto i (verso il centro della corda fra i-m e i+m)
+    const inner=(i,m)=>{ const p=G.scr[i], a=G.scr[(i-m+n)%n], c=G.scr[(i+m)%n];
+      const dx=c[0]-a[0], dy=c[1]-a[1], l=Math.hypot(dx,dy)||1; let nx=-dy/l, ny=dx/l;
+      const mx=(a[0]+c[0])/2-p[0], my=(a[1]+c[1])/2-p[1]; if(nx*mx+ny*my<0){ nx=-nx; ny=-ny; }
+      return {nx, ny, bend:Math.hypot(mx,my)}; };
+    const tot=G.cumR[G.cumR.length-1], step=tot/n;
+    // cordoli: 50 m attorno al punto della curva, sul lato interno
+    for(const c of (circuit.mv.corners||[])){ const tp=c.trackPosition; if(!tp) continue;
+      const q=G.P(tp.x,tp.y); let bi=0, bd=1e18; G.scr.forEach((p,i)=>{ const d=(p[0]-q[0])**2+(p[1]-q[1])**2; if(d<bd){ bd=d; bi=i; } });
+      const m=Math.max(2, Math.round(400/step)), dir=inner(bi,m); if(dir.bend<1.5) continue;   // quasi dritto: niente cordolo
+      const span=Math.max(2, Math.round(250/step)), pts=[];
+      for(let j=-span;j<=span;j++){ const i=(bi+j+n)%n, d=inner(i,m), p=G.scr[i]; const s=(d.nx*dir.nx+d.ny*dir.ny)<0?-1:1; pts.push([p[0]+d.nx*s*(w/2), p[1]+d.ny*s*(w/2)]); }
+      path(pts); b.lineCap='butt'; b.lineWidth=Math.max(2.5, 3*sc);
+      b.setLineDash([4*sc,4*sc]); b.strokeStyle='#f2f4f8'; b.stroke();
+      b.lineDashOffset=4*sc; b.strokeStyle='#e10600'; b.stroke(); b.setLineDash([]); b.lineDashOffset=0; b.lineCap='round';
+    }
+    // confini dei settori e traguardo a scacchi
+    const across=(f, fn)=>{ const a=G.at(f-0.002), z=G.at(f+0.002), p=G.at(f); b.save(); b.translate(p[0],p[1]); b.rotate(Math.atan2(z[1]-a[1], z[0]-a[0])); fn(); b.restore();
+      const l=Math.hypot(z[0]-a[0], z[1]-a[1])||1; return [p[0]-(z[1]-a[1])/l, p[1]+(z[0]-a[0])/l, p]; };
+    if(cal) for(const [f,lbl] of [[ends[0],'S1'],[ends[1],'S2']]){
+      const [nx,ny,p]=across(f, ()=>{ b.strokeStyle='#aeb6c4'; b.lineWidth=2; b.beginPath(); b.moveTo(0,-w/2-5); b.lineTo(0,w/2+5); b.stroke(); });
+      const d=w/2+12*sc; b.fillStyle='#aeb6c4'; b.font='bold '+Math.round(10*sc)+'px Titillium Web'; b.textAlign='center'; b.textBaseline='middle';
+      b.fillText(lbl, p[0]+(nx-p[0])*d, p[1]+(ny-p[1])*d); b.textAlign='left'; b.textBaseline='alphabetic'; }
+    if(cal) across(out.finish, ()=>{ const cs=Math.max(3,(w+6)/4), rows=2, cols=4;
+      for(let r=0;r<rows;r++) for(let c2=0;c2<cols;c2++){ b.fillStyle=(r+c2)%2?'#0b0d12':'#ffffff'; b.fillRect(-cs+r*cs, -cols*cs/2+c2*cs, cs, cs); } });
+    // numeri delle curve in un tondino, dal lato dove li mette MultiViewer (fuori dalla curva)
+    b.font='bold '+Math.round(10*sc)+'px Titillium Web'; b.textAlign='center'; b.textBaseline='middle';
+    const badges=[];
+    for(const c of (circuit.mv.corners||[])){ const tp=c.trackPosition; if(!tp) continue;
+      const p=G.P(tp.x,tp.y), ang=(c.angle||0)*Math.PI/180, txt=c.number+(c.letter||''), r=Math.max(8*sc, b.measureText(txt).width/2+4);
+      let d=w/2+15*sc, x, y, k=0;
+      for(;k<4;k++){ x=p[0]+Math.cos(ang)*d; y=p[1]-Math.sin(ang)*d;   // curve vicine (chicane): il tondino si allontana
+        if(!badges.some(q=>Math.hypot(q[0]-x,q[1]-y)<q[2]+r+2)) break; d+=r*1.6; }
+      badges.push([x,y,r]);
+      if(k){ b.strokeStyle='#4a5262'; b.lineWidth=1; b.beginPath(); b.moveTo(p[0]+Math.cos(ang)*(w/2+2), p[1]-Math.sin(ang)*(w/2+2)); b.lineTo(x-Math.cos(ang)*r, y+Math.sin(ang)*r); b.stroke(); }
+      b.fillStyle='#1b2029'; b.strokeStyle='#4a5262'; b.lineWidth=1; b.beginPath(); b.arc(x,y,r,0,7); b.fill(); b.stroke();
+      b.fillStyle='#c3cad6'; b.fillText(txt, x, y+0.5); }
+    b.textAlign='left'; b.textBaseline='alphabetic';
+    mapBg={G, cal, sc, dpr, cv};
+  }
+  g.drawImage(mapBg.cv, 0, 0, W, Hh);
+  return out;
+}
 function drawMap(){
   if(!S) return;
   const fs=document.body.classList.contains('fs');
@@ -1449,29 +1530,7 @@ function drawMap(){
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); const W=r.width, Hh=r.height;
   g.clearRect(0,0,W,Hh);
   const G=geo(W,Hh,fs?90:40), cal=circuit.cal;
-  // corsia box
-  if(G.lane){ g.strokeStyle='#2a3140'; g.lineWidth=5; g.setLineDash([6,5]); g.beginPath(); G.lane.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.stroke(); g.setLineDash([]); }
-  // tracciato con i tre settori
-  const secCol=['#454d5e','#363d4b','#2a303b'];
-  let ends=[0.34,0.67,1];
-  if(cal){ const ns=cal.nseg, N=cal.refDur.length; ends=[cal.bounds[ns[0]-1], cal.bounds[ns[0]+ns[1]-1], cal.bounds[N-1]]; }
-  const finish=ends[2];
-  const rel = f => ((f-finish)%1+1)%1;
-  const secOf = f => { const x=rel(f); return x<rel(ends[0])?0:x<rel(ends[1])?1:2; };
-  g.lineCap='round'; g.lineJoin='round';
-  g.strokeStyle='#05070a'; g.lineWidth=16*sc; g.beginPath(); G.scr.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])); g.closePath(); g.stroke();
-  for(let i=0;i<G.scr.length;i++){ const p=G.scr[i], q=G.scr[(i+1)%G.scr.length]; g.strokeStyle=secCol[secOf(G.fracOf(i))]; g.lineWidth=10*sc; g.beginPath(); g.moveTo(p[0],p[1]); g.lineTo(q[0],q[1]); g.stroke(); }
-  // traguardo e confini dei settori
-  const tick=(f,col,w,lbl)=>{ const a=G.at(f-0.002), b=G.at(f+0.002), p=G.at(f); const dx=b[0]-a[0], dy=b[1]-a[1], l=Math.hypot(dx,dy)||1; const nx=-dy/l*12, ny=dx/l*12;
-    g.strokeStyle=col; g.lineWidth=w; g.beginPath(); g.moveTo(p[0]-nx,p[1]-ny); g.lineTo(p[0]+nx,p[1]+ny); g.stroke();
-    if(lbl){ g.fillStyle=col; g.font='bold 10px Titillium Web'; g.fillText(lbl, p[0]+nx*1.4+3, p[1]+ny*1.4+3); } };
-  if(cal){ tick(ends[0],'#8b94a7',2,'S1'); tick(ends[1],'#8b94a7',2,'S2'); }
-  tick(finish,'#ffffff',4,'');
-  // curve
-  g.fillStyle='#5d6577'; g.font='bold 10px Titillium Web'; g.textAlign='center';
-  for(const c of (circuit.mv.corners||[])){ const tp=c.trackPosition; if(!tp) continue; const p=G.P(tp.x,tp.y), ang=(c.angle||0)*Math.PI/180;
-    g.fillText(c.number+(c.letter||''), p[0]+Math.cos(ang)*22, p[1]-Math.sin(ang)*22+3); }
-  g.textAlign='left';
+  const {finish} = trackLayer(g, G, W, Hh, sc, dpr, cal);
   // auto
   const pos=carPositions(), leader=S.drivers[0];
   for(const d of S.drivers.slice().reverse()){
