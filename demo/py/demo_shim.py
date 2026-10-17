@@ -57,7 +57,7 @@ def _route(path, body):
     if u.path == "/api/update":          # la demo e' sempre l'ultima versione
         return {"current": f.APP_VERSION, "latest": f.APP_VERSION, "newer": False}
     if u.path == "/api/setup":
-        return {"askShortcut": False}
+        return {"askShortcut": False, "version": f.APP_VERSION}
     if u.path == "/api/sessions":
         return [{"name": f.SOURCE.name, "path": FOLDER, "origin": "demo", "mtime": time.time()}]
     if u.path == "/api/calendar":
