@@ -9,6 +9,7 @@ from datetime import timedelta
 threading.Thread.start = lambda self: None   # nel browser niente thread: il replay avanza a ogni richiesta
 
 import f1cruscotto as f
+f.MC_SYNC, f.MC_SIMS = True, 300    # probabilita' di vittoria calcolate subito, con meno simulazioni
 import os
 import shutil
 import telemetria

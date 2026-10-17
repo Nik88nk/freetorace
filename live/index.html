@@ -100,7 +100,22 @@ nav em{font-style:normal}
 .delay b{font-size:22px;min-width:64px;text-align:center}
 #rpBar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#0f1218;border-bottom:1px solid var(--line2)}
 #rpBar button{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:5px 10px;font:inherit;font-weight:700;min-width:44px}
-#rpBar input{flex:1;accent-color:var(--accent)}
+#rpBar input{width:100%;accent-color:var(--accent)}
+.rpSeekW{flex:1;position:relative;display:flex;align-items:center}
+#rpMarks{position:absolute;left:8px;right:8px;bottom:-4px;height:4px;pointer-events:none}
+#rpMarks i{position:absolute;top:0;height:4px;border-radius:2px}
+#rpMarks i.red{background:#e10600}#rpMarks i.sc{background:#ff9f1a}#rpMarks i.vsc{background:#ffd12e}
+#rpMarks b{position:absolute;top:-3px;width:2px;height:10px;background:#fff}
+#rpNote{display:none;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;font-size:14px;border-bottom:1px solid var(--line2);border-left:5px solid}
+#rpNote.red{display:flex;background:linear-gradient(90deg,#5a0b0b,#240909);border-left-color:#e10600}
+#rpNote.grid{display:flex;background:linear-gradient(90deg,#14233b,#0d121c);border-left-color:#2f6fd1}
+#rpNote.go{display:flex;background:linear-gradient(90deg,#0f3a22,#0b1510);border-left-color:#22d36b}
+#rpNote b.h{font-size:16px;font-weight:900}
+#rpNote .cd{font-weight:900;font-size:17px}
+#rpNote button{margin-left:auto;background:#fff;color:#111;border:none;border-radius:8px;padding:7px 12px;font:inherit;font-weight:900}
+#rpNote .lights{display:inline-flex;gap:4px}
+#rpNote .lights i{width:12px;height:12px;border-radius:50%;background:#2a0505;border:1px solid #000}
+#rpNote .lights i.on{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a}
 #rpTime{font-size:12px;color:var(--dim)}
 #rpLoad{position:fixed;inset:0;z-index:9;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px}
 #rpLoad img{width:72px;height:72px;border-radius:14px}#rpLoad span{color:var(--dim)}
@@ -115,7 +130,8 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
   <div class="lap tn" id="lap"></div>
 </header>
 <div id="conn"><i></i><span id="connTxt"></span><span class="grow"></span><span id="delayTxt" class="tn"></span></div>
-<div id="rpBar" style="display:none"><button id="rpPlay">⏸</button><button id="rpSpeed">1×</button><input type="range" id="rpSeek" min="0" max="1000" value="0"><span id="rpTime" class="tn"></span></div>
+<div id="rpBar" style="display:none"><button id="rpPlay">⏸</button><button id="rpSpeed">1×</button><span class="rpSeekW"><input type="range" id="rpSeek" min="0" max="1000" value="0"><span id="rpMarks"></span></span><span id="rpTime" class="tn"></span></div>
+<div id="rpNote"></div>
 <div id="rpLoad" style="display:none"><img src="icon-192.png" alt=""><b>FREE TO RACE · DEMO</b><span id="rpMsg"></span></div>
 <main>
   <div class="pane on" id="p-times">
@@ -152,6 +168,7 @@ const T = {
   disc:'Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. Live data straight from the public F1 live timing to your phone. Circuit drawings: MultiViewer.',
   live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2026 Italian GP, the whole race on your phone', weekend:'Weekend schedule (your time)', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
   retired:'OUT', pit:'PIT', mapApprox:'Approximate map: it gets precise after the first session on this circuit.', mapNone:'Track layout not available.', mapOk:'Cars estimated from the official timing, about 10 m accuracy.', noMsg:'No messages yet.', locale:'en-GB',
+  redH:'RED FLAG', redP:'Race suspended: the cars are parked in the pit lane, nothing happens on track until the restart.', restartIn:'Restart in', skipRestart:'⏩ Skip', gridH:'START', gridP:'Cars on the grid, lights out in', goStart:'⏩ Go', goH:'LIGHTS OUT!', goP:'First lap: the order updates at every timing point.',
   rpLoading:'Loading the demo race…', rpWhat:'2026 Italian GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
@@ -160,6 +177,7 @@ const T = {
   disc:'Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati arrivano al telefono direttamente dal cronometraggio pubblico F1. Disegni dei circuiti: MultiViewer.',
   live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP d’Italia 2026, tutta la gara sul telefono', weekend:'Programma del weekend (tua ora)', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
   retired:'RIT', pit:'BOX', mapApprox:'Mappa approssimata: diventa precisa dopo la prima sessione su questo circuito.', mapNone:'Disegno della pista non disponibile.', mapOk:'Auto stimate dal cronometraggio ufficiale, precisione circa 10 m.', noMsg:'Ancora nessun messaggio.', locale:'it-IT',
+  redH:'BANDIERA ROSSA', redP:'Gara sospesa: le auto sono ferme in corsia box, in pista non succede niente fino alla ripartenza.', restartIn:'Ripartenza fra', skipRestart:'⏩ Salta', gridH:'PARTENZA', gridP:'Auto schierate sulla griglia, semafori spenti fra', goStart:'⏩ Vai', goH:'VIA!', goP:'Primo giro: l’ordine si aggiorna a ogni passaggio cronometrato.',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP d’Italia 2026', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
   track:{'1':'Pista libera','2':'Gialla','4':'Safety Car','5':'Bandiera rossa','6':'VSC','7':'Fine VSC'}}};
 const store = {get(k,d){try{return localStorage.getItem(k)??d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -278,7 +296,8 @@ function render(){
   // in attesa la testata non mostra la sessione finita (giro 62/62 e simili): solo il nome
   $('#ev').textContent = live && m.Name || 'Free to Race';
   $('#ses').textContent = live ? ([si.Name, m.Location].filter(Boolean).join(' · ') || 'Live') : t('noSession');
-  const ts = String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
+  const susp = DEMO && rp && rp.marks && rp.marks.phases.some(x=>x.kind==='red' && rp.t>=x.from && rp.t<x.to);   // sospensione: la pista torna «libera» prima della ripartenza
+  const ts = susp ? '5' : String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
   if(live && tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
   const lc = ST.LapCount || {};
   if(!live) $('#lap').innerHTML = '';
@@ -513,10 +532,39 @@ async function startDemo(){
     ev.sort((a,b)=>a[0]-b[0]);
     const st = ev.find(e => e[1]==='SessionData' && JSON.stringify(e[2]).includes('"Started"'));
     rp = {ev, i:0, t:0, t0:ev[0][0], t1:ev[ev.length-1][0], start:(st?st[0]:ev[0][0]) - 20000, speed:1, paused:false, last:performance.now()};
+    rp.marks = demoMarks(ev, rp.t1);
+    const pc = v => ((v - rp.t0)/(rp.t1 - rp.t0)*100).toFixed(2)+'%';
+    $('#rpMarks').innerHTML = rp.marks.phases.map(x=>`<i class="${x.kind}" style="left:${pc(x.from)};width:max(3px,calc(${pc(x.to)} - ${pc(x.from)}))"></i>`).join('') + rp.marks.starts.map(x=>`<b style="left:${pc(x)}"></b>`).join('');
     seek(rp.start);
     $('#rpLoad').style.display='none'; $('#rpBar').style.display='flex';
   }catch(e){ $('#rpMsg').textContent = t('rpErr'); }
 }
+// partenze (semafori spenti) e tratti con SC, VSC e bandiera rossa: come nel programma per PC (Replay._marks);
+// la bandiera rossa dura fino alla ripartenza, anche se intanto la pista torna «libera»
+function demoMarks(ev, end){
+  const starts=[], phases=[]; let cur=null, red=null;
+  for(const [w,k,d] of ev){
+    if(k==='SessionData'){ for(const e of asList((d||{}).StatusSeries)){ const st=e&&e.SessionStatus;
+        if(st==='Started'){ starts.push(w); if(red){ red.to=w; phases.push(red); red=null; } }
+        else if((st==='Aborted'||st==='Suspended') && !red) red={kind:'red', from:w};
+        else if(/^(Finished|Finalised|Ends)$/.test(st||'') && red){ red.to=w; phases.push(red); red=null; } } }
+    else if(k==='TrackStatus'){ const c=String((d||{}).Status||''); if(c==='5' && !red) red={kind:'red', from:w};
+      const kind={'4':'sc','6':'vsc','7':'vsc'}[c]; if(cur && cur.kind!==kind){ cur.to=w; phases.push(cur); cur=null; } if(kind && !cur) cur={kind, from:w}; }
+  }
+  for(const o of [cur, red]) if(o){ o.to=end; phases.push(o); }
+  return {starts, phases};
+}
+function rpNote(){
+  const box=$('#rpNote'), m=rp.marks, now=rp.t; let kind='', h='';
+  const red = m.phases.find(x=>x.kind==='red' && now>=x.from && now<x.to);
+  if(red){ kind='red'; const resume = m.starts.find(x=>Math.abs(x-red.to)<2000);
+    h=`<b class="h">🟥 ${t('redH')}</b><span>${t('redP')}</span>` + (resume ? `<span>${t('restartIn')} <span class="cd tn">${fmtT((resume-now)/1000)}</span></span><button data-go="${resume-12000}">${t('skipRestart')}</button>` : ''); }
+  else if(m.starts.length && now < m.starts[0] && m.starts[0]-now < 600000){ kind='grid'; const left=(m.starts[0]-now)/1000, lit=Math.max(0,Math.min(5,Math.ceil(6-left)));
+    h=`<b class="h">🚦 ${t('gridH')}</b><span class="lights">${[0,1,2,3,4].map(i=>`<i class="${i<lit?'on':''}"></i>`).join('')}</span><span>${t('gridP')} <span class="cd tn">${fmtT(left)}</span></span>` + (left>8 ? `<button data-go="${m.starts[0]-6000}">${t('goStart')}</button>` : ''); }
+  else if(m.starts.some(x=>now>=x && now-x<25000)){ kind='go'; h=`<b class="h">🏁 ${t('goH')}</b><span>${t('goP')}</span>`; }
+  box.className=kind; if(box._h!==h){ box.innerHTML=h; box._h=h; }
+}
+$('#rpNote').addEventListener('click', e => { const b=e.target.closest('[data-go]'); if(b) seek(+b.dataset.go); });
 function seek(tms){
   for(const k of Object.keys(ST)) delete ST[k];
   trk.last={}; trk.ratio={}; trk.pitIn={}; for(const k of Object.keys(disp)) delete disp[k];
@@ -533,6 +581,7 @@ setInterval(() => {
   if(rp.i !== before && real - rpRender > 250){ rpRender = real; render(); }
   if(!sliding) $('#rpSeek').value = Math.round((rp.t - rp.t0)/(rp.t1 - rp.t0)*1000);
   $('#rpTime').textContent = fmtT(Math.max(0,(rp.t - rp.start - 20000)/1000));
+  rpNote();
 }, 100);
 let sliding = false;
 $('#rpSeek').addEventListener('input', () => sliding = true);
