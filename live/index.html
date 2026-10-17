@@ -201,6 +201,28 @@ const TYRE = {SOFT:['#ff3b3b','S'],MEDIUM:['#ffd12e','M'],HARD:['#f2f2f2','H'],I
 const TRACKC = {'1':['#1f9d55','#fff'],'2':['#ffd12e','#111'],'4':['#ff9f1a','#111'],'5':['#e10600','#fff'],'6':['#ff9f1a','#111'],'7':['#ffd12e','#111']};
 const OK = new Set([2048,2049,2051,2064]);
 const DEMO = new URLSearchParams(location.search).has('demo');   // replay della gara della demo, senza diretta
+// Versione della pagina: va cambiata a ogni pubblicazione (strumenti/build_live.py lo fa da solo).
+// Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
+// all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
+// se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
+const BUILD = '20261017-124110';
+async function checkBuild(){
+  try{
+    const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
+    const m = (await r.text()).match(/const BUILD = '([^']+)'/);
+    if(!m || m[1] === BUILD) return;
+    const q = new URLSearchParams(location.search);
+    if(q.get('v') === m[1]) return;               // gia' chiesta quella versione: niente giri a vuoto
+    q.set('v', m[1]);
+    location.replace(location.pathname + '?' + q.toString());
+  }catch(e){}
+}
+let hiddenAt = 0;
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden) hiddenAt = Date.now();
+  else if(hiddenAt && Date.now() - hiddenAt > 10*60e3) checkBuild();   // tornati all'app dopo 10 minuti
+});
+checkBuild();
 const LIVE_LAG = DEMO ? 0 : 2.1;   // in diretta i passaggi arrivano circa 2,1 s dopo il passaggio vero; la demo e' d'archivio
 let rp = null;                   // replay: eventi, posizione (ms di sessione), velocita', pausa
 const sessNow = () => DEMO ? (rp ? rp.t/1000 : 0) : performance.now()/1000;   // orologio della mappa, in secondi di sessione
