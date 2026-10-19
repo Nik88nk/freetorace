@@ -155,7 +155,7 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
     <div class="set"><h4 data-t="langH"></h4><div class="seg" style="padding:0"><button data-l="en">English</button><button data-l="it">Italiano</button></div></div>
     <div class="set"><h4 data-t="homeH"></h4><p class="dim" style="font-size:13px;margin:0" data-t="homeP"></p></div>
     <div class="set"><a class="btn main" href="../" data-t="pc"></a> <a class="btn" href="https://ko-fi.com/freetorace" data-t="coffee"></a> <a class="btn" href="#" data-share="1" data-t="share"></a></div>
-    <div class="set"><a href="#" id="introBtn" style="color:var(--dim);font-size:13px;margin-right:16px" data-t="introAgain"></a><a href="../privacy/" style="color:var(--dim);font-size:13px" data-t="privacy"></a></div>
+    <div class="set"><a href="#" id="introBtn" style="color:var(--dim);font-size:13px;margin-right:16px" data-t="introAgain"></a><a href="#" id="bugBtn" style="color:var(--dim);font-size:13px;margin-right:16px" data-t="bug"></a><a href="../privacy/" style="color:var(--dim);font-size:13px" data-t="privacy"></a></div>
     <footer data-t="disc"></footer>
   </div>
 </main>
@@ -173,7 +173,7 @@ const T = {
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
   langH:'Language', homeH:'On your home screen', homeP:'Browser menu → “Add to Home screen”: it opens like an app.', pc:'Free to Race for PC', coffee:'☕ Buy me a coffee',
   disc:'Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. Live data straight from the public F1 live timing to your phone. Circuit drawings: MultiViewer.',
-  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2026 Italian GP, the whole race on your phone', weekend:'Weekend schedule (your time)', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
+  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2026 Italian GP, the whole race on your phone', weekend:'Weekend schedule (your time)', bug:'🐞 Report a problem', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
   retired:'OUT', pit:'PIT', mapApprox:'Approximate map: it gets precise after the first session on this circuit.', mapNone:'Track layout not available.', mapOk:'Cars estimated from the official timing, about 10 m accuracy.', noMsg:'No messages yet.', locale:'en-GB',
   redH:'RED FLAG', redP:'Race suspended: the cars are parked in the pit lane, nothing happens on track until the restart.', restartIn:'Restart in', skipRestart:'⏩ Skip', gridH:'START', gridP:'Cars on the grid, lights out in', goStart:'⏩ Go', goH:'LIGHTS OUT!', goP:'First lap: the order updates at every timing point.',
   rpLoading:'Loading the demo race…', rpWhat:'2026 Italian GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
@@ -182,7 +182,7 @@ const T = {
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
   langH:'Lingua', homeH:'Sulla schermata Home', homeP:'Menu del browser → «Aggiungi a schermata Home»: si apre come un’app.', pc:'Free to Race per PC', coffee:'☕ Offrimi un caffè',
   disc:'Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati arrivano al telefono direttamente dal cronometraggio pubblico F1. Disegni dei circuiti: MultiViewer.',
-  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP d’Italia 2026, tutta la gara sul telefono', weekend:'Programma del weekend (tua ora)', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
+  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP d’Italia 2026, tutta la gara sul telefono', weekend:'Programma del weekend (tua ora)', bug:'🐞 Segnala un problema', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
   retired:'RIT', pit:'BOX', mapApprox:'Mappa approssimata: diventa precisa dopo la prima sessione su questo circuito.', mapNone:'Disegno della pista non disponibile.', mapOk:'Auto stimate dal cronometraggio ufficiale, precisione circa 10 m.', noMsg:'Ancora nessun messaggio.', locale:'it-IT',
   redH:'BANDIERA ROSSA', redP:'Gara sospesa: le auto sono ferme in corsia box, in pista non succede niente fino alla ripartenza.', restartIn:'Ripartenza fra', skipRestart:'⏩ Salta', gridH:'PARTENZA', gridP:'Auto schierate sulla griglia, semafori spenti fra', goStart:'⏩ Vai', goH:'VIA!', goP:'Primo giro: l’ordine si aggiorna a ogni passaggio cronometrato.',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP d’Italia 2026', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
@@ -201,7 +201,7 @@ const DEMO = new URLSearchParams(location.search).has('demo');   // replay della
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261018-113342';
+const BUILD = '20261019-201332';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -663,6 +663,15 @@ function drawMap(){
 }
 requestAnimationFrame(drawMap);
 $('#v3d').classList.toggle('on', view3d);
+// «Segnala un problema»: una mail gia' scritta, con la versione dell'app e il telefono; parte solo se chi scrive preme Invia
+$('#bugBtn').onclick = e => {
+  e.preventDefault();
+  const si = ST.SessionInfo || {}, mode = DEMO ? 'demo' : (isLive() ? 'live' : 'attesa');
+  const body = [LANG==='it'?'Cosa è successo:':'What happened:', '', '', LANG==='it'?'Cosa stavi facendo:':'What you were doing:', '', '',
+    LANG==='it'?'--- informazioni per chi sviluppa ---':'--- info for the developer ---',
+    `Free to Race Live ${BUILD} · ${mode} · ${(si.Meeting||{}).Name||''} ${si.Name||''}`, navigator.userAgent].join('\n');
+  location.href = `mailto:segnalazioni@free-to-race.com?subject=${encodeURIComponent('Free to Race Live - ' + (LANG==='it'?'segnalazione':'report'))}&body=${encodeURIComponent(body)}`;
+};
 $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0'); geo=null; $('#v3d').classList.toggle('on', view3d); };
 
 // ---------------- schede, ritardo, lingua ----------------

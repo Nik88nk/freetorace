@@ -140,7 +140,7 @@ nav .links + .lang{margin-left:auto}
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#" style="display:flex;align-items:center;gap:9px"><img src="img/logo.png" alt="" style="width:32px;height:32px"><span><b>FREE</b> TO RACE</span></a>
-  <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
+  <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><a href="#feedback" data-i="nav_fb"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
   <button class="lang" id="lang" title="English / Italiano"></button>
   <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px"></a>
   <a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short"></a>
@@ -208,6 +208,16 @@ nav .links + .lang{margin-left:auto}
   <div class="teams" id="teams"></div>
 </div></section>
 
+<section id="feedback"><div class="wrap">
+  <div class="support">
+    <div><h3 data-i="fb_h"></h3><p data-i="fb_p"></p><p class="small" style="margin-top:8px" data-i="fb_tip"></p></div>
+    <div class="cta" style="flex:0 0 auto;margin:0">
+      <a class="btn main" href="mailto:segnalazioni@free-to-race.com?subject=Free%20to%20Race%20-%20" data-i="fb_mail"></a>
+      <a class="btn" href="https://github.com/Nik88nk/freetorace/issues/new" target="_blank" rel="noopener" data-i="fb_gh"></a>
+    </div>
+  </div>
+</div></section>
+
 <footer><div class="wrap">
   <p data-i="disc"></p>
   <p data-i="credits"></p>
@@ -248,6 +258,11 @@ const T = {
   err_cal:'Calendar not available right now.', err_st:'Standings not available right now.', loading:'Loading…',
   disc:'<b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.',
   privacy:'Privacy and safety: no account, no data collected',
+  nav_fb:'🐞 Feedback',
+  fb_h:'Free to Race is a work in progress 🛠️',
+  fb_p:'It’s a bit like a certain Japanese engine: a rough start and a few too many breakdowns, but give it some patience and it can do great things. If you find a bug (or it won’t start at all), write to us! Every suggestion is welcome.',
+  fb_tip:'Found a bug? In the program use <b>🐞 Report a problem</b> (in <i>Choose session</i>): it prepares the email with your version and the last lines of the log, and you see everything before sending.',
+  fb_mail:'✉ Write to segnalazioni@free-to-race.com', fb_gh:'Open an issue on GitHub',
   credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   locale:'en-GB'
  },
@@ -280,6 +295,11 @@ const T = {
   err_cal:'Calendario non disponibile adesso.', err_st:'Classifiche non disponibili adesso.', loading:'Carico…',
   disc:'<b style="color:var(--text)">Free to Race</b> è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.',
   privacy:'Privacy e sicurezza: niente account, nessun dato raccolto',
+  nav_fb:'🐞 Segnalazioni',
+  fb_h:'Free to Race è un work in progress 🛠️',
+  fb_p:'È un po’ come un certo motore giapponese: all’inizio si rompe più del dovuto, ma con un po’ di pazienza può fare grandi cose. Se trovi un errore (o proprio non parte), scrivici! Ogni suggerimento è benvenuto.',
+  fb_tip:'Hai trovato un errore? Nel programma usa <b>🐞 Segnala un problema</b> (in <i>Scegli sessione</i>): prepara la mail con la tua versione e le ultime righe del registro, e vedi tutto prima di inviarla.',
+  fb_mail:'✉ Scrivi a segnalazioni@free-to-race.com', fb_gh:'Apri una segnalazione su GitHub',
   credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   locale:'it-IT'
  }
