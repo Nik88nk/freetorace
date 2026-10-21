@@ -1322,7 +1322,7 @@ const rcKind = m => { const t=(m.msg||'').toUpperCase();
 function renderDG(){
   if(!H) return;
   const list = H.rcm.filter(m=>rcFilter==='all'||rcKind(m)[rcFilter]).slice().reverse();
-  $('#rcm').innerHTML = list.map(m => { const k=rcKind(m); const t=m.utc?new Date(m.utc+(m.utc.endsWith('Z')?'':'Z')).toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'}):'';
+  $('#rcm').innerHTML = list.map(m => { const k=rcKind(m); const t=m.utc?new Date(/(Z|[+-]\d\d:?\d\d)$/.test(m.utc)?m.utc:m.utc+'Z').toLocaleTimeString(LOC(),{hour:'2-digit',minute:'2-digit'}):'';
     return `<div class="msg ${k.pen?'pen':''}"><span class="fl" style="background:${FLAG[m.flag]||(m.cat==='SafetyCar'?'#ff9f1a':'#3a4150')}"></span><span class="lp">${m.lap?L('G','L')+m.lap:''}</span><span class="tm">${t}</span><span>${esc(m.msg)}</span></div>`; }).join('') || L('<div class="empty">Nessun messaggio</div>','<div class="empty">No messages</div>');
   const key = S.radio.map(r=>r.url).join('|');
   if(key !== lastRadioKey){

@@ -19,7 +19,9 @@ with open("/data/circuit.json", encoding="utf-8") as fh:
     CIRCUIT = json.load(fh)
 f.SOURCE = f.Replay(FOLDER)
 _path = (f.ENGINE.state.get("SessionInfo") or {}).get("Path")
-if _path and os.path.exists("/data/tele.bin"):       # telemetria gia' scaricata, messa dove la cerca il programma
+# telemetria disponibile solo se c'e' il file e non e' vuoto (le dirette registrate non la contengono)
+TELE_OK = bool(_path) and os.path.exists("/data/tele.bin") and os.path.getsize("/data/tele.bin") > 0
+if TELE_OK:                                           # telemetria gia' scaricata, messa dove la cerca il programma
     os.makedirs(telemetria.DIR, exist_ok=True)
     shutil.copyfile("/data/tele.bin", telemetria._file(_path))
 _last = time.monotonic()
@@ -53,6 +55,8 @@ def _route(path, body):
     if u.path == "/api/circuit":
         return CIRCUIT
     if u.path == "/api/telemetry":
+        if not TELE_OK:      # senza telemetria: messaggio onesto, non "archivio non raggiungibile, riprova"
+            return {"status": "unavailable"}
         return f.telemetry(urllib.parse.parse_qs(u.query))
     if u.path == "/api/update":          # la demo e' sempre l'ultima versione
         return {"current": f.APP_VERSION, "latest": f.APP_VERSION, "newer": False}
