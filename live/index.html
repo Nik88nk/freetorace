@@ -232,7 +232,7 @@ const DEMO = new URLSearchParams(location.search).has('demo');   // replay della
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261021-223832';
+const BUILD = '20261021-224217';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -252,7 +252,8 @@ document.addEventListener('visibilitychange', () => {
 checkBuild();
 const LIVE_LAG = DEMO ? 0 : 2.1;   // in diretta i passaggi arrivano circa 2,1 s dopo il passaggio vero; la demo e' d'archivio
 let rp = null;                   // replay: eventi, posizione (ms di sessione), velocita', pausa
-const sessNow = () => DEMO ? (rp ? rp.t/1000 : 0) : performance.now()/1000;   // orologio della mappa, in secondi di sessione
+// orologio della mappa, in secondi di sessione; in demo continuo fra un passo del replay e l'altro (niente gradini da 100 ms)
+const sessNow = () => DEMO ? (rp ? Math.min(rp.t1, rp.t + (rp.paused ? 0 : (performance.now() - rp.last) * rp.speed))/1000 : 0) : performance.now()/1000;
 const rate = () => DEMO ? (rp && !rp.paused ? rp.speed : 0) : 1;
 const secs = v => { if(!v || typeof v!=='string') return null; v=v.trim().replace('+',''); const p=v.split(':'); const x = p.length>1 ? (+p[0])*60+parseFloat(p[1]) : parseFloat(p[0]); return isNaN(x)?null:x; };
 
