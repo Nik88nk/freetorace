@@ -232,7 +232,7 @@ const DEMO = new URLSearchParams(location.search).has('demo');   // replay della
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261021-222710';
+const BUILD = '20261021-223832';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -268,14 +268,16 @@ function merge(base, upd){
 }
 const asList = x => Array.isArray(x) ? x.filter(v=>v!=null) : (x && typeof x==='object') ? Object.keys(x).sort((a,b)=>a-b).map(k=>x[k]) : [];
 const ST = {};
-const trk = {last:{}, ratio:{}, pitIn:{}, rpos:{}, hasReal:false};   // minisettori/andatura/box; rpos: posizioni vere (OpenF1)
+const trk = {last:{}, ratio:{}, pitIn:{}, rhist:{}, hasReal:false};   // minisettori/andatura/box; rhist: storico posizioni vere (OpenF1)
 let selNum = null, gapMode = 'gap', tab = 'times';
 
 function apply(topic, data, when){
   if(topic.endsWith('.z')) return;
-  if(topic==='Position'){                       // posizioni vere delle auto (sessioni OpenF1): tengo solo l'ultima per auto
-    for(const snap of asList(data && data.Position)) for(const [n,e] of Object.entries((snap && snap.Entries) || {})){
-      if(e && typeof e.X==='number' && (e.X || e.Y)) trk.rpos[n] = [e.X, e.Y];
+  if(topic==='Position'){                       // posizioni vere (sessioni OpenF1): storico per auto, per interpolare
+    for(const snap of asList(data && data.Position)){ const ts = Date.parse(snap && snap.Timestamp)/1000 || when;
+      for(const [n,e] of Object.entries((snap && snap.Entries) || {})){
+        if(e && typeof e.X==='number' && (e.X || e.Y)){ const h = trk.rhist[n] || (trk.rhist[n]=[]); if(!h.length || ts>h[h.length-1][0]){ h.push([ts, e.X, e.Y]); if(h.length>60) h.shift(); } }
+      }
     }
     trk.hasReal = true; return;                 // non serve accumularle in ST
   }
@@ -677,13 +679,24 @@ function drawMap(){
   trackLayer(g, G, r.width, r.height, 0.85, dpr, cal && !cal.approx ? cal : null);   // pista, cordoli, box, curve, edifici
   $('#mapNote').textContent = trk.hasReal ? t('mapReal') : (cal && cal.approx ? t('mapApprox') : t('mapOk'));
   if(!isLive()) return;
-  const real = performance.now(), dt = Math.min(0.1, (real - lastFrame)/1000) * rate(), now = sessNow(); lastFrame = real;
+  const real = performance.now(), dtr = Math.min(0.1, (real - lastFrame)/1000), dt = dtr * rate(), now = sessNow(); lastFrame = real;
   const ds = drivers().slice().reverse(), lines = ((ST.TimingData||{}).Lines)||{};
   for(const d of ds){
     if(d.out) continue;
     let xy;
-    if(trk.hasReal){                             // posizioni vere delle auto (sessione OpenF1): direttamente sul tracciato
-      const p = trk.rpos[d.n]; if(p) xy = G.P(p[0], p[1]);
+    if(trk.hasReal){                             // posizioni vere: interpolo fra due campioni un filo indietro, poi smusso (come il PC)
+      const h = trk.rhist[d.n];
+      if(h && h.length){
+        const T = now - Math.min(0.5 + 0.9*rate(), Math.max(0.3, (h[h.length-1][0]-h[0][0])*0.9));
+        let p;
+        if(T<=h[0][0]) p=h[0];
+        else if(T>=h[h.length-1][0]) p=h[h.length-1];
+        else { let i=1; while(i<h.length-1 && h[i][0]<T) i++; const a=h[i-1], c=h[i], r=(T-a[0])/((c[0]-a[0])||1); p=[0, a[1]+(c[1]-a[1])*r, a[2]+(c[2]-a[2])*r]; }
+        const tgt=G.P(p[1],p[2]), dd=disp['v'+d.n];
+        if(!dd || Math.hypot(tgt[0]-dd.xy[0], tgt[1]-dd.xy[1])>80) disp['v'+d.n]={xy:tgt};
+        else { const k=Math.min(1, dtr*12); dd.xy=[dd.xy[0]+(tgt[0]-dd.xy[0])*k, dd.xy[1]+(tgt[1]-dd.xy[1])*k]; }
+        xy = disp['v'+d.n].xy;
+      }
     } else if(cal){                              // stima dai minisettori (diretta o archivio)
       const L = trk.last[d.n];
       if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
@@ -773,7 +786,7 @@ function rpNote(){
 $('#rpNote').addEventListener('click', e => { const b=e.target.closest('[data-go]'); if(b) seek(+b.dataset.go); });
 function seek(tms){
   for(const k of Object.keys(ST)) delete ST[k];
-  trk.last={}; trk.ratio={}; trk.pitIn={}; trk.rpos={}; for(const k of Object.keys(disp)) delete disp[k];
+  trk.last={}; trk.ratio={}; trk.pitIn={}; trk.rhist={}; for(const k of Object.keys(disp)) delete disp[k];
   rp.i=0; rp.t=Math.max(rp.t0, Math.min(rp.t1, tms)); advance(); render();
 }
 function advance(){
