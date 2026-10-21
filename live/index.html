@@ -232,7 +232,7 @@ const DEMO = new URLSearchParams(location.search).has('demo');   // replay della
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261021-224217';
+const BUILD = '20261021-231438';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -693,9 +693,9 @@ function drawMap(){
         if(T<=h[0][0]) p=h[0];
         else if(T>=h[h.length-1][0]) p=h[h.length-1];
         else { let i=1; while(i<h.length-1 && h[i][0]<T) i++; const a=h[i-1], c=h[i], r=(T-a[0])/((c[0]-a[0])||1); p=[0, a[1]+(c[1]-a[1])*r, a[2]+(c[2]-a[2])*r]; }
-        const tgt=G.P(p[1],p[2]), dd=disp['v'+d.n];
-        if(!dd || Math.hypot(tgt[0]-dd.xy[0], tgt[1]-dd.xy[1])>80) disp['v'+d.n]={xy:tgt};
-        else { const k=Math.min(1, dtr*12); dd.xy=[dd.xy[0]+(tgt[0]-dd.xy[0])*k, dd.xy[1]+(tgt[1]-dd.xy[1])*k]; }
+        const tgt=G.P(p[1],p[2]), dd=disp['v'+d.n], sr=Math.max(1, rate());   // smorzamento in proporzione alla velocita'
+        if(!dd || Math.hypot(tgt[0]-dd.xy[0], tgt[1]-dd.xy[1])>80*sr) disp['v'+d.n]={xy:tgt};
+        else { const k=Math.min(1, dtr*12*sr); dd.xy=[dd.xy[0]+(tgt[0]-dd.xy[0])*k, dd.xy[1]+(tgt[1]-dd.xy[1])*k]; }
         xy = disp['v'+d.n].xy;
       }
     } else if(cal){                              // stima dai minisettori (diretta o archivio)
