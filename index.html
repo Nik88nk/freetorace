@@ -36,6 +36,15 @@ nav .links{display:flex;gap:18px;margin-left:auto;font-weight:600;font-size:15px
 nav .links a{text-decoration:none;color:var(--dim)}
 nav .links a:hover{color:var(--text)}
 @media(max-width:760px){nav .links{display:none}}
+/* menu su una riga sola: le voci non vanno a capo; quando lo spazio manca si tolgono le meno importanti
+   (le stesse sezioni si raggiungono scorrendo la pagina) */
+nav .wrap > *, nav .links a{white-space:nowrap;flex:none}
+nav .links{gap:16px}
+nav .wrap{max-width:1440px}
+@media(max-width:1400px){nav .links a[href="#teams-sec"]{display:none}}
+@media(max-width:1260px){nav .links a[href="#standings"]{display:none}}
+@media(max-width:1140px){nav .links a[href="#season-sec"],nav .links a[href="#features"]{display:none}}
+@media(max-width:940px){nav .links a[href="#feedback"]{display:none}}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--panel2)}
 .btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn:hover{filter:brightness(1.1)}
