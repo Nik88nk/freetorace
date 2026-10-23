@@ -227,12 +227,13 @@ const col = c => /^[0-9a-f]{6}$/i.test(String(c||'').replace('#','')) ? '#'+Stri
 const TYRE = {SOFT:['#ff3b3b','S'],MEDIUM:['#ffd12e','M'],HARD:['#f2f2f2','H'],INTERMEDIATE:['#43b047','I'],WET:['#2f7fd1','W']};
 const TRACKC = {'1':['#1f9d55','#fff'],'2':['#ffd12e','#111'],'4':['#ff9f1a','#111'],'5':['#e10600','#fff'],'6':['#ff9f1a','#111'],'7':['#ffd12e','#111']};
 const OK = new Set([2048,2049,2051,2064]);
-const DEMO = new URLSearchParams(location.search).has('demo');   // replay della gara della demo, senza diretta
+const REPLAY = (new URLSearchParams(location.search).get('replay')||'').replace(/[^\w]/g,'');   // replay pubblicato di una sessione (free-to-race.com/replay/)
+const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // replay della gara della demo, senza diretta
 // Versione della pagina: va cambiata a ogni pubblicazione (strumenti/build_live.py lo fa da solo).
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261021-231438';
+const BUILD = '20261023-220936';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -506,6 +507,7 @@ async function loadCircuit(key, year){
   const k = key+'/'+year; if(circuitKey===k) return; circuitKey=k; circuit=null; cal=null; geo=null; SCENE=null;
   try{ circuit = await (await fetch(`https://api.multiviewer.app/api/v1/circuits/${key}/${year}`)).json(); }catch(e){ circuit=null; }
   try{ const r = await fetch(`../circuiti/${key}_${year}.json`); if(r.ok) cal = await r.json(); }catch(e){}
+  if(!cal && REPLAY) try{ const r = await fetch(`../circuiti/${key}_${year-1}.json`); if(r.ok) cal = await r.json(); }catch(e){}   // replay subito dopo la sessione: taratura dell'anno prima, stesso tracciato
   if(cal && cal.track) circuit = cal.track;
   try{ const r = await fetch(`../circuiti/${key}_scena.json`); if(r.ok) SCENE = await r.json(); }catch(e){}
   if(!cal) cal = approximate();
@@ -739,9 +741,13 @@ function texts(){ document.documentElement.lang=LANG; $$('[data-t]').forEach(e =
 // ---------------- demo: la gara di Monza 2026 rigiocata nel telefono ----------------
 async function startDemo(){
   $('#rpLoad').style.display='flex'; $('#rpMsg').textContent = t('rpLoading');
-  $('#conn').classList.add('on'); $('#connTxt').innerHTML = `<b style="color:var(--accent)">DEMO</b> ${t('rpWhat')} · <a href="../demo/?full=1" style="color:var(--text)">${t('rpFull')}</a>`;
+  const base = REPLAY ? `../replay/${REPLAY}/` : '../demo/';
+  const what = w => { $('#connTxt').innerHTML = `<b style="color:var(--accent)">${REPLAY?'REPLAY':'DEMO'}</b> ${w} · <a href="${base}?full=1" style="color:var(--text)">${t('rpFull')}</a>`; };
+  $('#conn').classList.add('on'); what(REPLAY ? '' : t('rpWhat'));
+  if(REPLAY) $('#rpLoad b').textContent = 'FREE TO RACE · REPLAY';
   try{
-    const r = await fetch('../demo/data/race.jsonl.gz');
+    const r = await fetch(base + 'data/race.jsonl.gz');
+    if(!r.ok) throw new Error(r.status);
     let buf = new Uint8Array(await r.arrayBuffer());
     if(buf[0]===0x1f && buf[1]===0x8b) buf = new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
     const ev = [];
@@ -750,6 +756,8 @@ async function startDemo(){
       try{ const o = JSON.parse(line); ev.push([Date.parse(o.dateTime), o.type, o.json]); }catch(e){}
     }
     ev.sort((a,b)=>a[0]-b[0]);
+    if(REPLAY){ const si = (ev.find(e => e[1]==='SessionInfo' && e[2] && e[2].Meeting) || [])[2] || {};
+      what(`${esc((si.Meeting||{}).Name||'')} ${esc((si.StartDate||'').slice(0,4))} · ${esc(t('sess')[si.Name]||si.Name||'')}`); }
     const st = ev.find(e => e[1]==='SessionData' && JSON.stringify(e[2]).includes('"Started"'));
     rp = {ev, i:0, t:0, t0:ev[0][0], t1:ev[ev.length-1][0], start:(st?st[0]:ev[0][0]) - 20000, speed:1, paused:false, last:performance.now()};
     rp.marks = demoMarks(ev, rp.t1);

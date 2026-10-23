@@ -147,7 +147,7 @@ nav .links + .lang{margin-left:auto}
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#" style="display:flex;align-items:center;gap:9px"><img src="img/logo.png" alt="" style="width:32px;height:32px"><span><b>FREE</b> TO RACE</span></a>
-  <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><a href="#feedback" data-i="nav_fb"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
+  <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><a href="replay/" data-i="nav_rp"></a><a href="#feedback" data-i="nav_fb"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
   <button class="lang" id="lang" title="English / Italiano"></button>
   <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px"></a>
   <a class="btn main" id="dlNav" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short"></a>
@@ -162,6 +162,7 @@ nav .links + .lang{margin-left:auto}
     <div class="cta" id="download">
       <a class="btn main" id="dlMain" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl"></a>
       <a class="btn" href="demo/" data-i="demo"></a>
+      <a class="btn" href="replay/" data-i="nav_rp"></a>
       <a class="btn" id="liveBtn" href="live/?install=1" data-i="live_btn"></a>
       <a class="btn" href="#features" data-i="what"></a>
     </div>
@@ -239,7 +240,7 @@ nav .links + .lang{margin-left:auto}
 // ---------------- testi in due lingue ----------------
 const T = {
  en: {
-  nav_app:'The app', nav_cal:'Calendar', nav_st:'Standings', nav_teams:'Teams', nav_pred:'Predictions', nav_live:'📱 Live on your phone', dl_short:'⬇ Download', coffee:'☕ Buy me a coffee',
+  nav_app:'The app', nav_cal:'Calendar', nav_st:'Standings', nav_teams:'Teams', nav_pred:'Predictions', nav_live:'📱 Live on your phone', nav_rp:'🎬 Replays', dl_short:'⬇ Download', coffee:'☕ Buy me a coffee',
   h1:'The race, as the <b>pit wall</b> sees it.',
   lead:'Live timing, tyre strategy, pit-stop forecasts and a track map with every car moving: free, on your own PC, no subscription.',
   dl:'⬇ Download for Windows', what:'What it does', demo:'▶ Try the demo in your browser', live_btn:'📱 Live on your phone', ph_install:'📲 Install the app on your phone', ph_short:'📲 Install', qr_h:'📱 Free to Race on your phone', qr_p:'Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.', qr_open:'or open it here in the browser', qr_close:'Close',
@@ -276,7 +277,7 @@ const T = {
   locale:'en-GB'
  },
  it: {
-  nav_app:'Il programma', nav_cal:'Calendario', nav_st:'Classifiche', nav_teams:'Squadre', nav_pred:'Previsioni', nav_live:'📱 Live sul telefono', dl_short:'⬇ Scarica', coffee:'☕ Offrimi un caffè',
+  nav_app:'Il programma', nav_cal:'Calendario', nav_st:'Classifiche', nav_teams:'Squadre', nav_pred:'Previsioni', nav_live:'📱 Live sul telefono', nav_rp:'🎬 Replay', dl_short:'⬇ Scarica', coffee:'☕ Offrimi un caffè',
   h1:'La gara, come la vede il <b>muretto box</b>.',
   lead:'Tempi in diretta, strategia gomme, previsione delle soste e una pista con le auto in movimento: tutto gratis, sul tuo PC, senza abbonamenti.',
   dl:'⬇ Scarica per Windows', what:'Cosa fa', demo:'▶ Prova la demo nel browser', live_btn:'📱 In diretta sul telefono', ph_install:'📲 Installa l’app sul telefono', ph_short:'📲 Installa', qr_h:'📱 Free to Race sul telefono', qr_p:'Inquadra con la fotocamera del telefono: si apre l’app e la installi con un tocco. Gratis, senza store e senza account.', qr_open:'oppure aprila qui nel browser', qr_close:'Chiudi',
