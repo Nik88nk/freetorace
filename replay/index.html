@@ -35,7 +35,8 @@ footer{color:var(--dim);font-size:13px;padding:20px 0 40px;border-top:1px solid 
 <body>
 <nav><div class="wrap">
   <a class="brand" href="../"><img src="../img/logo.png" alt="" style="width:30px;height:30px"><span><b>FREE</b> TO RACE</span></a>
-  <button class="lang" id="lang"></button>
+  <a href="../risultati/" style="margin-left:auto;text-decoration:none;color:var(--ink2,#b6bdca);font-weight:600;white-space:nowrap" data-i="ris"></a>
+  <button class="lang" id="lang" style="margin-left:0"></button>
 </div></nav>
 <main class="wrap">
   <h1 data-i="h"></h1>
@@ -45,10 +46,10 @@ footer{color:var(--dim);font-size:13px;padding:20px 0 40px;border-top:1px solid 
 <footer><div class="wrap" data-i="disc"></div></footer>
 <script>
 const T = {
- en:{h:'🎬 Replays', sub:'The sessions recorded live, ready to watch again: timing, tyres, strategy and the track map, running in your browser.', loading:'Loading…', none:'No replays yet.', err:'The list could not load. Try again later.', watch:'▶ Watch', laps:'laps',
+ en:{h:'🎬 Replays', ris:'📊 Results', sub:'The sessions recorded live, ready to watch again: timing, tyres, strategy and the track map, running in your browser.', loading:'Loading…', none:'No replays yet.', err:'The list could not load. Try again later.', watch:'▶ Watch', laps:'laps',
   sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
   disc:'Free to Race is an unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.', locale:'en-GB'},
- it:{h:'🎬 Replay', sub:'Le sessioni registrate in diretta, da rivedere: tempi, gomme, strategia e la pista, nel tuo browser.', loading:'Carico…', none:'Ancora nessun replay.', err:'Non riesco a caricare l’elenco. Riprova più tardi.', watch:'▶ Guarda', laps:'giri',
+ it:{h:'🎬 Replay', ris:'📊 Risultati', sub:'Le sessioni registrate in diretta, da rivedere: tempi, gomme, strategia e la pista, nel tuo browser.', loading:'Carico…', none:'Ancora nessun replay.', err:'Non riesco a caricare l’elenco. Riprova più tardi.', watch:'▶ Guarda', laps:'giri',
   sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
   disc:'Free to Race è un progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.', locale:'it-IT'}};
 let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s==='it'||s==='en') return s; }catch(e){} return /^it\b/i.test(navigator.language||'')?'it':'en'; })();

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Results · Free to Race</title>
+<link rel="icon" type="image/png" href="../img/logo.png">
+<meta name="description" content="F1 session results at a glance: classification, race pace, tyre degradation, qualifying cuts, strategies. Unofficial fan project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6eb;--text:#14171c;--dim:#6b7383;--accent:#e10600}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12;--panel:#14181f;--line:#262c37;--text:#eef1f6;--dim:#8b94a7}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 "Titillium Web","Segoe UI",system-ui,sans-serif}
+a{color:inherit}.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+nav{border-bottom:3px solid var(--accent);background:#08090d;color:#eef1f6}nav .wrap{display:flex;align-items:center;gap:12px;height:56px}
+.brand{font-weight:900;font-size:19px;font-style:italic;text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}.brand b{color:var(--accent)}
+nav a.lnk{margin-left:auto;text-decoration:none;color:#b6bdca;font-weight:600;white-space:nowrap}
+.lang{background:transparent;border:1px solid #333a46;color:#b6bdca;border-radius:8px;padding:5px 9px;font:inherit;font-weight:700;cursor:pointer}
+h1{font-size:clamp(26px,5vw,38px);font-weight:900;margin:22px 0 4px}.sub{color:var(--dim);margin:0 0 14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chips button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.wk{color:var(--dim);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-top:14px}
+#out{margin:10px 0 40px}.empty{color:var(--dim);padding:20px 0}
+footer{color:var(--dim);font-size:12.5px;padding:18px 0 40px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="../"><img src="../img/logo.png" alt="" style="width:28px;height:28px"><span><b>FREE</b> TO RACE</span></a><a class="lnk" href="../replay/" data-i="rp"></a><button class="lang" id="lang"></button></div></nav>
+<main class="wrap">
+  <h1 data-i="h"></h1><p class="sub" data-i="sub"></p>
+  <div id="pick"></div>
+  <div id="out"><div class="empty" data-i="loading"></div></div>
+</main>
+<footer><div class="wrap" data-i="disc"></div></footer>
+<script src="risultati.js"></script>
+<script>
+const TX = {
+ en:{h:'📊 Results', sub:'Every session at a glance: not just the classification, but race pace, tyres, qualifying cuts and strategies.', loading:'Loading…', none:'No results yet.', err:'The results could not load. Try again later.', rp:'🎬 Replays',
+  sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
+  disc:'Free to Race is an unofficial fan project, not associated in any way with the Formula 1 companies. Data from the public F1 live timing, recorded live. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.'},
+ it:{h:'📊 Risultati', sub:'Ogni sessione a colpo d’occhio: non solo la classifica, ma passo gara, gomme, tagli della qualifica e strategie.', loading:'Carico…', none:'Ancora nessun risultato.', err:'Non riesco a caricare i risultati. Riprova più tardi.', rp:'🎬 Replay',
+  sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
+  disc:'Free to Race è un progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. Dati dal cronometraggio pubblico F1, registrati in diretta. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.'}};
+let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s==='it'||s==='en') return s; }catch(e){} return /^it\b/i.test(navigator.language||'')?'it':'en'; })();
+const t = k => TX[LANG][k];
+let INDEX = null, REPLAYS = new Set(), cur = new URLSearchParams(location.search).get('s'), cache = {};
+function texts(){ document.documentElement.lang = LANG; document.querySelectorAll('[data-i]').forEach(e => { const v=t(e.dataset.i); if(typeof v==='string') e.innerHTML=v; }); document.getElementById('lang').textContent = LANG==='it'?'EN':'IT'; }
+function pick(){
+  if(!INDEX) return;
+  const weeks = []; for(const x of INDEX){ const k = x.year+' '+x.meeting; let w = weeks.find(w=>w.k===k); if(!w){ w={k, items:[]}; weeks.push(w); } w.items.push(x); }
+  document.getElementById('pick').innerHTML = weeks.map(w => `<div class="wk">${w.k}</div><div class="chips">${w.items.slice().sort((a,b)=>(a.start||'').localeCompare(b.start||'')).map(x=>`<button data-s="${x.name}" class="${x.name===cur?'on':''}">${t('sess')[x.session]||x.session}</button>`).join('')}</div>`).join('');
+}
+async function show(){
+  const out = document.getElementById('out');
+  if(!cur){ out.innerHTML = `<div class="empty">${t('none')}</div>`; return; }
+  try{
+    const doc = cache[cur] || (cache[cur] = await (await fetch(cur + '.json', {cache:'no-cache'})).json());
+    FTRRis.render(out, doc, LANG, {sessName: t('sess')[doc.session]||doc.session, replay: REPLAYS.has(cur) ? `../replay/${cur}/` : null});
+  }catch(e){ out.innerHTML = `<div class="empty">${t('err')}</div>`; }
+}
+document.getElementById('pick').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if(!b) return; cur = b.dataset.s; history.replaceState(null, '', '?s=' + cur); pick(); show(); });
+document.getElementById('lang').onclick = () => { LANG = LANG==='it'?'en':'it'; try{ localStorage.setItem('ftr.lang', LANG); }catch(e){} texts(); pick(); show(); };
+texts();
+Promise.all([fetch('index.json', {cache:'no-cache'}).then(r=>r.json()), fetch('../replay/replays.json', {cache:'no-cache'}).then(r=>r.json()).catch(()=>[])])
+  .then(([idx, rp]) => { INDEX = idx; REPLAYS = new Set(rp.map(x=>x.name)); if(!cur || !idx.some(x=>x.name===cur)) cur = idx.length ? idx[0].name : null; pick(); show(); })
+  .catch(() => { document.getElementById('out').innerHTML = `<div class="empty">${t('err')}</div>`; });
+</script>
+</body>
+</html>

@@ -127,6 +127,8 @@ nav em{font-style:normal}
 #intro .skip{position:absolute;right:22px;bottom:22px;background:transparent;border:1px solid #262c37;color:#8b94a7;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;z-index:2}
 #intro .skip:hover{color:#fff}
 footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
+#ris{padding:4px 12px 0}#ris .rhd{display:flex;align-items:baseline;gap:8px;margin:14px 0 6px}#ris .rhd b{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}#ris .rhd a{margin-left:auto;font-size:13px;color:var(--dim)}
+#ris .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}#ris .chips button{flex:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700}#ris .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 #instBar{display:none;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(90deg,#3a0a0a,#14181f);border-bottom:1px solid var(--line2);font-size:14px}
 #instBar.on{display:flex}
 #instBar img{width:28px;height:28px;border-radius:6px}
@@ -182,6 +184,7 @@ body.dense .mini{margin-top:2px}
 <div id="rpLoad" style="display:none"><img src="icon-192.png" alt=""><b>FREE TO RACE · DEMO</b><span id="rpMsg"></span></div>
 <main>
   <div class="pane on" id="p-times">
+    <div id="ris"></div>
     <div id="idle"></div>
     <div class="seg" id="gapMode"><button data-g="gap" class="on" data-t="gapLeader"></button><button data-g="int" data-t="gapAhead"></button></div>
     <div class="head" id="timesHead"><span>P</span><span></span><span data-t="driver"></span><span id="hGap" data-t="gap"></span><span data-t="last"></span><span data-t="tyre"></span></div>
@@ -206,13 +209,14 @@ body.dense .mini{margin-top:2px}
   <button data-tab="rc"><span>⚑</span><em data-t="tRc"></em></button>
   <button data-tab="set"><span>⚙</span><em data-t="tSet"></em></button>
 </nav>
+<script src="../risultati/risultati.js"></script>
 <script>
 // Free to Race Live: il telefono si collega da solo al feed in diretta della F1 (stesso flusso del programma
 // per PC, senza server in mezzo). Tempi, gomme, mappa con le auto stimate dai minisettori, direzione gara.
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
-  langH:'Language', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
+  langH:'Language', risH:'Results this weekend', risAll:'All results', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
   instIosOther:'On iPhone you need <b>Safari</b>: open <b>free-to-race.com/live</b> in Safari and follow these steps.',
@@ -227,7 +231,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
-  langH:'Lingua', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
+  langH:'Lingua', risH:'Risultati del weekend', risAll:'Tutti i risultati', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
   instIosOther:'Su iPhone serve <b>Safari</b>: apri <b>free-to-race.com/live</b> in Safari e segui questi passi.',
@@ -255,7 +259,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261024-102921';
+const BUILD = '20261024-105236';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -419,6 +423,7 @@ function render(){
       <span class="g tn">${g}<div class="mini">${mini}</div></span><span class="l tn ${d.lastOb?'ob':d.lastPb?'pb':''}">${esc(d.last)}</span><span class="tyre tn">${ty}</span></div>`;
   }).join('');
   $('#idle').innerHTML = live ? '' : idleHtml();
+  $('#ris').style.display = live || DEMO ? 'none' : '';
   // sotto la mappa: classifica compatta (tocca un pilota per seguirlo sulla pista)
   $('#mapRows').innerHTML = live ? ds.map(d => { let g; if(race) g = d.pos===1 ? 'Leader' : esc(gapMode==='int' ? d.int : d.gap); else { const b=secs(d.best); g = b==null ? '' : b===ref ? esc(d.best) : '+'+(b-ref).toFixed(3); }
     const ty = d.tyre && TYRE[d.tyre] ? `<i class="ti" style="border-color:${TYRE[d.tyre][0]};color:${TYRE[d.tyre][0]}">${TYRE[d.tyre][1]}</i>` : '';
@@ -764,7 +769,7 @@ $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0')
 $$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); });
 function showDelay(){ $('#delayV').textContent = delay+' s'; $('#delayTxt').textContent = delay ? `+${delay} s` : ''; }
 $$('[data-d]').forEach(b => b.onclick = () => { delay = b.dataset.r ? 0 : Math.max(0, Math.min(300, delay + (+b.dataset.d))); store.set('ftr.delay', delay); showDelay(); });
-$$('[data-l]').forEach(b => b.onclick = () => { LANG=b.dataset.l; store.set('ftr.lang', LANG); texts(); render(); });
+$$('[data-l]').forEach(b => b.onclick = () => { LANG=b.dataset.l; store.set('ftr.lang', LANG); texts(); render(); drawRis(); });
 function texts(){ document.documentElement.lang=LANG; $$('[data-t]').forEach(e => { const v=t(e.dataset.t); if(typeof v==='string') e.innerHTML=v; }); $$('[data-l]').forEach(b=>b.classList.toggle('on', b.dataset.l===LANG)); }
 // ---------------- demo: la gara di Monza 2026 rigiocata nel telefono ----------------
 async function startDemo(){
@@ -954,6 +959,35 @@ function playIntro(force){
   });
 }
 
+
+
+// ---------------- risultati del weekend (fuori dalla diretta): sito/risultati, disegnati da risultati.js ----------------
+const RIS = {week: [], cur: null, docs: {}, replays: new Set()};
+async function loadRis(){
+  if(DEMO || !window.FTRRis) return;
+  try{
+    const [idx, rp] = await Promise.all([fetch('../risultati/index.json', {cache:'no-cache'}).then(r => r.json()),
+                                         fetch('../replay/replays.json', {cache:'no-cache'}).then(r => r.json()).catch(() => [])]);
+    if(!idx.length) return;
+    const k = idx[0].year + idx[0].meeting;                 // il weekend piu' recente
+    RIS.week = idx.filter(x => x.year + x.meeting === k).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+    RIS.cur = idx[0].name; RIS.replays = new Set(rp.map(x => x.name));
+    drawRis();
+  }catch(e){}
+}
+async function drawRis(){
+  const box = $('#ris');
+  if(!RIS.cur){ box.innerHTML = ''; return; }
+  const w = RIS.week[0] || {};
+  box.innerHTML = `<div class="rhd"><b>${t('risH')}</b><a href="../risultati/?s=${encodeURIComponent(RIS.cur)}">${t('risAll')} →</a></div>
+    <div class="chips">${RIS.week.map(x => `<button data-ris="${esc(x.name)}" class="${x.name === RIS.cur ? 'on' : ''}">${esc(t('sess')[x.session] || x.session)}</button>`).join('')}</div><div id="risBody"></div>`;
+  try{
+    const doc = RIS.docs[RIS.cur] || (RIS.docs[RIS.cur] = await (await fetch(`../risultati/${RIS.cur}.json`, {cache:'no-cache'})).json());
+    FTRRis.render($('#risBody'), doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: RIS.replays.has(RIS.cur) ? `?replay=${encodeURIComponent(RIS.cur)}` : null});
+  }catch(e){ $('#risBody').innerHTML = ''; }
+}
+$('#ris').addEventListener('click', e => { const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; drawRis(); });
+loadRis();
 
 // ---------------- avvisi per le bandiere, schermo acceso, classifica compatta ----------------
 const opt = k => store.get('ftr.' + k, '1') === '1';
