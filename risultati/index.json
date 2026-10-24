@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Austin_Practice_3",
+  "kind": "practice",
+  "meeting": "United States Grand Prix",
+  "location": "Austin",
+  "year": "2026",
+  "session": "Practice 3",
+  "start": "2026-10-24T12:30:00"
+ },
+ {
   "name": "2026_Austin_Practice_2",
   "kind": "practice",
   "meeting": "United States Grand Prix",
