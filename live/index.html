@@ -128,7 +128,7 @@ nav em{font-style:normal}
 #intro .skip:hover{color:#fff}
 footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 #ris{padding:4px 12px 0}#ris .rhd{display:flex;align-items:baseline;gap:8px;margin:14px 0 6px}#ris .rhd b{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}#ris .rhd a{margin-left:auto;font-size:13px;color:var(--dim)}
-#ris .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}#ris .chips button{flex:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700}#ris .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+#ris .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}#ris .chips button{flex:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:6px 11px;font:inherit;font-size:13px;font-weight:700;text-align:left;line-height:1.2}#ris .chips button small{display:block;font-size:11px;font-weight:600;color:var(--dim)}#ris .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}#ris .chips button.on small{color:#ffe1df}#ris .chips button.nx{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}#ris .chips button:disabled{opacity:1;color:var(--dim)}#ris .chips button.past{opacity:.55}#ris .nx1{text-align:center;padding:12px 0 2px}#ris .nx1 .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}#ris .nxl{font-size:17px;margin-top:4px}#ris .nxl b{font-size:19px}#ris .nx1 .where{color:var(--dim);font-size:13px}#ris .cdg{margin:10px 0 4px;gap:6px}#ris .cdg div{min-width:56px;padding:7px 3px 6px;border-radius:10px}#ris .cdg b{font-size:26px}#ris .cdg small{font-size:9px;margin-top:3px}
 #instBar{display:none;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(90deg,#3a0a0a,#14181f);border-bottom:1px solid var(--line2);font-size:14px}
 #instBar.on{display:flex}
 #instBar img{width:28px;height:28px;border-radius:6px}
@@ -216,7 +216,7 @@ body.dense .mini{margin-top:2px}
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
-  langH:'Language', risH:'Results this weekend', risAll:'All results', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
+  langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
   instIosOther:'On iPhone you need <b>Safari</b>: open <b>free-to-race.com/live</b> in Safari and follow these steps.',
@@ -231,7 +231,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
-  langH:'Lingua', risH:'Risultati del weekend', risAll:'Tutti i risultati', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
+  langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
   instIosOther:'Su iPhone serve <b>Safari</b>: apri <b>free-to-race.com/live</b> in Safari e segui questi passi.',
@@ -259,7 +259,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261024-105236';
+const BUILD = '20261024-150817';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -461,7 +461,7 @@ async function loadNext(){
         if(d > now - 2*3600e3) out.push({d, name:race.raceName, s:lbl, wk}); } }
     out.sort((a,b)=>a.d-b.d); nextSess = out[0] || null; weekend = nextSess ? nextSess.wk : null;
     if(weekend) weekend.sessions.sort((a,b)=>a.d-b.d);
-    render();
+    render(); drawRis();
   }catch(e){}
 }
 // file .ics con tutte le sessioni del weekend e un promemoria 15 minuti prima: il telefono lo apre nel calendario
@@ -502,6 +502,7 @@ document.addEventListener('click', e => {
 function idleHtml(){
   const si = ST.SessionInfo || {}, m = si.Meeting || {};
   let h = `<div class="idle">`;
+  if(RIS.ok) return h + idleRest(si, m);
   if(nextSess){
     h += `<div class="kick">${t('next')}</div><h2>${esc(nextSess.name)}</h2>${weekend && weekend.circuit ? `<div class="where">${esc(weekend.circuit)}${weekend.place?' · '+esc(weekend.place):''}</div>` : ''}
       <div class="when">${esc(t('sess')[nextSess.s]||nextSess.s)} · ${new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'})}</div>
@@ -513,6 +514,10 @@ function idleHtml(){
     const fmt = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'});
     h += `<div class="wk"><h4>${t('weekend')}</h4>${weekend.sessions.map(x => `<div class="${x===nx?'nx':x.d<now?'done':''}"><span>${esc(t('sess')[x.s]||x.s)}</span><span class="tn">${esc(fmt(x.d))}</span></div>`).join('')}</div>`;
   }
+  return h + idleRest(si, m);
+}
+function idleRest(si, m){     // demo e pulsanti, sotto (o al posto di) programma e risultati
+  let h = RIS.ok ? `<a class="btn main big" href="?demo=1">${t('demo')}</a><div class="sub">${t('demoSub')}</div>` : '';
   h += `<div class="acts">${STANDALONE?'':`<a class="btn" href="#" data-install="1">${t('instBtn')}</a>`}${weekend?`<a class="btn" href="#" data-cal="1">${t('addCal')}</a>`:''}<a class="btn" href="#" data-share="1">${t('share')}</a></div>`;
   if(m.Name) h += `<div class="last">${t('last_')}: ${esc(m.Name)} · ${esc(si.Name||'')}</div>`;
   return h + `</div>`;
@@ -961,29 +966,56 @@ function playIntro(force){
 
 
 
-// ---------------- risultati del weekend (fuori dalla diretta): sito/risultati, disegnati da risultati.js ----------------
-const RIS = {week: [], cur: null, docs: {}, replays: new Set()};
+// ---------------- prossima sessione + programma del weekend + risultati (fuori dalla diretta) ----------------
+// In cima: la prossima sessione col conto alla rovescia; poi il programma del weekend, dove le sessioni gia' corse
+// hanno la spunta e aprono i loro risultati (sito/risultati, disegnati da risultati.js); sotto, i risultati scelti.
+const RIS = {idx: [], cur: null, docs: {}, replays: new Set(), ok: false};
 async function loadRis(){
   if(DEMO || !window.FTRRis) return;
   try{
     const [idx, rp] = await Promise.all([fetch('../risultati/index.json', {cache:'no-cache'}).then(r => r.json()),
                                          fetch('../replay/replays.json', {cache:'no-cache'}).then(r => r.json()).catch(() => [])]);
-    if(!idx.length) return;
-    const k = idx[0].year + idx[0].meeting;                 // il weekend piu' recente
-    RIS.week = idx.filter(x => x.year + x.meeting === k).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
-    RIS.cur = idx[0].name; RIS.replays = new Set(rp.map(x => x.name));
-    drawRis();
+    RIS.idx = idx; RIS.replays = new Set(rp.map(x => x.name)); RIS.ok = true;
+    if(!RIS.cur && idx.length) RIS.cur = idx[0].name;                  // l'ultima sessione pubblicata
+    render(); drawRis();
   }catch(e){}
+}
+function risWeek(){                     // risultati del weekend in programma, o dell'ultimo weekend pubblicato
+  if(!RIS.idx.length) return {same: false, items: []};
+  const near = x => weekend && Math.abs(Date.parse(x.start) - weekend.sessions[0].d) < 5*86400e3;
+  const same = RIS.idx.filter(near).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+  if(same.length) return {same: true, items: same};
+  const k = RIS.idx[0].year + RIS.idx[0].meeting;
+  return {same: false, items: RIS.idx.filter(x => x.year + x.meeting === k).sort((a, b) => (a.start || '').localeCompare(b.start || ''))};
 }
 async function drawRis(){
   const box = $('#ris');
-  if(!RIS.cur){ box.innerHTML = ''; return; }
-  const w = RIS.week[0] || {};
-  box.innerHTML = `<div class="rhd"><b>${t('risH')}</b><a href="../risultati/?s=${encodeURIComponent(RIS.cur)}">${t('risAll')} →</a></div>
-    <div class="chips">${RIS.week.map(x => `<button data-ris="${esc(x.name)}" class="${x.name === RIS.cur ? 'on' : ''}">${esc(t('sess')[x.session] || x.session)}</button>`).join('')}</div><div id="risBody"></div>`;
+  if(DEMO || !RIS.ok){ box.innerHTML = ''; return; }
+  const wk = risWeek(), byS = {}; for(const x of wk.items) byS[x.session] = x;
+  const fmtD = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'});
+  let h = '';
+  if(nextSess){
+    h += `<div class="nx1"><div class="kick">${t('next')}</div><div class="nxl"><b>${esc(t('sess')[nextSess.s]||nextSess.s)}</b> · ${esc(new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'}))}</div>
+      <div class="where">${esc(nextSess.name)}${weekend && weekend.place ? ' · ' + esc(weekend.place) : ''}</div><div class="cdg tn" id="cdg">${cdHtml()}</div></div>`;
+  }
+  if(weekend){
+    const now = Date.now();
+    h += `<div class="rhd"><b>${t('weekend')}</b><a href="../risultati/${RIS.cur ? '?s=' + encodeURIComponent(RIS.cur) : ''}">${t('risAll')} →</a></div><div class="chips">` +
+      weekend.sessions.map(x => { const r = wk.same ? byS[x.s] : null, isNext = nextSess && x.d === nextSess.d && x.s === nextSess.s;
+        return `<button ${r ? `data-ris="${esc(r.name)}"` : 'disabled'} class="${isNext ? 'nx' : ''} ${!r && x.d < now ? 'past' : ''}">${r ? '✓ ' : ''}${esc(t('sess')[x.s]||x.s)}<small>${esc(fmtD(x.d))}</small></button>`; }).join('') + `</div>`;
+  }
+  if(wk.items.length && !wk.same){
+    h += `<div class="rhd"><b>${t('lastWk')} · ${esc(wk.items[0].meeting)}</b></div><div class="chips">` +
+      wk.items.map(x => `<button data-ris="${esc(x.name)}">${esc(t('sess')[x.session]||x.session)}</button>`).join('') + `</div>`;
+  }
+  const show = RIS.cur && wk.items.some(x => x.name === RIS.cur) ? RIS.cur : (wk.items.length ? wk.items[wk.items.length - 1].name : null);
+  RIS.cur = show;
+  box.innerHTML = h + `<div id="risBody"></div>`;
+  if(!show) return;
+  box.querySelectorAll('[data-ris]').forEach(b => b.classList.toggle('on', b.dataset.ris === show));
   try{
-    const doc = RIS.docs[RIS.cur] || (RIS.docs[RIS.cur] = await (await fetch(`../risultati/${RIS.cur}.json`, {cache:'no-cache'})).json());
-    FTRRis.render($('#risBody'), doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: RIS.replays.has(RIS.cur) ? `?replay=${encodeURIComponent(RIS.cur)}` : null});
+    const doc = RIS.docs[show] || (RIS.docs[show] = await (await fetch(`../risultati/${show}.json`, {cache:'no-cache'})).json());
+    FTRRis.render($('#risBody'), doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: RIS.replays.has(show) ? `?replay=${encodeURIComponent(show)}` : null});
   }catch(e){ $('#risBody').innerHTML = ''; }
 }
 $('#ris').addEventListener('click', e => { const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; drawRis(); });
