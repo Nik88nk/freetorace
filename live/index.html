@@ -144,11 +144,32 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 #instSheet .go{display:block;width:100%;margin:14px 0 0;padding:14px;font-size:17px;text-align:center;border:none;font-family:inherit}
 #instSheet .qr{display:block;margin:12px auto;width:180px;height:180px;border-radius:10px}
 #instSheet .close{display:block;margin:10px auto 0;background:none;border:none;color:var(--dim);font:inherit;font-size:14px}
+/* testata su una riga: luogo · sessione, tempo/giro a destra; la barra di stato compare solo se serve */
+header{padding:calc(env(safe-area-inset-top) + 6px) 12px 6px}
+header .ev b{font-size:15px}
+#hdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none;display:none}
+#hdot.on{display:block}
+#conn.hide{display:none}
+/* classifica compatta: una riga per pilota; squadra e miglior tempo si aprono toccando la riga */
+body.dense .row{padding:4px 12px;gap:6px}
+body.dense .row .t small,body.dense .row .g small{display:none}
+body.dense .row.sel .t small,body.dense .row.sel .g small{display:block}
+body.dense .row .bar{height:18px}
+body.dense .row .ti{width:18px;height:18px;border-width:2px}
+body.dense .mini{margin-top:2px}
+/* bandiere: avviso a tutta larghezza per qualche secondo */
+#flagBan{position:fixed;left:0;right:0;top:0;z-index:60;display:none;padding:calc(env(safe-area-inset-top) + 16px) 16px 16px;text-align:center;font-size:26px;font-weight:900;letter-spacing:1px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#flagBan.on{display:block;animation:fbIn .25s ease-out}
+@keyframes fbIn{from{transform:translateY(-100%)}to{transform:none}}
+.opt{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px}
+.opt input{width:20px;height:20px;accent-color:var(--accent);flex:none}
 </style>
 </head>
 <body>
+<div id="flagBan"></div>
 <header>
-  <img src="icon-192.png" alt="" style="width:30px;height:30px;border-radius:7px">
+  <img src="icon-192.png" alt="" style="width:26px;height:26px;border-radius:6px">
+  <i id="hdot"></i>
   <div class="ev"><b id="ev">Free to Race</b><small id="ses">Live</small></div>
   <span class="pill" id="track" style="display:none"></span>
   <div class="lap tn" id="lap"></div>
@@ -171,6 +192,7 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
   <div class="pane" id="p-set">
     <div class="set"><h4 data-t="delayH"></h4><div class="delay"><button data-d="-5">−5</button><b id="delayV" class="tn">0 s</b><button data-d="5">+5</button><button data-d="30">+30</button><button data-d="0" data-r="1">0</button></div>
       <p class="dim" style="font-size:13px" data-t="delayP"></p></div>
+    <div class="set"><h4 data-t="viewH"></h4><label class="opt"><input type="checkbox" data-opt="dense"><span data-t="optDense"></span></label><label class="opt"><input type="checkbox" data-opt="wake"><span data-t="optWake"></span></label><label class="opt"><input type="checkbox" data-opt="vib"><span data-t="optVib"></span></label></div>
     <div class="set"><h4 data-t="langH"></h4><div class="seg" style="padding:0"><button data-l="en">English</button><button data-l="it">Italiano</button></div></div>
     <div class="set" id="instSet"><h4 data-t="homeH"></h4><a class="btn main" href="#" data-install="1" data-t="instBtn" style="margin:0"></a></div>
     <div class="set"><a class="btn main" href="../" data-t="pc"></a> <a class="btn" href="https://ko-fi.com/freetorace" data-t="coffee"></a> <a class="btn" href="#" data-share="1" data-t="share"></a></div>
@@ -190,7 +212,7 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
-  langH:'Language', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
+  langH:'Language', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
   instIosOther:'On iPhone you need <b>Safari</b>: open <b>free-to-race.com/live</b> in Safari and follow these steps.',
@@ -205,7 +227,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
-  langH:'Lingua', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
+  langH:'Lingua', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
   instIosOther:'Su iPhone serve <b>Safari</b>: apri <b>free-to-race.com/live</b> in Safari e segui questi passi.',
@@ -233,7 +255,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261023-220936';
+const BUILD = '20261024-102921';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -266,6 +288,9 @@ function merge(base, upd){
     for(const [k,v] of Object.entries(upd)){ if(k==='_deleted'){ for(const d of v) delete base[String(d)]; continue; } base[k]=merge(base[k],v); }
     return base;
   }
+  // le liste si copiano: altrimenti lo stato condivide l'array del messaggio originale e, nel replay, i messaggi
+  // aggiunti dopo finiscono dentro l'evento e ricompaiono quando si torna indietro (audit 0.4.4 I1, 0.4.8 I4)
+  if(Array.isArray(upd)) return upd.map(v => merge(null, v));
   return upd;
 }
 const asList = x => Array.isArray(x) ? x.filter(v=>v!=null) : (x && typeof x==='object') ? Object.keys(x).sort((a,b)=>a-b).map(k=>x[k]) : [];
@@ -364,8 +389,8 @@ function render(){
   const si = ST.SessionInfo || {}, m = si.Meeting || {}, race = si.Type==='Race';
   const live = isLive();
   // in attesa la testata non mostra la sessione finita (giro 62/62 e simili): solo il nome
-  $('#ev').textContent = live && m.Name || 'Free to Race';
-  $('#ses').textContent = live ? ([si.Name, m.Location].filter(Boolean).join(' · ') || 'Live') : t('noSession');
+  $('#ev').textContent = live ? ([m.Location || m.Name, t('sess')[si.Name] || si.Name].filter(Boolean).join(' · ') || 'Free to Race') : 'Free to Race';
+  $('#ses').textContent = live ? '' : t('noSession'); $('#ses').style.display = live ? 'none' : '';
   const susp = DEMO && rp && rp.marks && rp.marks.phases.some(x=>x.kind==='red' && rp.t>=x.from && rp.t<x.to);   // sospensione: la pista torna «libera» prima della ripartenza
   const ts = susp ? '5' : String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
   if(live && tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
@@ -374,6 +399,9 @@ function render(){
   else if(race && lc.CurrentLap) $('#lap').innerHTML = `${lc.CurrentLap}<span class="dim" style="font-size:13px">/${lc.TotalLaps||'?'}</span><small>${t('lap')}</small>`;
   else { const r = remaining(); $('#lap').innerHTML = r!=null ? `${fmtT(r)}<small>${t('left')}</small>` : ''; }
   if(connected && !DEMO) setConn(live ? t('live') : t('idleConn'), true);
+  const quiet = !DEMO && live && connected && !delay;   // tutto normale: la barra di stato lascia il posto al pallino in testata
+  $('#conn').classList.toggle('hide', quiet); $('#hdot').classList.toggle('on', quiet);
+  flagAlert(live ? ts : null); wakeLock();
   const ds = drivers();
   $('#gapMode').style.display = race && live ? '' : 'none';
   $('#timesHead').style.display = live ? '' : 'none';
@@ -757,7 +785,7 @@ async function startDemo(){
     }
     ev.sort((a,b)=>a[0]-b[0]);
     if(REPLAY){ const si = (ev.find(e => e[1]==='SessionInfo' && e[2] && e[2].Meeting) || [])[2] || {};
-      what(`${esc((si.Meeting||{}).Name||'')} ${esc((si.StartDate||'').slice(0,4))} · ${esc(t('sess')[si.Name]||si.Name||'')}`); }
+      what(esc((si.StartDate||'').slice(0,4)) || ''); }   // luogo e sessione sono gia' nella testata: qui solo l'anno
     const st = ev.find(e => e[1]==='SessionData' && JSON.stringify(e[2]).includes('"Started"'));
     rp = {ev, i:0, t:0, t0:ev[0][0], t1:ev[ev.length-1][0], start:(st?st[0]:ev[0][0]) - 20000, speed:1, paused:false, last:performance.now()};
     rp.marks = demoMarks(ev, rp.t1);
@@ -794,6 +822,7 @@ function rpNote(){
 }
 $('#rpNote').addEventListener('click', e => { const b=e.target.closest('[data-go]'); if(b) seek(+b.dataset.go); });
 function seek(tms){
+  prevFlag = undefined;   // dopo un salto la bandiera del momento non e' una novita'
   for(const k of Object.keys(ST)) delete ST[k];
   trk.last={}; trk.ratio={}; trk.pitIn={}; trk.rhist={}; for(const k of Object.keys(disp)) delete disp[k];
   rp.i=0; rp.t=Math.max(rp.t0, Math.min(rp.t1, tms)); advance(); render();
@@ -924,6 +953,37 @@ function playIntro(force){
     }
   });
 }
+
+
+// ---------------- avvisi per le bandiere, schermo acceso, classifica compatta ----------------
+const opt = k => store.get('ftr.' + k, '1') === '1';
+let prevFlag, flagTimer = 0;
+function flagAlert(ts){
+  if(ts == null){ prevFlag = undefined; return; }
+  const was = prevFlag; prevFlag = ts;
+  if(was === undefined || was === ts || !opt('vib')) return;
+  const big = ['4', '5', '6'].includes(ts), clear = ts === '1' && ['4', '5', '6', '7'].includes(was);
+  if(!big && !clear) return;
+  const c = TRACKC[ts] || ['#1f9d55', '#fff'], b = $('#flagBan');
+  b.textContent = String(t('track')[ts] || '').toUpperCase();
+  b.style.background = c[0]; b.style.color = c[1]; b.classList.add('on');
+  clearTimeout(flagTimer); flagTimer = setTimeout(() => b.classList.remove('on'), big ? 5000 : 3000);
+  try{ if(navigator.vibrate) navigator.vibrate(big ? [250, 120, 250, 120, 250] : [150]); }catch(e){}
+}
+$('#flagBan').onclick = () => $('#flagBan').classList.remove('on');
+let wl = null, wlBusy = false;
+async function wakeLock(){
+  const want = opt('wake') && !document.hidden && (DEMO ? !!(rp && !rp.paused) : isLive());
+  if(wlBusy || !('wakeLock' in navigator) || want === !!wl) return;
+  wlBusy = true;
+  try{ if(want){ wl = await navigator.wakeLock.request('screen'); wl.addEventListener('release', () => { wl = null; }); } else { await wl.release(); wl = null; } }
+  catch(e){ wl = null; }
+  wlBusy = false;
+}
+document.addEventListener('visibilitychange', () => { wl = null; wakeLock(); });   // il sistema lo toglie quando l'app va in secondo piano
+function applyOpts(){ document.body.classList.toggle('dense', opt('dense')); $$('[data-opt]').forEach(i => i.checked = opt(i.dataset.opt)); }
+$$('[data-opt]').forEach(i => i.onchange = () => { store.set('ftr.' + i.dataset.opt, i.checked ? '1' : '0'); applyOpts(); wakeLock(); });
+applyOpts();
 
 // ---------------- installazione sulla schermata Home ----------------
 // Chrome/Android: si tiene da parte l'invito del browser e lo si apre col pulsante, un tocco solo.

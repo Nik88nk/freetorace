@@ -1054,7 +1054,7 @@ function renderConfronto(){
 // I dati vengono dall'archivio F1 (si scaricano una volta per sessione): nella diretta gratuita non ci sono.
 const tel = {a:null, la:null, b:null, lb:null, data:null, key:'', status:'', hover:null, retry:null, sess:''};
 function telLaps(n){ return (H && H.laps[n] || []).filter(r=>r.t && !r.partial && !r.pin && !r.pout); }
-function telBest(n){ const ls=telLaps(n); return ls.length ? ls.reduce((a,r)=>r.t<a.t?r:a).lap : null; }
+function telBest(n){ const ls=telLaps(n).filter(r=>!r.del); return ls.length ? ls.reduce((a,r)=>r.t<a.t?r:a).lap : null; }   // i giri cancellati non sono il migliore
 function telDefaults(){
   if(!S || !S.drivers.length) return;
   const sk = S.meeting+'|'+S.session;
