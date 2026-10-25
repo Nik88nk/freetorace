@@ -259,7 +259,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261024-150817';
+const BUILD = '20261025-095052';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -333,6 +333,10 @@ function passages(upd, when){
 }
 function passage(n, idx, tt){
   const prev = trk.last[n]; if(prev && prev[0]===idx) return;
+  if(prev && cal){   // come pista.plausible: niente ritorni indietro per lo stato rimandato di un minisettore gia' passato
+    const N = cal.refDur.length, fwd = ((idx - prev[0]) % N + N) % N;
+    if(fwd > 2){ let need = 0; for(let k=1;k<=fwd;k++) need += cal.refDur[(prev[0]+k)%N]; if(tt - prev[1] < 0.6*need) return; }
+  }
   if(prev && cal && idx===(prev[0]+1)%cal.refDur.length){ const r=(tt-prev[1])/Math.max(0.5,cal.refDur[idx]); if(r>0.5&&r<6){ const l=trk.ratio[n]=trk.ratio[n]||[]; l.push(r); if(l.length>3) l.shift(); } }
   trk.last[n] = [idx, tt];
 }
@@ -744,8 +748,10 @@ function drawMap(){
       else if(L){
         const ft = estFrac(L[0], now - L[1], pace(d.n));
         let q = disp[d.n]; const delta = q ? ((ft-q.f+0.5)%1+1)%1-0.5 : 1;
-        if(!q || Math.abs(delta)>0.03) q = disp[d.n] = {f:ft};
-        else { const vt = (((estFrac(L[0], now-L[1]+0.2, pace(d.n))-ft)%1+1)%1)/0.2; q.f = (q.f + Math.max(0.25*vt, vt + delta/1.2)*dt) % 1; }
+        // come nel programma per PC: si riposiziona solo se indietro di molto o avanti di moltissimo; poco avanti, rallenta
+        if(!q || delta>0.03 || delta<-0.08) q = disp[d.n] = {f:ft};
+        else { const vt = Math.max(0, ((estFrac(L[0], now-L[1]+0.2, pace(d.n))-ft+0.5)%1+1)%1-0.5)/0.2;   // col segno: niente «quasi un giro» per uno scarto minuscolo
+          q.f = (q.f + Math.max(0.25*vt, vt + delta/1.2)*dt) % 1; }
         xy = G.at(q.f);
       }
     }
