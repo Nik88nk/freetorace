@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Austin_Race",
+  "kind": "race",
+  "meeting": "United States Grand Prix",
+  "location": "Austin",
+  "year": "2026",
+  "session": "Race",
+  "start": "2026-10-25T15:00:00"
+ },
+ {
   "name": "2026_Austin_Qualifying",
   "kind": "quali",
   "meeting": "United States Grand Prix",
