@@ -48,5 +48,15 @@
   "it": "United States Grand Prix 2026 · Libere 1",
   "en": "2026 United States Grand Prix · Practice 1",
   "laps": 26
+ },
+ {
+  "name": "2025_Mexico_City_Race",
+  "start": "2025-10-26T20:00:00+00:00",
+  "year": "2025",
+  "meeting": "Mexico City Grand Prix",
+  "session": "Race",
+  "it": "Mexico City Grand Prix 2025 · Gara",
+  "en": "2025 Mexico City Grand Prix · Race",
+  "laps": 71
  }
 ]
