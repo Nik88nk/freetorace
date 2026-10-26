@@ -60,6 +60,48 @@ nav .wrap{max-width:1440px}
 .hero .small{font-size:13px;color:var(--dim);margin-top:12px}
 .shot{border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6);width:100%;display:block}
 
+/* in cima: il weekend (prossima gara o weekend in corso) e accanto il programma col replay, oppure la diretta */
+.top{padding:28px 0 26px;background:radial-gradient(ellipse at 80% 0%,rgba(225,6,0,.16),transparent 60%)}
+.top .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+@media(max-width:960px){.top .wrap{grid-template-columns:1fr}.top.livefirst #prod{order:-1}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0}
+.kick{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
+.wkh{font-size:clamp(28px,3.2vw,36px);line-height:1.05;margin:4px 0 2px;font-weight:900}
+.ch{margin:0 0 8px;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim)}
+.cdl{margin-top:14px;font-weight:700}
+.cd.big{margin:6px 0 4px}
+.cd.big div{min-width:70px;padding:10px 8px 8px;border:1px solid var(--line);border-radius:12px}
+.cd.big b{font-size:34px;font-weight:900}
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:6px}
+.prog > *{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.25;color:var(--dim);text-decoration:none}
+.prog b{display:block;font-size:14px;color:var(--text)}
+.prog .done b::before{content:"✓ ";color:var(--green)}
+.prog a.done{border-color:#2d6b45}.prog a.done:hover{filter:brightness(1.2)}
+.prog .live{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:#2a0d0d}.prog .live b::after{content:" ● LIVE";color:var(--accent);font-size:11px}
+.prog .nx{border-color:#c9cfdb}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn.sm{padding:8px 14px;font-size:14px}
+.prod{display:flex;flex-direction:column}
+.prod h2{font-size:clamp(26px,2.6vw,32px);line-height:1.05;margin:4px 0 6px;font-style:italic}
+.prod h2 b{color:var(--accent)}
+.prod .lead2{color:#c3c9d6;font-size:15px;margin:0 0 12px}
+.thumb{position:relative;display:block;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.thumb img{display:block;width:100%;height:210px;object-fit:cover;object-position:left top}
+.thumb.play::after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(225,6,0,.92);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 8px;border-radius:6px;background:var(--accent);color:#fff;text-transform:uppercase}
+.cap{font-size:14px;color:var(--dim);margin:8px 0 12px}.cap b{color:var(--text)}
+.prod .acts{margin-top:auto}
+.prod.live{border-color:var(--accent);background:linear-gradient(160deg,#2a0d0d,var(--panel) 55%)}
+.row3{display:grid;grid-template-columns:1.15fr 1fr .8fr;gap:18px}
+@media(max-width:960px){.row3{grid-template-columns:1fr}}
+.row3 table td,.row3 table th{padding:6px 8px;font-size:14px}
+.row3 .sw{display:inline-block;width:4px;height:15px;border-radius:2px;vertical-align:-3px;margin-right:6px}
+.up{color:#22b35a}.dn{color:#e5484d}
+.mbar{height:8px;border-radius:0 4px 4px 0;display:block}
+.more{display:block;margin-top:10px;font-size:14px;color:var(--dim)}
+.more a{color:var(--text)}
+#now{border-top:0;padding-top:0}
+
 section{padding:56px 0;border-top:1px solid var(--line2)}
 h2{font-size:clamp(28px,3.5vw,38px);margin:0 0 8px;font-weight:900}
 h2 + p.sub{color:var(--dim);margin:0 0 28px}
@@ -151,6 +193,7 @@ nav .links + .lang{margin-left:auto}
 .support h3{margin:0 0 4px}
 .support p{margin:0;color:#c3c9d6}
 @media(max-width:760px){.btn.kofi:not(.big){display:none}}
+@media(max-width:430px){nav .wrap{gap:10px;padding:0 12px}.brand{font-size:18px}nav .btn.main{padding:8px 12px!important}}
 </style>
 </head>
 <body>
@@ -164,27 +207,21 @@ nav .links + .lang{margin-left:auto}
 
 <div id="qrPop"><div class="box"><h3 data-i="qr_h"></h3><img class="qr" src="img/qr_live.svg" alt="QR free-to-race.com/live"><p data-i="qr_p"></p><p><a href="live/" data-i="qr_open"></a></p><button id="qrClose" data-i="qr_close"></button></div></div>
 
-<header class="hero"><div class="wrap">
-  <div>
-    <h1 data-i="h1"></h1>
-    <p class="lead" data-i="lead"></p>
-    <div class="cta" id="download">
-      <a class="btn main" id="dlMain" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl"></a>
-      <a class="btn" href="demo/" data-i="demo"></a>
-      <a class="btn" href="replay/" data-i="nav_rp"></a>
-      <a class="btn" href="risultati/" data-i="ris_btn"></a>
-      <a class="btn" id="liveBtn" href="live/?install=1" data-i="live_btn"></a>
-      <a class="btn" href="#features" data-i="what"></a>
-    </div>
-    <div class="small" data-i="dl_note"></div>
-    <details class="smart"><summary data-i="ss_q"></summary><p data-i="ss_a"></p></details>
-  </div>
-  <img class="shot" src="img/gara.png" alt="Free to Race">
+<header class="top" id="download"><div class="wrap">
+  <div class="card" id="wk"><div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2></div>
+  <div class="card prod" id="prod"></div>
 </div></header>
+
+<section id="now"><div class="wrap"><div class="row3">
+  <div class="card" id="lastCard"></div>
+  <div class="card"><h3 class="ch" id="miniDh"></h3><table id="miniD"></table><a class="more" href="#standings" data-i="full_st"></a></div>
+  <div class="card"><h3 class="ch" data-i="constructors"></h3><table id="miniC"></table></div>
+</div></div></section>
 
 <section id="features"><div class="wrap">
   <h2 data-i="f_h"></h2>
   <p class="sub" data-i="f_sub"></p>
+  <img class="shot" src="img/gara.png" alt="Free to Race" style="margin-bottom:22px">
   <div class="feats">
     <div class="feat"><span class="tag" data-i="f1t"></span><h3 data-i="f1h"></h3><p data-i="f1p"></p></div>
     <div class="feat"><span class="tag" data-i="f2t"></span><h3 data-i="f2h"></h3><p data-i="f2p"></p></div>
@@ -206,7 +243,6 @@ nav .links + .lang{margin-left:auto}
 <section id="season-sec"><div class="wrap">
   <h2><span data-i="s_h"></span> <span id="season"></span></h2>
   <p class="sub" data-i="s_sub"></p>
-  <div class="next" id="next"></div>
   <div class="mapbox"><svg id="map"></svg><div class="tip" id="tip"></div>
     <div class="legend"><span><i style="background:#5d6577"></i><span data-i="lg_done"></span></span><span><i style="background:var(--accent)"></i><span data-i="lg_next"></span></span><span><i style="border:2px solid #8b94a7;width:8px;height:8px"></i><span data-i="lg_todo"></span></span></div>
   </div>
@@ -284,6 +320,13 @@ const T = {
   fb_tip:'Found a bug? In the program use <b>🐞 Report a problem</b> (in <i>Choose session</i>): it prepares the email with your version and the last lines of the log, and you see everything before sending.',
   fb_mail:'✉ Write to segnalazioni@free-to-race.com', fb_gh:'Open an issue on GitHub',
   credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
+  sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
+  of:'of', wk_on:'Race weekend · round', prog_h:'Weekend schedule (your time)', in_:s=>`${s} starts in`, add_cal:'📅 Add to calendar', all_cal:'Full calendar ↓',
+  prod_k:'The program · free', lead2:'Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.',
+  rp_sub:'try it in your browser, nothing to install', live_now:'● Live now', follow:'📱 Follow on your phone', follow_ph:'📱 Follow live',
+  last_race:'Last race', last_sess:'Latest session', th_grid:'Start', th_gap:'Gap', th_best:'Best lap', th_time:'Time', fl:'Fastest lap',
+  more_race:'Strategy, pace and stops', more_pr:'Race pace, tyres, teams', more_q:'Cuts, sectors, ideal lap', rp_more:'Watch it again',
+  full_st:'Full standings and teams ↓', mini_d:(r,n)=>`Drivers · after ${r} of ${n} races`, ex_tag:'Replay',
   locale:'en-GB'
  },
  it: {
@@ -321,6 +364,13 @@ const T = {
   fb_tip:'Hai trovato un errore? Nel programma usa <b>🐞 Segnala un problema</b> (in <i>Scegli sessione</i>): prepara la mail con la tua versione e le ultime righe del registro, e vedi tutto prima di inviarla.',
   fb_mail:'✉ Scrivi a segnalazioni@free-to-race.com', fb_gh:'Apri una segnalazione su GitHub',
   credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
+  sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
+  of:'di', wk_on:'Weekend in corso · round', prog_h:'Programma del weekend (tua ora)', in_:s=>`${s} tra`, add_cal:'📅 Aggiungi al calendario', all_cal:'Tutto il calendario ↓',
+  prod_k:'Il programma · gratis', lead2:'Tempi in diretta, strategia gomme, previsione delle soste e la pista con le auto: gratis e senza account, su PC e telefono.',
+  rp_sub:'provalo nel browser, senza installare', live_now:'● In diretta adesso', follow:'📱 Segui sul telefono', follow_ph:'📱 Segui in diretta',
+  last_race:'Ultima gara', last_sess:'Ultima sessione', th_grid:'Part.', th_gap:'Distacco', th_best:'Miglior giro', th_time:'Tempo', fl:'Giro più veloce',
+  more_race:'Strategie, passo e soste', more_pr:'Passo gara, gomme, squadre', more_q:'Tagli, settori, giro ideale', rp_more:'Rivedila',
+  full_st:'Classifiche complete e squadre ↓', mini_d:(r,n)=>`Mondiale piloti · dopo ${r} gare su ${n}`, ex_tag:'Replay',
   locale:'it-IT'
  }
 };
@@ -331,7 +381,7 @@ function applyLang(){
   document.documentElement.lang = LANG;
   document.querySelectorAll('[data-i]').forEach(e => { const v=t(e.dataset.i); if(typeof v==='string') e.innerHTML = v; });
   $('lang').textContent = LANG==='it' ? 'EN' : 'IT';
-  if(races.length){ renderNext(); renderCal(); }
+  renderTop(); if(races.length) renderCal();
   if(lastStandings) renderStandings(...lastStandings);
   if(!lastStandings){ $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('loading')}</td></tr>`; }
 }
@@ -351,26 +401,30 @@ const $ = id => document.getElementById(id);
 async function j(path){ const r = await fetch(API + path); if(!r.ok) throw new Error(r.status); return (await r.json()).MRData; }
 
 let races=[], winners={}, lastStandings=null, cdTimer=null;
+let RP=[], RI=[], LAST=null, DOCS={};   // replay pubblicati, risultati pubblicati, ultima gara (Jolpica), risultati gia' scaricati
+const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe';
 // Dal telefono il pulsante principale installa l'app (il programma per Windows li' non serve);
-// dal PC «Live sul telefono» mostra il QR da inquadrare.
+// dal PC «sul telefono» mostra il QR da inquadrare.
 const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-if(MOBILE){
-  $('dlMain').href = $('dlNav').href = 'live/?install=1';
-  $('dlMain').dataset.i = 'ph_install'; $('dlNav').dataset.i = 'ph_short';
-  $('liveBtn').style.display = 'none';   // fa gia' il pulsante principale
-} else {
-  $('liveBtn').onclick = e => { e.preventDefault(); $('qrPop').classList.add('on'); };
-  $('qrPop').onclick = e => { if(e.target.id === 'qrPop' || e.target.id === 'qrClose') $('qrPop').classList.remove('on'); };
-}
+if(MOBILE){ $('dlNav').href = 'live/?install=1'; $('dlNav').dataset.i = 'ph_short'; }
+document.addEventListener('click', e => {
+  if(e.target.closest('[data-qr]') && !MOBILE){ e.preventDefault(); $('qrPop').classList.add('on'); }
+  if(e.target.id === 'qrPop' || e.target.id === 'qrClose') $('qrPop').classList.remove('on');
+  if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
+});
 async function main(){
   applyLang();
+  const site = p => fetch(p, {cache:'no-cache'}).then(r => r.ok ? r.json() : []).catch(() => []);
+  const side = Promise.all([site('replay/replays.json'), site('risultati/index.json'), j('/last/results.json').catch(() => null)])
+    .then(([rp, ri, last]) => { RP = rp; RI = ri; LAST = last && last.RaceTable.Races[0] || null; renderTop(); });
   try{
     const [rt, res] = await Promise.all([j('.json?limit=40'), j('/results/1.json?limit=100')]);
     races = rt.RaceTable.Races;
     $('season').textContent = rt.RaceTable.season;
     for(const r of res.RaceTable.Races) winners[r.round] = r.Results[0];
-    renderNext(); renderCal(); await renderMap();
-  }catch(e){ $('cal').innerHTML = `<div class="err">${t('err_cal')}</div>`; }
+    renderTop(); renderCal(); await renderMap();
+  }catch(e){ $('cal').innerHTML = `<div class="err">${t('err_cal')}</div>`; renderTop(); }
+  await side;
   try{
     const [ds, cs] = await Promise.all([j('/driverstandings.json?limit=40'), j('/constructorstandings.json?limit=20')]);
     lastStandings = [ds.StandingsTable.StandingsLists[0], cs.StandingsTable.StandingsLists[0]];
@@ -379,16 +433,140 @@ async function main(){
 }
 
 function nextRace(){ const now=new Date(); return races.find(r => raceTime(r) > now); }
-function renderNext(){
-  const r = nextRace(), box=$('next');
+// ---------------- in cima: il weekend, il programma (o la diretta), l'ultima gara o sessione ----------------
+// Prima del weekend: conto alla rovescia alla prima sessione, programma, replay della stessa gara dell'anno prima.
+// Durante: sessioni corse con la spunta (aprono i risultati), quella in corso in rosso, conto alla rovescia alla prossima,
+// e i risultati dell'ultima sessione pubblicata. Una sessione e' «in diretta» fra l'orario e la durata prevista + 15 min.
+const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};
+const SKEYS = [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']];
+const sname = s => (t('sess') || {})[s] || s;
+const lapT = v => v == null ? '' : v >= 60 ? `${Math.floor(v / 60)}:${(v % 60).toFixed(3).padStart(6, '0')}` : v.toFixed(3);
+function sessionsOf(r){
+  const out = [];
+  for(const [k, s] of SKEYS){ const x = k ? r[k] : {date:r.date, time:r.time}; if(x && x.date) out.push({s, d:Date.parse(x.date + 'T' + (x.time || '12:00:00Z'))}); }
+  return out.sort((a, b) => a.d - b.d);
+}
+function weekendNow(){       // il weekend in corso o il prossimo (finisce 4 ore dopo la partenza della gara)
+  const now = Date.now();
+  for(const r of races){ const ss = sessionsOf(r); if(ss.length && ss[ss.length - 1].d + 4*3600e3 > now) return {r, ss}; }
+  return null;
+}
+const nearWk = (x, ss) => Math.abs(Date.parse(x.start) - ss[0].d) < 5*86400e3;   // stessa settimana del weekend
+function featuredReplay(w){   // replay di questo weekend; altrimenti la stessa gara di un anno passato; altrimenti l'ultima gara
+  const mine = w ? RP.filter(x => nearWk(x, w.ss)) : [];
+  if(mine.length) return mine[0];
+  return (w && RP.find(x => x.session === 'Race' && x.meeting === w.r.raceName)) || RP.find(x => x.session === 'Race') || null;
+}
+let topSig = '';
+function renderTop(){
+  const w = races.length ? weekendNow() : null, now = Date.now();
+  const live = w && w.ss.find(x => now >= x.d && now < x.d + ((DUR[x.s] || 60) + 15)*60e3);
+  const nx = w && w.ss.find(x => x.d > now), during = w && now >= w.ss[0].d;
+  topSig = [LANG, races.length, RP.length, RI.length, !!LAST, live && live.s, nx && nx.s].join('|');
   if(cdTimer) clearInterval(cdTimer);
-  if(!r){ box.innerHTML = `<div><div class="k">${t('season')}</div><div class="v">${t('season_over')}</div></div>`; return; }
-  box.innerHTML = `<div><div class="k">${t('next_k')} ${r.round}</div><div class="v">${esc(r.raceName)}</div>
-    <div class="dim">${esc(r.Circuit.circuitName)} · ${esc(r.Circuit.Location.locality)}, ${esc(r.Circuit.Location.country)} · ${raceTime(r).toLocaleString(t('locale'),{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})}</div></div>
-    <div class="cd" id="cd"></div>`;
-  const tick = () => { let s=Math.max(0,(raceTime(r)-new Date())/1000); const d=Math.floor(s/86400); s-=d*86400; const h=Math.floor(s/3600); s-=h*3600; const m=Math.floor(s/60); const x=Math.floor(s-m*60);
-    $('cd').innerHTML = [[d,t('days')],[h,t('hours')],[m,t('minutes')],[x,t('seconds')]].map(([v,l])=>`<div><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join(''); };
-  tick(); cdTimer = setInterval(tick, 1000);
+  // il weekend
+  let h;
+  if(!races.length) h = `<div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2>`;
+  else if(!w) h = `<div class="kick">${t('season')}</div><h2 class="wkh">${t('season_over')}</h2>`;
+  else {
+    const r = w.r, mine = RI.filter(x => nearWk(x, w.ss)), byS = {}; for(const x of mine) byS[x.session] = x;
+    const fmt = d => `${new Date(d).toLocaleDateString(t('locale'), {weekday:'short', day:'numeric', month:'short'})} · ${new Date(d).toLocaleTimeString(t('locale'), {hour:'2-digit', minute:'2-digit'})}`;
+    h = `<div class="kick">${during ? t('wk_on') : t('next_k')} ${r.round} ${t('of')} ${races.length}</div><h2 class="wkh">${esc(r.raceName)}</h2>
+      <div class="dim">${esc(r.Circuit.circuitName)} · ${esc(r.Circuit.Location.locality)}, ${esc(r.Circuit.Location.country)}</div>`;
+    if(nx) h += `<div class="cdl">${esc(t('in_')(sname(nx.s)))}</div><div class="cd big" id="cd"></div>`;
+    h += `<h3 class="ch" style="margin-top:14px">${t('prog_h')}</h3><div class="prog">` + w.ss.map(x => {
+      const res = byS[x.s], cls = live === x ? 'live' : x.d < now ? 'done' : nx === x ? 'nx' : '';
+      const inner = `<b>${esc(sname(x.s))}</b>${esc(fmt(x.d))}`;
+      return res && cls === 'done' ? `<a class="done" href="risultati/?s=${encodeURIComponent(res.name)}">${inner}</a>` : `<div class="${cls}">${inner}</div>`;
+    }).join('') + `</div><div class="acts"><a class="btn sm" href="#" data-cal="1">${t('add_cal')}</a><a class="btn sm" href="#season-sec">${t('all_cal')}</a></div>`;
+    if(nx){
+      const tick = () => { const el = $('cd'); if(!el) return; let s = Math.max(0, (nx.d - Date.now())/1000); const d = Math.floor(s/86400); s -= d*86400; const hh = Math.floor(s/3600); s -= hh*3600; const m = Math.floor(s/60); const x = Math.floor(s - m*60);
+        el.innerHTML = [[d,t('days')],[hh,t('hours')],[m,t('minutes')],[x,t('seconds')]].map(([v,l]) => `<div><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join(''); };
+      setTimeout(tick);
+    }
+  }
+  $('wk').innerHTML = h;
+  // il programma, oppure la diretta
+  const dl = MOBILE ? `<a class="btn main" href="live/?install=1">${t('ph_install')}</a>`
+                    : `<a class="btn main" href="${DL_URL}">${t('dl')}</a><a class="btn" href="live/?install=1" data-qr="1">${t('ph_install')}</a>`;
+  const rp = featuredReplay(w), rpUrl = rp ? `replay/${encodeURIComponent(rp.name)}/` : 'demo/';
+  const smart = MOBILE ? '' : `<div class="small dim" style="margin-top:10px;font-size:13px">${t('dl_note')}</div><details class="smart"><summary>${t('ss_q')}</summary><p>${t('ss_a')}</p></details>`;
+  $('download').classList.toggle('livefirst', !!live);     // sul telefono la diretta va in cima
+  if(live){
+    $('prod').className = 'card prod live';
+    $('prod').innerHTML = `<div><span class="tag">${t('live_now')}</span></div><h2 style="font-style:normal">${esc(sname(live.s))} · ${esc(w.r.Circuit.Location.locality)}</h2><p class="lead2">${t('lead2')}</p>
+      <a class="thumb" href="live/" ${MOBILE ? '' : 'data-qr="1"'}><img src="img/replay.jpg" alt=""></a>
+      <div class="acts"><a class="btn main" href="live/" ${MOBILE ? '' : 'data-qr="1"'}>${MOBILE ? t('follow_ph') : t('follow')}</a>${MOBILE ? '' : `<a class="btn" href="${DL_URL}">${t('dl')}</a>`}</div>${smart}`;
+  } else {
+    $('prod').className = 'card prod';
+    $('prod').innerHTML = `<div class="kick">${t('prod_k')}</div><h2>${t('h1')}</h2><p class="lead2">${t('lead2')}</p>
+      <a class="thumb play" href="${rpUrl}"><img src="img/replay.jpg" alt=""></a>
+      <div class="cap"><span class="tag">${t('ex_tag')}</span> <a href="${rpUrl}"><b>${esc(rp ? rp[LANG] || rp.en : t('demo'))}</b></a> · ${t('rp_sub')}</div>
+      <div class="acts">${dl}</div>${smart}`;
+  }
+  renderLast(w, during);
+}
+setInterval(() => { const w = races.length ? weekendNow() : null, now = Date.now();
+  const live = w && w.ss.find(x => now >= x.d && now < x.d + ((DUR[x.s] || 60) + 15)*60e3), nx = w && w.ss.find(x => x.d > now);
+  if([LANG, races.length, RP.length, RI.length, !!LAST, live && live.s, nx && nx.s].join('|') !== topSig) renderTop();
+  const el = $('cd'); if(el && nx){ let s = Math.max(0, (nx.d - now)/1000); const d = Math.floor(s/86400); s -= d*86400; const hh = Math.floor(s/3600); s -= hh*3600; const m = Math.floor(s/60); const x = Math.floor(s - m*60);
+    el.innerHTML = [[d,t('days')],[hh,t('hours')],[m,t('minutes')],[x,t('seconds')]].map(([v,l]) => `<div><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join(''); }
+}, 1000);
+
+// l'ultima sessione pubblicata di questo weekend (risultati di Free to Race), altrimenti l'ultima gara (Jolpica)
+async function renderLast(w, during){
+  const ran = new Set(w ? w.ss.filter(x => x.d < Date.now()).map(x => x.s) : []);
+  const box = $('lastCard'), mine = w ? RI.filter(x => nearWk(x, w.ss) && ran.has(x.session)).sort((a, b) => (b.start || '').localeCompare(a.start || '')) : [];
+  const sw = c => `<span class="sw" style="background:${c}"></span>`;
+  const chg = (g, p) => { if(!g) return '<span class="dim">box</span>'; const d = g - p; return d > 0 ? `<span class="up">▲${d}</span>` : d < 0 ? `<span class="dn">▼${-d}</span>` : '<span class="dim">=</span>'; };
+  const links = (name, kind) => { const ri = RI.find(x => x.name === name), rp = RP.find(x => x.name === name), out = [];
+    if(ri) out.push(`<a href="risultati/?s=${encodeURIComponent(name)}">${t(kind === 'race' ? 'more_race' : kind === 'quali' ? 'more_q' : 'more_pr')} →</a>`);
+    if(rp) out.push(`<a href="replay/${encodeURIComponent(name)}/">${t('rp_more')} →</a>`);
+    return out.join(' · '); };
+  if(during && mine.length){
+    const it = mine[0];
+    try{
+      const doc = DOCS[it.name] || (DOCS[it.name] = await (await fetch(`risultati/${it.name}.json`, {cache:'no-cache'})).json());
+      const D = n => doc.drivers[n] || {tla:n, color:'#888'};
+      let tb;
+      if(doc.kind === 'race'){
+        tb = `<tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t('th_grid')}</th><th class="num">±</th><th class="num">${t('th_gap')}</th><th class="num">${t('th_pts')}</th></tr>` +
+          doc.arrivo.slice(0, 10).map(x => `<tr><td>${x.pos}</td><td>${sw(D(x.n).color)}<b>${esc(D(x.n).tla)}</b></td><td class="num">${x.grid || ''}</td><td class="num">${chg(x.grid, x.pos)}</td><td class="num">${x.pos === 1 ? t('winner') : esc(x.gap)}</td><td class="num">${x.pts || ''}</td></tr>`).join('');
+        if(doc.giroVeloce) tb += `<tr><td colspan="6" class="dim" style="font-size:13px">${t('fl')}: <b style="color:var(--text)">${esc(D(doc.giroVeloce.n).tla)}</b> ${lapT(doc.giroVeloce.t)}</td></tr>`;
+      } else {
+        const rows = doc.kind === 'quali' ? doc.griglia.map(x => ({n:x.n, pos:x.pos, t:x.q3 ?? x.q2 ?? x.q1, gap:x.gap})) : doc.classifica.map(x => ({n:x.n, pos:x.pos, t:x.best, gap:x.gap}));
+        tb = `<tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t(doc.kind === 'quali' ? 'th_time' : 'th_best')}</th><th class="num">${t('th_gap')}</th></tr>` +
+          rows.slice(0, 10).map(x => `<tr><td>${x.pos}</td><td>${sw(D(x.n).color)}<b>${esc(D(x.n).tla)}</b></td><td class="num">${lapT(x.t)}</td><td class="num">${x.gap ? '+' + x.gap.toFixed(3) : ''}</td></tr>`).join('');
+      }
+      box.innerHTML = `<h3 class="ch">${t('last_sess')} · ${esc(sname(doc.session))}</h3><table>${tb}</table><div class="more">${links(it.name, doc.kind)}</div>`;
+      return;
+    }catch(e){}
+  }
+  if(!LAST){ box.innerHTML = `<h3 class="ch">${t('last_race')}</h3><div class="err">${t('loading')}</div>`; return; }
+  const own = RI.find(x => x.session === 'Race' && x.meeting === LAST.raceName && x.year === LAST.season);
+  const fl = LAST.Results.find(x => x.FastestLap && x.FastestLap.rank === '1');
+  box.innerHTML = `<h3 class="ch">${t('last_race')} · ${esc(LAST.raceName)}</h3><table><tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t('th_grid')}</th><th class="num">±</th><th class="num">${t('th_gap')}</th><th class="num">${t('th_pts')}</th></tr>` +
+    LAST.Results.slice(0, 10).map(x => `<tr><td>${x.position}</td><td>${sw(col(x.Constructor.constructorId))}<b>${esc(x.Driver.code || x.Driver.familyName)}</b></td><td class="num">${+x.grid || ''}</td><td class="num">${chg(+x.grid, +x.position)}</td>
+      <td class="num">${x.position === '1' ? t('winner') : esc(x.Time ? x.Time.time : x.status)}</td><td class="num">${+x.points || ''}</td></tr>`).join('') +
+    (fl ? `<tr><td colspan="6" class="dim" style="font-size:13px">${t('fl')}: <b style="color:var(--text)">${esc(fl.Driver.code)}</b> ${esc(fl.FastestLap.Time.time)}</td></tr>` : '') +
+    `</table><div class="more">${own ? links(own.name, 'race') : ''}</div>`;
+}
+// file .ics con tutte le sessioni del weekend e un promemoria 15 minuti prima
+function addCalendar(){
+  const w = weekendNow(); if(!w) return;
+  const z = ms => new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''), r = w.r;
+  const out = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Free to Race//Site//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  for(const x of w.ss){
+    const name = `${r.raceName} · ${sname(x.s)}`;
+    out.push('BEGIN:VEVENT', `UID:ftr-${x.d}-${x.s.replace(/\W/g,'')}@free-to-race.com`, `DTSTAMP:${z(Date.now())}`, `DTSTART:${z(x.d)}`, `DTEND:${z(x.d + (DUR[x.s]||60)*60e3)}`,
+      `SUMMARY:${name}`, `LOCATION:${(r.Circuit.circuitName + ' - ' + r.Circuit.Location.locality).replace(/,/g,'\\,')}`, 'URL:https://free-to-race.com/live/',
+      'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:${name}`,'TRIGGER:-PT15M','END:VALARM','END:VEVENT');
+  }
+  out.push('END:VCALENDAR');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([out.join('\r\n')], {type:'text/calendar'}));
+  a.download = r.raceName.replace(/[^\w]+/g,'_') + '.ics';
+  document.body.appendChild(a); a.click(); a.remove();
 }
 function renderCal(){
   const nx = nextRace();
@@ -433,7 +611,12 @@ function renderStandings(dl, cl){
   $('drivers').innerHTML = D.map(d => { const c = d.Constructors[d.Constructors.length-1];
     return `<tr><td class="p">${d.positionText}</td><td class="bar"><i style="background:${col(c.constructorId)}"></i></td>
       <td><b>${esc(d.Driver.givenName)} ${esc(d.Driver.familyName)}</b></td><td class="dim">${esc(tname(c))}</td><td class="num">${d.wins}</td><td class="num pts">${d.points}</td></tr>`; }).join('');
-  const max = Math.max(1, ...C.map(c => +c.points));
+  const max = Math.max(1, ...C.map(c => +c.points)), lead = Math.max(1, ...D.map(d => +d.points));
+  if(dl) $('miniDh').textContent = t('mini_d')(dl.round, races.length || '?');
+  $('miniD').innerHTML = D.slice(0, 10).map(d => { const c = d.Constructors[d.Constructors.length-1];
+    return `<tr><td>${d.positionText}</td><td><span class="sw" style="background:${col(c.constructorId)}"></span><b>${esc(d.Driver.code || d.Driver.familyName)}</b> <span class="dim" style="font-size:13px">${esc(tname(c))}</span></td>
+      <td style="width:32%"><span class="mbar" style="width:${(+d.points/lead*100).toFixed(0)}%;background:${col(c.constructorId)}"></span></td><td class="num pts">${d.points}</td></tr>`; }).join('');
+  $('miniC').innerHTML = C.slice(0, 10).map(c => `<tr><td>${c.positionText}</td><td><span class="sw" style="background:${col(c.Constructor.constructorId)}"></span>${esc(tname(c.Constructor))}</td><td class="num pts">${c.points}</td></tr>`).join('');
   $('teamsTable').innerHTML = C.map(c => `<tr><td class="p">${c.positionText}</td><td><b>${esc(tname(c.Constructor))}</b></td>
       <td><div class="cbar"><div class="t"><i style="width:${(+c.points/max*100).toFixed(1)}%;background:${col(c.Constructor.constructorId)}"></i></div></div></td><td class="num pts">${c.points}</td></tr>`).join('');
   $('teams').innerHTML = C.map(c => {
