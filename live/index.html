@@ -259,7 +259,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261025-095052';
+const BUILD = '20261026-222546';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -366,7 +366,14 @@ function connect(){
   ws.onclose = () => { connected=false; later(); };
   ws.onerror = () => {};
 }
-function later(){ retry++; setConn(t('reconnecting'), false); setTimeout(connect, Math.min(30000, 2000*retry)); }
+let laterT = 0;
+function later(){ retry++; setConn(t('reconnecting'), false); clearTimeout(laterT); laterT = setTimeout(connect, Math.min(30000, 2000*retry)); }
+// iPhone e Android chiudono il collegamento quando l'app va in secondo piano: al ritorno ci si ricollega subito,
+// senza aspettare l'attesa crescente (fino a 30 s) fra un tentativo e l'altro
+document.addEventListener('visibilitychange', () => {
+  if(DEMO || document.hidden || (ws && ws.readyState <= 1)) return;
+  clearTimeout(laterT); retry = 0; connect();
+});
 setInterval(()=>{ if(ws && ws.readyState===1) ws.send(JSON.stringify({type:6})+RS); if(connected && Date.now()-lastMsg>60000) ws.close(); }, 15000);
 function pump(){
   const now = performance.now()/1000;
@@ -375,6 +382,14 @@ function pump(){
   if(changed) render();
 }
 setInterval(pump, 250);
+// iPhone, app sulla schermata Home con la barra di stato trasparente: l'altezza della pagina esclude la barra di stato,
+// e sotto i pulsanti resta una striscia vuota. Si porta la pagina all'altezza vera dello schermo.
+function fitIos(){
+  if(navigator.standalone !== true) return;
+  const full = innerHeight >= innerWidth ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+  document.body.style.height = Math.max(innerHeight, full) + 'px';
+}
+fitIos(); addEventListener('resize', fitIos); addEventListener('orientationchange', () => setTimeout(fitIos, 300));
 function setConn(txt, on){ $('#conn').classList.toggle('on', on); $('#connTxt').textContent = txt; }
 
 // ---------------- tempi ----------------
