@@ -3,15 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free to Race</title>
+<title>Free to Race — Free F1 live timing, track map &amp; race strategy</title>
+<link rel="canonical" href="https://free-to-race.com/">
 <link rel="icon" type="image/png" href="img/logo.png">
-<meta name="description" content="Free F1 live timing, tyre strategy, pit-stop forecasts and a live track map. Runs on your PC, no subscription. Unofficial fan project.">
+<meta name="description" content="Free F1 live timing with every car on a live track map, tyre strategy, pit-stop forecasts and race replays. Windows and phone, no subscription. Unofficial.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Free to Race — F1 live timing, strategy and a live track map">
 <meta property="og:description" content="Free, runs on your PC, no subscription. Unofficial fan project.">
 <meta property="og:url" content="https://free-to-race.com/">
 <meta property="og:image" content="https://free-to-race.com/img/copertina.png">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Free to Race","url":"https://free-to-race.com/",
+  "description":"Free F1 live timing with every car on a live track map, tyre strategy, pit-stop forecasts, pace analysis and race replays. Unofficial fan project.",
+  "applicationCategory":"SportsApplication","operatingSystem":"Windows 10, Windows 11","isAccessibleForFree":true,
+  "downloadUrl":"https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe",
+  "screenshot":"https://free-to-race.com/img/gara.png","license":"https://polyformproject.org/licenses/noncommercial/1.0.0/",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}},
+ {"@context":"https://schema.org","@type":"WebApplication","name":"Free to Race Live","url":"https://free-to-race.com/live/",
+  "description":"F1 live timing and track map on your phone, installable from the browser.","applicationCategory":"SportsApplication",
+  "operatingSystem":"Android, iOS","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}},
+ {"@context":"https://schema.org","@type":"WebSite","name":"Free to Race","url":"https://free-to-race.com/"}]
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -66,6 +79,7 @@ nav .wrap{max-width:1440px}
 @media(max-width:960px){.top .wrap{grid-template-columns:1fr}.top.livefirst #prod{order:-1}}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0}
 .kick{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
+h1.kick{margin:0;line-height:1.35}
 .wkh{font-size:clamp(28px,3.2vw,36px);line-height:1.05;margin:4px 0 2px;font-weight:900}
 .ch{margin:0 0 8px;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim)}
 .cdl{margin-top:14px;font-weight:700}
@@ -195,89 +209,91 @@ nav .links + .lang{margin-left:auto}
 @media(max-width:760px){.btn.kofi:not(.big){display:none}}
 @media(max-width:430px){nav .wrap{gap:10px;padding:0 12px}.brand{font-size:18px}nav .btn.main{padding:8px 12px!important}}
 </style>
+<script data-goatcounter="https://freetorace.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#" style="display:flex;align-items:center;gap:9px"><img src="img/logo.png" alt="" style="width:32px;height:32px"><span><b>FREE</b> TO RACE</span></a>
-  <div class="links"><a href="#features" data-i="nav_app"></a><a href="#season-sec" data-i="nav_cal"></a><a href="#standings" data-i="nav_st"></a><a href="#teams-sec" data-i="nav_teams"></a><a href="live/" data-i="nav_live" style="color:var(--text)"></a><a href="replay/" data-i="nav_rp"></a><a href="#feedback" data-i="nav_fb"></a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)"></a> --></div>
+  <div class="links"><a href="#features" data-i="nav_app">The app</a><a href="#season-sec" data-i="nav_cal">Calendar</a><a href="#standings" data-i="nav_st">Standings</a><a href="#teams-sec" data-i="nav_teams">Teams</a><a href="live/" data-i="nav_live" style="color:var(--text)">📱 Live on your phone</a><a href="replay/" data-i="nav_rp">🎬 Replays</a><a href="#feedback" data-i="nav_fb">🐞 Feedback</a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)">Predictions</a> --></div>
   <button class="lang" id="lang" title="English / Italiano"></button>
-  <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px"></a>
-  <a class="btn main" id="dlNav" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short"></a>
+  <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px">☕ Buy me a coffee</a>
+  <a class="btn main" id="dlNav" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short" data-ev="download-windows">⬇ Download</a>
 </div></nav>
 
-<div id="qrPop"><div class="box"><h3 data-i="qr_h"></h3><img class="qr" src="img/qr_live.svg" alt="QR free-to-race.com/live"><p data-i="qr_p"></p><p><a href="live/" data-i="qr_open"></a></p><button id="qrClose" data-i="qr_close"></button></div></div>
+<div id="qrPop"><div class="box"><h3 data-i="qr_h">📱 Free to Race on your phone</h3><img class="qr" src="img/qr_live.svg" alt="QR free-to-race.com/live"><p data-i="qr_p">Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.</p><p><a href="live/" data-i="qr_open">or open it here in the browser</a></p><button id="qrClose" data-i="qr_close">Close</button></div></div>
 
 <header class="top" id="download"><div class="wrap">
   <div class="card" id="wk"><div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2></div>
-  <div class="card prod" id="prod"></div>
+  <div class="card prod" id="prod"><h1 class="kick" data-i="seo_h1">Free F1 live timing, track map &amp; race strategy</h1><h2 data-i="h1">The race, as the <b>pit wall</b> sees it.</h2><p class="lead2" data-i="lead2">Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.</p>
+    <div class="acts"><a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl" data-ev="download-windows">⬇ Download for Windows</a><a class="btn" href="live/?install=1" data-i="ph_install" data-ev="install-phone">📲 Install the app on your phone</a><a class="btn" href="replay/" data-i="nav_rp">🎬 Replays</a></div></div>
 </div></header>
 
 <section id="now"><div class="wrap"><div class="row3">
   <div class="card" id="lastCard"></div>
-  <div class="card"><h3 class="ch" id="miniDh"></h3><table id="miniD"></table><a class="more" href="#standings" data-i="full_st"></a></div>
-  <div class="card"><h3 class="ch" data-i="constructors"></h3><table id="miniC"></table></div>
+  <div class="card"><h3 class="ch" id="miniDh"></h3><table id="miniD"></table><a class="more" href="#standings" data-i="full_st">Full standings and teams ↓</a></div>
+  <div class="card"><h3 class="ch" data-i="constructors">Constructors</h3><table id="miniC"></table></div>
 </div></div></section>
 
 <section id="features"><div class="wrap">
-  <h2 data-i="f_h"></h2>
-  <p class="sub" data-i="f_sub"></p>
+  <h2 data-i="f_h">More than a timing tower</h2>
+  <p class="sub" data-i="f_sub">It takes the public data of the official timing and makes sense of it.</p>
   <img class="shot" src="img/gara.png" alt="Free to Race" style="margin-bottom:22px">
   <div class="feats">
-    <div class="feat"><span class="tag" data-i="f1t"></span><h3 data-i="f1h"></h3><p data-i="f1p"></p></div>
-    <div class="feat"><span class="tag" data-i="f2t"></span><h3 data-i="f2h"></h3><p data-i="f2p"></p></div>
-    <div class="feat"><span class="tag" data-i="f3t"></span><h3 data-i="f3h"></h3><p data-i="f3p"></p></div>
-    <div class="feat"><span class="tag" data-i="f4t"></span><h3 data-i="f4h"></h3><p data-i="f4p"></p></div>
-    <div class="feat"><span class="tag" data-i="f5t"></span><h3 data-i="f5h"></h3><p data-i="f5p"></p></div>
-    <div class="feat"><span class="tag" data-i="f6t"></span><h3 data-i="f6h"></h3><p data-i="f6p"></p></div>
+    <div class="feat"><span class="tag" data-i="f1t">Only here</span><h3 data-i="f1h">Every car on track, live</h3><p data-i="f1p">Without a subscription, F1 does not send car positions. Free to Race shows them anyway, live, on a map of the circuit.</p></div>
+    <div class="feat"><span class="tag" data-i="f2t">Strategy</span><h3 data-i="f2h">Who wins, pit stops and undercut</h3><p data-i="f2p">Live win and podium chances, recalculated every lap. Where each driver would rejoin after a stop, the cheap stop under Safety Car, and the chance an undercut works. Checked on 41 races.</p></div>
+    <div class="feat"><span class="tag" data-i="f3t">Timing</span><h3 data-i="f3h">Sectors and mini-sectors</h3><p data-i="f3p">Gaps, purple and green sectors, the mini-sectors of the current lap, tyres, pit stops and a virtual standing that accounts for stops still to come.</p></div>
+    <div class="feat"><span class="tag" data-i="f4t">Analysis</span><h3 data-i="f4h">Pace, degradation, head-to-head</h3><p data-i="f4p">Pace over the last clean laps, degradation of each tyre, how much fresh tyres are worth, and lap-by-lap comparison of two drivers.</p></div>
+    <div class="feat"><span class="tag" data-i="f5t">TV</span><h3 data-i="f5h">In sync with your TV</h3><p data-i="f5p">Set the delay and the timing arrives together with the pictures, no spoilers. Every live session is recorded.</p></div>
+    <div class="feat"><span class="tag" data-i="f6t">Replay</span><h3 data-i="f6h">Every past race</h3><p data-i="f6p">Download any session from the public archive and replay it from 1× to 60×, with a timeline to jump around.</p></div>
   </div>
   <div class="gallery">
-    <figure><img class="shot" src="img/pista.png" alt=""><figcaption data-i="cap1"></figcaption></figure>
-    <figure><img class="shot" src="img/gomme.png" alt=""><figcaption data-i="cap2"></figcaption></figure>
+    <figure><img class="shot" src="img/pista.png" alt=""><figcaption data-i="cap1">The track map with every car, and the lap strip below.</figcaption></figure>
+    <figure><img class="shot" src="img/gomme.png" alt=""><figcaption data-i="cap2">Tyre strategy: stints, pit-lane times and the window for the next stop.</figcaption></figure>
   </div>
   <div class="support">
-    <div><h3 data-i="sup_h"></h3><p data-i="sup_p"></p></div>
-    <a class="btn kofi big" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee_long"></a>
+    <div><h3 data-i="sup_h">Free, and it stays free</h3><p data-i="sup_p">Free to Race is made by one fan in spare time. If you enjoy it, a coffee helps keep it working race after race.</p></div>
+    <a class="btn kofi big" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee_long">☕ Buy me a coffee on Ko-fi</a>
   </div>
 </div></section>
 
 <section id="season-sec"><div class="wrap">
-  <h2><span data-i="s_h"></span> <span id="season"></span></h2>
-  <p class="sub" data-i="s_sub"></p>
+  <h2><span data-i="s_h">Season</span> <span id="season"></span></h2>
+  <p class="sub" data-i="s_sub">The calendar on the map, with the winners of the races already run.</p>
   <div class="mapbox"><svg id="map"></svg><div class="tip" id="tip"></div>
-    <div class="legend"><span><i style="background:#5d6577"></i><span data-i="lg_done"></span></span><span><i style="background:var(--accent)"></i><span data-i="lg_next"></span></span><span><i style="border:2px solid #8b94a7;width:8px;height:8px"></i><span data-i="lg_todo"></span></span></div>
+    <div class="legend"><span><i style="background:#5d6577"></i><span data-i="lg_done">run</span></span><span><i style="background:var(--accent)"></i><span data-i="lg_next">next</span></span><span><i style="border:2px solid #8b94a7;width:8px;height:8px"></i><span data-i="lg_todo">to come</span></span></div>
   </div>
   <div class="cal" id="cal"></div>
 </div></section>
 
 <section id="standings"><div class="wrap">
-  <h2 data-i="st_h"></h2>
+  <h2 data-i="st_h">Standings</h2>
   <p class="sub" id="afterRound"></p>
   <div class="two">
-    <div class="panel"><h3 data-i="drivers"></h3><table><thead><tr><th class="num">Pos</th><th></th><th data-i="th_drv"></th><th data-i="th_team"></th><th class="num" data-i="th_wins"></th><th class="num" data-i="th_pts"></th></tr></thead><tbody id="drivers"></tbody></table></div>
-    <div class="panel"><h3 data-i="constructors"></h3><table><thead><tr><th class="num">Pos</th><th data-i="th_team"></th><th style="width:45%"></th><th class="num" data-i="th_pts"></th></tr></thead><tbody id="teamsTable"></tbody></table></div>
+    <div class="panel"><h3 data-i="drivers">Drivers</h3><table><thead><tr><th class="num">Pos</th><th></th><th data-i="th_drv">Driver</th><th data-i="th_team">Team</th><th class="num" data-i="th_wins">Wins</th><th class="num" data-i="th_pts">Points</th></tr></thead><tbody id="drivers"></tbody></table></div>
+    <div class="panel"><h3 data-i="constructors">Constructors</h3><table><thead><tr><th class="num">Pos</th><th data-i="th_team">Team</th><th style="width:45%"></th><th class="num" data-i="th_pts">Points</th></tr></thead><tbody id="teamsTable"></tbody></table></div>
   </div>
 </div></section>
 
 <section id="teams-sec"><div class="wrap">
-  <h2 data-i="t_h"></h2>
-  <p class="sub" data-i="t_sub"></p>
+  <h2 data-i="t_h">Teams and drivers</h2>
+  <p class="sub" data-i="t_sub">This season's teams and their drivers, in championship order.</p>
   <div class="teams" id="teams"></div>
 </div></section>
 
 <section id="feedback"><div class="wrap">
   <div class="support">
-    <div><h3 data-i="fb_h"></h3><p data-i="fb_p"></p><p class="small" style="margin-top:8px" data-i="fb_tip"></p></div>
+    <div><h3 data-i="fb_h">Free to Race is a work in progress 🛠️</h3><p data-i="fb_p">It’s a bit like a certain Japanese engine: a rough start and a few too many breakdowns, but give it some patience and it can do great things. If you find a bug (or it won’t start at all), write to us! Every suggestion is welcome.</p><p class="small" style="margin-top:8px" data-i="fb_tip">Found a bug? In the program use <b>🐞 Report a problem</b> (in <i>Choose session</i>): it prepares the email with your version and the last lines of the log, and you see everything before sending.</p></div>
     <div class="cta" style="flex:0 0 auto;margin:0">
-      <a class="btn main" href="mailto:segnalazioni@free-to-race.com?subject=Free%20to%20Race%20-%20" data-i="fb_mail"></a>
-      <a class="btn" href="https://github.com/Nik88nk/freetorace/issues/new" target="_blank" rel="noopener" data-i="fb_gh"></a>
+      <a class="btn main" href="mailto:segnalazioni@free-to-race.com?subject=Free%20to%20Race%20-%20" data-i="fb_mail">✉ Write to segnalazioni@free-to-race.com</a>
+      <a class="btn" href="https://github.com/Nik88nk/freetorace/issues/new" target="_blank" rel="noopener" data-i="fb_gh">Open an issue on GitHub</a>
     </div>
   </div>
 </div></section>
 
 <footer><div class="wrap">
-  <p data-i="disc"></p>
-  <p data-i="credits"></p>
-  <p><a href="privacy/" data-i="privacy"></a></p>
+  <p data-i="disc"><b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.</p>
+  <p data-i="credits">Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.</p>
+  <p><a href="privacy/" data-i="privacy">Privacy and safety: no account, no data collected</a></p>
 </div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -322,7 +338,7 @@ const T = {
   credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
   of:'of', wk_on:'Race weekend · round', prog_h:'Weekend schedule (your time)', in_:s=>`${s} starts in`, add_cal:'📅 Add to calendar', all_cal:'Full calendar ↓',
-  prod_k:'The program · free', lead2:'Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.',
+  prod_k:'The program · free', seo_h1:'Free F1 live timing, track map &amp; race strategy', lead2:'Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.',
   rp_sub:'try it in your browser, nothing to install', live_now:'● Live now', follow:'📱 Follow on your phone', follow_ph:'📱 Follow live',
   last_race:'Last race', last_sess:'Latest session', th_grid:'Start', th_gap:'Gap', th_best:'Best lap', th_time:'Time', fl:'Fastest lap',
   more_race:'Strategy, pace and stops', more_pr:'Race pace, tyres, teams', more_q:'Cuts, sectors, ideal lap', rp_more:'Watch it again',
@@ -366,7 +382,7 @@ const T = {
   credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
   of:'di', wk_on:'Weekend in corso · round', prog_h:'Programma del weekend (tua ora)', in_:s=>`${s} tra`, add_cal:'📅 Aggiungi al calendario', all_cal:'Tutto il calendario ↓',
-  prod_k:'Il programma · gratis', lead2:'Tempi in diretta, strategia gomme, previsione delle soste e la pista con le auto: gratis e senza account, su PC e telefono.',
+  prod_k:'Il programma · gratis', seo_h1:'Live timing F1 gratis, mappa della pista e strategia di gara', lead2:'Tempi in diretta, strategia gomme, previsione delle soste e la pista con le auto: gratis e senza account, su PC e telefono.',
   rp_sub:'provalo nel browser, senza installare', live_now:'● In diretta adesso', follow:'📱 Segui sul telefono', follow_ph:'📱 Segui in diretta',
   last_race:'Ultima gara', last_sess:'Ultima sessione', th_grid:'Part.', th_gap:'Distacco', th_best:'Miglior giro', th_time:'Tempo', fl:'Giro più veloce',
   more_race:'Strategie, passo e soste', more_pr:'Passo gara, gomme, squadre', more_q:'Tagli, settori, giro ideale', rp_more:'Rivedila',
@@ -406,8 +422,11 @@ const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/F
 // Dal telefono il pulsante principale installa l'app (il programma per Windows li' non serve);
 // dal PC «sul telefono» mostra il QR da inquadrare.
 const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-if(MOBILE){ $('dlNav').href = 'live/?install=1'; $('dlNav').dataset.i = 'ph_short'; }
+if(MOBILE){ $('dlNav').href = 'live/?install=1'; $('dlNav').dataset.i = 'ph_short'; $('dlNav').dataset.ev = 'install-phone'; }
 document.addEventListener('click', e => {
+  // contatore senza cookie (GoatCounter, se presente nella pagina): solo quante volte si preme un pulsante
+  const ev = e.target.closest('[data-ev]');
+  if(ev && window.goatcounter && goatcounter.count) goatcounter.count({path: ev.dataset.ev, title: ev.dataset.ev, event: true});
   if(e.target.closest('[data-qr]') && !MOBILE){ e.preventDefault(); $('qrPop').classList.add('on'); }
   if(e.target.id === 'qrPop' || e.target.id === 'qrClose') $('qrPop').classList.remove('on');
   if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
@@ -487,19 +506,19 @@ function renderTop(){
   }
   $('wk').innerHTML = h;
   // il programma, oppure la diretta
-  const dl = MOBILE ? `<a class="btn main" href="live/?install=1">${t('ph_install')}</a>`
-                    : `<a class="btn main" href="${DL_URL}">${t('dl')}</a><a class="btn" href="live/?install=1" data-qr="1">${t('ph_install')}</a>`;
+  const dl = MOBILE ? `<a class="btn main" href="live/?install=1" data-ev="install-phone">${t('ph_install')}</a>`
+                    : `<a class="btn main" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a><a class="btn" href="live/?install=1" data-qr="1" data-ev="install-phone">${t('ph_install')}</a>`;
   const rp = featuredReplay(w), rpUrl = rp ? `replay/${encodeURIComponent(rp.name)}/` : 'demo/';
   const smart = MOBILE ? '' : `<div class="small dim" style="margin-top:10px;font-size:13px">${t('dl_note')}</div><details class="smart"><summary>${t('ss_q')}</summary><p>${t('ss_a')}</p></details>`;
   $('download').classList.toggle('livefirst', !!live);     // sul telefono la diretta va in cima
   if(live){
     $('prod').className = 'card prod live';
-    $('prod').innerHTML = `<div><span class="tag">${t('live_now')}</span></div><h2 style="font-style:normal">${esc(sname(live.s))} · ${esc(w.r.Circuit.Location.locality)}</h2><p class="lead2">${t('lead2')}</p>
+    $('prod').innerHTML = `<h1 class="kick">${t('seo_h1')}</h1><div style="margin-top:6px"><span class="tag">${t('live_now')}</span></div><h2 style="font-style:normal">${esc(sname(live.s))} · ${esc(w.r.Circuit.Location.locality)}</h2><p class="lead2">${t('lead2')}</p>
       <a class="thumb" href="live/" ${MOBILE ? '' : 'data-qr="1"'}><img src="img/replay.jpg" alt=""></a>
-      <div class="acts"><a class="btn main" href="live/" ${MOBILE ? '' : 'data-qr="1"'}>${MOBILE ? t('follow_ph') : t('follow')}</a>${MOBILE ? '' : `<a class="btn" href="${DL_URL}">${t('dl')}</a>`}</div>${smart}`;
+      <div class="acts"><a class="btn main" href="live/" ${MOBILE ? '' : 'data-qr="1"'} data-ev="follow-live">${MOBILE ? t('follow_ph') : t('follow')}</a>${MOBILE ? '' : `<a class="btn" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a>`}</div>${smart}`;
   } else {
     $('prod').className = 'card prod';
-    $('prod').innerHTML = `<div class="kick">${t('prod_k')}</div><h2>${t('h1')}</h2><p class="lead2">${t('lead2')}</p>
+    $('prod').innerHTML = `<h1 class="kick">${t('seo_h1')}</h1><h2>${t('h1')}</h2><p class="lead2">${t('lead2')}</p>
       <a class="thumb play" href="${rpUrl}"><img src="img/replay.jpg" alt=""></a>
       <div class="cap"><span class="tag">${t('ex_tag')}</span> <a href="${rpUrl}"><b>${esc(rp ? rp[LANG] || rp.en : t('demo'))}</b></a> · ${t('rp_sub')}</div>
       <div class="acts">${dl}</div>${smart}`;

@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Free to Race Live</title>
+<title>Free to Race Live — F1 live timing on your phone</title>
+<link rel="canonical" href="https://free-to-race.com/live/">
 <meta name="description" content="Free F1 live timing and track map on your phone. Unofficial fan project.">
 <meta name="theme-color" content="#0b0d12">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -166,6 +167,7 @@ body.dense .mini{margin-top:2px}
 .opt{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14px}
 .opt input{width:20px;height:20px;accent-color:var(--accent);flex:none}
 </style>
+<script data-goatcounter="https://freetorace.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div id="flagBan"></div>
@@ -259,7 +261,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261027-195431';
+const BUILD = '20261027-203113';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
