@@ -7,7 +7,7 @@
 <meta name="description" content="Free F1 live timing and track map on your phone. Unofficial fan project.">
 <meta name="theme-color" content="#0b0d12">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Free to Race">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -259,7 +259,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261026-222546';
+const BUILD = '20261027-195431';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -382,14 +382,10 @@ function pump(){
   if(changed) render();
 }
 setInterval(pump, 250);
-// iPhone, app sulla schermata Home con la barra di stato trasparente: l'altezza della pagina esclude la barra di stato,
-// e sotto i pulsanti resta una striscia vuota. Si porta la pagina all'altezza vera dello schermo.
-function fitIos(){
-  if(navigator.standalone !== true) return;
-  const full = innerHeight >= innerWidth ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
-  document.body.style.height = Math.max(innerHeight, full) + 'px';
-}
-fitIos(); addEventListener('resize', fitIos); addEventListener('orientationchange', () => setTimeout(fitIos, 300));
+// iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
+// pagina finiva sotto l'orologio, che i nuovi iOS velano e sfocano, e l'altezza escludeva la barra di stato (striscia
+// vuota in basso, prima corretta portando a mano la pagina all'altezza dello schermo). Con la barra opaca la pagina
+// parte sotto la barra e l'altezza e' quella giusta: non serve piu' nessuna correzione.
 function setConn(txt, on){ $('#conn').classList.toggle('on', on); $('#connTxt').textContent = txt; }
 
 // ---------------- tempi ----------------
