@@ -261,7 +261,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261027-203113';
+const BUILD = '20261027-205858';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -562,7 +562,7 @@ async function loadCircuit(key, year){
   const k = key+'/'+year; if(circuitKey===k) return; circuitKey=k; circuit=null; cal=null; geo=null; SCENE=null;
   try{ circuit = await (await fetch(`https://api.multiviewer.app/api/v1/circuits/${key}/${year}`)).json(); }catch(e){ circuit=null; }
   try{ const r = await fetch(`../circuiti/${key}_${year}.json`); if(r.ok) cal = await r.json(); }catch(e){}
-  if(!cal && REPLAY) try{ const r = await fetch(`../circuiti/${key}_${year-1}.json`); if(r.ok) cal = await r.json(); }catch(e){}   // replay subito dopo la sessione: taratura dell'anno prima, stesso tracciato
+  if(!cal) try{ const r = await fetch(`../circuiti/${key}_${year-1}.json`); if(r.ok) cal = await r.json(); }catch(e){}   // prima sessione su un circuito (o replay subito dopo): taratura dell'anno prima, stesso tracciato
   if(cal && cal.track) circuit = cal.track;
   try{ const r = await fetch(`../circuiti/${key}_scena.json`); if(r.ok) SCENE = await r.json(); }catch(e){}
   if(!cal) cal = approximate();
