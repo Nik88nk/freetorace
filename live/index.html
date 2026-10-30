@@ -149,8 +149,9 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 #instSheet .close{display:block;margin:10px auto 0;background:none;border:none;color:var(--dim);font:inherit;font-size:14px}
 /* testata su una riga: luogo · sessione, tempo/giro a destra; la barra di stato compare solo se serve */
 header{padding:calc(env(safe-area-inset-top) + 6px) 12px 6px}
-/* iPhone con la pagina sotto l'orologio (icona aggiunta prima del 27.10): iOS 26 sfoca una fascia sotto l'orologio, la testata scende sotto */
-.iosvelo header{padding-top:calc(env(safe-area-inset-top) + 34px)}
+/* iPhone, app dalla schermata Home: iOS 26 sfoca una fascia in cima alla pagina, con la barra di stato opaca o trasparente;
+   la testata scende sotto la fascia */
+.iosapp header{padding-top:calc(env(safe-area-inset-top) + 34px)}
 header .ev b{font-size:15px}
 #hdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none;display:none}
 #hdot.on{display:block}
@@ -263,7 +264,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261030-174704';
+const BUILD = '20261030-175058';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -391,9 +392,11 @@ setInterval(pump, 250);
 // vuota in basso, prima corretta portando a mano la pagina all'altezza dello schermo). Con la barra opaca la pagina
 // parte sotto la barra e l'altezza e' quella giusta. Ma iOS legge la barra di stato quando si aggiunge l'icona: chi
 // l'ha aggiunta prima del 27.10 ha ancora quella trasparente. Lo si riconosce dal margine sicuro in alto (> 0 solo
-// se la pagina sta sotto l'orologio): in quel caso testata piu' bassa e pagina all'altezza vera dello schermo.
+// se la pagina sta sotto l'orologio): in quel caso pagina all'altezza vera dello schermo. In tutti e due i casi iOS 26
+// sfoca una fascia in cima alla pagina: la testata e' piu' bassa (.iosapp).
 function fitIos(){
   if(navigator.standalone !== true) return;
+  document.documentElement.classList.add('iosapp');
   const pr = document.createElement('div'); pr.style.cssText = 'position:fixed;top:0;height:env(safe-area-inset-top);visibility:hidden';
   document.body.appendChild(pr); const under = pr.getBoundingClientRect().height > 0; pr.remove();
   document.documentElement.classList.toggle('iosvelo', under);
