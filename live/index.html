@@ -261,7 +261,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261030-075205';
+const BUILD = '20261030-080214';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -612,7 +612,7 @@ function trackLayer(g, G, W, Hh, sc, dpr, cal){
   let ends=[0.34,0.67,1];
   if(cal){ const ns=cal.nseg, N=cal.refDur.length; ends=[cal.bounds[ns[0]-1], cal.bounds[ns[0]+ns[1]-1], cal.bounds[N-1]]; }
   const out = {finish: ends[2]};
-  if(!(mapBg && mapBg.G===G && mapBg.cal===cal && mapBg.sc===sc && mapBg.dpr===dpr)){
+  if(!(mapBg && mapBg.G===G && mapBg.cal===cal && mapBg.sc===sc && mapBg.dpr===dpr && mapBg.scene===SCENE)){   // anche gli edifici, che arrivano dopo la pista
     const cv=document.createElement('canvas'); cv.width=Math.round(W*dpr); cv.height=Math.round(Hh*dpr);
     const b=cv.getContext('2d'); b.setTransform(dpr,0,0,dpr,0,0);
     const n=G.scr.length, w=Math.max(9*sc, Math.min(26*sc, 130*G.k));
@@ -688,7 +688,7 @@ function trackLayer(g, G, W, Hh, sc, dpr, cal){
       b.fillStyle='#c3cad6'; b.fillText(txt, x, y+0.5); }
     b.textAlign='left'; b.textBaseline='alphabetic';
     if(scene){ b.fillStyle='#5d6577'; b.font='10px Titillium Web'; b.textAlign='right'; b.fillText(scene.source||'© OpenStreetMap contributors', W-8, Hh-6); b.textAlign='left'; }
-    mapBg={G, cal, sc, dpr, cv};
+    mapBg={G, cal, sc, dpr, cv, scene};
   }
   g.drawImage(mapBg.cv, 0, 0, W, Hh);
   return out;
