@@ -1733,10 +1733,10 @@ function renderMap(){
   const ghostHelp = isRace() && ghostOn ? L(' <br>👻 <b>Fantasma della sosta</b>: clicca un pilota in classifica e sulla pista compare dove sarebbe adesso se si fermasse in questo giro, con il tratto che la sosta gli costerebbe. Con Safety Car o VSC compaiono i fantasmi di tutti. ≈ = in bilico, meno di 1 s.',
     ' <br>👻 <b>Pit ghost</b>: click a driver in the standings and the track shows where they would be now if they stopped on this lap, with the stretch the stop would cost them. Under Safety Car or VSC everyone’s ghost appears. ≈ = too close to call, under 1 s.') : '';
   $('#mapInfo').innerHTML = (LANG==='en' ? (mapMode==='vere' ? 'Real car positions, from the downloaded session.' :
-    cal ? `<b>Estimated</b> positions from the timing passes (24 timed points per lap): between two passes the car moves with the speed profile of a real lap. Typical error around 10 m. ${cal.approx?'<b class="yl">Approximate calibration'+(cal.source&&cal.source!=='approssimata'?' ('+esc(cal.source)+')':'')+': it becomes precise once Free to Race has followed a session on this circuit live.</b>':'Calibration: '+esc(cal.source)+'.'}`
+    cal ? `<b>Estimated</b> positions.${cal.approx?' <b class="yl">They become more precise after the first live session on this circuit.</b>':''}`
         : `Calibrating the circuit: ${esc(SRV(S.calStatus||'in corso'))}… (downloading an archived session, less than a minute)`) :
     mapMode==='vere' ? 'Posizioni vere delle auto, dalla sessione scaricata.' :
-    cal ? `Posizioni <b>stimate</b> dai passaggi sui minisettori (24 punti cronometrati per giro): tra un passaggio e l’altro l’auto avanza col profilo di velocità di un giro vero. Errore tipico circa 10 m. ${cal.approx?'<b class="yl">Taratura approssimata'+(cal.source&&cal.source!=='approssimata'?' ('+esc(cal.source)+')':'')+': diventa precisa dopo che Free to Race ha seguito in diretta una sessione su questo circuito.</b>':'Taratura: '+esc(cal.source)+'.'}`
+    cal ? `Posizioni <b>stimate</b>.${cal.approx?' <b class="yl">Diventano più precise dopo la prima sessione in diretta su questo circuito.</b>':''}`
         : `Taratura del circuito ${esc(S.calStatus||'in corso')}… (scarico una sessione archiviata, meno di un minuto)`) + ghostHelp;
 }
 $('#ghostBtn').onclick = () => { ghostOn=!ghostOn; store.set('ghost', ghostOn?'1':'0'); renderMap(); };
