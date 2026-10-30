@@ -261,7 +261,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261027-205858';
+const BUILD = '20261030-075205';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -791,6 +791,7 @@ $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0')
 
 // ---------------- schede, ritardo, lingua ----------------
 $$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); });
+if(DEMO) $('nav [data-tab="map"]').click();   // demo e replay si aprono sulla mappa: e' la prima cosa da vedere
 function showDelay(){ $('#delayV').textContent = delay+' s'; $('#delayTxt').textContent = delay ? `+${delay} s` : ''; }
 $$('[data-d]').forEach(b => b.onclick = () => { delay = b.dataset.r ? 0 : Math.max(0, Math.min(300, delay + (+b.dataset.d))); store.set('ftr.delay', delay); showDelay(); });
 $$('[data-l]').forEach(b => b.onclick = () => { LANG=b.dataset.l; store.set('ftr.lang', LANG); texts(); render(); drawRis(); });

@@ -483,7 +483,7 @@ applyLang();
 $('#langBtn').onclick = () => { LANG = L('en','it'); store.set('lang', LANG); try{ localStorage.setItem('ftr.lang', LANG); }catch(e){}
   applyLang(); lastRadioKey=''; if(S) renderAll(); };
 
-let S=null, H=null, sel=[], focus=null, towerMode=store.get('tm','race')==='spd'?'spd':'race', tab=store.get('tab','gara'), chartMode='gap', rcFilter='all';
+let S=null, H=null, sel=[], focus=null, towerMode=store.get('tm','race')==='spd'?'spd':'race', tab='pista', chartMode='gap', rcFilter='all';
 let stintSel=null, cmpA=null, cmpB=null, circuit=null, circuitKey=null, lastRadioKey='', prev=null;
 
 const DEMO_T = {
