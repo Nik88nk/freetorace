@@ -149,8 +149,8 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 #instSheet .close{display:block;margin:10px auto 0;background:none;border:none;color:var(--dim);font:inherit;font-size:14px}
 /* testata su una riga: luogo · sessione, tempo/giro a destra; la barra di stato compare solo se serve */
 header{padding:calc(env(safe-area-inset-top) + 6px) 12px 6px}
-/* iPhone: iOS 26 sfuma e sfoca una fascia sotto l'orologio anche con la barra di stato opaca; la testata scende sotto la fascia */
-.ios header{padding-top:calc(env(safe-area-inset-top) + 22px)}
+/* iPhone con la pagina sotto l'orologio (icona aggiunta prima del 27.10): iOS 26 sfoca una fascia sotto l'orologio, la testata scende sotto */
+.iosvelo header{padding-top:calc(env(safe-area-inset-top) + 34px)}
 header .ev b{font-size:15px}
 #hdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex:none;display:none}
 #hdot.on{display:block}
@@ -263,7 +263,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261030-174056';
+const BUILD = '20261030-174704';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -389,8 +389,19 @@ setInterval(pump, 250);
 // iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
 // pagina finiva sotto l'orologio, che i nuovi iOS velano e sfocano, e l'altezza escludeva la barra di stato (striscia
 // vuota in basso, prima corretta portando a mano la pagina all'altezza dello schermo). Con la barra opaca la pagina
-// parte sotto la barra e l'altezza e' quella giusta. iOS 26 pero' sfoca ancora una fascia sotto l'orologio: la testata
-// ha piu' spazio in alto sugli iPhone (classe .ios, impostata dove si riconosce il sistema).
+// parte sotto la barra e l'altezza e' quella giusta. Ma iOS legge la barra di stato quando si aggiunge l'icona: chi
+// l'ha aggiunta prima del 27.10 ha ancora quella trasparente. Lo si riconosce dal margine sicuro in alto (> 0 solo
+// se la pagina sta sotto l'orologio): in quel caso testata piu' bassa e pagina all'altezza vera dello schermo.
+function fitIos(){
+  if(navigator.standalone !== true) return;
+  const pr = document.createElement('div'); pr.style.cssText = 'position:fixed;top:0;height:env(safe-area-inset-top);visibility:hidden';
+  document.body.appendChild(pr); const under = pr.getBoundingClientRect().height > 0; pr.remove();
+  document.documentElement.classList.toggle('iosvelo', under);
+  if(!under){ document.body.style.height = ''; return; }
+  const full = innerHeight >= innerWidth ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+  document.body.style.height = Math.max(innerHeight, full) + 'px';
+}
+fitIos(); addEventListener('resize', fitIos); addEventListener('orientationchange', () => setTimeout(fitIos, 300));
 function setConn(txt, on){ $('#conn').classList.toggle('on', on); $('#connTxt').textContent = txt; }
 
 // ---------------- tempi ----------------
@@ -1081,7 +1092,6 @@ applyOpts();
 const UA = navigator.userAgent;
 const STANDALONE = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const IOS = /iPhone|iPad|iPod/i.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-document.documentElement.classList.toggle('ios', IOS);
 const ANDROID = /Android/i.test(UA);
 const INAPP = /Instagram|FBAN|FBAV|FB_IAB|Line\/|TikTok|musical_ly|; wv\)/i.test(UA);
 const IOS_SAFARI = IOS && !/CriOS|FxiOS|EdgiOS|OPiOS/i.test(UA) && !INAPP;
