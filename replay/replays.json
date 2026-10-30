@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_Mexico_City_Practice_1",
+  "start": "2026-10-30T12:30:00",
+  "year": "2026",
+  "meeting": "Mexico City Grand Prix",
+  "session": "Practice 1",
+  "it": "Mexico City Grand Prix 2026 · Libere 1",
+  "en": "2026 Mexico City Grand Prix · Practice 1",
+  "laps": 33
+ },
+ {
   "name": "2026_Austin_Race",
   "start": "2026-10-25T15:00:00",
   "year": "2026",

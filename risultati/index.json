@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Mexico_City_Practice_1",
+  "kind": "practice",
+  "meeting": "Mexico City Grand Prix",
+  "location": "Mexico City",
+  "year": "2026",
+  "session": "Practice 1",
+  "start": "2026-10-30T12:30:00"
+ },
+ {
   "name": "2026_Austin_Race",
   "kind": "race",
   "meeting": "United States Grand Prix",
