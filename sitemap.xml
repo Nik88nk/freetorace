@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://free-to-race.com/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://free-to-race.com/live/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://free-to-race.com/replay/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://free-to-race.com/risultati/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://free-to-race.com/privacy/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://free-to-race.com/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://free-to-race.com/live/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://free-to-race.com/replay/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://free-to-race.com/risultati/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://free-to-race.com/privacy/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://free-to-race.com/tester/</loc><lastmod>2026-10-31</lastmod></url>
 </urlset>
