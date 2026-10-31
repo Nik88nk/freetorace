@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Mexico_City_Practice_3",
+  "kind": "practice",
+  "meeting": "Mexico City Grand Prix",
+  "location": "Mexico City",
+  "year": "2026",
+  "session": "Practice 3",
+  "start": "2026-10-31T11:30:00"
+ },
+ {
   "name": "2026_Mexico_City_Practice_2",
   "kind": "practice",
   "meeting": "Mexico City Grand Prix",
