@@ -46,13 +46,15 @@ footer{color:var(--dim2);font-size:13px;padding:26px 0 40px;border-top:1px solid
 <main class="wrap" id="page"></main>
 <script>
 // Da riempire quando ci sono (vuoto = riquadro «in arrivo»):
-const GROUP_URL = 'https://groups.google.com/g/freetorace-testers';   // Gruppo Google dei tester
+const MAIL = 'segnalazioni@free-to-race.com';   // richieste dei tester: oggetto «Tester Android»
 const OPTIN_URL = 'https://play.google.com/apps/testing/com.freetorace.app';   // partecipazione al test chiuso (Play Console → Test chiusi → Tester, «Accedi sul Web»)
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.freetorace.app';
 
 const link = (url, text, ev) => url
   ? `<a class="btn" href="${url}" target="_blank" rel="noopener" data-ev="${ev}">${text}</a>`
   : `<span class="wait">${LANG==='it' ? 'Disponibile dopo l’approvazione di Google' : 'Available after Google’s approval'}</span>`;
+
+const mail = (it) => `<a class="btn" href="mailto:${MAIL}?subject=Tester%20Android&body=${encodeURIComponent(it ? 'Il mio Gmail per Google Play: ' : 'My Gmail for Google Play: ')}" data-ev="tester-mail">${it ? 'Mandaci il tuo Gmail' : 'Send us your Gmail'}</a>`;
 
 const T = {
 en: () => `
@@ -67,11 +69,11 @@ en: () => `
 <li>Tell us what does not work or could be better: <a href="mailto:segnalazioni@free-to-race.com">segnalazioni@free-to-race.com</a>.</li>
 </ul>
 <p>The app is free, needs no account and shows no ads.</p></div>
-<div class="card step"><span class="num">1</span><div><h2>Join the group</h2>
-<p>A Google group used only to give testers access. You receive no emails.</p>
-${link(GROUP_URL, 'Join the group', 'tester-group')}</div></div>
+<div class="card step"><span class="num">1</span><div><h2>Send us your Gmail</h2>
+<p>Google Play lets in only the accounts we add. Write us the Gmail address you use on your phone: we enable you within 24 hours and reply with the link.</p>
+${mail(false)}</div></div>
 <div class="card step"><span class="num">2</span><div><h2>Become a tester</h2>
-<p>Open the test page with the same Google account and press “Become a tester”.</p>
+<p>Open the test page with the same Google account and press “Become a tester”. It works once we have enabled you.</p>
 ${link(OPTIN_URL, 'Become a tester', 'tester-optin')}</div></div>
 <div class="card step"><span class="num">3</span><div><h2>Install it from Google Play</h2>
 <p>From the test page, or search for “Free to Race” on Google Play with the same account.</p>
@@ -91,11 +93,11 @@ it: () => `
 <li>Scrivici cosa non funziona o si può migliorare: <a href="mailto:segnalazioni@free-to-race.com">segnalazioni@free-to-race.com</a>.</li>
 </ul>
 <p>L’app è gratuita, senza account e senza pubblicità.</p></div>
-<div class="card step"><span class="num">1</span><div><h2>Unisciti al gruppo</h2>
-<p>Un gruppo Google che serve solo a dare l’accesso ai tester. Non ricevi email.</p>
-${link(GROUP_URL, 'Unisciti al gruppo', 'tester-group')}</div></div>
+<div class="card step"><span class="num">1</span><div><h2>Mandaci il tuo Gmail</h2>
+<p>Google Play fa entrare solo gli account che aggiungiamo noi. Scrivici l’indirizzo Gmail che usi sul telefono: ti abilitiamo entro 24 ore e ti rispondiamo con il link.</p>
+${mail(true)}</div></div>
 <div class="card step"><span class="num">2</span><div><h2>Diventa tester</h2>
-<p>Apri la pagina del test con lo stesso account Google e premi «Diventa un tester».</p>
+<p>Apri la pagina del test con lo stesso account Google e premi «Diventa un tester». Funziona dopo che ti abbiamo abilitato.</p>
 ${link(OPTIN_URL, 'Diventa tester', 'tester-optin')}</div></div>
 <div class="card step"><span class="num">3</span><div><h2>Installala da Google Play</h2>
 <p>Dalla pagina del test, oppure cerca «Free to Race» su Google Play con lo stesso account.</p>
