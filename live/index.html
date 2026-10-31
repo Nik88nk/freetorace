@@ -7,6 +7,19 @@
 <link rel="canonical" href="https://free-to-race.com/live/">
 <meta name="description" content="Free F1 live timing and track map on your phone. Unofficial fan project.">
 <meta name="theme-color" content="#0b0d12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Free to Race">
+<meta property="og:title" content="Free to Race Live — F1 live timing and track map on your phone">
+<meta property="og:description" content="Free, no account: live times, the cars on the track map, strategy and replays. Unofficial fan project.">
+<meta property="og:url" content="https://free-to-race.com/live/">
+<meta property="og:image" content="https://free-to-race.com/live/anteprima.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Free to Race Live on a phone: live track map with the cars and the timing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free to Race Live — F1 live timing and track map on your phone">
+<meta name="twitter:description" content="Free, no account: live times, the cars on the track map, strategy and replays. Unofficial fan project.">
+<meta name="twitter:image" content="https://free-to-race.com/live/anteprima.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Free to Race">
@@ -171,6 +184,12 @@ body.dense .mini{margin-top:2px}
 .opt input{width:20px;height:20px;accent-color:var(--accent);flex:none}
 /* ===== in sessione (mockup G1, 31.10.2026): testata con meteo e pallino del feed, passo, mappa richiudibile ===== */
 #hdot.bad{background:#ff3b3b;box-shadow:0 0 8px #ff3b3b}
+/* Condividi nella testata (31.10.2026): icona + parola; in sessione, con meteo e giro, resta solo l'icona */
+#shareH{flex:none;display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:5px 9px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;line-height:1}
+#shareH svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex:none}
+#shareH:active{background:var(--panel2)}
+header.busy #shareH{padding:6px 7px}header.busy #shareH span{display:none}
+@media (max-width:479px){#shareH{padding:6px 7px}#shareH span{display:none}}
 header .ev small .qp{display:inline-block;background:var(--accent);color:#fff;font-size:10px;font-weight:900;padding:0 5px;border-radius:3px;margin-left:5px;letter-spacing:0}
 header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-weight:700}
 #wx{display:none;flex-direction:column;align-items:flex-end;gap:1px;font-size:11px;color:var(--dim);line-height:1.15;padding-right:8px;border-right:1px solid var(--line);white-space:nowrap}
@@ -273,6 +292,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
   <span class="pill" id="track" style="display:none"></span>
   <div id="wx" class="tn"></div>
   <div class="lap tn" id="lap"></div>
+  <button id="shareH" data-ev="share-app" aria-label="Share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span data-t="shareShort"></span></button>
 </header>
 <div id="instBar"><img src="icon-192.png" alt=""><span data-t="instBar"></span><button data-install="1" data-t="instShort"></button><button class="x" id="instX" aria-label="×">×</button></div>
 <div id="instSheet"><div class="box" id="instBox"></div></div>
@@ -326,7 +346,7 @@ const T = {
   instInApp:'You are inside another app’s browser (Instagram, Facebook…), which cannot install. Tap <span class="k">⋯</span> or <span class="k">⋮</span> and choose <span class="k">Open in browser</span>, then come back here.',
   instPc:'Scan with your phone’s camera to open the app there and install it.', instPcProg:'On PC there is the full program:', pcDl:'⬇ Download for Windows', pc:'Free to Race for PC', coffee:'☕ Buy me a coffee',
   disc:'Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. Live data straight from the public F1 live timing to your phone. Circuit drawings: MultiViewer.',
-  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2025 United States GP, the whole race on your phone', demoSubGp:'NAME: the whole race on your phone, ahead of this weekend', weekend:'Weekend schedule (your time)', bug:'🐞 Report a problem', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
+  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2025 United States GP, the whole race on your phone', demoSubGp:'NAME: the whole race on your phone, ahead of this weekend', weekend:'Weekend schedule (your time)', bug:'🐞 Report a problem', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied: paste it anywhere', shareShort:'Share', shareLive:'I’m following NAME with the live track map, free:', shareRp:'Watch NAME again with the track map, free:', calAlarm:'starts in 15 minutes', soon:'Starting any moment', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
   retired:'OUT', pit:'PIT', mapApprox:'Approximate map: it gets precise after the first session on this circuit.', mapNone:'Track layout not available.', mapOk:'Cars estimated from the official timing, about 10 m accuracy.', mapReal:'Real car positions, from the session.', noMsg:'No messages yet.', locale:'en-GB',
   redH:'RED FLAG', redP:'Race suspended: the cars are parked in the pit lane, nothing happens on track until the restart.', restartIn:'Restart in', skipRestart:'⏩ Skip', gridH:'START', gridP:'Cars on the grid, lights out in', goStart:'⏩ Go', goH:'LIGHTS OUT!', goP:'First lap: the order updates at every timing point.',
   rpLoading:'Loading the demo race…', rpWhat:'2025 United States GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
@@ -348,7 +368,7 @@ const T = {
   instInApp:'Sei nel browser interno di un’altra app (Instagram, Facebook…), che non può installare. Tocca <span class="k">⋯</span> o <span class="k">⋮</span> e scegli <span class="k">Apri nel browser</span>, poi torna qui.',
   instPc:'Inquadra con la fotocamera del telefono: si apre l’app lì e la installi.', instPcProg:'Sul PC c’è il programma completo:', pcDl:'⬇ Scarica per Windows', pc:'Free to Race per PC', coffee:'☕ Offrimi un caffè',
   disc:'Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati arrivano al telefono direttamente dal cronometraggio pubblico F1. Disegni dei circuiti: MultiViewer.',
-  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP degli Stati Uniti 2025, tutta la gara sul telefono', demoSubGp:'NAME: tutta la gara sul telefono, per prepararsi al weekend', weekend:'Programma del weekend (tua ora)', bug:'🐞 Segnala un problema', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
+  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP degli Stati Uniti 2025, tutta la gara sul telefono', demoSubGp:'NAME: tutta la gara sul telefono, per prepararsi al weekend', weekend:'Programma del weekend (tua ora)', bug:'🐞 Segnala un problema', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato: incollalo dove vuoi', shareShort:'Condividi', shareLive:'Sto seguendo NAME con la mappa in diretta, gratis:', shareRp:'Rivedi NAME con la mappa, gratis:', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
   retired:'RIT', pit:'BOX', mapApprox:'Mappa approssimata: diventa precisa dopo la prima sessione su questo circuito.', mapNone:'Disegno della pista non disponibile.', mapOk:'Auto stimate dal cronometraggio ufficiale, precisione circa 10 m.', mapReal:'Posizioni vere delle auto, dalla sessione.', noMsg:'Ancora nessun messaggio.', locale:'it-IT',
   redH:'BANDIERA ROSSA', redP:'Gara sospesa: le auto sono ferme in corsia box, in pista non succede niente fino alla ripartenza.', restartIn:'Ripartenza fra', skipRestart:'⏩ Salta', gridH:'PARTENZA', gridP:'Auto schierate sulla griglia, semafori spenti fra', goStart:'⏩ Vai', goH:'VIA!', goP:'Primo giro: l’ordine si aggiorna a ogni passaggio cronometrato.',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP degli Stati Uniti 2025', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
@@ -374,7 +394,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261031-122403';
+const BUILD = '20261031-133004';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -606,6 +626,7 @@ function render(){
   const ts = susp ? '5' : String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
   if(live && tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
   const lc = ST.LapCount || {};
+  $('header').classList.toggle('busy', live);
   if(!live) $('#lap').innerHTML = '';
   else if(race && lc.CurrentLap) $('#lap').innerHTML = `${lc.CurrentLap}<span class="dim" style="font-size:13px">/${lc.TotalLaps||'?'}</span><small>${t('lap')}</small>`;
   else { const r = remaining(); $('#lap').innerHTML = r!=null ? `${fmtT(r)}<small>${t('left')}</small>` : ''; }
@@ -883,19 +904,37 @@ function addCalendar(){
   a.download = weekend.name.replace(/[^\w]+/g,'_') + '.ics';
   document.body.appendChild(a); a.click(); a.remove();
 }
+// Condividi: in diretta la sessione che si sta guardando, nel replay il link a quel replay, altrimenti l'app.
+// Con la condivisione del telefono (Web Share API); dove non c'e', il messaggio col link va negli appunti.
+function shareInfo(){
+  const si = ST.SessionInfo || {}, m = si.Meeting || {}, gp = m.Name || m.Location || '';
+  const what = y => [gp + y, t('sess')[si.Name] || si.Name || ''].filter(Boolean).join(' – ');
+  if(REPLAY){ const y = /^\d{4}_/.test(REPLAY) ? ' ' + REPLAY.slice(0, 4) : '';
+    return {ev:'share-replay', url:'https://free-to-race.com/live/?replay=' + REPLAY, text: gp ? t('shareRp').replace('NAME', what(y)) : t('shareTxt')}; }
+  if(!DEMO && isLive() && gp) return {ev:'share-app', url:'https://free-to-race.com/live/', text:t('shareLive').replace('NAME', what(''))};
+  return {ev:'share-app', url:'https://free-to-race.com/live/', text:t('shareTxt')};
+}
+function copyText(s){
+  if(navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(s);
+  const a = document.createElement('textarea'); a.value = s; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;top:-100px;opacity:0';
+  document.body.appendChild(a); a.select(); const ok = document.execCommand('copy'); a.remove();
+  return ok ? Promise.resolve() : Promise.reject(new Error('copy'));
+}
 async function share(){
-  const url = 'https://free-to-race.com/live/';
-  if(navigator.share){ try{ await navigator.share({title:'Free to Race Live', text:t('shareTxt'), url}); }catch(e){} return; }   // annullato: niente
-  try{ await navigator.clipboard.writeText(url); toast(t('copied')); }catch(e){ prompt('', url); }
+  const x = shareInfo();
+  $('#shareH').dataset.ev = x.ev;
+  if(window.goatcounter && goatcounter.count) try{ goatcounter.count({path:x.ev, title:x.ev, event:true}); }catch(e){}
+  if(navigator.share){ try{ await navigator.share({title:'Free to Race Live', text:x.text, url:x.url}); }catch(e){} return; }   // annullato: niente
+  try{ await copyText(x.text + ' ' + x.url); toast('✓ ' + t('copied')); }catch(e){ prompt('', x.url); }
 }
 function toast(msg){
   const d = document.createElement('div'); d.textContent = msg;
-  d.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;z-index:20;font-weight:700';
+  d.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;z-index:20;font-weight:700;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis';
   document.body.appendChild(d); setTimeout(()=>d.remove(), 1800);
 }
 document.addEventListener('click', e => {
   if(e.target.closest('#introBtn')){ e.preventDefault(); playIntro(true); }
-  if(e.target.closest('[data-share]')){ e.preventDefault(); share(); }
+  if(e.target.closest('[data-share],#shareH')){ e.preventDefault(); share(); }
   if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
 });
 function idleHtml(){
