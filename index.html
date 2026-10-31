@@ -209,6 +209,31 @@ nav .links + .lang{margin-left:auto}
 .support p{margin:0;color:#c3c9d6}
 @media(max-width:760px){.btn.kofi:not(.big){display:none}}
 @media(max-width:430px){nav .wrap{gap:10px;padding:0 12px}.brand{font-size:18px}nav .btn.main{padding:8px 12px!important}}
+/* telefono (o finestra sotto i 900 px): in cima «Apri l'app» e «Mandalo sul tuo PC»; sotto il programma per Windows */
+.ph{display:none;text-align:center;padding:20px 18px 18px;border-color:#3a1414;background:linear-gradient(170deg,#2a0d0d,var(--panel) 60%)}
+.ph .phh{font-size:27px;line-height:1.08;font-weight:900;font-style:italic;margin:4px 0 8px}
+.ph .phh b{color:var(--accent)}
+.ph .phl{color:#c3c9d6;font-size:15px;margin:0 0 16px}
+.ph .btn{width:100%;justify-content:center;font-size:19px;padding:15px 18px;border-radius:12px}
+.ph button.btn{font-family:inherit;font-weight:700;color:var(--text);cursor:pointer}
+.ph .btn.main{font-size:21px;padding:17px 18px;box-shadow:0 10px 30px rgba(225,6,0,.35)}
+.ph .free{color:var(--dim);font-size:14px;margin:7px 0 16px}
+.ph .free b{color:var(--green);font-weight:700}
+.ph .pcu{margin:10px 0 0;font-size:14px;color:var(--dim)}
+.ph .pcu b{display:block;color:var(--text);font-size:24px;letter-spacing:.3px;font-weight:900;user-select:all}
+.ph .ok{display:none;margin-top:8px;color:var(--green);font-weight:700;font-size:15px}
+.ph .ok.on{display:block}
+.ph .unoff{margin:14px 0 0;font-size:12px;color:var(--dim2);line-height:1.35}
+@media(max-width:900px){.ph{display:block}.top .wrap #prod{order:-1}.top .wrap #phHero{order:-2}}
+html.phone .ph{display:block}
+html.phone .top .wrap{grid-template-columns:1fr}
+html.phone .top .wrap #prod{order:-1}
+html.phone .top .wrap #phHero{order:-2}
+/* niente scorrimento laterale: tabelle piu' strette sul telefono, una voce in meno nel menu fra 760 e 900 px */
+@media(max-width:480px){td,th{padding-left:6px;padding-right:6px}.row3 table td,.row3 table th{padding:6px 5px}}
+@media(max-width:900px){nav .links a[href="replay/"]{display:none}}
+/* segnalazioni: sul telefono i due pulsanti vanno a capo (l'indirizzo lungo allargava la pagina) */
+@media(max-width:760px){.support .cta{flex:1 1 100%!important;min-width:0;display:flex;flex-direction:column;gap:8px}.support .cta .btn{white-space:normal;overflow-wrap:anywhere;justify-content:center}}
 </style>
 <script data-goatcounter="https://freetorace.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
@@ -224,9 +249,16 @@ nav .links + .lang{margin-left:auto}
 <div id="qrPop"><div class="box"><h3 data-i="qr_h">📱 Free to Race on your phone</h3><img class="qr" src="img/qr_live.svg" alt="QR free-to-race.com/live"><p data-i="qr_p">Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.</p><p><a href="live/" data-i="qr_open">or open it here in the browser</a></p><button id="qrClose" data-i="qr_close">Close</button></div></div>
 
 <header class="top" id="download"><div class="wrap">
+  <div class="card ph" id="phHero"><p class="phh" data-i="ph_h">F1 live timing, <b>on your phone</b></p><p class="phl" data-i="ph_l">Timing, every car on the track map and strategy, right in your browser.</p>
+    <a class="btn main" href="live/" data-i="open_app" data-ev="open-app-home">▶ Open the app</a>
+    <div class="free" data-i="ph_free"><b>Free</b>, no account, nothing to install</div>
+    <button class="btn" type="button" id="sendPc" data-i="send_pc" data-ev="send-to-pc">💻 Send it to your PC</button>
+    <div class="ok" id="sendOk" role="status" data-i="copied">✓ Link copied: paste it on your PC</div>
+    <p class="pcu"><span data-i="pc_open">On your PC, open</span><b>free-to-race.com</b></p>
+    <p class="unoff" data-i="unoff">Unofficial fan project, not associated with the Formula 1 companies.</p></div>
   <div class="card" id="wk"><div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2></div>
   <div class="card prod" id="prod"><h1 class="kick" data-i="seo_h1">Free F1 live timing, track map &amp; race strategy</h1><h2 data-i="h1">The race, as the <b>pit wall</b> sees it.</h2><p class="lead2" data-i="lead2">Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.</p>
-    <div class="acts"><a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl" data-ev="download-windows">⬇ Download for Windows</a><a class="btn" href="live/?install=1" data-i="ph_install" data-ev="install-phone">📲 Install the app on your phone</a><a class="btn" href="replay/" data-i="nav_rp">🎬 Replays</a></div></div>
+    <div class="acts"><a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl" data-ev="download-windows">⬇ Download for Windows</a><a class="btn" href="live/" data-i="open_br" data-ev="open-browser-pc">▶ Open in browser</a><a class="btn" href="live/?install=1" data-i="ph_install" data-ev="install-phone">📲 Install the app on your phone</a><a class="btn" href="replay/" data-i="nav_rp">🎬 Replays</a></div></div>
 </div></header>
 
 <section id="now"><div class="wrap"><div class="row3">
@@ -339,6 +371,11 @@ const T = {
   credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
   of:'of', wk_on:'Race weekend · round', prog_h:'Weekend schedule (your time)', in_:s=>`${s} starts in`, add_cal:'📅 Add to calendar', all_cal:'Full calendar ↓',
+  ph_h:'F1 live timing, <b>on your phone</b>', ph_l:'Timing, every car on the track map and strategy, right in your browser.',
+  open_app:'▶ Open the app', ph_free:'<b>Free</b>, no account, nothing to install',
+  send_pc:'💻 Send it to your PC', copied:'✓ Link copied: paste it on your PC',
+  pc_open:'On your PC, open', share_txt:'Free to Race: free F1 live timing, track map and race strategy. Open it on your PC to get the Windows program:',
+  unoff:'Unofficial fan project, not associated with the Formula 1 companies.', open_br:'▶ Open in browser',
   prod_k:'The program · free', seo_h1:'Free F1 live timing, track map &amp; race strategy', lead2:'Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.',
   rp_sub:'try it in your browser, nothing to install', live_now:'● Live now', follow:'📱 Follow on your phone', follow_ph:'📱 Follow live',
   last_race:'Last race', last_sess:'Latest session', th_grid:'Start', th_gap:'Gap', th_best:'Best lap', th_time:'Time', fl:'Fastest lap',
@@ -383,6 +420,11 @@ const T = {
   credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
   sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
   of:'di', wk_on:'Weekend in corso · round', prog_h:'Programma del weekend (tua ora)', in_:s=>`${s} tra`, add_cal:'📅 Aggiungi al calendario', all_cal:'Tutto il calendario ↓',
+  ph_h:'La F1 in diretta, <b>sul telefono</b>', ph_l:'Tempi, la pista con tutte le auto e la strategia, subito nel browser.',
+  open_app:'▶ Apri l’app', ph_free:'<b>Gratis</b>, senza account, niente da installare',
+  send_pc:'💻 Mandalo sul tuo PC', copied:'✓ Link copiato: incollalo sul PC',
+  pc_open:'Sul PC apri', share_txt:'Free to Race: tempi F1 in diretta, mappa della pista e strategia, gratis. Aprilo sul PC per avere il programma per Windows:',
+  unoff:'Progetto di appassionati, non ufficiale, non associato alle società di Formula 1.', open_br:'▶ Apri nel browser',
   prod_k:'Il programma · gratis', seo_h1:'Live timing F1 gratis, mappa della pista e strategia di gara', lead2:'Tempi in diretta, strategia gomme, previsione delle soste e la pista con le auto: gratis e senza account, su PC e telefono.',
   rp_sub:'provalo nel browser, senza installare', live_now:'● In diretta adesso', follow:'📱 Segui sul telefono', follow_ph:'📱 Segui in diretta',
   last_race:'Ultima gara', last_sess:'Ultima sessione', th_grid:'Part.', th_gap:'Distacco', th_best:'Miglior giro', th_time:'Tempo', fl:'Giro più veloce',
@@ -423,6 +465,22 @@ const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/F
 // Dal telefono il pulsante principale installa l'app (il programma per Windows li' non serve);
 // dal PC «sul telefono» mostra il QR da inquadrare.
 const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if(MOBILE) document.documentElement.classList.add('phone');
+// «Mandalo sul tuo PC»: la condivisione del telefono (mail, WhatsApp, a se stessi...); senza, il link negli appunti
+async function sendToPc(){
+  const url = 'https://free-to-race.com/';
+  if(navigator.share){
+    try{ await navigator.share({title:'Free to Race', text:t('share_txt'), url}); return; }
+    catch(e){ if(e && e.name === 'AbortError') return; }
+  }
+  let ok = false;
+  try{ await navigator.clipboard.writeText(url); ok = true; }catch(e){}
+  if(!ok){ try{ const ta = document.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove(); }catch(e){} }
+  const el = $('sendOk'); el.innerHTML = ok ? t('copied') : 'free-to-race.com'; el.classList.add('on');
+  clearTimeout(sendToPc.tm); sendToPc.tm = setTimeout(() => el.classList.remove('on'), 6000);
+}
+$('sendPc').addEventListener('click', sendToPc);
 if(MOBILE){ $('dlNav').href = 'live/?install=1'; $('dlNav').dataset.i = 'ph_short'; $('dlNav').dataset.ev = 'install-phone'; }
 document.addEventListener('click', e => {
   // contatore senza cookie (GoatCounter, se presente nella pagina): solo quante volte si preme un pulsante
@@ -508,7 +566,7 @@ function renderTop(){
   $('wk').innerHTML = h;
   // il programma, oppure la diretta
   const dl = MOBILE ? `<a class="btn main" href="live/?install=1" data-ev="install-phone">${t('ph_install')}</a>`
-                    : `<a class="btn main" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a><a class="btn" href="live/?install=1" data-qr="1" data-ev="install-phone">${t('ph_install')}</a>`;
+                    : `<a class="btn main" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a><a class="btn" href="live/" data-ev="open-browser-pc">${t('open_br')}</a><a class="btn" href="live/?install=1" data-qr="1" data-ev="install-phone">${t('ph_install')}</a>`;
   const rp = featuredReplay(w), rpUrl = rp ? `replay/${encodeURIComponent(rp.name)}/` : 'demo/';
   const smart = MOBILE ? '' : `<div class="small dim" style="margin-top:10px;font-size:13px">${t('dl_note')}</div><details class="smart"><summary>${t('ss_q')}</summary><p>${t('ss_a')}</p></details>`;
   $('download').classList.toggle('livefirst', !!live);     // sul telefono la diretta va in cima
