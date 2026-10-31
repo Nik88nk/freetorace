@@ -59,12 +59,15 @@ async function show(){
   if(!cur){ out.innerHTML = `<div class="empty">${t('none')}</div>`; return; }
   try{
     const doc = cache[cur] || (cache[cur] = await (await fetch(cur + '.json', {cache:'no-cache'})).json());
-    FTRRis.render(out, doc, LANG, {sessName: t('sess')[doc.session]||doc.session, replay: REPLAYS.has(cur) ? `../replay/${cur}/` : null});
+    FTRRis.render(out, doc, LANG, {sessName: t('sess')[doc.session]||doc.session, replay: REPLAYS.has(cur) ? (PHONE ? `../live/?replay=${encodeURIComponent(cur)}` : `../replay/${cur}/`) : null});
   }catch(e){ out.innerHTML = `<div class="empty">${t('err')}</div>`; }
 }
 document.getElementById('pick').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if(!b) return; cur = b.dataset.s; history.replaceState(null, '', '?s=' + cur); pick(); show(); });
 document.getElementById('lang').onclick = () => { LANG = LANG==='it'?'en':'it'; try{ localStorage.setItem('ftr.lang', LANG); }catch(e){} texts(); pick(); show(); };
 texts();
+// dal telefono (o in una finestra stretta) «Rivedi la sessione» apre il replay nell'app, come la lista dei replay;
+// dal PC largo la pagina replay completa
+const PHONE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || matchMedia('(max-width: 900px)').matches;
 Promise.all([fetch('index.json', {cache:'no-cache'}).then(r=>r.json()), fetch('../replay/replays.json', {cache:'no-cache'}).then(r=>r.json()).catch(()=>[])])
   .then(([idx, rp]) => { INDEX = idx; REPLAYS = new Set(rp.map(x=>x.name)); if(!cur || !idx.some(x=>x.name===cur)) cur = idx.length ? idx[0].name : null; pick(); show(); })
   .catch(() => { document.getElementById('out').innerHTML = `<div class="empty">${t('err')}</div>`; });
