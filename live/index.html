@@ -399,7 +399,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-230737';
+const BUILD = '20261101-231845';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -587,8 +587,16 @@ let laterT = 0;
 function later(){ retry++; setConn(t('reconnecting'), false); clearTimeout(laterT); laterT = setTimeout(connect, Math.min(30000, 2000*retry)); }
 // iPhone e Android chiudono il collegamento quando l'app va in secondo piano: al ritorno ci si ricollega subito,
 // senza aspettare l'attesa crescente (fino a 30 s) fra un tentativo e l'altro
+// Al ritorno dopo piu' di 2 s ci si ricollega comunque: Android lascia il collegamento «aperto» ma morto, e l'app
+// restava ferma fino al controllo dei 60 s (1.11, comportamento a caso alla riapertura). I dati si considerano
+// fermi da quando l'app e' andata in secondo piano
+let bgAt = 0;
 document.addEventListener('visibilitychange', () => {
-  if(DEMO || document.hidden || (ws && ws.readyState <= 1)) return;
+  if(DEMO) return;
+  if(document.hidden){ bgAt = performance.now()/1000; return; }
+  const away = bgAt ? performance.now()/1000 - bgAt : 0;
+  if(ws && ws.readyState <= 1 && away < 2) return;
+  if(ws && ws.readyState <= 1){ if(!streamEnd) streamEnd = bgAt; ws.onclose = null; try{ ws.close(); }catch(e){} connected = false; }
   clearTimeout(laterT); retry = 0; connect();
 });
 setInterval(()=>{ if(ws && ws.readyState===1) ws.send(JSON.stringify({type:6})+RS); if(connected && Date.now()-lastMsg>60000) ws.close(); }, 15000);
@@ -625,7 +633,8 @@ function rewind(){
 }
 function hold(a, b){ holdFrom = a; holdTo = b; }
 function lagWait(now){
-  const frozen = !DEMO && delay && now >= holdFrom && holdTo - now > 1;
+  // ferma davvero: dentro la finestra d'attesa e nessun dato in coda da mostrare entro un secondo
+  const frozen = !DEMO && delay && now >= holdFrom && holdTo - now > 1 && !(queue.length && queue[0][0] + delay - now < 1);
   const el = $('#delayTxt'); if(!el) return;
   el.classList.toggle('lagw', !!frozen); $('#conn').classList.toggle('lagw', !!frozen);
   el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(holdTo - now)) : '';
