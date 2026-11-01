@@ -47,7 +47,8 @@ header .ev small{color:var(--dim);font-size:12px;text-transform:uppercase;letter
 #conn i{width:8px;height:8px;border-radius:50%;background:#555;display:inline-block}
 #conn.on i{background:var(--green);box-shadow:0 0 8px var(--green)}
 #conn .grow{flex:1}
-#conn>span{white-space:nowrap}#conn.lagw #connTxt{display:none}
+#conn>span{white-space:nowrap}
+#redBand{display:none;background:#e10600;color:#fff;padding:10px 14px;font-size:14px;line-height:1.35}#redBand.on{display:block}#redBand b{display:block;font-size:17px;font-weight:900;letter-spacing:.5px}#conn.lagw #connTxt{display:none}
 .dctl{display:flex;align-items:center;gap:5px;margin-left:8px}.dctl button{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 9px;font:inherit;font-weight:700}.dctl b{min-width:34px;text-align:center;color:var(--text)}
 #delayTxt.lagw{color:#111;background:var(--yellow);font-weight:700;border-radius:6px;padding:2px 8px}
 main{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
@@ -300,6 +301,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 <div id="instBar"><img src="icon-192.png" alt=""><span data-t="instBar"></span><button data-install="1" data-t="instShort"></button><button class="x" id="instX" aria-label="×">×</button></div>
 <div id="instSheet"><div class="box" id="instBox"></div></div>
 <div id="conn"><i></i><span id="connTxt"></span><span class="grow"></span><span id="delayTxt" class="tn"></span><span class="dctl" id="dctl"><span data-t="tvDelay"></span><button data-d="-5" aria-label="-5 s">−5</button><b class="tn" id="delayV2"></b><button data-d="5" aria-label="+5 s">+5</button></span></div>
+<div id="redBand" role="status"></div>
 <div id="rpBar" style="display:none"><button id="rpPlay">⏸</button><button id="rpSpeed">1×</button><span class="rpSeekW"><input type="range" id="rpSeek" min="0" max="1000" value="0"><span id="rpMarks"></span></span><span id="rpTime" class="tn"></span></div>
 <div id="rpNote"></div>
 <div id="rpLoad" style="display:none"><img src="icon-192.png" alt=""><b>FREE TO RACE · DEMO</b><span id="rpMsg"></span></div>
@@ -397,7 +399,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-224305';
+const BUILD = '20261101-230737';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -726,6 +728,10 @@ function render(){
   $('#dctl').style.display = DEMO ? 'none' : '';
   safe('testata', feedDot);
   flagAlert(live ? ts : null); wakeLock();
+  // bandiera rossa: fascia fissa per tutta la sospensione. Il riquadro grande compare solo al cambio di bandiera,
+  // e chi apriva l'app a gara gia' sospesa vedeva solo la scritta piccola in testata (1.11, Messico)
+  const red = live && !DEMO && ts === '5', rb = $('#redBand');
+  rb.classList.toggle('on', red); if(red && rb._l !== LANG){ rb.innerHTML = `<b>🟥 ${t('redH')}</b>${t('redP')}`; rb._l = LANG; }
   const ds = drivers();
   let ref = null; if(!race){ for(const d of ds){ const b=secs(d.best); if(b!=null && (ref==null || b<ref)) ref=b; } }
   const kind = !live ? '' : race ? 'race' : si.Type==='Qualifying' ? 'quali' : 'fp';
