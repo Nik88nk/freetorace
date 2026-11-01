@@ -47,6 +47,7 @@ header .ev small{color:var(--dim);font-size:12px;text-transform:uppercase;letter
 #conn i{width:8px;height:8px;border-radius:50%;background:#555;display:inline-block}
 #conn.on i{background:var(--green);box-shadow:0 0 8px var(--green)}
 #conn .grow{flex:1}
+#delayTxt.lagw{color:#111;background:var(--yellow);font-weight:700;border-radius:6px;padding:2px 8px}
 main{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
 .pane{display:none}
 .pane.on{display:block}
@@ -337,7 +338,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tStrat:'Strategy', stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
-  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.',
+  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.', lagWait:'⏸ Waiting for your TV delay · resumes in N s',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
@@ -359,7 +360,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tStrat:'Strategia', stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
-  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.',
+  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.', lagWait:'⏸ In attesa del ritardo TV · riparte tra N s',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
@@ -394,7 +395,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-214457';
+const BUILD = '20261101-214835';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -585,9 +586,19 @@ function pump(){
   const now = performance.now()/1000;
   let changed = false;
   while(queue.length && now - queue[0][0] >= delay){ const [w, k, d] = queue.shift(); apply(k, d, w + delay); changed = true; }
-  if(changed) render();
+  if(changed){ lastApply = now; render(); }
+  lagWait(now);
 }
 setInterval(pump, 250);
+// ritardo TV: quando i dati sono fermi perche' si aspetta il ritardo (riapertura dopo molto, ritardo aumentato) la
+// barra in alto lo dice, con i secondi che mancano: non deve sembrare bloccata
+let lastApply = 0;
+function lagWait(now){
+  const wait = queue.length ? queue[0][0] + delay - now : 0, frozen = !DEMO && delay && connected && now - lastApply > 2 && wait > 1.5;
+  const el = $('#delayTxt'); if(!el) return;
+  el.classList.toggle('lagw', !!frozen);
+  el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(wait)) : delay ? `+${delay} s` : '';
+}
 // ritardo TV: quando l'app va in secondo piano o si chiude si salvano lo stato mostrato e i messaggi non ancora
 // mostrati; alla riapertura (entro 10 minuti) si riparte da li', e lo stato nuovo del feed arriva col ritardo
 const SNAP = 'ftr.snap';
