@@ -47,6 +47,8 @@ header .ev small{color:var(--dim);font-size:12px;text-transform:uppercase;letter
 #conn i{width:8px;height:8px;border-radius:50%;background:#555;display:inline-block}
 #conn.on i{background:var(--green);box-shadow:0 0 8px var(--green)}
 #conn .grow{flex:1}
+#conn>span{white-space:nowrap}#conn.lagw #connTxt{display:none}
+.dctl{display:flex;align-items:center;gap:5px;margin-left:8px}.dctl button{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:3px 9px;font:inherit;font-weight:700}.dctl b{min-width:34px;text-align:center;color:var(--text)}
 #delayTxt.lagw{color:#111;background:var(--yellow);font-weight:700;border-radius:6px;padding:2px 8px}
 main{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
 .pane{display:none}
@@ -297,7 +299,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 </header>
 <div id="instBar"><img src="icon-192.png" alt=""><span data-t="instBar"></span><button data-install="1" data-t="instShort"></button><button class="x" id="instX" aria-label="×">×</button></div>
 <div id="instSheet"><div class="box" id="instBox"></div></div>
-<div id="conn"><i></i><span id="connTxt"></span><span class="grow"></span><span id="delayTxt" class="tn"></span></div>
+<div id="conn"><i></i><span id="connTxt"></span><span class="grow"></span><span id="delayTxt" class="tn"></span><span class="dctl" id="dctl"><span data-t="tvDelay"></span><button data-d="-5" aria-label="-5 s">−5</button><b class="tn" id="delayV2"></b><button data-d="5" aria-label="+5 s">+5</button></span></div>
 <div id="rpBar" style="display:none"><button id="rpPlay">⏸</button><button id="rpSpeed">1×</button><span class="rpSeekW"><input type="range" id="rpSeek" min="0" max="1000" value="0"><span id="rpMarks"></span></span><span id="rpTime" class="tn"></span></div>
 <div id="rpNote"></div>
 <div id="rpLoad" style="display:none"><img src="icon-192.png" alt=""><b>FREE TO RACE · DEMO</b><span id="rpMsg"></span></div>
@@ -338,7 +340,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tStrat:'Strategy', stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
-  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.', lagWait:'⏸ Waiting for your TV delay · resumes in N s',
+  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything a few seconds later, to stay in sync with your TV and avoid spoilers.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
@@ -360,7 +362,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tStrat:'Strategia', stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
-  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.', lagWait:'⏸ In attesa del ritardo TV · riparte tra N s',
+  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto qualche secondo dopo, per restare allineato alla TV e non avere spoiler.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
@@ -395,7 +397,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-221511';
+const BUILD = '20261101-224305';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -564,8 +566,10 @@ function connect(){
         const fresh = !ST.SessionInfo && !queue.some(q => q[1]==='SessionInfo');
         // attesa vera per il ritardo: a pagina vuota tutto il ritardo; altrimenti il buco fra l'ultimo dato avuto
         // (in coda o gia' mostrato) e adesso, cioe' il tempo in cui l'app era chiusa
-        const last = queue.length ? queue[queue.length-1][0] : lastItemT;
-        if(fresh) hold(now, now + delay); else if(last && now - last > 2) hold(last + delay, now + delay);
+        // il buco va da quando i dati hanno smesso di arrivare (collegamento perso o app chiusa), non dall'ultimo
+        // messaggio: col feed tranquillo (bandiera rossa) l'ultimo messaggio puo' essere di molto prima
+        if(fresh) hold(now, now + delay); else if(streamEnd && now - streamEnd > 2) hold(streamEnd + delay, now + delay);
+        streamEnd = 0;
         if(fresh) queue.length = 0;
         const t0 = fresh ? now - delay : now;
         queue.push([t0, '__full__', null]);
@@ -574,7 +578,7 @@ function connect(){
       else if(o.type===7){ ws.close(); }
     }
   };
-  ws.onclose = () => { connected=false; later(); };
+  ws.onclose = () => { connected=false; if(!streamEnd) streamEnd = performance.now()/1000; later(); };
   ws.onerror = () => {};
 }
 let laterT = 0;
@@ -589,7 +593,8 @@ setInterval(()=>{ if(ws && ws.readyState===1) ws.send(JSON.stringify({type:6})+R
 function pump(){
   const now = performance.now()/1000;
   let changed = false;
-  while(queue.length && now - queue[0][0] >= delay){ const [w, k, d] = queue.shift(); apply(k, d, w + delay); lastItemT = w; changed = true; }
+  while(queue.length && now - queue[0][0] >= delay){ const it = queue.shift(), [w, k, d] = it; apply(k, d, w + delay); lastItemT = w; changed = true;
+    if(k==='__full__') LOG = []; LOG.push(it); }
   if(changed) render();
   lagWait(now);
 }
@@ -597,32 +602,53 @@ setInterval(pump, 250);
 // ritardo TV: quando i dati sono fermi perche' si aspetta il ritardo (riapertura dopo molto, ritardo aumentato) la
 // barra in alto lo dice, con i secondi che mancano: non deve sembrare bloccata. Solo in quei casi (finestra
 // holdFrom-holdTo): col feed tranquillo (bandiera rossa, 1.11) i dati sono fermi ma l'app non sta aspettando niente
-let lastItemT = 0, holdFrom = 0, holdTo = 0;
+let lastItemT = 0, holdFrom = 0, holdTo = 0, streamEnd = 0;
+// tutto cio' che e' stato mostrato dall'ultimo stato completo: serve a tornare indietro quando si aumenta il ritardo
+// (si rifa' lo stato fino a «adesso meno il ritardo nuovo», e il resto torna in coda) e a riprendere dopo la chiusura
+// con giri e passo interi. Una gara intera sono circa 2-3 MB
+let LOG = [];
+function rewind(){
+  const now = performance.now()/1000, cut = now - delay;
+  if(!LOG.length || LOG[LOG.length-1][0] <= cut) return;
+  let full = 0; while(full < LOG.length && LOG[full][0] === LOG[0][0]) full++;   // lo stato completo resta sempre
+  let i = LOG.length; while(i > full && LOG[i-1][0] > cut) i--;
+  const keep = LOG.slice(0, i), back = LOG.slice(i);
+  LOG = []; resetState(); prevFlag = undefined;
+  for(const it of keep){ apply(it[1], it[2], it[0] + delay); LOG.push(it); }
+  queue.unshift(...back);
+  // prima dello stato completo non c'e' niente: se il ritardo chiede di andare piu' indietro, si resta su quello
+  // finche' il ritardo non lo raggiunge (col feed tranquillo il prossimo messaggio puo' arrivare dopo: non e' attesa)
+  if(cut < LOG[0][0] - 1) hold(now, LOG[0][0] + delay); else hold(0, 0);
+  render();
+}
 function hold(a, b){ holdFrom = a; holdTo = b; }
 function lagWait(now){
   const frozen = !DEMO && delay && now >= holdFrom && holdTo - now > 1;
   const el = $('#delayTxt'); if(!el) return;
-  el.classList.toggle('lagw', !!frozen);
-  el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(holdTo - now)) : delay ? `+${delay} s` : '';
+  el.classList.toggle('lagw', !!frozen); $('#conn').classList.toggle('lagw', !!frozen);
+  el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(holdTo - now)) : '';
 }
 // ritardo TV: quando l'app va in secondo piano o si chiude si salvano lo stato mostrato e i messaggi non ancora
 // mostrati; alla riapertura (entro 10 minuti) si riparte da li', e lo stato nuovo del feed arriva col ritardo
 const SNAP = 'ftr.snap';
-function saveSnap(){
+function saveSnap(all){
   if(DEMO || !delay || !ST.SessionInfo) return;
-  try{ const p = performance.now()/1000, w = Date.now();
-    localStorage.setItem(SNAP, JSON.stringify({w, st:ST, q:queue.map(([x,k,d]) => [w - (p-x)*1000, k, d])})); }catch(e){}
+  const p = performance.now()/1000, w = Date.now(), wall = ([x,k,d]) => [w - (p-x)*1000, k, d], q = queue.map(wall);
+  if(all && LOG.length) try{ localStorage.setItem(SNAP, JSON.stringify({w, log:LOG.map(wall), q})); return; }catch(e){}   // troppo grande: solo lo stato
+  try{ localStorage.setItem(SNAP, JSON.stringify({w, st:ST, q})); }catch(e){}
 }
-addEventListener('visibilitychange', () => { if(document.hidden) saveSnap(); });
-addEventListener('pagehide', saveSnap);
+addEventListener('visibilitychange', () => { if(document.hidden) saveSnap(true); });
+addEventListener('pagehide', () => saveSnap(true));
 setInterval(() => { if(!document.hidden) saveSnap(); }, 5000);   // anche se il telefono chiude l'app senza avvisare
 function loadSnap(){
   let s = null;
   // non si cancella: se la pagina si ricarica subito (versione nuova all'apertura) prima di aver mostrato lo stato,
   // saveSnap non ha niente da salvare e il salvataggio andrebbe perso (1.11: al telefono attesa piena dopo la riapertura)
   try{ s = JSON.parse(localStorage.getItem(SNAP) || 'null'); }catch(e){}
-  if(DEMO || !delay || !s || !s.st || !s.st.SessionInfo || Date.now() - s.w > 600e3) return;
+  if(DEMO || !delay || !s || !(s.log || (s.st && s.st.SessionInfo)) || Date.now() - s.w > 600e3) return;
   const p = performance.now()/1000, w = Date.now(), order = {SessionInfo:0, DriverList:1};
+  streamEnd = p - (w - s.w)/1000;   // i dati si sono fermati alla chiusura
+  if(s.log){ for(const [x,k,d] of s.log.concat(s.q || [])) queue.push([p - (w - x)/1000, k, d]); return; }
   const t0 = p - (w - s.w)/1000 - delay;   // lo stato mostrato alla chiusura e' quello arrivato «ritardo» secondi prima
   queue.push([t0, '__full__', null]);
   for(const k of Object.keys(s.st).sort((a,b)=>(order[a]??2)-(order[b]??2))) queue.push([t0, k, s.st[k]]);
@@ -696,8 +722,8 @@ function render(){
   else { const r = remaining(); $('#lap').innerHTML = r!=null ? `${fmtT(r)}<small>${t('left')}</small>` : ''; }
   if(connected && !DEMO) setConn(live ? t('live') : t('idleConn'), true);
   // la barra di stato serve solo per ritardo, demo e collegamento fuori sessione: in diretta lo stato del feed e' il pallino
-  const quiet = !DEMO && live && !delay;
-  $('#conn').classList.toggle('hide', quiet);
+  // la barra resta sempre visibile: porta il comando del ritardo TV (in demo non serve)
+  $('#dctl').style.display = DEMO ? 'none' : '';
   safe('testata', feedDot);
   flagAlert(live ? ts : null); wakeLock();
   const ds = drivers();
@@ -1289,9 +1315,9 @@ $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0')
 // ---------------- schede, ritardo, lingua ----------------
 $$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); placeMap(); });
 // demo e replay si aprono sui tempi, dove in cima c'e' la mappa
-function showDelay(){ $('#delayV').textContent = delay+' s'; $('#delayTxt').textContent = delay ? `+${delay} s` : ''; }
+function showDelay(){ $('#delayV').textContent = delay+' s'; $('#delayV2').textContent = delay+' s'; }
 $$('[data-d]').forEach(b => b.onclick = () => { const was = delay; delay = b.dataset.r ? 0 : Math.max(0, Math.min(300, delay + (+b.dataset.d)));
-  if(delay > was){ const n = performance.now()/1000; hold(n, n + delay - was); } else hold(0, 0);
+  if(delay > was) rewind(); else hold(0, 0);
   store.set('ftr.delay', delay); showDelay(); });
 $$('[data-l]').forEach(b => b.onclick = () => { LANG=b.dataset.l; store.set('ftr.lang', LANG); texts(); render(); drawRis(); });
 function texts(){ document.documentElement.lang=LANG; $$('[data-t]').forEach(e => { const v=t(e.dataset.t); if(typeof v==='string') e.innerHTML=v; }); $$('[data-l]').forEach(b=>b.classList.toggle('on', b.dataset.l===LANG)); }
@@ -1623,7 +1649,7 @@ if(STANDALONE) $('#instSet').style.display = 'none';
 else if(INSTALL_ASK || Date.now() - (+store.get('ftr.instX', 0)) > 7*86400e3) $('#instBar').classList.add('on');   // chiusa: ricompare dopo una settimana
 
 texts(); showDelay(); render();
-if(DEMO){ startDemo(); $$('[data-d]').forEach(b => b.closest('.set').style.display='none'); }
+if(DEMO){ startDemo(); $$('[data-d]').forEach(b => { const st = b.closest('.set'); if(st) st.style.display='none'; }); }
 else { loadSnap(); loadNext(); connect();
   // prima apertura: l'intro, ma non se c'e' una sessione in diretta (chi apre al volo vuole i tempi)
   // ne' se si e' arrivati per installare: prima la finestra con il pulsante
