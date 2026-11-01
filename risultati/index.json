@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Mexico_City_Race",
+  "kind": "race",
+  "meeting": "Mexico City Grand Prix",
+  "location": "Mexico City",
+  "year": "2026",
+  "session": "Race",
+  "start": "2026-11-01T14:00:00"
+ },
+ {
   "name": "2026_Mexico_City_Qualifying",
   "kind": "quali",
   "meeting": "Mexico City Grand Prix",

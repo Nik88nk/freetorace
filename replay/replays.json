@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_Mexico_City_Race",
+  "start": "2026-11-01T14:00:00",
+  "year": "2026",
+  "meeting": "Mexico City Grand Prix",
+  "session": "Race",
+  "it": "Mexico City Grand Prix 2026 · Gara",
+  "en": "2026 Mexico City Grand Prix · Race",
+  "laps": 71
+ },
+ {
   "name": "2026_Mexico_City_Qualifying",
   "start": "2026-10-31T15:00:00",
   "year": "2026",
