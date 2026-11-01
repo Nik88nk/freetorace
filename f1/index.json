@@ -1,0 +1,309 @@
+{
+ "sessions": [
+  {
+   "name": "2026_Mexico_City_Qualifying",
+   "url": "/f1/2026/mexico-city/qualifying/",
+   "year": "2026",
+   "meeting": "Mexico City Grand Prix",
+   "session": "Qualifying",
+   "start": "2026-10-31T15:00:00",
+   "kind": "quali",
+   "lead": [
+    {
+     "name": "Lewis Hamilton",
+     "tla": "HAM",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:16.514"
+    },
+    {
+     "name": "George Russell",
+     "tla": "RUS",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.009"
+    },
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "+0.119"
+    }
+   ]
+  },
+  {
+   "name": "2026_Mexico_City_Practice_3",
+   "url": "/f1/2026/mexico-city/practice-3/",
+   "year": "2026",
+   "meeting": "Mexico City Grand Prix",
+   "session": "Practice 3",
+   "start": "2026-10-31T11:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "1:17.600"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.001"
+    },
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "+0.117"
+    }
+   ]
+  },
+  {
+   "name": "2026_Mexico_City_Practice_2",
+   "url": "/f1/2026/mexico-city/practice-2/",
+   "year": "2026",
+   "meeting": "Mexico City Grand Prix",
+   "session": "Practice 2",
+   "start": "2026-10-30T16:00:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:17.827"
+    },
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "+0.103"
+    },
+    {
+     "name": "George Russell",
+     "tla": "RUS",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.106"
+    }
+   ]
+  },
+  {
+   "name": "2026_Mexico_City_Practice_1",
+   "url": "/f1/2026/mexico-city/practice-1/",
+   "year": "2026",
+   "meeting": "Mexico City Grand Prix",
+   "session": "Practice 1",
+   "start": "2026-10-30T12:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:18.128"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.659"
+    },
+    {
+     "name": "Frederik Vesti",
+     "tla": "VES",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.733"
+    }
+   ]
+  },
+  {
+   "name": "2026_Austin_Race",
+   "url": "/f1/2026/united-states/race/",
+   "year": "2026",
+   "meeting": "United States Grand Prix",
+   "session": "Race",
+   "start": "2026-10-25T15:00:00",
+   "kind": "race",
+   "lead": [
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": ""
+    },
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "+13.078"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+17.485"
+    }
+   ]
+  },
+  {
+   "name": "2026_Austin_Qualifying",
+   "url": "/f1/2026/united-states/qualifying/",
+   "year": "2026",
+   "meeting": "United States Grand Prix",
+   "session": "Qualifying",
+   "start": "2026-10-24T16:00:00",
+   "kind": "quali",
+   "lead": [
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "1:34.035"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.179"
+    },
+    {
+     "name": "Isack Hadjar",
+     "tla": "HAD",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.215"
+    }
+   ]
+  },
+  {
+   "name": "2026_Austin_Practice_3",
+   "url": "/f1/2026/united-states/practice-3/",
+   "year": "2026",
+   "meeting": "United States Grand Prix",
+   "session": "Practice 3",
+   "start": "2026-10-24T12:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Lewis Hamilton",
+     "tla": "HAM",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:34.893"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.168"
+    },
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "+0.234"
+    }
+   ]
+  },
+  {
+   "name": "2026_Austin_Practice_2",
+   "url": "/f1/2026/united-states/practice-2/",
+   "year": "2026",
+   "meeting": "United States Grand Prix",
+   "session": "Practice 2",
+   "start": "2026-10-23T16:00:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:35.291"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.042"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.189"
+    }
+   ]
+  },
+  {
+   "name": "2026_Austin_Practice_1",
+   "url": "/f1/2026/united-states/practice-1/",
+   "year": "2026",
+   "meeting": "United States Grand Prix",
+   "session": "Practice 1",
+   "start": "2026-10-23T12:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Charles Leclerc",
+     "tla": "LEC",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "1:36.052"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.084"
+    },
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "+0.245"
+    }
+   ]
+  }
+ ],
+ "years": [
+  "2026"
+ ],
+ "pages": {
+  "f1/2026/mexico-city/practice-1/": "2026-11-01",
+  "f1/2026/mexico-city/practice-2/": "2026-11-01",
+  "f1/2026/mexico-city/practice-3/": "2026-11-01",
+  "f1/2026/mexico-city/qualifying/": "2026-11-01",
+  "f1/2026/mexico-city/": "2026-11-01",
+  "f1/2026/united-states/practice-1/": "2026-11-01",
+  "f1/2026/united-states/practice-2/": "2026-11-01",
+  "f1/2026/united-states/practice-3/": "2026-11-01",
+  "f1/2026/united-states/qualifying/": "2026-11-01",
+  "f1/2026/united-states/race/": "2026-11-01",
+  "f1/2026/united-states/": "2026-11-01",
+  "f1/2026/": "2026-11-01"
+ }
+}

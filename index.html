@@ -233,6 +233,17 @@ html.phone .top .wrap #phHero{order:-2}
 @media(max-width:480px){td,th{padding-left:6px;padding-right:6px}.row3 table td,.row3 table th{padding:6px 5px}}
 @media(max-width:900px){nav .links a[href="replay/"]{display:none}}
 /* segnalazioni: sul telefono i due pulsanti vanno a capo (l'indirizzo lungo allargava la pagina) */
+/* «Diventa tester»: link piccolo sotto i pulsanti del telefono, solo su Android (il test e' su Google Play) */
+.ph .tst{display:none;margin:12px 0 0;font-size:14px;color:var(--dim);text-decoration:underline}
+html.android .ph .tst{display:block}
+/* ultimi risultati: le ultime tre sessioni, verso le pagine /f1/ */
+.latest{margin-top:18px}
+.lat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:760px){.lat{grid-template-columns:1fr}}
+.lat a{display:block;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:10px 12px;text-decoration:none;line-height:1.3;min-width:0}
+.lat a:hover{filter:brightness(1.2)}
+.lat .sw{display:inline-block;width:4px;height:14px;border-radius:2px;vertical-align:-2px;margin-right:5px}
+.lat b{display:block;font-size:15px}.lat .k{font-size:12px;color:var(--dim)}.lat .v{display:block;font-size:14px;margin-top:3px}
 @media(max-width:760px){.support .cta{flex:1 1 100%!important;min-width:0;display:flex;flex-direction:column;gap:8px}.support .cta .btn{white-space:normal;overflow-wrap:anywhere;justify-content:center}}
 </style>
 <script data-goatcounter="https://freetorace.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -255,6 +266,7 @@ html.phone .top .wrap #phHero{order:-2}
     <button class="btn" type="button" id="sendPc" data-i="send_pc" data-ev="send-to-pc">💻 Send it to your PC</button>
     <div class="ok" id="sendOk" role="status" data-i="copied">✓ Link copied: paste it on your PC</div>
     <p class="pcu"><span data-i="pc_open">On your PC, open</span><b>free-to-race.com</b></p>
+    <a class="tst" href="tester/" data-i="ph_tester" data-ev="tester-home">On Android? Become a tester of the Google Play app →</a>
     <p class="unoff" data-i="unoff">Unofficial fan project, not associated with the Formula 1 companies.</p></div>
   <div class="card" id="wk"><div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2></div>
   <div class="card prod" id="prod"><h1 class="kick" data-i="seo_h1">Free F1 live timing, track map &amp; race strategy</h1><h2 data-i="h1">The race, as the <b>pit wall</b> sees it.</h2><p class="lead2" data-i="lead2">Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.</p>
@@ -265,7 +277,9 @@ html.phone .top .wrap #phHero{order:-2}
   <div class="card" id="lastCard"></div>
   <div class="card"><h3 class="ch" id="miniDh"></h3><table id="miniD"></table><a class="more" href="#standings" data-i="full_st">Full standings and teams ↓</a></div>
   <div class="card"><h3 class="ch" data-i="constructors">Constructors</h3><table id="miniC"></table></div>
-</div></div></section>
+</div>
+  <div class="card latest"><h3 class="ch" data-i="lat_h">Latest results</h3><div class="lat" id="latList"></div><a class="more" id="latAll" href="f1/2026/" data-i="lat_all">All 2026 results, session by session →</a></div>
+</div></section>
 
 <section id="features"><div class="wrap">
   <h2 data-i="f_h">More than a timing tower</h2>
@@ -326,7 +340,7 @@ html.phone .top .wrap #phHero{order:-2}
 <footer><div class="wrap">
   <p data-i="disc"><b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.</p>
   <p data-i="credits">Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.</p>
-  <p><a href="privacy/" data-i="privacy">Privacy and safety: no account, no data collected</a></p>
+  <p><a href="f1/2026/" data-i="ft_res">F1 2026 results</a> · <a href="tester/" data-i="ft_tester" data-ev="tester-footer">Become a tester (Android)</a> · <a href="privacy/" data-i="privacy">Privacy and safety: no account, no data collected</a></p>
 </div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -381,6 +395,8 @@ const T = {
   last_race:'Last race', last_sess:'Latest session', th_grid:'Start', th_gap:'Gap', th_best:'Best lap', th_time:'Time', fl:'Fastest lap',
   more_race:'Strategy, pace and stops', more_pr:'Race pace, tyres, teams', more_q:'Cuts, sectors, ideal lap', rp_more:'Watch it again',
   full_st:'Full standings and teams ↓', mini_d:(r,n)=>`Drivers · after ${r} of ${n} races`, ex_tag:'Replay',
+  ph_tester:'On Android? Become a tester of the Google Play app →', ft_res:'F1 2026 results', ft_tester:'Become a tester (Android)',
+  lat_h:'Latest results', lat_all:'All 2026 results, session by session →', lat_pole:'Pole', lat_winner:'Winner', lat_fastest:'Fastest',
   locale:'en-GB'
  },
  it: {
@@ -430,6 +446,8 @@ const T = {
   last_race:'Ultima gara', last_sess:'Ultima sessione', th_grid:'Part.', th_gap:'Distacco', th_best:'Miglior giro', th_time:'Tempo', fl:'Giro più veloce',
   more_race:'Strategie, passo e soste', more_pr:'Passo gara, gomme, squadre', more_q:'Tagli, settori, giro ideale', rp_more:'Rivedila',
   full_st:'Classifiche complete e squadre ↓', mini_d:(r,n)=>`Mondiale piloti · dopo ${r} gare su ${n}`, ex_tag:'Replay',
+  ph_tester:'Hai Android? Diventa tester dell’app su Google Play →', ft_res:'Risultati F1 2026', ft_tester:'Diventa tester (Android)',
+  lat_h:'Ultimi risultati', lat_all:'Tutti i risultati 2026, sessione per sessione →', lat_pole:'Pole', lat_winner:'Vincitore', lat_fastest:'Il più veloce',
   locale:'it-IT'
  }
 };
@@ -443,6 +461,7 @@ function applyLang(){
   renderTop(); if(races.length) renderCal();
   if(lastStandings) renderStandings(...lastStandings);
   if(!lastStandings){ $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('loading')}</td></tr>`; }
+  if(typeof renderLatest === 'function') renderLatest();
 }
 
 // ---------------- dati ----------------
@@ -466,6 +485,18 @@ const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/F
 // dal PC «sul telefono» mostra il QR da inquadrare.
 const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 if(MOBILE) document.documentElement.classList.add('phone');
+if(/Android/i.test(navigator.userAgent)) document.documentElement.classList.add('android');
+// «Ultimi risultati»: le ultime tre sessioni pubblicate, verso le pagine statiche /f1/ (elenco scritto da pagine_f1.py)
+let F1IDX = null;
+function renderLatest(){
+  const box = $('latList'); if(!box || !F1IDX) return;
+  const ss = (F1IDX.sessions || []).slice(0, 3);
+  if(F1IDX.years && F1IDX.years[0]) $('latAll').href = `f1/${encodeURIComponent(F1IDX.years[0])}/`;
+  box.innerHTML = ss.map(x => { const l = (x.lead || [])[0], k = x.kind === 'race' ? 'lat_winner' : x.kind === 'quali' ? 'lat_pole' : 'lat_fastest';
+    return `<a href="${esc(x.url)}" data-ev="latest-results"><span class="k">${esc(x.meeting.replace(/ Grand Prix$/, ' GP'))} ${esc(x.year)}</span><b>${esc(sname(x.session))}</b>`
+      + (l ? `<span class="v">${t(k)}: <span class="sw" style="background:${esc(l.color || '#888')}"></span><b style="display:inline">${esc(l.name)}</b>${l.v && x.kind !== 'race' ? ` <span class="dim">${esc(l.v)}</span>` : ''}</span>` : '') + `</a>`; }).join('');
+}
+fetch('f1/index.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(j => { F1IDX = j; renderLatest(); }).catch(() => {});
 // «Mandalo sul tuo PC»: la condivisione del telefono (mail, WhatsApp, a se stessi...); senza, il link negli appunti
 async function sendToPc(){
   const url = 'https://free-to-race.com/';
