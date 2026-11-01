@@ -395,7 +395,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-214835';
+const BUILD = '20261101-215701';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -609,9 +609,12 @@ function saveSnap(){
 }
 addEventListener('visibilitychange', () => { if(document.hidden) saveSnap(); });
 addEventListener('pagehide', saveSnap);
+setInterval(() => { if(!document.hidden) saveSnap(); }, 5000);   // anche se il telefono chiude l'app senza avvisare
 function loadSnap(){
   let s = null;
-  try{ s = JSON.parse(localStorage.getItem(SNAP) || 'null'); localStorage.removeItem(SNAP); }catch(e){}
+  // non si cancella: se la pagina si ricarica subito (versione nuova all'apertura) prima di aver mostrato lo stato,
+  // saveSnap non ha niente da salvare e il salvataggio andrebbe perso (1.11: al telefono attesa piena dopo la riapertura)
+  try{ s = JSON.parse(localStorage.getItem(SNAP) || 'null'); }catch(e){}
   if(DEMO || !delay || !s || !s.st || !s.st.SessionInfo || Date.now() - s.w > 600e3) return;
   const p = performance.now()/1000, w = Date.now(), order = {SessionInfo:0, DriverList:1};
   queue.push([p - delay, '__full__', null]);
