@@ -395,7 +395,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-215701';
+const BUILD = '20261101-221511';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -562,6 +562,10 @@ function connect(){
       // (1.11, gara Messico)
       if(o.type===3 && o.result){ connected=true; retry=0; setConn(t('live'), true);
         const fresh = !ST.SessionInfo && !queue.some(q => q[1]==='SessionInfo');
+        // attesa vera per il ritardo: a pagina vuota tutto il ritardo; altrimenti il buco fra l'ultimo dato avuto
+        // (in coda o gia' mostrato) e adesso, cioe' il tempo in cui l'app era chiusa
+        const last = queue.length ? queue[queue.length-1][0] : lastItemT;
+        if(fresh) hold(now, now + delay); else if(last && now - last > 2) hold(last + delay, now + delay);
         if(fresh) queue.length = 0;
         const t0 = fresh ? now - delay : now;
         queue.push([t0, '__full__', null]);
@@ -585,19 +589,21 @@ setInterval(()=>{ if(ws && ws.readyState===1) ws.send(JSON.stringify({type:6})+R
 function pump(){
   const now = performance.now()/1000;
   let changed = false;
-  while(queue.length && now - queue[0][0] >= delay){ const [w, k, d] = queue.shift(); apply(k, d, w + delay); changed = true; }
-  if(changed){ lastApply = now; render(); }
+  while(queue.length && now - queue[0][0] >= delay){ const [w, k, d] = queue.shift(); apply(k, d, w + delay); lastItemT = w; changed = true; }
+  if(changed) render();
   lagWait(now);
 }
 setInterval(pump, 250);
 // ritardo TV: quando i dati sono fermi perche' si aspetta il ritardo (riapertura dopo molto, ritardo aumentato) la
-// barra in alto lo dice, con i secondi che mancano: non deve sembrare bloccata
-let lastApply = 0;
+// barra in alto lo dice, con i secondi che mancano: non deve sembrare bloccata. Solo in quei casi (finestra
+// holdFrom-holdTo): col feed tranquillo (bandiera rossa, 1.11) i dati sono fermi ma l'app non sta aspettando niente
+let lastItemT = 0, holdFrom = 0, holdTo = 0;
+function hold(a, b){ holdFrom = a; holdTo = b; }
 function lagWait(now){
-  const wait = queue.length ? queue[0][0] + delay - now : 0, frozen = !DEMO && delay && connected && now - lastApply > 2 && wait > 1.5;
+  const frozen = !DEMO && delay && now >= holdFrom && holdTo - now > 1;
   const el = $('#delayTxt'); if(!el) return;
   el.classList.toggle('lagw', !!frozen);
-  el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(wait)) : delay ? `+${delay} s` : '';
+  el.textContent = frozen ? t('lagWait').replace('N', Math.ceil(holdTo - now)) : delay ? `+${delay} s` : '';
 }
 // ritardo TV: quando l'app va in secondo piano o si chiude si salvano lo stato mostrato e i messaggi non ancora
 // mostrati; alla riapertura (entro 10 minuti) si riparte da li', e lo stato nuovo del feed arriva col ritardo
@@ -617,8 +623,9 @@ function loadSnap(){
   try{ s = JSON.parse(localStorage.getItem(SNAP) || 'null'); }catch(e){}
   if(DEMO || !delay || !s || !s.st || !s.st.SessionInfo || Date.now() - s.w > 600e3) return;
   const p = performance.now()/1000, w = Date.now(), order = {SessionInfo:0, DriverList:1};
-  queue.push([p - delay, '__full__', null]);
-  for(const k of Object.keys(s.st).sort((a,b)=>(order[a]??2)-(order[b]??2))) queue.push([p - delay, k, s.st[k]]);
+  const t0 = p - (w - s.w)/1000 - delay;   // lo stato mostrato alla chiusura e' quello arrivato «ritardo» secondi prima
+  queue.push([t0, '__full__', null]);
+  for(const k of Object.keys(s.st).sort((a,b)=>(order[a]??2)-(order[b]??2))) queue.push([t0, k, s.st[k]]);
   for(const [x,k,d] of s.q || []) queue.push([p - (w - x)/1000, k, d]);
 }
 // iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
@@ -677,7 +684,10 @@ function render(){
     $('#wx').classList.toggle('on', on);
     $('#wx').innerHTML = on ? (temps ? `<span>${temps}</span>` : '') + (r!=null ? `<span class="${r?'rain':'dry'}">${r?t('rain'):t('dry')}</span>` : '') : ''; });
   const susp = DEMO && rp && rp.marks && rp.marks.phases.some(x=>x.kind==='red' && rp.t>=x.from && rp.t<x.to);   // sospensione: la pista torna «libera» prima della ripartenza
-  const ts = susp ? '5' : String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
+  // gara sospesa: il feed rimette la pista «AllClear» dopo 2 minuti mentre la sessione resta «Aborted» fino alla
+  // ripartenza (1.11, rossa del Messico): la bandiera rossa la da' lo stato della sessione
+  const aborted = !DEMO && asList((ST.SessionData||{}).StatusSeries).map(x => x && x.SessionStatus).filter(Boolean).pop() === 'Aborted';
+  const ts = susp || aborted ? '5' : String((ST.TrackStatus||{}).Status||''), tc = TRACKC[ts], tp=$('#track');
   if(live && tc && ts!=='1'){ tp.style.display=''; tp.textContent=t('track')[ts]; tp.style.background=tc[0]; tp.style.color=tc[1]; } else tp.style.display='none';
   const lc = ST.LapCount || {};
   $('header').classList.toggle('busy', live);
@@ -1280,7 +1290,9 @@ $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0')
 $$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); placeMap(); });
 // demo e replay si aprono sui tempi, dove in cima c'e' la mappa
 function showDelay(){ $('#delayV').textContent = delay+' s'; $('#delayTxt').textContent = delay ? `+${delay} s` : ''; }
-$$('[data-d]').forEach(b => b.onclick = () => { delay = b.dataset.r ? 0 : Math.max(0, Math.min(300, delay + (+b.dataset.d))); store.set('ftr.delay', delay); showDelay(); });
+$$('[data-d]').forEach(b => b.onclick = () => { const was = delay; delay = b.dataset.r ? 0 : Math.max(0, Math.min(300, delay + (+b.dataset.d)));
+  if(delay > was){ const n = performance.now()/1000; hold(n, n + delay - was); } else hold(0, 0);
+  store.set('ftr.delay', delay); showDelay(); });
 $$('[data-l]').forEach(b => b.onclick = () => { LANG=b.dataset.l; store.set('ftr.lang', LANG); texts(); render(); drawRis(); });
 function texts(){ document.documentElement.lang=LANG; $$('[data-t]').forEach(e => { const v=t(e.dataset.t); if(typeof v==='string') e.innerHTML=v; }); $$('[data-l]').forEach(b=>b.classList.toggle('on', b.dataset.l===LANG)); }
 // ---------------- demo: la gara di Monza 2026 rigiocata nel telefono ----------------
