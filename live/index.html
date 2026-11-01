@@ -394,7 +394,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-213816';
+const BUILD = '20261101-214457';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -555,11 +555,14 @@ function connect(){
     for(const part of String(ev.data).split(RS)){
       if(!part) continue; let o; try{ o=JSON.parse(part); }catch(e){ continue; }
       const now = performance.now()/1000;
-      // lo stato completo si mostra subito anche col ritardo TV: ritardato, a ogni riapertura l'app restava vuota
-      // («Nessuna sessione») per tutto il ritardo (1.11, gara Messico). Solo gli aggiornamenti dopo restano ritardati:
-      // si vede subito com'e' adesso, poi si ferma per il ritardo e riparte allineata alla TV
+      // col ritardo TV lo stato completo resta ritardato se in pagina c'e' gia' qualcosa da mostrare (app tornata dal
+      // secondo piano o ripresa dal salvataggio, loadSnap): si riprende da dove si era, sempre allineati alla TV.
+      // A pagina vuota invece si mostra subito: ritardato, l'app restava su «Nessuna sessione» per tutto il ritardo
+      // (1.11, gara Messico)
       if(o.type===3 && o.result){ connected=true; retry=0; setConn(t('live'), true);
-        queue.length = 0; const t0 = now - delay;
+        const fresh = !ST.SessionInfo && !queue.some(q => q[1]==='SessionInfo');
+        if(fresh) queue.length = 0;
+        const t0 = fresh ? now - delay : now;
         queue.push([t0, '__full__', null]);
         const order={SessionInfo:0, DriverList:1}; for(const k of Object.keys(o.result).sort((a,b)=>(order[a]??2)-(order[b]??2))) queue.push([t0, k, o.result[k]]); }
       else if(o.type===1 && o.target==='feed' && o.arguments) queue.push([now, o.arguments[0], o.arguments[1]]);
@@ -585,6 +588,25 @@ function pump(){
   if(changed) render();
 }
 setInterval(pump, 250);
+// ritardo TV: quando l'app va in secondo piano o si chiude si salvano lo stato mostrato e i messaggi non ancora
+// mostrati; alla riapertura (entro 10 minuti) si riparte da li', e lo stato nuovo del feed arriva col ritardo
+const SNAP = 'ftr.snap';
+function saveSnap(){
+  if(DEMO || !delay || !ST.SessionInfo) return;
+  try{ const p = performance.now()/1000, w = Date.now();
+    localStorage.setItem(SNAP, JSON.stringify({w, st:ST, q:queue.map(([x,k,d]) => [w - (p-x)*1000, k, d])})); }catch(e){}
+}
+addEventListener('visibilitychange', () => { if(document.hidden) saveSnap(); });
+addEventListener('pagehide', saveSnap);
+function loadSnap(){
+  let s = null;
+  try{ s = JSON.parse(localStorage.getItem(SNAP) || 'null'); localStorage.removeItem(SNAP); }catch(e){}
+  if(DEMO || !delay || !s || !s.st || !s.st.SessionInfo || Date.now() - s.w > 600e3) return;
+  const p = performance.now()/1000, w = Date.now(), order = {SessionInfo:0, DriverList:1};
+  queue.push([p - delay, '__full__', null]);
+  for(const k of Object.keys(s.st).sort((a,b)=>(order[a]??2)-(order[b]??2))) queue.push([p - delay, k, s.st[k]]);
+  for(const [x,k,d] of s.q || []) queue.push([p - (w - x)/1000, k, d]);
+}
 // iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
 // pagina finiva sotto l'orologio, che i nuovi iOS velano e sfocano, e l'altezza escludeva la barra di stato (striscia
 // vuota in basso, prima corretta portando a mano la pagina all'altezza dello schermo). Con la barra opaca la pagina
@@ -1576,7 +1598,7 @@ else if(INSTALL_ASK || Date.now() - (+store.get('ftr.instX', 0)) > 7*86400e3) $(
 
 texts(); showDelay(); render();
 if(DEMO){ startDemo(); $$('[data-d]').forEach(b => b.closest('.set').style.display='none'); }
-else { loadNext(); connect();
+else { loadSnap(); loadNext(); connect();
   // prima apertura: l'intro, ma non se c'e' una sessione in diretta (chi apre al volo vuole i tempi)
   // ne' se si e' arrivati per installare: prima la finestra con il pulsante
   if(INSTALL_ASK && !STANDALONE) setTimeout(instSheet, 800);   // un attimo per l'invito di Chrome
