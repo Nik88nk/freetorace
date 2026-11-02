@@ -1,6 +1,38 @@
 {
  "sessions": [
   {
+   "name": "2026_Mexico_City_Race",
+   "url": "/f1/2026/mexico-city/race/",
+   "year": "2026",
+   "meeting": "Mexico City Grand Prix",
+   "session": "Race",
+   "start": "2026-11-01T14:00:00",
+   "kind": "race",
+   "lead": [
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": ""
+    },
+    {
+     "name": "Lewis Hamilton",
+     "tla": "HAM",
+     "team": "Ferrari",
+     "color": "#ED1131",
+     "v": "+0.799"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+4.006"
+    }
+   ]
+  },
+  {
    "name": "2026_Mexico_City_Qualifying",
    "url": "/f1/2026/mexico-city/qualifying/",
    "year": "2026",
@@ -293,17 +325,18 @@
   "2026"
  ],
  "pages": {
-  "f1/2026/mexico-city/practice-1/": "2026-11-01",
-  "f1/2026/mexico-city/practice-2/": "2026-11-01",
-  "f1/2026/mexico-city/practice-3/": "2026-11-01",
-  "f1/2026/mexico-city/qualifying/": "2026-11-01",
-  "f1/2026/mexico-city/": "2026-11-01",
+  "f1/2026/mexico-city/practice-1/": "2026-11-02",
+  "f1/2026/mexico-city/practice-2/": "2026-11-02",
+  "f1/2026/mexico-city/practice-3/": "2026-11-02",
+  "f1/2026/mexico-city/qualifying/": "2026-11-02",
+  "f1/2026/mexico-city/race/": "2026-11-02",
+  "f1/2026/mexico-city/": "2026-11-02",
   "f1/2026/united-states/practice-1/": "2026-11-01",
   "f1/2026/united-states/practice-2/": "2026-11-01",
   "f1/2026/united-states/practice-3/": "2026-11-01",
   "f1/2026/united-states/qualifying/": "2026-11-01",
   "f1/2026/united-states/race/": "2026-11-01",
   "f1/2026/united-states/": "2026-11-01",
-  "f1/2026/": "2026-11-01"
+  "f1/2026/": "2026-11-02"
  }
 }
