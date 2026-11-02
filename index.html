@@ -570,7 +570,7 @@ addEventListener('resize', () => { clearTimeout(renderTop.rt); renderTop.rt = se
 
 // ---------------- l'app in vetrina: cinque schede con riprese e schermate vere ----------------
 const TABS = [
- {vid:'img/home/clip_mappa.webm', it:['Mappa','Mappa con le auto','Ogni auto sulla pista, in 2D o 3D.'], en:['Map','Track map','Every car on the track, in 2D or 3D.'], tab:'pista'},
+ {vid:'img/home/clip_mappa', it:['Mappa','Mappa con le auto','Ogni auto sulla pista, in 2D o 3D.'], en:['Map','Track map','Every car on the track, in 2D or 3D.'], tab:'pista'},
  {img:'img/home/f_gomme.jpg', it:['Strategia','Strategia e gomme','Mescole, stint, soste e previsione della prossima sosta.'], en:['Strategy','Strategy & tyres','Compounds, stints, pit stops and the next stop forecast.'], tab:'gomme'},
  {img:'img/home/f_confronto.jpg', it:['Confronto','Confronto piloti','Due piloti a confronto, giro per giro.'], en:['Compare','Driver comparison','Two drivers side by side, lap by lap.'], tab:'confronto'},
  {img:'img/home/f_tele.jpg', it:['Telemetria','Telemetria','Velocità, gas, freno e marce su due giri a scelta.','⬇ Scarica per Windows'], en:['Telemetry','Telemetry','Speed, throttle, brake and gears on any two laps.','⬇ Download for Windows'], abs:DL_URL, ev:'download-windows', where:{it:'Solo nel programma per PC: nei replay online non c’è.',en:'PC program only: not in the online replays.'}},
@@ -587,8 +587,11 @@ function tabHref(f){
 function showTab(i){
   CUR = i; const f = TABS[i], [, h, p] = f[LANG];
   $('tabs').querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
-  $('screen').innerHTML = f.vid ? `<video src="${f.vid}" poster="img/home/clip_mappa.jpg" autoplay muted loop playsinline></video><span class="src">${t('src')}</span>`
+  // clip: prima H.264 (la decodifica ogni browser, anche col decoder hardware di Windows), poi VP9; se nessuna parte resta il poster
+  $('screen').innerHTML = f.vid ? `<video poster="${f.vid}.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture><source src="${f.vid}.mp4" type="video/mp4"><source src="${f.vid}.webm" type="video/webm"></video><span class="src">${t('src')}</span>`
                                 : `<img src="${f.img}" alt="${esc(h)}" ${f.ph1 ? 'class="ph1"' : ''}>`;
+  const v = $('screen').querySelector('video');
+  if(v){ v.muted = true; const pp = v.play(); if(pp && pp.catch) pp.catch(() => {}); }
   $('capt').innerHTML = `<div><h3>${h}</h3><p>${p}</p></div><a href="${tabHref(f)}"${f.ev ? ` data-ev="${f.ev}"` : ''}>${f[LANG][3] || t('open')}</a>${f.where ? `<span class="where">${f.where[LANG]}</span>` : ''}`;
   const pr = $('pbar'); pr.classList.remove('run'); if(AUTO){ void pr.offsetWidth; pr.classList.add('run'); }
 }
