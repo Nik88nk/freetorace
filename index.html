@@ -29,137 +29,176 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
+/* Prima pagina «D2» (mockup\home_D2.html, scelto da Nikita il 02.11.2026), con due modifiche:
+   - in diretta la fascia in alto diventa alta e rossa, con LIVE, la sessione e il pulsante «Segui la diretta»;
+     il pulsante della demo diventa secondario;
+   - il pulsante della demo apre il replay dell'ultima gara pubblicata (replay/replays.json), e se il file non
+     risponde la demo del GP degli Stati Uniti 2025. */
 :root{
   --bg:#0b0d12; --panel:#14181f; --panel2:#1b2029; --line:#262c37; --line2:#1d222b; --text:#eef1f6; --dim:#8b94a7; --dim2:#5d6577;
-  --accent:#e10600; --purple:#b46cff; --green:#22d36b; --yellow:#ffd12e;
+  --accent:#e10600; --green:#22d36b; --yellow:#ffd12e;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Titillium Web","Segoe UI",system-ui,sans-serif}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 "Titillium Web","Segoe UI",system-ui,sans-serif}
 a{color:inherit}
-.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
 .tn{font-variant-numeric:tabular-nums}
 .dim{color:var(--dim)}
+code{font-size:.92em;background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:0 5px;word-break:break-all}
 
 /* barra */
-nav{position:sticky;top:0;z-index:10;background:rgba(8,9,13,.92);backdrop-filter:blur(8px);border-bottom:3px solid var(--accent)}
-nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
-.brand{font-weight:900;font-size:21px;font-style:italic;letter-spacing:.3px;text-decoration:none}
+nav{position:sticky;top:0;z-index:10;background:rgba(8,9,13,.94);backdrop-filter:blur(8px)}
+nav .wrap{display:flex;align-items:center;gap:14px;height:52px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px;font-style:italic;text-decoration:none;white-space:nowrap}
+.brand img{width:28px;height:28px}
 .brand b{color:var(--accent)}
-nav .links{display:flex;gap:18px;margin-left:auto;font-weight:600;font-size:15px}
-nav .links a{text-decoration:none;color:var(--dim)}
-nav .links a:hover{color:var(--text)}
-@media(max-width:760px){nav .links{display:none}}
-/* menu su una riga sola: le voci non vanno a capo; quando lo spazio manca si tolgono le meno importanti
-   (le stesse sezioni si raggiungono scorrendo la pagina) */
-nav .wrap > *, nav .links a{white-space:nowrap;flex:none}
-nav .links{gap:16px}
-nav .wrap{max-width:1440px}
-@media(max-width:1400px){nav .links a[href="#teams-sec"]{display:none}}
-@media(max-width:1260px){nav .links a[href="#standings"]{display:none}}
-@media(max-width:1140px){nav .links a[href="#season-sec"],nav .links a[href="#features"]{display:none}}
-@media(max-width:940px){nav .links a[href="#feedback"]{display:none}}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--panel2)}
+nav .sp{flex:1}
+nav .lk{color:var(--dim);text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap}
+nav .lk:hover{color:var(--text)}
+.lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.lang button{font:inherit;font-size:13px;font-weight:700;padding:4px 9px;background:transparent;color:var(--dim);border:0;cursor:pointer}
+.lang button.on{background:var(--panel2);color:var(--text)}
+@media(max-width:1000px){nav .lk.x{display:none}}
+@media(max-width:700px){nav .lk{display:none}}
+
+/* fascia della sessione: sottile fuori sessione, alta e rossa in diretta */
+.band{display:block;text-decoration:none;border-bottom:1px solid var(--line);background:var(--panel);font-size:14.5px}
+.band .wrap{display:flex;align-items:center;gap:12px;height:36px;white-space:nowrap}
+.band .k{font-size:11.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);font-weight:700;flex:none}
+.band .what{font-weight:600;color:#c9cfdb;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.band .cd{font-weight:700;flex:none}
+.band .go{margin-left:auto;font-weight:700;color:var(--text);flex:none}
+.band .go::after{content:" →"}
+.band:hover .go{text-decoration:underline}
+.band.live{background:var(--accent);border-bottom-color:#8a0400}
+.band.live .wrap{height:auto;min-height:64px;padding-top:10px;padding-bottom:10px;gap:10px 14px;flex-wrap:wrap}
+.band.live .what{color:#fff;font-size:18px;font-weight:700}
+.band.live .what small{font-size:14.5px;font-weight:600;opacity:.9}
+.band.live .go{background:#fff;color:var(--accent);padding:10px 20px;border-radius:10px;font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:.3px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.band.live:hover .go{text-decoration:none;filter:brightness(.96)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:900;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;background:#fff;color:var(--accent);flex:none}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pl 1.2s infinite}
+@keyframes pl{50%{opacity:.25}}
+@media(max-width:700px){.band{font-size:14px}.band .wrap{gap:8px}.band .k{font-size:10.5px;letter-spacing:1px}
+  .band.live .what{flex:1;font-size:17px}.band.live .what small{display:block}.band.live .go{width:100%;text-align:center;margin-left:0}}
+
+/* testata: titolo, tre spunte, pulsante, scarica/installa */
+.hero{padding:28px 0 34px;background:radial-gradient(ellipse at 80% 10%,rgba(225,6,0,.14),transparent 55%)}
+.hero .wrap{display:grid;grid-template-columns:.85fr 1.35fr;gap:34px;align-items:start}
+.hero .wrap > div{min-width:0}
+.hero h1{margin:4px 0 10px;font-size:clamp(26px,3.3vw,42px);line-height:1.05;font-weight:900;font-style:italic}
+.hero p.lead{margin:0 0 14px;color:#c9cfdb;font-size:17px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:15.5px}
+.checks li::before{content:"✓";color:var(--green);font-weight:900;display:inline-block;width:20px}
+.ckm{margin:2px 0 24px 20px;font-size:13.5px}
+.ckm a{color:var(--dim)}
+.cta{display:flex;align-items:center;gap:12px;max-width:460px;padding:14px 18px;border-radius:12px;text-decoration:none;background:var(--accent);color:#fff;box-shadow:0 10px 30px rgba(225,6,0,.28);border:1.5px solid var(--accent)}
+.cta:hover{filter:brightness(1.08)}
+.cta .i{flex:0 0 auto;font-size:22px;line-height:1}
+.cta b{display:block;font-size:19px;line-height:1.15;font-weight:900;text-transform:uppercase;letter-spacing:.3px}
+.cta small{display:block;font-size:14px;line-height:1.3;opacity:.92}
+.cta .kk{display:block;font-size:11.5px;line-height:1.2;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;opacity:.85;margin-bottom:2px}
+.cta.sec{background:transparent;border-color:#c9cfdb;color:var(--text);box-shadow:none}
+.cta.sec b{font-size:17px}
+.os{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:15px}
+.os a.dl{font-weight:700;text-decoration:none;border-bottom:1px solid var(--dim2)}
+.os .q{font:inherit;font-size:14px;color:var(--dim);background:transparent;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.os .q::before{content:"?";display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-right:5px;border-radius:50%;border:1px solid var(--dim);font-size:12px;font-weight:700;text-decoration:none}
+.os .sm{color:var(--dim);font-size:14px}
+.os .sm a{color:var(--text)}
+.os.ph{display:none}
+html.phone .os.pc{display:none}
+html.phone .os.ph{display:flex}
+.mini{display:none;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-size:14px}
+html.phone .mini{display:flex}
+.mini button,.mini a{font:inherit;font-size:14px;color:var(--dim);background:transparent;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.mini .tst{display:none}
+html.android .mini .tst{display:inline}
+.mini .ok{display:none;width:100%;color:var(--green);font-weight:700}
+.mini .ok.on{display:block}
+
+/* l'app in vetrina */
+.app{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55);min-width:0}
+.app .bar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--dim)}
+.app .bar i{width:10px;height:10px;border-radius:50%;background:#2c323d;flex:none}
+.app .bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{display:flex;gap:4px;padding:8px 10px 0;border-bottom:1px solid var(--line);min-height:41px}
+.tabs button{font:inherit;font-size:14px;font-weight:700;padding:7px 11px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--dim);cursor:pointer;white-space:nowrap;text-transform:uppercase;letter-spacing:.4px}
+.tabs button.on{color:var(--text);border-bottom-color:var(--accent)}
+.tabs button:hover{color:var(--text)}
+.screen{position:relative;aspect-ratio:16/9;background:#0e1118;overflow:hidden}
+.screen img,.screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.screen img.ph1{object-fit:contain;background:#0e1118}
+.screen .src{position:absolute;right:8px;bottom:6px;font-size:11px;color:#c9cfdb;background:rgba(0,0,0,.6);padding:1px 6px;border-radius:4px}
+.capt{display:flex;align-items:center;gap:10px 16px;padding:12px 14px;flex-wrap:wrap;min-height:64px}
+.capt div{flex:1;min-width:200px}
+.capt h3{margin:0;font-size:18px}
+.capt p{margin:0;color:var(--dim);font-size:14.5px}
+.capt a{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);font-weight:700;text-decoration:none;white-space:nowrap}
+.capt .where{font-size:12px;color:var(--dim2);width:100%;margin-top:-4px}
+.pbar{height:2px;background:var(--accent);width:0}
+.pbar.run{animation:pr 6s linear forwards}
+@keyframes pr{to{width:100%}}
+
+@media(max-width:900px){
+  .hero{padding:16px 0 26px}
+  .hero .wrap{grid-template-columns:1fr;gap:20px}
+  .hero h1{margin-top:0}
+  .hero p.lead{font-size:15px;margin-bottom:10px}
+  .checks{font-size:15px}
+  .ckm{margin-bottom:22px}
+  .cta{max-width:none;padding:12px 14px}
+  .cta b{font-size:17px}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:4px 2px 0}
+  .tabs button{font-size:11.5px;padding:7px 1px;white-space:normal;line-height:1.15;letter-spacing:0}
+  .capt a{width:100%;text-align:center}
+}
+
+/* sezioni sotto */
+section{padding:34px 0;border-top:1px solid var(--line)}
+section h2{margin:0 0 6px;font-size:clamp(22px,2.6vw,28px);font-weight:900}
+section h2 + p.sub{color:var(--dim);margin:0 0 18px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--panel2);font:inherit;font-weight:700;color:var(--text);cursor:pointer}
 .btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn:hover{filter:brightness(1.1)}
 
-/* apertura */
-.hero{padding:70px 0 40px;background:radial-gradient(ellipse at 70% 0%,rgba(225,6,0,.18),transparent 60%)}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
-@media(max-width:960px){.hero .wrap{grid-template-columns:1fr}}
-.hero h1{font-size:clamp(38px,5.5vw,64px);line-height:1;margin:0 0 16px;font-weight:900;font-style:italic;letter-spacing:-.5px}
-.hero h1 b{color:var(--accent)}
-.hero p.lead{font-size:20px;color:#c9cfdb;margin:0 0 26px;max-width:520px}
-.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-.hero .small{font-size:13px;color:var(--dim);margin-top:12px}
-.shot{border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6);width:100%;display:block}
+/* ultime sessioni */
+section.latest{padding:22px 0}
+.lat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lat:empty{display:none}
+@media(max-width:900px){.lat{grid-template-columns:1fr}}
+.lat a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;line-height:1.3;min-width:0}
+.lat a:hover{filter:brightness(1.2)}
+.lat .k{font-size:13px;color:var(--dim)}
+.lat b{display:block;font-size:16px}
+.lat .v{display:block;font-size:14px;margin-top:3px}
+.lat .sw{display:inline-block;width:4px;height:14px;border-radius:2px;vertical-align:-2px;margin-right:5px}
+.latall{display:inline-block;margin-top:10px;font-size:14.5px;color:var(--dim)}
 
-/* in cima: il weekend (prossima gara o weekend in corso) e accanto il programma col replay, oppure la diretta */
-.top{padding:28px 0 26px;background:radial-gradient(ellipse at 80% 0%,rgba(225,6,0,.16),transparent 60%)}
-.top .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
-@media(max-width:960px){.top .wrap{grid-template-columns:1fr}.top.livefirst #prod{order:-1}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0}
-.kick{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
-h1.kick{margin:0;line-height:1.35}
-.wkh{font-size:clamp(28px,3.2vw,36px);line-height:1.05;margin:4px 0 2px;font-weight:900}
-.ch{margin:0 0 8px;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim)}
-.cdl{margin-top:14px;font-weight:700}
-.cd.big{margin:6px 0 4px}
-.cd.big div{min-width:70px;padding:10px 8px 8px;border:1px solid var(--line);border-radius:12px}
-.cd.big b{font-size:34px;font-weight:900}
-.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:6px}
-.prog > *{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.25;color:var(--dim);text-decoration:none}
-.prog b{display:block;font-size:14px;color:var(--text)}
-.prog .done b::before{content:"✓ ";color:var(--green)}
-.prog a.done{border-color:#2d6b45}.prog a.done:hover{filter:brightness(1.2)}
-.prog .live{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:#2a0d0d}.prog .live b::after{content:" ● LIVE";color:var(--accent);font-size:11px}
-.prog .nx{border-color:#c9cfdb}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.btn.sm{padding:8px 14px;font-size:14px}
-.prod{display:flex;flex-direction:column}
-.prod h2{font-size:clamp(26px,2.6vw,32px);line-height:1.05;margin:4px 0 6px;font-style:italic}
-.prod h2 b{color:var(--accent)}
-.prod .lead2{color:#c3c9d6;font-size:15px;margin:0 0 12px}
-.thumb{position:relative;display:block;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.thumb img{display:block;width:100%;height:210px;object-fit:cover;object-position:left top}
-.thumb.play::after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(225,6,0,.92);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 8px;border-radius:6px;background:var(--accent);color:#fff;text-transform:uppercase}
-.cap{font-size:14px;color:var(--dim);margin:8px 0 12px}.cap b{color:var(--text)}
-.prod .acts{margin-top:auto}
-.prod.live{border-color:var(--accent);background:linear-gradient(160deg,#2a0d0d,var(--panel) 55%)}
-.row3{display:grid;grid-template-columns:1.15fr 1fr .8fr;gap:18px}
-@media(max-width:960px){.row3{grid-template-columns:1fr}}
-.row3 table td,.row3 table th{padding:6px 8px;font-size:14px}
-.row3 .sw{display:inline-block;width:4px;height:15px;border-radius:2px;vertical-align:-3px;margin-right:6px}
-.up{color:#22b35a}.dn{color:#e5484d}
-.mbar{height:8px;border-radius:0 4px 4px 0;display:block}
-.more{display:block;margin-top:10px;font-size:14px;color:var(--dim)}
-.more a{color:var(--text)}
-#now{border-top:0;padding-top:0}
-
-section{padding:56px 0;border-top:1px solid var(--line2)}
-h2{font-size:clamp(28px,3.5vw,38px);margin:0 0 8px;font-weight:900}
-h2 + p.sub{color:var(--dim);margin:0 0 28px}
-
-/* funzioni */
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.feat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
-.feat h3{margin:0 0 6px;font-size:19px}
-.feat p{margin:0;color:#c3c9d6;font-size:15px}
-.feat .tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
-@media(max-width:860px){.gallery{grid-template-columns:1fr}}
-.gallery figure{margin:0}
-.gallery figcaption{color:var(--dim);font-size:14px;margin-top:6px}
-
-/* mappa */
-.next{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:16px 20px;margin-bottom:18px}
-.next .k{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);font-weight:700}
-.next .v{font-size:24px;font-weight:900;line-height:1.1}
-.cd{display:flex;gap:10px;margin-left:auto}
-.cd div{text-align:center;background:var(--panel2);border-radius:8px;padding:6px 10px;min-width:62px}
-.cd b{display:block;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
-.cd span{font-size:10px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+/* calendario */
 .mapbox{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 #map{display:block;width:100%;height:auto}
 .tip{position:absolute;pointer-events:none;background:rgba(10,12,16,.96);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:13px;display:none;max-width:260px;z-index:3}
 .tip b{display:block;font-size:14px}
 .legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--dim);font-size:13px;padding:10px 16px;border-top:1px solid var(--line2)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
-.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:16px}
-.race{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:8px 12px;font-size:14px}
-.race .r{font-weight:900;color:var(--dim);width:28px}
-.race .n{flex:1;line-height:1.2}
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:14px}
+.race{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:8px 12px;font-size:14px;min-width:0}
+.race .r{font-weight:900;color:var(--dim);width:28px;flex:none}
+.race .n{flex:1;line-height:1.2;min-width:0}
 .race .n small{display:block;color:var(--dim)}
 .race .w{text-align:right;font-weight:700;line-height:1.2}
 .race .w small{display:block;color:var(--dim);font-weight:400}
 .race.nextr{border-color:var(--accent)}
 .race.done{opacity:.85}
+.calacts{margin-top:12px}
 
 /* classifiche */
 .two{display:grid;grid-template-columns:1.15fr 1fr;gap:18px}
 @media(max-width:900px){.two{grid-template-columns:1fr}}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
 .panel h3{margin:0;padding:12px 16px;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line)}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 td,th{padding:7px 12px;border-bottom:1px solid var(--line2);text-align:left}
@@ -172,26 +211,45 @@ td.p{font-weight:900;width:34px;text-align:right}
 .cbar{display:flex;align-items:center;gap:10px}
 .cbar .t{flex:1;height:10px;background:#0f1217;border-radius:5px;overflow:hidden}
 .cbar .t i{display:block;height:10px;border-radius:5px}
-
-/* squadre */
-.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.team{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.team .top{padding:14px 16px 10px;border-top:5px solid}
-.team .top .nm{font-size:20px;font-weight:900;line-height:1.1}
-.team .top .meta{color:var(--dim);font-size:13px}
-.drv{display:flex;align-items:center;gap:12px;padding:9px 16px;border-top:1px solid var(--line2)}
-.drv .no{font-size:24px;font-weight:900;width:38px;text-align:center;line-height:1}
-.drv .who{flex:1;line-height:1.2}
-.drv .who small{display:block;color:var(--dim)}
-.drv .pt{text-align:right;font-weight:700;line-height:1.2}
-.drv .pt small{display:block;color:var(--dim);font-weight:400}
-
-footer{padding:40px 0 60px;border-top:1px solid var(--line2);color:var(--dim);font-size:13px}
-footer p{margin:6px 0;max-width:900px}
+@media(max-width:480px){td,th{padding-left:6px;padding-right:6px}}
 .err{color:var(--dim);padding:20px;text-align:center}
-.lang{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:6px 10px;font:inherit;font-weight:700;cursor:pointer;margin-left:auto}
-nav .links{margin-left:0!important}
-nav .links + .lang{margin-left:auto}
+
+/* segnalazioni */
+.support{display:flex;align-items:center;gap:18px 24px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
+.support > div{flex:1;min-width:240px}
+.support h3{margin:0 0 4px}
+.support p{margin:0;color:#c3c9d6}
+.support .small{font-size:14px}
+.support .acts{display:flex;gap:8px;flex-wrap:wrap;flex:0 1 auto;min-width:0}
+@media(max-width:760px){.support .acts{flex:1 1 100%;flex-direction:column}.support .acts .btn{white-space:normal;overflow-wrap:anywhere;justify-content:center}}
+
+/* perché fidarsi */
+section.trust{scroll-margin-top:60px}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.tgrid{grid-template-columns:1fr}}
+.tcard{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px 16px;font-size:14.5px;color:#c9cfdb;scroll-margin-top:70px}
+.tcard h3{margin:0 0 6px;font-size:17px;color:var(--text)}
+.tcard p{margin:0 0 8px}
+.tcard p:last-child{margin:0}
+.tcard ul{margin:0 0 8px;padding-left:0;list-style:none}
+.tcard li{margin:3px 0}
+.tcard li::before{content:"✓ ";color:var(--green);font-weight:700}
+.tcard a{color:var(--text)}
+.tcard.hl{animation:hl 1.6s ease-out}
+@keyframes hl{0%{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(255,209,46,.35)}100%{border-color:var(--line);box-shadow:none}}
+
+/* Ko-fi */
+.kofi{border-top:1px solid var(--line);padding:20px 0}
+.kofi .wrap{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap}
+.kofi .cup{font-size:28px;line-height:1}
+.kofi p{margin:0;flex:1;min-width:240px;color:#c9cfdb;font-size:15px}
+.kofi a{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);font-weight:700;text-decoration:none;white-space:nowrap}
+
+footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--dim);font-size:13.5px}
+footer p{margin:6px 0;max-width:900px}
+footer .unoff{color:#c9cfdb;font-size:14px}
+
+/* QR dal PC per installare l'app sul telefono */
 #qrPop{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px}
 #qrPop.on{display:flex}
 #qrPop .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 26px;max-width:340px;text-align:center}
@@ -199,108 +257,58 @@ nav .links + .lang{margin-left:auto}
 #qrPop img.qr{display:block;width:200px;height:200px;margin:14px auto;border-radius:10px}
 #qrPop p{margin:6px 0;color:#c3c9d6;font-size:15px}
 #qrPop button{margin-top:10px;background:none;border:none;color:var(--dim);font:inherit;cursor:pointer}
-.btn.kofi{background:#29abe0;border-color:#29abe0;color:#fff}
-.btn.kofi.big{padding:14px 24px;font-size:17px}
-.smart{margin-top:14px;color:var(--dim);font-size:14px;max-width:520px}
-.smart summary{cursor:pointer}
-.support{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:28px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
-.support div{flex:1;min-width:260px}
-.support h3{margin:0 0 4px}
-.support p{margin:0;color:#c3c9d6}
-@media(max-width:760px){.btn.kofi:not(.big){display:none}}
-@media(max-width:430px){nav .wrap{gap:10px;padding:0 12px}.brand{font-size:18px}nav .btn.main{padding:8px 12px!important}}
-/* telefono (o finestra sotto i 900 px): in cima «Apri l'app» e «Mandalo sul tuo PC»; sotto il programma per Windows */
-.ph{display:none;text-align:center;padding:20px 18px 18px;border-color:#3a1414;background:linear-gradient(170deg,#2a0d0d,var(--panel) 60%)}
-.ph .phh{font-size:27px;line-height:1.08;font-weight:900;font-style:italic;margin:4px 0 8px}
-.ph .phh b{color:var(--accent)}
-.ph .phl{color:#c3c9d6;font-size:15px;margin:0 0 16px}
-.ph .btn{width:100%;justify-content:center;font-size:19px;padding:15px 18px;border-radius:12px}
-.ph button.btn{font-family:inherit;font-weight:700;color:var(--text);cursor:pointer}
-.ph .btn.main{font-size:21px;padding:17px 18px;box-shadow:0 10px 30px rgba(225,6,0,.35)}
-.ph .free{color:var(--dim);font-size:14px;margin:7px 0 16px}
-.ph .free b{color:var(--green);font-weight:700}
-.ph .pcu{margin:10px 0 0;font-size:14px;color:var(--dim)}
-.ph .pcu b{display:block;color:var(--text);font-size:24px;letter-spacing:.3px;font-weight:900;user-select:all}
-.ph .ok{display:none;margin-top:8px;color:var(--green);font-weight:700;font-size:15px}
-.ph .ok.on{display:block}
-.ph .unoff{margin:14px 0 0;font-size:12px;color:var(--dim2);line-height:1.35}
-@media(max-width:900px){.ph{display:block}.top .wrap #prod{order:-1}.top .wrap #phHero{order:-2}}
-html.phone .ph{display:block}
-html.phone .top .wrap{grid-template-columns:1fr}
-html.phone .top .wrap #prod{order:-1}
-html.phone .top .wrap #phHero{order:-2}
-/* niente scorrimento laterale: tabelle piu' strette sul telefono, una voce in meno nel menu fra 760 e 900 px */
-@media(max-width:480px){td,th{padding-left:6px;padding-right:6px}.row3 table td,.row3 table th{padding:6px 5px}}
-@media(max-width:900px){nav .links a[href="replay/"]{display:none}}
-/* segnalazioni: sul telefono i due pulsanti vanno a capo (l'indirizzo lungo allargava la pagina) */
-/* «Diventa tester»: link piccolo sotto i pulsanti del telefono, solo su Android (il test e' su Google Play) */
-.ph .tst{display:none;margin:12px 0 0;font-size:14px;color:var(--dim);text-decoration:underline}
-html.android .ph .tst{display:block}
-/* ultimi risultati: le ultime tre sessioni, verso le pagine /f1/ */
-.latest{margin-top:18px}
-.lat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media(max-width:760px){.lat{grid-template-columns:1fr}}
-.lat a{display:block;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:10px 12px;text-decoration:none;line-height:1.3;min-width:0}
-.lat a:hover{filter:brightness(1.2)}
-.lat .sw{display:inline-block;width:4px;height:14px;border-radius:2px;vertical-align:-2px;margin-right:5px}
-.lat b{display:block;font-size:15px}.lat .k{font-size:12px;color:var(--dim)}.lat .v{display:block;font-size:14px;margin-top:3px}
-@media(max-width:760px){.support .cta{flex:1 1 100%!important;min-width:0;display:flex;flex-direction:column;gap:8px}.support .cta .btn{white-space:normal;overflow-wrap:anywhere;justify-content:center}}
 </style>
 <script data-goatcounter="https://freetorace.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <nav><div class="wrap">
-  <a class="brand" href="#" style="display:flex;align-items:center;gap:9px"><img src="img/logo.png" alt="" style="width:32px;height:32px"><span><b>FREE</b> TO RACE</span></a>
-  <div class="links"><a href="#features" data-i="nav_app">The app</a><a href="#season-sec" data-i="nav_cal">Calendar</a><a href="#standings" data-i="nav_st">Standings</a><a href="#teams-sec" data-i="nav_teams">Teams</a><a href="live/" data-i="nav_live" style="color:var(--text)">📱 Live on your phone</a><a href="replay/" data-i="nav_rp">🎬 Replays</a><a href="#feedback" data-i="nav_fb">🐞 Feedback</a><!-- pagina previsioni pronta, da riattivare al lancio: <a href="predictions/" data-i="nav_pred" style="color:var(--text)">Predictions</a> --></div>
-  <button class="lang" id="lang" title="English / Italiano"></button>
-  <a class="btn kofi" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee" style="padding:8px 14px">☕ Buy me a coffee</a>
-  <a class="btn main" id="dlNav" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" style="padding:8px 16px" data-i="dl_short" data-ev="download-windows">⬇ Download</a>
+  <a class="brand" href="#"><img src="img/logo.png" alt=""><span>FREE TO <b>RACE</b></span></a><span class="sp"></span>
+  <a class="lk x" href="#season-sec" data-i="nav_cal">Calendar</a>
+  <a class="lk x" href="#standings" data-i="nav_st">Standings</a>
+  <a class="lk" href="risultati/" data-i="nRes">Results</a>
+  <a class="lk" href="replay/" data-i="nRp">Replays</a>
+  <a class="lk x" href="#feedback" data-i="nav_fb">🐞 Feedback</a>
+  <div class="lang"><button type="button" data-l="it">IT</button><button type="button" data-l="en">EN</button></div>
 </div></nav>
 
 <div id="qrPop"><div class="box"><h3 data-i="qr_h">📱 Free to Race on your phone</h3><img class="qr" src="img/qr_live.svg" alt="QR free-to-race.com/live"><p data-i="qr_p">Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.</p><p><a href="live/" data-i="qr_open">or open it here in the browser</a></p><button id="qrClose" data-i="qr_close">Close</button></div></div>
 
-<header class="top" id="download"><div class="wrap">
-  <div class="card ph" id="phHero"><p class="phh" data-i="ph_h">F1 live timing, <b>on your phone</b></p><p class="phl" data-i="ph_l">Timing, every car on the track map and strategy, right in your browser.</p>
-    <a class="btn main" href="live/" data-i="open_app" data-ev="open-app-home">▶ Open the app</a>
-    <div class="free" data-i="ph_free"><b>Free</b>, no account, nothing to install</div>
-    <button class="btn" type="button" id="sendPc" data-i="send_pc" data-ev="send-to-pc">💻 Send it to your PC</button>
-    <div class="ok" id="sendOk" role="status" data-i="copied">✓ Link copied: paste it on your PC</div>
-    <p class="pcu"><span data-i="pc_open">On your PC, open</span><b>free-to-race.com</b></p>
-    <a class="tst" href="tester/" data-i="ph_tester" data-ev="tester-home">On Android? Become a tester of the Google Play app →</a>
-    <p class="unoff" data-i="unoff">Unofficial fan project, not associated with the Formula 1 companies.</p></div>
-  <div class="card" id="wk"><div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2></div>
-  <div class="card prod" id="prod"><h1 class="kick" data-i="seo_h1">Free F1 live timing, track map &amp; race strategy</h1><h2 data-i="h1">The race, as the <b>pit wall</b> sees it.</h2><p class="lead2" data-i="lead2">Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.</p>
-    <div class="acts"><a class="btn main" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-i="dl" data-ev="download-windows">⬇ Download for Windows</a><a class="btn" href="live/" data-i="open_br" data-ev="open-browser-pc">▶ Open in browser</a><a class="btn" href="live/?install=1" data-i="ph_install" data-ev="install-phone">📲 Install the app on your phone</a><a class="btn" href="replay/" data-i="nav_rp">🎬 Replays</a></div></div>
+<a class="band" id="band" href="live/" data-ev="open-app-home"><div class="wrap"><span class="go" data-i="nxGo">Open the app</span></div></a>
+
+<header class="hero"><div class="wrap">
+  <div>
+    <h1 data-i="seo_h1">Free F1 live timing, track map &amp; race strategy</h1>
+    <p class="lead" data-i="lead">Live timing, every car on the track, tyres and pit stops. On your phone and PC.</p>
+    <ul class="checks"><li data-i="ck1">No account, no email</li><li data-i="ck2">No cookies, no ads</li><li data-i="ck3">Straight from the F1 timing feed</li></ul>
+    <p class="ckm"><a href="privacy/" data-i="ckMore">The site counts visits, without cookies: what and how →</a></p>
+    <a class="cta" id="cta" href="demo/#pista" data-ev="cta-demo"><span class="i">▶</span><span><span class="kk" data-i="d2K">Demo in your browser · nothing to install</span><b id="ctaH" data-i="d2H">2025 United States GP</b><small data-i="d2P">The whole race, with the map, timing and strategy</small></span></a>
+    <div class="os pc">
+      <a class="dl" href="https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe" data-ev="download-windows" data-i="dlW">⬇ Download for Windows</a><span class="sm" data-i="dlNote">full program, free</span>
+      <button type="button" class="q" id="ssQ" data-ev="smartscreen-info" data-i="ssQ">Why does Windows show a warning?</button>
+      <span class="sm"><span data-i="orPh">or</span> <a href="live/?install=1" data-qr="1" data-ev="install-phone" data-i="orPhA">install it on your phone</a></span>
+    </div>
+    <div class="os ph">
+      <a class="dl" href="live/?install=1" data-ev="install-phone" data-i="inst">📲 Install on your phone</a><span class="sm" data-i="instNote">no store, updates itself</span>
+    </div>
+    <div class="mini">
+      <button type="button" id="sendPc" data-ev="send-to-pc" data-i="send_pc">💻 Send it to your PC</button>
+      <a class="tst" href="tester/" data-ev="tester-home" data-i="ph_tester">On Android? Become a tester →</a>
+      <span class="ok" id="sendOk" role="status"></span>
+    </div>
+  </div>
+  <div class="app" id="app">
+    <div class="bar"><i></i><i></i><i></i><span data-i="appBar">Free to Race · replay · Mexico City Grand Prix</span></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="pbar" id="pbar"></div>
+    <div class="screen" id="screen"><img src="img/home/clip_mappa.jpg" alt=""></div>
+    <div class="capt" id="capt"></div>
+  </div>
 </div></header>
 
-<section id="now"><div class="wrap"><div class="row3">
-  <div class="card" id="lastCard"></div>
-  <div class="card"><h3 class="ch" id="miniDh"></h3><table id="miniD"></table><a class="more" href="#standings" data-i="full_st">Full standings and teams ↓</a></div>
-  <div class="card"><h3 class="ch" data-i="constructors">Constructors</h3><table id="miniC"></table></div>
-</div>
-  <div class="card latest"><h3 class="ch" data-i="lat_h">Latest results</h3><div class="lat" id="latList"></div><a class="more" id="latAll" href="f1/2026/" data-i="lat_all">All 2026 results, session by session →</a></div>
-</div></section>
-
-<section id="features"><div class="wrap">
-  <h2 data-i="f_h">More than a timing tower</h2>
-  <p class="sub" data-i="f_sub">It takes the public data of the official timing and makes sense of it.</p>
-  <img class="shot" src="img/gara.png" alt="Free to Race" style="margin-bottom:22px">
-  <div class="feats">
-    <div class="feat"><span class="tag" data-i="f1t">Only here</span><h3 data-i="f1h">Every car on track, live</h3><p data-i="f1p">Without a subscription, F1 does not send car positions. Free to Race shows them anyway, live, on a map of the circuit.</p></div>
-    <div class="feat"><span class="tag" data-i="f2t">Strategy</span><h3 data-i="f2h">Who wins, pit stops and undercut</h3><p data-i="f2p">Live win and podium chances, recalculated every lap. Where each driver would rejoin after a stop, the cheap stop under Safety Car, and the chance an undercut works. Checked on 41 races.</p></div>
-    <div class="feat"><span class="tag" data-i="f3t">Timing</span><h3 data-i="f3h">Sectors and mini-sectors</h3><p data-i="f3p">Gaps, purple and green sectors, the mini-sectors of the current lap, tyres, pit stops and a virtual standing that accounts for stops still to come.</p></div>
-    <div class="feat"><span class="tag" data-i="f4t">Analysis</span><h3 data-i="f4h">Pace, degradation, head-to-head</h3><p data-i="f4p">Pace over the last clean laps, degradation of each tyre, how much fresh tyres are worth, and lap-by-lap comparison of two drivers.</p></div>
-    <div class="feat"><span class="tag" data-i="f5t">TV</span><h3 data-i="f5h">In sync with your TV</h3><p data-i="f5p">Set the delay and the timing arrives together with the pictures, no spoilers. Every live session is recorded.</p></div>
-    <div class="feat"><span class="tag" data-i="f6t">Replay</span><h3 data-i="f6h">Every past race</h3><p data-i="f6p">Download any session from the public archive and replay it from 1× to 60×, with a timeline to jump around.</p></div>
-  </div>
-  <div class="gallery">
-    <figure><img class="shot" src="img/pista.png" alt=""><figcaption data-i="cap1">The track map with every car, and the lap strip below.</figcaption></figure>
-    <figure><img class="shot" src="img/gomme.png" alt=""><figcaption data-i="cap2">Tyre strategy: stints, pit-lane times and the window for the next stop.</figcaption></figure>
-  </div>
-  <div class="support">
-    <div><h3 data-i="sup_h">Free, and it stays free</h3><p data-i="sup_p">Free to Race is made by one fan in spare time. If you enjoy it, a coffee helps keep it working race after race.</p></div>
-    <a class="btn kofi big" href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-i="coffee_long">☕ Buy me a coffee on Ko-fi</a>
-  </div>
+<section class="latest"><div class="wrap">
+  <h2 data-i="lat_h">Latest sessions</h2>
+  <div class="lat" id="latList"></div>
+  <a class="latall" id="latAll" href="f1/2026/" data-i="lat_all">All 2026 results, session by session →</a>
 </div></section>
 
 <section id="season-sec"><div class="wrap">
@@ -310,6 +318,7 @@ html.android .ph .tst{display:block}
     <div class="legend"><span><i style="background:#5d6577"></i><span data-i="lg_done">run</span></span><span><i style="background:var(--accent)"></i><span data-i="lg_next">next</span></span><span><i style="border:2px solid #8b94a7;width:8px;height:8px"></i><span data-i="lg_todo">to come</span></span></div>
   </div>
   <div class="cal" id="cal"></div>
+  <div class="calacts"><a class="btn" href="#" data-cal="1" data-i="add_cal">📅 Add this weekend to your calendar</a></div>
 </div></section>
 
 <section id="standings"><div class="wrap">
@@ -321,147 +330,172 @@ html.android .ph .tst{display:block}
   </div>
 </div></section>
 
-<section id="teams-sec"><div class="wrap">
-  <h2 data-i="t_h">Teams and drivers</h2>
-  <p class="sub" data-i="t_sub">This season's teams and their drivers, in championship order.</p>
-  <div class="teams" id="teams"></div>
-</div></section>
-
 <section id="feedback"><div class="wrap">
   <div class="support">
     <div><h3 data-i="fb_h">Free to Race is a work in progress 🛠️</h3><p data-i="fb_p">It’s a bit like a certain Japanese engine: a rough start and a few too many breakdowns, but give it some patience and it can do great things. If you find a bug (or it won’t start at all), write to us! Every suggestion is welcome.</p><p class="small" style="margin-top:8px" data-i="fb_tip">Found a bug? In the program use <b>🐞 Report a problem</b> (in <i>Choose session</i>): it prepares the email with your version and the last lines of the log, and you see everything before sending.</p></div>
-    <div class="cta" style="flex:0 0 auto;margin:0">
+    <div class="acts">
       <a class="btn main" href="mailto:segnalazioni@free-to-race.com?subject=Free%20to%20Race%20-%20" data-i="fb_mail">✉ Write to segnalazioni@free-to-race.com</a>
       <a class="btn" href="https://github.com/Nik88nk/freetorace/issues/new" target="_blank" rel="noopener" data-i="fb_gh">Open an issue on GitHub</a>
     </div>
   </div>
 </div></section>
 
+<section class="trust" id="fiducia"><div class="wrap">
+  <h2 data-i="trH">Why you can trust it</h2>
+  <div class="tgrid">
+    <div class="tcard" id="tcWin"><h3 data-i="ssH">Why does Windows show a warning?</h3><p data-i="ssP1">On first launch Windows may say “Windows protected your PC”: it happens with programs that are not signed with a code-signing certificate, which costs money. Free to Race is free and made by one fan in spare time: it is not signed yet.</p><p data-i="ssP2">To open it: <b>More info</b> → <b>Run anyway</b>. Only the first time.</p><p data-i="ssP3">Every release on <a href="https://github.com/Nik88nk/freetorace/releases/latest">GitHub</a> has a <code>.sha256</code> file next to the installer with its fingerprint, to check that your download is the published file (<a href="privacy/">how</a>). The program on your PC counts nothing and sends nothing about you.</p></div>
+    <div class="tcard" id="tcPriv"><h3 data-i="prH">Privacy: what it collects</h3><ul><li data-i="pr1">No account, no sign-in, no email.</li><li data-i="pr2">No advertising, cookies or tracking: not in the program, not in the app, not on this site.</li><li data-i="pr3">The site and the app count visits with GoatCounter, without cookies and without keeping your IP address. The program on your PC counts nothing.</li><li data-i="pr4">Timing comes straight from the F1 timing feed, not through a server of ours.</li></ul><p data-i="prMore"><a href="privacy/">Privacy and safety</a>: everything it connects to.</p></div>
+  </div>
+</div></section>
+
+<div class="kofi"><div class="wrap">
+  <span class="cup">☕</span><p data-i="kfP">Free to Race is an independent, ad-free fan project, and every feature is free. If it keeps you company on race weekends, you can buy a coffee on Ko-fi: donations only, nothing to unlock.</p>
+  <a href="https://ko-fi.com/freetorace" target="_blank" rel="noopener" data-ev="kofi-home" data-i="kfGo">☕ Buy me a coffee on Ko-fi</a>
+</div></div>
+
 <footer><div class="wrap">
-  <p data-i="disc"><b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.</p>
-  <p data-i="credits">Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.</p>
-  <p><a href="f1/2026/" data-i="ft_res">F1 2026 results</a> · <a href="tester/" data-i="ft_tester" data-ev="tester-footer">Become a tester (Android)</a> · <a href="privacy/" data-i="privacy">Privacy and safety: no account, no data collected</a></p>
+  <p class="unoff" data-i="unoff">Free to Race is an independent, unofficial project, not associated with the Formula 1 companies. No F1 logos.</p>
+  <p data-i="disc">F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.</p>
+  <p data-i="credits">Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license.</p>
+  <p><a href="f1/2026/" data-i="ft_res">F1 2026 results</a> · <a href="tester/" data-ev="tester-footer" data-i="ft_tester">Become a tester (Android)</a> · <a href="privacy/" data-i="privacy">Privacy and safety</a> · <a href="https://github.com/Nik88nk/freetorace/releases" data-i="fGh">Releases on GitHub</a> · <a href="https://ko-fi.com/freetorace">Ko-fi</a></p>
 </div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
 // ---------------- testi in due lingue ----------------
+// build_sito.py scrive i testi di T.en dentro i tag con data-i (vuoti qui), cosi' la pagina ha i testi anche senza JavaScript.
 const T = {
  en: {
-  nav_app:'The app', nav_cal:'Calendar', nav_st:'Standings', nav_teams:'Teams', nav_pred:'Predictions', nav_live:'📱 Live on your phone', nav_rp:'🎬 Replays', ris_btn:'📊 Results', dl_short:'⬇ Download', coffee:'☕ Buy me a coffee',
-  h1:'The race, as the <b>pit wall</b> sees it.',
-  lead:'Live timing, tyre strategy, pit-stop forecasts and a track map with every car moving: free, on your own PC, no subscription.',
-  dl:'⬇ Download for Windows', what:'What it does', demo:'▶ Try the demo in your browser', live_btn:'📱 Live on your phone', ph_install:'📲 Install the app on your phone', ph_short:'📲 Install', qr_h:'📱 Free to Race on your phone', qr_p:'Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.', qr_open:'or open it here in the browser', qr_close:'Close',
-  dl_note:'Version 0.4 · Windows 10/11 · installs in a few seconds, no admin rights, updates with one click · unofficial fan project',
-  ss_q:'Windows says “Windows protected your PC”?',
-  ss_a:'It happens with new programs from small developers that are not code-signed yet. Click <b>More info</b>, then <b>Run anyway</b>. You only need to do it once. <a href="privacy/">Privacy and safety</a>: what the program connects to and how to check the download.',
-  f_h:'More than a timing tower', f_sub:'It takes the public data of the official timing and makes sense of it.',
-  f1t:'Only here', f1h:'Every car on track, live', f1p:'Without a subscription, F1 does not send car positions. Free to Race shows them anyway, live, on a map of the circuit.',
-  f2t:'Strategy', f2h:'Who wins, pit stops and undercut', f2p:'Live win and podium chances, recalculated every lap. Where each driver would rejoin after a stop, the cheap stop under Safety Car, and the chance an undercut works. Checked on 41 races.',
-  f3t:'Timing', f3h:'Sectors and mini-sectors', f3p:'Gaps, purple and green sectors, the mini-sectors of the current lap, tyres, pit stops and a virtual standing that accounts for stops still to come.',
-  f4t:'Analysis', f4h:'Pace, degradation, head-to-head', f4p:'Pace over the last clean laps, degradation of each tyre, how much fresh tyres are worth, and lap-by-lap comparison of two drivers.',
-  f5t:'TV', f5h:'In sync with your TV', f5p:'Set the delay and the timing arrives together with the pictures, no spoilers. Every live session is recorded.',
-  f6t:'Replay', f6h:'Every past race', f6p:'Download any session from the public archive and replay it from 1× to 60×, with a timeline to jump around.',
-  cap1:'The track map with every car, and the lap strip below.', cap2:'Tyre strategy: stints, pit-lane times and the window for the next stop.',
-  sup_h:'Free, and it stays free', sup_p:'Free to Race is made by one fan in spare time. If you enjoy it, a coffee helps keep it working race after race.',
-  coffee_long:'☕ Buy me a coffee on Ko-fi',
+  nRes:'Results', nRp:'Replays', nav_cal:'Calendar', nav_st:'Standings', nav_fb:'🐞 Feedback',
+  nxK:'Next session', nxKs:'Next', nxGo:'Open the app', nxGos:'App', lvK:'LIVE', lvGo:'Follow live', lvP:'timing, sectors and every car on the map',
+  season_over:'Season over', dd:'d',
+  seo_h1:'Free F1 live timing, track map &amp; race strategy',
+  lead:'Live timing, every car on the track, tyres and pit stops. On your phone and PC.',
+  ck1:'No account, no email', ck2:'No cookies, no ads', ck3:'Straight from the F1 timing feed',
+  ckMore:'The site counts visits, without cookies: what and how →',
+  d2K:'Demo in your browser · nothing to install', d2H:'2025 United States GP', d2P:'The whole race, with the map, timing and strategy',
+  dlW:'⬇ Download for Windows', dlNote:'full program, free', ssQ:'Why does Windows show a warning?', orPh:'or', orPhA:'install it on your phone',
+  inst:'📲 Install on your phone', instNote:'no store, updates itself',
+  send_pc:'💻 Send it to your PC', copied:'✓ Link copied: paste it on your PC', ph_tester:'On Android? Become a tester →',
+  share_txt:'Free to Race: free F1 live timing, track map and race strategy. Open it on your PC to get the Windows program:',
+  appBar:'Free to Race · replay · Mexico City Grand Prix', open:'Open this tab →', src:'real app footage',
+  lat_h:'Latest sessions', lat_all:'All 2026 results, session by session →', lat_pole:'Pole', lat_winner:'Winner', lat_fastest:'Fastest',
   s_h:'Season', s_sub:'The calendar on the map, with the winners of the races already run.',
-  lg_done:'run', lg_next:'next', lg_todo:'to come',
-  next_k:'Next race · round', season_over:'Season over', season:'Season',
-  days:'days', hours:'hours', minutes:'minutes', seconds:'seconds', winner:'winner', nextw:'next', winner_l:'Winner',
+  lg_done:'run', lg_next:'next', lg_todo:'to come', add_cal:'📅 Add this weekend to your calendar',
+  winner:'winner', nextw:'next', winner_l:'Winner',
   st_h:'Standings', after:(r,n)=>`After round ${r} of ${n}.`, drivers:'Drivers', constructors:'Constructors',
   th_drv:'Driver', th_team:'Team', th_wins:'Wins', th_pts:'Points',
-  t_h:'Teams and drivers', t_sub:'This season\'s teams and their drivers, in championship order.',
-  t_meta:(p,pts,w,nat)=>`${p} in the constructors · ${pts} points · ${w} ${w==='1'?'win':'wins'} · ${nat}`, d_meta:(p,w)=>`P${p} · ${w} wins`,
   err_cal:'Calendar not available right now.', err_st:'Standings not available right now.', loading:'Loading…',
-  disc:'<b style="color:var(--text)">Free to Race</b> is a free, <b>unofficial</b> fan project and is not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.',
-  privacy:'Privacy and safety: no account, no data collected',
-  nav_fb:'🐞 Feedback',
   fb_h:'Free to Race is a work in progress 🛠️',
   fb_p:'It’s a bit like a certain Japanese engine: a rough start and a few too many breakdowns, but give it some patience and it can do great things. If you find a bug (or it won’t start at all), write to us! Every suggestion is welcome.',
   fb_tip:'Found a bug? In the program use <b>🐞 Report a problem</b> (in <i>Choose session</i>): it prepares the email with your version and the last lines of the log, and you see everything before sending.',
   fb_mail:'✉ Write to segnalazioni@free-to-race.com', fb_gh:'Open an issue on GitHub',
-  credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license. Support: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Issues and releases: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
+  trH:'Why you can trust it',
+  ssH:'Why does Windows show a warning?',
+  ssP1:'On first launch Windows may say “Windows protected your PC”: it happens with programs that are not signed with a code-signing certificate, which costs money. Free to Race is free and made by one fan in spare time: it is not signed yet.',
+  ssP2:'To open it: <b>More info</b> → <b>Run anyway</b>. Only the first time.',
+  ssP3:'Every release on <a href="https://github.com/Nik88nk/freetorace/releases/latest">GitHub</a> has a <code>.sha256</code> file next to the installer with its fingerprint, to check that your download is the published file (<a href="privacy/">how</a>). The program on your PC counts nothing and sends nothing about you.',
+  prH:'Privacy: what it collects',
+  pr1:'No account, no sign-in, no email.',
+  pr2:'No advertising, cookies or tracking: not in the program, not in the app, not on this site.',
+  pr3:'The site and the app count visits with GoatCounter, without cookies and without keeping your IP address. The program on your PC counts nothing.',
+  pr4:'Timing comes straight from the F1 timing feed, not through a server of ours.',
+  prMore:'<a href="privacy/">Privacy and safety</a>: everything it connects to.',
+  kfP:'Free to Race is an independent, ad-free fan project, and every feature is free. If it keeps you company on race weekends, you can buy a coffee on Ko-fi: donations only, nothing to unlock.',
+  kfGo:'☕ Buy me a coffee on Ko-fi',
+  unoff:'Free to Race is an independent, unofficial project, not associated with the Formula 1 companies. No F1 logos.',
+  disc:'F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.',
+  credits:'Calendar and standings: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Map: Natural Earth via world-atlas. The app is released under the PolyForm Noncommercial 1.0.0 license.',
+  ft_res:'F1 2026 results', ft_tester:'Become a tester (Android)', privacy:'Privacy and safety', fGh:'Releases on GitHub',
+  qr_h:'📱 Free to Race on your phone', qr_p:'Scan with your phone’s camera: the app opens and you install it with one tap. Free, no store, no account.', qr_open:'or open it here in the browser', qr_close:'Close',
   sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'},
-  of:'of', wk_on:'Race weekend · round', prog_h:'Weekend schedule (your time)', in_:s=>`${s} starts in`, add_cal:'📅 Add to calendar', all_cal:'Full calendar ↓',
-  ph_h:'F1 live timing, <b>on your phone</b>', ph_l:'Timing, every car on the track map and strategy, right in your browser.',
-  open_app:'▶ Open the app', ph_free:'<b>Free</b>, no account, nothing to install',
-  send_pc:'💻 Send it to your PC', copied:'✓ Link copied: paste it on your PC',
-  pc_open:'On your PC, open', share_txt:'Free to Race: free F1 live timing, track map and race strategy. Open it on your PC to get the Windows program:',
-  unoff:'Unofficial fan project, not associated with the Formula 1 companies.', open_br:'▶ Open in browser',
-  prod_k:'The program · free', seo_h1:'Free F1 live timing, track map &amp; race strategy', lead2:'Live timing, tyre strategy, pit-stop forecasts and the track with every car: free, no account, on PC and phone.',
-  rp_sub:'try it in your browser, nothing to install', live_now:'● Live now', follow:'📱 Follow on your phone', follow_ph:'📱 Follow live',
-  last_race:'Last race', last_sess:'Latest session', th_grid:'Start', th_gap:'Gap', th_best:'Best lap', th_time:'Time', fl:'Fastest lap',
-  more_race:'Strategy, pace and stops', more_pr:'Race pace, tyres, teams', more_q:'Cuts, sectors, ideal lap', rp_more:'Watch it again',
-  full_st:'Full standings and teams ↓', mini_d:(r,n)=>`Drivers · after ${r} of ${n} races`, ex_tag:'Replay',
-  ph_tester:'On Android? Become a tester of the Google Play app →', ft_res:'F1 2026 results', ft_tester:'Become a tester (Android)',
-  lat_h:'Latest results', lat_all:'All 2026 results, session by session →', lat_pole:'Pole', lat_winner:'Winner', lat_fastest:'Fastest',
   locale:'en-GB'
  },
  it: {
-  nav_app:'Il programma', nav_cal:'Calendario', nav_st:'Classifiche', nav_teams:'Squadre', nav_pred:'Previsioni', nav_live:'📱 Live sul telefono', nav_rp:'🎬 Replay', ris_btn:'📊 Risultati', dl_short:'⬇ Scarica', coffee:'☕ Offrimi un caffè',
-  h1:'La gara, come la vede il <b>muretto box</b>.',
-  lead:'Tempi in diretta, strategia gomme, previsione delle soste e una pista con le auto in movimento: tutto gratis, sul tuo PC, senza abbonamenti.',
-  dl:'⬇ Scarica per Windows', what:'Cosa fa', demo:'▶ Prova la demo nel browser', live_btn:'📱 In diretta sul telefono', ph_install:'📲 Installa l’app sul telefono', ph_short:'📲 Installa', qr_h:'📱 Free to Race sul telefono', qr_p:'Inquadra con la fotocamera del telefono: si apre l’app e la installi con un tocco. Gratis, senza store e senza account.', qr_open:'oppure aprila qui nel browser', qr_close:'Chiudi',
-  dl_note:'Versione 0.4 · Windows 10/11 · si installa in pochi secondi, senza diritti di amministratore, si aggiorna con un clic · progetto non ufficiale',
-  ss_q:'Windows dice «Windows ha protetto il PC»?',
-  ss_a:'Succede con i programmi nuovi di piccoli sviluppatori, non ancora firmati. Clicca <b>Ulteriori informazioni</b> e poi <b>Esegui comunque</b>. Basta farlo una volta. <a href="privacy/">Privacy e sicurezza</a>: a cosa si collega il programma e come controllare il file scaricato.',
-  f_h:'Più di una torre dei tempi', f_sub:'Usa i dati pubblici del cronometraggio ufficiale e ci ragiona sopra.',
-  f1t:'Solo qui', f1h:'Le auto in pista, in diretta', f1p:'Senza abbonamento la F1 non manda le posizioni delle auto. Free to Race te le mostra lo stesso, in diretta, sulla mappa del circuito.',
-  f2t:'Strategia', f2h:'Chi vince, soste e undercut', f2p:'Probabilità di vittoria e di podio in diretta, ricalcolate a ogni giro. Dove rientrerebbe ogni pilota dopo una sosta, la sosta scontata con la Safety Car, la probabilità che un undercut riesca. Provato su 41 gare.',
-  f3t:'Tempi', f3h:'Settori e minisettori', f3p:'Distacchi, settori viola e verdi, minisettori del giro in corso, gomme, soste e la classifica virtuale che tiene conto delle soste che mancano.',
-  f4t:'Analisi', f4h:'Passo, degrado, confronti', f4p:'Passo sugli ultimi giri puliti, degrado di ogni gomma, quanto valgono le gomme nuove, confronto giro per giro fra due piloti.',
-  f5t:'TV', f5h:'Sincronizzato con la tua TV', f5p:'Imposti il ritardo e i tempi arrivano insieme alle immagini, senza spoiler. Ogni diretta viene registrata.',
-  f6t:'Replay', f6h:'Ogni gara del passato', f6p:'Scarichi qualsiasi sessione dall\'archivio pubblico e la rivedi da 1× a 60×, con la barra per spostarti nel tempo.',
-  cap1:'La pista con tutte le auto e la striscia del giro.', cap2:'Strategia gomme: stint, secondi in corsia box, finestra della prossima sosta.',
-  sup_h:'Gratis, e resta gratis', sup_p:'Free to Race lo fa un appassionato nel tempo libero. Se ti piace, un caffè aiuta a tenerlo aggiornato gara dopo gara.',
-  coffee_long:'☕ Offrimi un caffè su Ko-fi',
+  nRes:'Risultati', nRp:'Replay', nav_cal:'Calendario', nav_st:'Classifiche', nav_fb:'🐞 Segnalazioni',
+  nxK:'Prossima sessione', nxKs:'Prossima', nxGo:'Apri l’app', nxGos:'App', lvK:'LIVE', lvGo:'Segui la diretta', lvP:'tempi, settori e ogni auto sulla mappa',
+  season_over:'Stagione conclusa', dd:'g',
+  seo_h1:'Live timing F1 gratis, mappa della pista e strategia di gara',
+  lead:'Tempi in diretta, ogni auto sulla pista, gomme e soste. Sul telefono e sul PC.',
+  ck1:'Nessun account, nessuna email', ck2:'Niente cookie né pubblicità', ck3:'Collegato direttamente al cronometraggio F1',
+  ckMore:'Il sito conta le visite, senza cookie: cosa e come →',
+  d2K:'Demo nel browser · niente da installare', d2H:'GP degli Stati Uniti 2025', d2P:'Tutta la gara, con mappa, tempi e strategia',
+  dlW:'⬇ Scarica per Windows', dlNote:'programma completo, gratis', ssQ:'Perché Windows mostra un avviso?', orPh:'o', orPhA:'installa sul telefono',
+  inst:'📲 Installa sul telefono', instNote:'senza store, si aggiorna da sola',
+  send_pc:'💻 Mandalo sul tuo PC', copied:'✓ Link copiato: incollalo sul PC', ph_tester:'Hai Android? Diventa tester →',
+  share_txt:'Free to Race: tempi F1 in diretta, mappa della pista e strategia, gratis. Aprilo sul PC per avere il programma per Windows:',
+  appBar:'Free to Race · replay · Gran Premio del Messico', open:'Apri questa scheda →', src:'ripresa vera dell’app',
+  lat_h:'Ultime sessioni', lat_all:'Tutti i risultati 2026, sessione per sessione →', lat_pole:'Pole', lat_winner:'Vincitore', lat_fastest:'Il più veloce',
   s_h:'Il mondiale', s_sub:'Calendario sulla mappa, con i vincitori delle gare già corse.',
-  lg_done:'già corsa', lg_next:'prossima', lg_todo:'da correre',
-  next_k:'Prossima gara · round', season_over:'Conclusa', season:'Stagione',
-  days:'giorni', hours:'ore', minutes:'minuti', seconds:'secondi', winner:'vincitore', nextw:'prossima', winner_l:'Vincitore',
+  lg_done:'già corsa', lg_next:'prossima', lg_todo:'da correre', add_cal:'📅 Aggiungi il weekend al calendario',
+  winner:'vincitore', nextw:'prossima', winner_l:'Vincitore',
   st_h:'Classifiche', after:(r,n)=>`Dopo il round ${r} di ${n}.`, drivers:'Piloti', constructors:'Costruttori',
   th_drv:'Pilota', th_team:'Squadra', th_wins:'Vittorie', th_pts:'Punti',
-  t_h:'Squadre e piloti', t_sub:'Le squadre di questa stagione con i loro piloti, in ordine di classifica.',
-  t_meta:(p,pts,w,nat)=>`${p}° nei costruttori · ${pts} punti · ${w} ${w==='1'?'vittoria':'vittorie'} · ${nat}`, d_meta:(p,w)=>`${p}° · ${w} vitt.`,
   err_cal:'Calendario non disponibile adesso.', err_st:'Classifiche non disponibili adesso.', loading:'Carico…',
-  disc:'<b style="color:var(--text)">Free to Race</b> è un progetto di appassionati, gratuito e <b>non ufficiale</b>: non è associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.',
-  privacy:'Privacy e sicurezza: niente account, nessun dato raccolto',
-  nav_fb:'🐞 Segnalazioni',
   fb_h:'Free to Race è un work in progress 🛠️',
   fb_p:'È un po’ come un certo motore giapponese: all’inizio si rompe più del dovuto, ma con un po’ di pazienza può fare grandi cose. Se trovi un errore (o proprio non parte), scrivici! Ogni suggerimento è benvenuto.',
   fb_tip:'Hai trovato un errore? Nel programma usa <b>🐞 Segnala un problema</b> (in <i>Scegli sessione</i>): prepara la mail con la tua versione e le ultime righe del registro, e vedi tutto prima di inviarla.',
   fb_mail:'✉ Scrivi a segnalazioni@free-to-race.com', fb_gh:'Apri una segnalazione su GitHub',
-  credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0. Sostienilo: <a href="https://ko-fi.com/freetorace">ko-fi.com/freetorace</a> · Segnalazioni e versioni: <a href="https://github.com/Nik88nk/freetorace">GitHub</a>.',
+  trH:'Perché fidarsi',
+  ssH:'Perché Windows mostra un avviso?',
+  ssP1:'Al primo avvio Windows può dire «Windows ha protetto il PC»: succede con i programmi che non sono firmati con un certificato di firma del codice, che è a pagamento. Free to Race è gratuito e lo fa un appassionato nel tempo libero: per ora non è firmato.',
+  ssP2:'Per aprirlo: <b>Ulteriori informazioni</b> → <b>Esegui comunque</b>. Basta la prima volta.',
+  ssP3:'Ogni versione su <a href="https://github.com/Nik88nk/freetorace/releases/latest">GitHub</a> ha accanto all’installatore il file <code>.sha256</code> con l’impronta, per controllare che il file scaricato sia quello pubblicato (<a href="privacy/">come si fa</a>). Il programma sul PC non conta nulla e non manda dati su di te.',
+  prH:'Privacy: cosa raccoglie',
+  pr1:'Niente account, niente accesso, niente email.',
+  pr2:'Niente pubblicità, cookie o tracciamento: né nel programma, né nell’app, né sul sito.',
+  pr3:'Il sito e l’app contano le visite con GoatCounter, senza cookie e senza conservare l’indirizzo IP. Il programma sul PC non conta nulla.',
+  pr4:'I tempi arrivano direttamente dal cronometraggio F1, senza passare da un nostro server.',
+  prMore:'<a href="privacy/">Privacy e sicurezza</a>: tutto quello a cui si collega.',
+  kfP:'Free to Race è un progetto indipendente, senza pubblicità, e tutte le funzioni sono gratis. Se ti fa compagnia nei weekend di gara, puoi offrire un caffè su Ko-fi: solo donazioni, niente da sbloccare.',
+  kfGo:'☕ Offri un caffè su Ko-fi',
+  unoff:'Free to Race è un progetto indipendente e non ufficiale, non associato alle società di Formula 1. Nessun logo F1.',
+  disc:'F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V.',
+  credits:'Calendario e classifiche: <a href="https://github.com/jolpica/jolpica-f1">Jolpica-F1</a>. Mappa: Natural Earth tramite world-atlas. Il programma è distribuito con licenza PolyForm Noncommercial 1.0.0.',
+  ft_res:'Risultati F1 2026', ft_tester:'Diventa tester (Android)', privacy:'Privacy e sicurezza', fGh:'Versioni su GitHub',
+  qr_h:'📱 Free to Race sul telefono', qr_p:'Inquadra con la fotocamera del telefono: si apre l’app e la installi con un tocco. Gratis, senza store e senza account.', qr_open:'oppure aprila qui nel browser', qr_close:'Chiudi',
   sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'},
-  of:'di', wk_on:'Weekend in corso · round', prog_h:'Programma del weekend (tua ora)', in_:s=>`${s} tra`, add_cal:'📅 Aggiungi al calendario', all_cal:'Tutto il calendario ↓',
-  ph_h:'La F1 in diretta, <b>sul telefono</b>', ph_l:'Tempi, la pista con tutte le auto e la strategia, subito nel browser.',
-  open_app:'▶ Apri l’app', ph_free:'<b>Gratis</b>, senza account, niente da installare',
-  send_pc:'💻 Mandalo sul tuo PC', copied:'✓ Link copiato: incollalo sul PC',
-  pc_open:'Sul PC apri', share_txt:'Free to Race: tempi F1 in diretta, mappa della pista e strategia, gratis. Aprilo sul PC per avere il programma per Windows:',
-  unoff:'Progetto di appassionati, non ufficiale, non associato alle società di Formula 1.', open_br:'▶ Apri nel browser',
-  prod_k:'Il programma · gratis', seo_h1:'Live timing F1 gratis, mappa della pista e strategia di gara', lead2:'Tempi in diretta, strategia gomme, previsione delle soste e la pista con le auto: gratis e senza account, su PC e telefono.',
-  rp_sub:'provalo nel browser, senza installare', live_now:'● In diretta adesso', follow:'📱 Segui sul telefono', follow_ph:'📱 Segui in diretta',
-  last_race:'Ultima gara', last_sess:'Ultima sessione', th_grid:'Part.', th_gap:'Distacco', th_best:'Miglior giro', th_time:'Tempo', fl:'Giro più veloce',
-  more_race:'Strategie, passo e soste', more_pr:'Passo gara, gomme, squadre', more_q:'Tagli, settori, giro ideale', rp_more:'Rivedila',
-  full_st:'Classifiche complete e squadre ↓', mini_d:(r,n)=>`Mondiale piloti · dopo ${r} gare su ${n}`, ex_tag:'Replay',
-  ph_tester:'Hai Android? Diventa tester dell’app su Google Play →', ft_res:'Risultati F1 2026', ft_tester:'Diventa tester (Android)',
-  lat_h:'Ultimi risultati', lat_all:'Tutti i risultati 2026, sessione per sessione →', lat_pole:'Pole', lat_winner:'Vincitore', lat_fastest:'Il più veloce',
   locale:'it-IT'
  }
 };
+// nomi dei GP: [inglese breve, italiano]; un nome che manca diventa «<nome> GP» in tutte e due le lingue
+const GP = {
+  'Australian Grand Prix':['Australian GP','GP d’Australia'], 'Chinese Grand Prix':['Chinese GP','GP della Cina'], 'Japanese Grand Prix':['Japanese GP','GP del Giappone'],
+  'Bahrain Grand Prix':['Bahrain GP','GP del Bahrein'], 'Bahrain Grand Prix in Malaysia':['Bahrain GP in Malaysia','GP del Bahrein in Malesia'],
+  'Saudi Arabian Grand Prix':['Saudi Arabian GP','GP dell’Arabia Saudita'], 'Miami Grand Prix':['Miami GP','GP di Miami'], 'Canadian Grand Prix':['Canadian GP','GP del Canada'],
+  'Monaco Grand Prix':['Monaco GP','GP di Monaco'], 'Barcelona Grand Prix':['Barcelona GP','GP di Barcellona'], 'Spanish Grand Prix':['Spanish GP','GP di Spagna'],
+  'Austrian Grand Prix':['Austrian GP','GP d’Austria'], 'British Grand Prix':['British GP','GP di Gran Bretagna'], 'Belgian Grand Prix':['Belgian GP','GP del Belgio'],
+  'Hungarian Grand Prix':['Hungarian GP','GP d’Ungheria'], 'Dutch Grand Prix':['Dutch GP','GP d’Olanda'], 'Italian Grand Prix':['Italian GP','GP d’Italia'],
+  'Emilia Romagna Grand Prix':['Emilia Romagna GP','GP dell’Emilia-Romagna'], 'Azerbaijan Grand Prix':['Azerbaijan GP','GP dell’Azerbaigian'],
+  'Singapore Grand Prix':['Singapore GP','GP di Singapore'], 'United States Grand Prix':['United States GP','GP degli Stati Uniti'],
+  'Mexico City Grand Prix':['Mexico City GP','GP del Messico'], 'Brazilian Grand Prix':['Brazilian GP','GP del Brasile'], 'São Paulo Grand Prix':['São Paulo GP','GP del Brasile'],
+  'Las Vegas Grand Prix':['Las Vegas GP','GP di Las Vegas'], 'Qatar Grand Prix':['Qatar GP','GP del Qatar'], 'Abu Dhabi Grand Prix':['Abu Dhabi GP','GP di Abu Dhabi']
+};
+const gpName = m => { const g = GP[m] || [String(m).replace(/ Grand Prix$/, ' GP')]; return LANG === 'it' ? (g[1] || g[0]) : g[0]; };
+const gpYear = (m, y) => LANG === 'it' ? `${gpName(m)} ${y}` : `${y} ${gpName(m)}`;
+
 // inglese di default; l'italiano solo se scelto con il pulsante (e allora si ricorda)
 let LANG = (()=>{ try{ const s=localStorage.getItem('ftr.lang'); if(s==='it'||s==='en') return s; }catch(e){} return 'en'; })();
 const t = k => T[LANG][k];
+const $ = id => document.getElementById(id);
+const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sname = s => (t('sess') || {})[s] || s;
+const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe';
+// telefono o tablet: si riconosce il sistema, non la larghezza (i link vanno all'app del telefono, non al programma per Windows)
+const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if(MOBILE) document.documentElement.classList.add('phone');
+if(/Android/i.test(navigator.userAgent)) document.documentElement.classList.add('android');
+const NARROW = () => matchMedia('(max-width:700px)').matches;
+
 function applyLang(){
   document.documentElement.lang = LANG;
-  document.querySelectorAll('[data-i]').forEach(e => { const v=t(e.dataset.i); if(typeof v==='string') e.innerHTML = v; });
-  $('lang').textContent = LANG==='it' ? 'EN' : 'IT';
-  renderTop(); if(races.length) renderCal();
+  document.querySelectorAll('[data-i]').forEach(e => { const v = t(e.dataset.i); if(typeof v === 'string') e.innerHTML = v; });
+  document.querySelectorAll('[data-l]').forEach(b => b.classList.toggle('on', b.dataset.l === LANG));
+  renderTop(); renderTabs(); renderLatest();
+  if(races.length) renderCal();
   if(lastStandings) renderStandings(...lastStandings);
-  if(!lastStandings){ $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('loading')}</td></tr>`; }
-  if(typeof renderLatest === 'function') renderLatest();
+  else $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('loading')}</td></tr>`;
 }
 
 // ---------------- dati ----------------
@@ -472,32 +506,109 @@ const TEAM_NAMES = {red_bull:'Red Bull Racing', rb:'Racing Bulls', alpine:'Alpin
   ferrari:'Ferrari', mclaren:'McLaren', williams:'Williams', aston_martin:'Aston Martin', audi:'Audi'};
 const col = id => TEAM_COLORS[id] || '#888';
 const tname = c => TEAM_NAMES[c.constructorId] || c.name;
-const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const raceTime = r => new Date(r.date + 'T' + (r.time || '12:00:00Z'));
 const fmtDate = d => d.toLocaleDateString(t('locale'), {day:'numeric', month:'short'});
-const $ = id => document.getElementById(id);
 async function j(path){ const r = await fetch(API + path); if(!r.ok) throw new Error(r.status); return (await r.json()).MRData; }
+let races=[], winners={}, lastStandings=null, RP=[];
 
-let races=[], winners={}, lastStandings=null, cdTimer=null;
-let RP=[], RI=[], LAST=null, DOCS={};   // replay pubblicati, risultati pubblicati, ultima gara (Jolpica), risultati gia' scaricati
-const DL_URL = 'https://github.com/Nik88nk/freetorace/releases/latest/download/FreeToRace-Setup.exe';
-// Dal telefono il pulsante principale installa l'app (il programma per Windows li' non serve);
-// dal PC «sul telefono» mostra il QR da inquadrare.
-const MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-if(MOBILE) document.documentElement.classList.add('phone');
-if(/Android/i.test(navigator.userAgent)) document.documentElement.classList.add('android');
-// «Ultimi risultati»: le ultime tre sessioni pubblicate, verso le pagine statiche /f1/ (elenco scritto da pagine_f1.py)
+// ---------------- la sessione: prossima o in diretta ----------------
+// Una sessione e' «in diretta» fra l'orario del calendario e la durata prevista + 15 minuti.
+const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};
+const SKEYS = [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']];
+function sessionsOf(r){
+  const out = [];
+  for(const [k, s] of SKEYS){ const x = k ? r[k] : {date:r.date, time:r.time}; if(x && x.date) out.push({s, d:Date.parse(x.date + 'T' + (x.time || '12:00:00Z')), r}); }
+  return out.sort((a, b) => a.d - b.d);
+}
+function weekendNow(){       // il weekend in corso o il prossimo (finisce 4 ore dopo la partenza della gara)
+  const now = Date.now();
+  for(const r of races){ const ss = sessionsOf(r); if(ss.length && ss[ss.length - 1].d + 4*3600e3 > now) return {r, ss}; }
+  return null;
+}
+function sessNow(){
+  const now = Date.now(), all = races.flatMap(sessionsOf);
+  return {live: all.find(x => now >= x.d && now < x.d + ((DUR[x.s] || 60) + 15)*60e3) || null, next: all.find(x => x.d > now) || null};
+}
+function cdText(ms){
+  let s = Math.max(0, (ms - Date.now())/1000); const d = Math.floor(s/86400); s -= d*86400; const h = Math.floor(s/3600); s -= h*3600; const m = Math.floor(s/60);
+  if(d && NARROW()) return d + t('dd') + ' ' + h + 'h';
+  return (d ? d + t('dd') + ' ' : '') + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
+}
+
+// ---------------- il pulsante: replay dell'ultima gara, altrimenti la demo ----------------
+// replay/replays.json lo riscrive il Raspberry a ogni replay pubblicato: la gara nuova compare da sola.
+function lastRace(){
+  return RP.filter(x => x && x.session === 'Race' && x.name).sort((a, b) => (Date.parse(b.start) || 0) - (Date.parse(a.start) || 0))[0] || null;
+}
+const rpUrl = (name, tab) => MOBILE ? `live/?replay=${encodeURIComponent(name)}` : `replay/${encodeURIComponent(name)}/#${tab}`;
+
+let topSig = '';
+function renderTop(){
+  const {live, next} = sessNow(), b = $('band'), lr = lastRace();
+  topSig = [LANG, races.length, RP.length, live && live.d, next && next.d, NARROW()].join('|');
+  // fascia
+  b.classList.toggle('live', !!live);
+  b.dataset.ev = live ? 'follow-live' : 'open-app-home';
+  if(live) b.innerHTML = `<div class="wrap"><span class="badge"><i></i>${t('lvK')}</span><span class="what">${esc(gpName(live.r.raceName))} · ${esc(sname(live.s))}${NARROW() ? '' : ` <small>· ${t('lvP')}</small>`}</span><span class="go">${t('lvGo')}</span></div>`;
+  else if(next){
+    const when = new Date(next.d).toLocaleString(t('locale'), {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+    b.innerHTML = `<div class="wrap"><span class="k">${t(NARROW() ? 'nxKs' : 'nxK')}</span><span class="what">${esc(gpName(next.r.raceName))} · ${esc(sname(next.s))}${NARROW() ? '' : ' · ' + esc(when)}</span><span class="cd tn" id="cdn">${cdText(next.d)}</span><span class="go">${t(NARROW() ? 'nxGos' : 'nxGo')}</span></div>`;
+  }
+  else b.innerHTML = `<div class="wrap">${races.length ? `<span class="k">${t('season_over')}</span>` : ''}<span class="go">${t('nxGo')}</span></div>`;
+  // pulsante: in diretta diventa secondario
+  const c = $('cta');
+  c.classList.toggle('sec', !!live);
+  c.href = lr ? rpUrl(lr.name, 'pista') : (MOBILE ? 'live/?demo' : 'demo/#pista');
+  $('ctaH').innerHTML = lr ? esc(gpYear(lr.meeting, lr.year)) : t('d2H');
+}
+setInterval(() => {
+  const {live, next} = sessNow();
+  if([LANG, races.length, RP.length, live && live.d, next && next.d, NARROW()].join('|') !== topSig) return renderTop();
+  const el = $('cdn'); if(el && next) el.textContent = cdText(next.d);
+}, 15000);
+addEventListener('resize', () => { clearTimeout(renderTop.rt); renderTop.rt = setTimeout(renderTop, 200); });
+
+// ---------------- l'app in vetrina: cinque schede con riprese e schermate vere ----------------
+const TABS = [
+ {vid:'img/home/clip_mappa.webm', it:['Mappa','Mappa con le auto','Ogni auto sulla pista, in 2D o 3D.'], en:['Map','Track map','Every car on the track, in 2D or 3D.'], tab:'pista'},
+ {img:'img/home/f_gomme.jpg', it:['Strategia','Strategia e gomme','Mescole, stint, soste e previsione della prossima sosta.'], en:['Strategy','Strategy & tyres','Compounds, stints, pit stops and the next stop forecast.'], tab:'gomme'},
+ {img:'img/home/f_confronto.jpg', it:['Confronto','Confronto piloti','Due piloti a confronto, giro per giro.'], en:['Compare','Driver comparison','Two drivers side by side, lap by lap.'], tab:'confronto'},
+ {img:'img/home/f_tele.jpg', it:['Telemetria','Telemetria','Velocità, gas, freno e marce su due giri a scelta.','⬇ Scarica per Windows'], en:['Telemetry','Telemetry','Speed, throttle, brake and gears on any two laps.','⬇ Download for Windows'], abs:DL_URL, ev:'download-windows', where:{it:'Solo nel programma per PC: nei replay online non c’è.',en:'PC program only: not in the online replays.'}},
+ {img:'img/home/f_ritardo.jpg', ph1:true, it:['Ritardo TV','Ritardo TV','Sposti i tempi di qualche secondo: niente spoiler sulla TV.'], en:['TV delay','TV delay','Shift timing by a few seconds: no spoilers on TV.'], href:'live/', where:{it:'In diretta: barra in alto e scheda ⚙ dell’app.',en:'Live: the top bar and the app’s ⚙ tab.'}}
+];
+let CUR = 0, AUTO = true, tabTimer = null;
+function tabHref(f){
+  if(f.abs) return f.abs;
+  if(f.href) return f.href;
+  const lr = lastRace();
+  if(lr) return rpUrl(lr.name, f.tab);
+  return f.tab === 'pista' ? (MOBILE ? 'live/?demo' : 'demo/#pista') : 'replay/';
+}
+function showTab(i){
+  CUR = i; const f = TABS[i], [, h, p] = f[LANG];
+  $('tabs').querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
+  $('screen').innerHTML = f.vid ? `<video src="${f.vid}" poster="img/home/clip_mappa.jpg" autoplay muted loop playsinline></video><span class="src">${t('src')}</span>`
+                                : `<img src="${f.img}" alt="${esc(h)}" ${f.ph1 ? 'class="ph1"' : ''}>`;
+  $('capt').innerHTML = `<div><h3>${h}</h3><p>${p}</p></div><a href="${tabHref(f)}"${f.ev ? ` data-ev="${f.ev}"` : ''}>${f[LANG][3] || t('open')}</a>${f.where ? `<span class="where">${f.where[LANG]}</span>` : ''}`;
+  const pr = $('pbar'); pr.classList.remove('run'); if(AUTO){ void pr.offsetWidth; pr.classList.add('run'); }
+}
+function renderTabs(){
+  $('tabs').innerHTML = TABS.map((f, i) => `<button type="button" data-tab="${i}">${f[LANG][0]}</button>`).join('');
+  showTab(CUR);
+}
+
+// ---------------- «Ultime sessioni»: le ultime tre pubblicate, verso le pagine statiche /f1/ (elenco di pagine_f1.py) ----------------
 let F1IDX = null;
 function renderLatest(){
   const box = $('latList'); if(!box || !F1IDX) return;
   const ss = (F1IDX.sessions || []).slice(0, 3);
   if(F1IDX.years && F1IDX.years[0]) $('latAll').href = `f1/${encodeURIComponent(F1IDX.years[0])}/`;
   box.innerHTML = ss.map(x => { const l = (x.lead || [])[0], k = x.kind === 'race' ? 'lat_winner' : x.kind === 'quali' ? 'lat_pole' : 'lat_fastest';
-    return `<a href="${esc(x.url)}" data-ev="latest-results"><span class="k">${esc(x.meeting.replace(/ Grand Prix$/, ' GP'))} ${esc(x.year)}</span><b>${esc(sname(x.session))}</b>`
+    return `<a href="${esc(x.url)}" data-ev="latest-results"><span class="k">${esc(gpYear(x.meeting, x.year))}</span><b>${esc(sname(x.session))}</b>`
       + (l ? `<span class="v">${t(k)}: <span class="sw" style="background:${esc(l.color || '#888')}"></span><b style="display:inline">${esc(l.name)}</b>${l.v && x.kind !== 'race' ? ` <span class="dim">${esc(l.v)}</span>` : ''}</span>` : '') + `</a>`; }).join('');
 }
-fetch('f1/index.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(j => { F1IDX = j; renderLatest(); }).catch(() => {});
-// «Mandalo sul tuo PC»: la condivisione del telefono (mail, WhatsApp, a se stessi...); senza, il link negli appunti
+
+// ---------------- «Mandalo sul tuo PC»: la condivisione del telefono; senza, il link negli appunti ----------------
 async function sendToPc(){
   const url = 'https://free-to-race.com/';
   if(navigator.share){
@@ -511,155 +622,22 @@ async function sendToPc(){
   const el = $('sendOk'); el.innerHTML = ok ? t('copied') : 'free-to-race.com'; el.classList.add('on');
   clearTimeout(sendToPc.tm); sendToPc.tm = setTimeout(() => el.classList.remove('on'), 6000);
 }
-$('sendPc').addEventListener('click', sendToPc);
-if(MOBILE){ $('dlNav').href = 'live/?install=1'; $('dlNav').dataset.i = 'ph_short'; $('dlNav').dataset.ev = 'install-phone'; }
+
 document.addEventListener('click', e => {
   // contatore senza cookie (GoatCounter, se presente nella pagina): solo quante volte si preme un pulsante
   const ev = e.target.closest('[data-ev]');
   if(ev && window.goatcounter && goatcounter.count) goatcounter.count({path: ev.dataset.ev, title: ev.dataset.ev, event: true});
+  const l = e.target.closest('[data-l]');
+  if(l){ LANG = l.dataset.l; try{ localStorage.setItem('ftr.lang', LANG); }catch(_){} applyLang(); return; }
+  const tb = e.target.closest('#tabs button');
+  if(tb){ AUTO = false; clearInterval(tabTimer); showTab(+tb.dataset.tab); return; }
+  if(e.target.closest('#ssQ')){ const c = $('tcWin'); c.scrollIntoView({behavior:'smooth', block:'center'}); c.classList.remove('hl'); void c.offsetWidth; c.classList.add('hl'); return; }
+  if(e.target.closest('#sendPc')){ sendToPc(); return; }
   if(e.target.closest('[data-qr]') && !MOBILE){ e.preventDefault(); $('qrPop').classList.add('on'); }
   if(e.target.id === 'qrPop' || e.target.id === 'qrClose') $('qrPop').classList.remove('on');
   if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
 });
-async function main(){
-  applyLang();
-  const site = p => fetch(p, {cache:'no-cache'}).then(r => r.ok ? r.json() : []).catch(() => []);
-  const side = Promise.all([site('replay/replays.json'), site('risultati/index.json'), j('/last/results.json').catch(() => null)])
-    .then(([rp, ri, last]) => { RP = rp; RI = ri; LAST = last && last.RaceTable.Races[0] || null; renderTop(); });
-  try{
-    const [rt, res] = await Promise.all([j('.json?limit=40'), j('/results/1.json?limit=100')]);
-    races = rt.RaceTable.Races;
-    $('season').textContent = rt.RaceTable.season;
-    for(const r of res.RaceTable.Races) winners[r.round] = r.Results[0];
-    renderTop(); renderCal(); await renderMap();
-  }catch(e){ $('cal').innerHTML = `<div class="err">${t('err_cal')}</div>`; renderTop(); }
-  await side;
-  try{
-    const [ds, cs] = await Promise.all([j('/driverstandings.json?limit=40'), j('/constructorstandings.json?limit=20')]);
-    lastStandings = [ds.StandingsTable.StandingsLists[0], cs.StandingsTable.StandingsLists[0]];
-    renderStandings(...lastStandings);
-  }catch(e){ $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('err_st')}</td></tr>`; }
-}
 
-function nextRace(){ const now=new Date(); return races.find(r => raceTime(r) > now); }
-// ---------------- in cima: il weekend, il programma (o la diretta), l'ultima gara o sessione ----------------
-// Prima del weekend: conto alla rovescia alla prima sessione, programma, replay della stessa gara dell'anno prima.
-// Durante: sessioni corse con la spunta (aprono i risultati), quella in corso in rosso, conto alla rovescia alla prossima,
-// e i risultati dell'ultima sessione pubblicata. Una sessione e' «in diretta» fra l'orario e la durata prevista + 15 min.
-const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};
-const SKEYS = [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']];
-const sname = s => (t('sess') || {})[s] || s;
-const lapT = v => v == null ? '' : v >= 60 ? `${Math.floor(v / 60)}:${(v % 60).toFixed(3).padStart(6, '0')}` : v.toFixed(3);
-function sessionsOf(r){
-  const out = [];
-  for(const [k, s] of SKEYS){ const x = k ? r[k] : {date:r.date, time:r.time}; if(x && x.date) out.push({s, d:Date.parse(x.date + 'T' + (x.time || '12:00:00Z'))}); }
-  return out.sort((a, b) => a.d - b.d);
-}
-function weekendNow(){       // il weekend in corso o il prossimo (finisce 4 ore dopo la partenza della gara)
-  const now = Date.now();
-  for(const r of races){ const ss = sessionsOf(r); if(ss.length && ss[ss.length - 1].d + 4*3600e3 > now) return {r, ss}; }
-  return null;
-}
-const nearWk = (x, ss) => Math.abs(Date.parse(x.start) - ss[0].d) < 5*86400e3;   // stessa settimana del weekend
-function featuredReplay(w){   // replay di questo weekend; altrimenti la stessa gara di un anno passato; altrimenti l'ultima gara
-  const mine = w ? RP.filter(x => nearWk(x, w.ss)) : [];
-  if(mine.length) return mine[0];
-  return (w && RP.find(x => x.session === 'Race' && x.meeting === w.r.raceName)) || RP.find(x => x.session === 'Race') || null;
-}
-let topSig = '';
-function renderTop(){
-  const w = races.length ? weekendNow() : null, now = Date.now();
-  const live = w && w.ss.find(x => now >= x.d && now < x.d + ((DUR[x.s] || 60) + 15)*60e3);
-  const nx = w && w.ss.find(x => x.d > now), during = w && now >= w.ss[0].d;
-  topSig = [LANG, races.length, RP.length, RI.length, !!LAST, live && live.s, nx && nx.s].join('|');
-  if(cdTimer) clearInterval(cdTimer);
-  // il weekend
-  let h;
-  if(!races.length) h = `<div class="kick">&nbsp;</div><h2 class="wkh">&nbsp;</h2>`;
-  else if(!w) h = `<div class="kick">${t('season')}</div><h2 class="wkh">${t('season_over')}</h2>`;
-  else {
-    const r = w.r, mine = RI.filter(x => nearWk(x, w.ss)), byS = {}; for(const x of mine) byS[x.session] = x;
-    const fmt = d => `${new Date(d).toLocaleDateString(t('locale'), {weekday:'short', day:'numeric', month:'short'})} · ${new Date(d).toLocaleTimeString(t('locale'), {hour:'2-digit', minute:'2-digit'})}`;
-    h = `<div class="kick">${during ? t('wk_on') : t('next_k')} ${r.round} ${t('of')} ${races.length}</div><h2 class="wkh">${esc(r.raceName)}</h2>
-      <div class="dim">${esc(r.Circuit.circuitName)} · ${esc(r.Circuit.Location.locality)}, ${esc(r.Circuit.Location.country)}</div>`;
-    if(nx) h += `<div class="cdl">${esc(t('in_')(sname(nx.s)))}</div><div class="cd big" id="cd"></div>`;
-    h += `<h3 class="ch" style="margin-top:14px">${t('prog_h')}</h3><div class="prog">` + w.ss.map(x => {
-      const res = byS[x.s], cls = live === x ? 'live' : x.d < now ? 'done' : nx === x ? 'nx' : '';
-      const inner = `<b>${esc(sname(x.s))}</b>${esc(fmt(x.d))}`;
-      return res && cls === 'done' ? `<a class="done" href="risultati/?s=${encodeURIComponent(res.name)}">${inner}</a>` : `<div class="${cls}">${inner}</div>`;
-    }).join('') + `</div><div class="acts"><a class="btn sm" href="#" data-cal="1">${t('add_cal')}</a><a class="btn sm" href="#season-sec">${t('all_cal')}</a></div>`;
-    if(nx){
-      const tick = () => { const el = $('cd'); if(!el) return; let s = Math.max(0, (nx.d - Date.now())/1000); const d = Math.floor(s/86400); s -= d*86400; const hh = Math.floor(s/3600); s -= hh*3600; const m = Math.floor(s/60); const x = Math.floor(s - m*60);
-        el.innerHTML = [[d,t('days')],[hh,t('hours')],[m,t('minutes')],[x,t('seconds')]].map(([v,l]) => `<div><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join(''); };
-      setTimeout(tick);
-    }
-  }
-  $('wk').innerHTML = h;
-  // il programma, oppure la diretta
-  const dl = MOBILE ? `<a class="btn main" href="live/?install=1" data-ev="install-phone">${t('ph_install')}</a>`
-                    : `<a class="btn main" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a><a class="btn" href="live/" data-ev="open-browser-pc">${t('open_br')}</a><a class="btn" href="live/?install=1" data-qr="1" data-ev="install-phone">${t('ph_install')}</a>`;
-  const rp = featuredReplay(w), rpUrl = rp ? `replay/${encodeURIComponent(rp.name)}/` : 'demo/';
-  const smart = MOBILE ? '' : `<div class="small dim" style="margin-top:10px;font-size:13px">${t('dl_note')}</div><details class="smart"><summary>${t('ss_q')}</summary><p>${t('ss_a')}</p></details>`;
-  $('download').classList.toggle('livefirst', !!live);     // sul telefono la diretta va in cima
-  if(live){
-    $('prod').className = 'card prod live';
-    $('prod').innerHTML = `<h1 class="kick">${t('seo_h1')}</h1><div style="margin-top:6px"><span class="tag">${t('live_now')}</span></div><h2 style="font-style:normal">${esc(sname(live.s))} · ${esc(w.r.Circuit.Location.locality)}</h2><p class="lead2">${t('lead2')}</p>
-      <a class="thumb" href="live/" ${MOBILE ? '' : 'data-qr="1"'}><img src="img/replay.jpg" alt=""></a>
-      <div class="acts"><a class="btn main" href="live/" ${MOBILE ? '' : 'data-qr="1"'} data-ev="follow-live">${MOBILE ? t('follow_ph') : t('follow')}</a>${MOBILE ? '' : `<a class="btn" href="${DL_URL}" data-ev="download-windows">${t('dl')}</a>`}</div>${smart}`;
-  } else {
-    $('prod').className = 'card prod';
-    $('prod').innerHTML = `<h1 class="kick">${t('seo_h1')}</h1><h2>${t('h1')}</h2><p class="lead2">${t('lead2')}</p>
-      <a class="thumb play" href="${rpUrl}"><img src="img/replay.jpg" alt=""></a>
-      <div class="cap"><span class="tag">${t('ex_tag')}</span> <a href="${rpUrl}"><b>${esc(rp ? rp[LANG] || rp.en : t('demo'))}</b></a> · ${t('rp_sub')}</div>
-      <div class="acts">${dl}</div>${smart}`;
-  }
-  renderLast(w, during);
-}
-setInterval(() => { const w = races.length ? weekendNow() : null, now = Date.now();
-  const live = w && w.ss.find(x => now >= x.d && now < x.d + ((DUR[x.s] || 60) + 15)*60e3), nx = w && w.ss.find(x => x.d > now);
-  if([LANG, races.length, RP.length, RI.length, !!LAST, live && live.s, nx && nx.s].join('|') !== topSig) renderTop();
-  const el = $('cd'); if(el && nx){ let s = Math.max(0, (nx.d - now)/1000); const d = Math.floor(s/86400); s -= d*86400; const hh = Math.floor(s/3600); s -= hh*3600; const m = Math.floor(s/60); const x = Math.floor(s - m*60);
-    el.innerHTML = [[d,t('days')],[hh,t('hours')],[m,t('minutes')],[x,t('seconds')]].map(([v,l]) => `<div><b>${String(v).padStart(2,'0')}</b><span>${l}</span></div>`).join(''); }
-}, 1000);
-
-// l'ultima sessione pubblicata di questo weekend (risultati di Free to Race), altrimenti l'ultima gara (Jolpica)
-async function renderLast(w, during){
-  const ran = new Set(w ? w.ss.filter(x => x.d < Date.now()).map(x => x.s) : []);
-  const box = $('lastCard'), mine = w ? RI.filter(x => nearWk(x, w.ss) && ran.has(x.session)).sort((a, b) => (b.start || '').localeCompare(a.start || '')) : [];
-  const sw = c => `<span class="sw" style="background:${c}"></span>`;
-  const chg = (g, p) => { if(!g) return '<span class="dim">box</span>'; const d = g - p; return d > 0 ? `<span class="up">▲${d}</span>` : d < 0 ? `<span class="dn">▼${-d}</span>` : '<span class="dim">=</span>'; };
-  const links = (name, kind) => { const ri = RI.find(x => x.name === name), rp = RP.find(x => x.name === name), out = [];
-    if(ri) out.push(`<a href="risultati/?s=${encodeURIComponent(name)}">${t(kind === 'race' ? 'more_race' : kind === 'quali' ? 'more_q' : 'more_pr')} →</a>`);
-    if(rp) out.push(`<a href="replay/${encodeURIComponent(name)}/">${t('rp_more')} →</a>`);
-    return out.join(' · '); };
-  if(during && mine.length){
-    const it = mine[0];
-    try{
-      const doc = DOCS[it.name] || (DOCS[it.name] = await (await fetch(`risultati/${it.name}.json`, {cache:'no-cache'})).json());
-      const D = n => doc.drivers[n] || {tla:n, color:'#888'};
-      let tb;
-      if(doc.kind === 'race'){
-        tb = `<tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t('th_grid')}</th><th class="num">±</th><th class="num">${t('th_gap')}</th><th class="num">${t('th_pts')}</th></tr>` +
-          doc.arrivo.slice(0, 10).map(x => `<tr><td>${x.pos}</td><td>${sw(D(x.n).color)}<b>${esc(D(x.n).tla)}</b></td><td class="num">${x.grid || ''}</td><td class="num">${chg(x.grid, x.pos)}</td><td class="num">${x.pos === 1 ? t('winner') : esc(x.gap)}</td><td class="num">${x.pts || ''}</td></tr>`).join('');
-        if(doc.giroVeloce) tb += `<tr><td colspan="6" class="dim" style="font-size:13px">${t('fl')}: <b style="color:var(--text)">${esc(D(doc.giroVeloce.n).tla)}</b> ${lapT(doc.giroVeloce.t)}</td></tr>`;
-      } else {
-        const rows = doc.kind === 'quali' ? doc.griglia.map(x => ({n:x.n, pos:x.pos, t:x.q3 ?? x.q2 ?? x.q1, gap:x.gap})) : doc.classifica.map(x => ({n:x.n, pos:x.pos, t:x.best, gap:x.gap}));
-        tb = `<tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t(doc.kind === 'quali' ? 'th_time' : 'th_best')}</th><th class="num">${t('th_gap')}</th></tr>` +
-          rows.slice(0, 10).map(x => `<tr><td>${x.pos}</td><td>${sw(D(x.n).color)}<b>${esc(D(x.n).tla)}</b></td><td class="num">${lapT(x.t)}</td><td class="num">${x.gap ? '+' + x.gap.toFixed(3) : ''}</td></tr>`).join('');
-      }
-      box.innerHTML = `<h3 class="ch">${t('last_sess')} · ${esc(sname(doc.session))}</h3><table>${tb}</table><div class="more">${links(it.name, doc.kind)}</div>`;
-      return;
-    }catch(e){}
-  }
-  if(!LAST){ box.innerHTML = `<h3 class="ch">${t('last_race')}</h3><div class="err">${t('loading')}</div>`; return; }
-  const own = RI.find(x => x.session === 'Race' && x.meeting === LAST.raceName && x.year === LAST.season);
-  const fl = LAST.Results.find(x => x.FastestLap && x.FastestLap.rank === '1');
-  box.innerHTML = `<h3 class="ch">${t('last_race')} · ${esc(LAST.raceName)}</h3><table><tr><th>Pos</th><th>${t('th_drv')}</th><th class="num">${t('th_grid')}</th><th class="num">±</th><th class="num">${t('th_gap')}</th><th class="num">${t('th_pts')}</th></tr>` +
-    LAST.Results.slice(0, 10).map(x => `<tr><td>${x.position}</td><td>${sw(col(x.Constructor.constructorId))}<b>${esc(x.Driver.code || x.Driver.familyName)}</b></td><td class="num">${+x.grid || ''}</td><td class="num">${chg(+x.grid, +x.position)}</td>
-      <td class="num">${x.position === '1' ? t('winner') : esc(x.Time ? x.Time.time : x.status)}</td><td class="num">${+x.points || ''}</td></tr>`).join('') +
-    (fl ? `<tr><td colspan="6" class="dim" style="font-size:13px">${t('fl')}: <b style="color:var(--text)">${esc(fl.Driver.code)}</b> ${esc(fl.FastestLap.Time.time)}</td></tr>` : '') +
-    `</table><div class="more">${own ? links(own.name, 'race') : ''}</div>`;
-}
 // file .ics con tutte le sessioni del weekend e un promemoria 15 minuti prima
 function addCalendar(){
   const w = weekendNow(); if(!w) return;
@@ -677,6 +655,7 @@ function addCalendar(){
   a.download = r.raceName.replace(/[^\w]+/g,'_') + '.ics';
   document.body.appendChild(a); a.click(); a.remove();
 }
+function nextRace(){ const now = new Date(); return races.find(r => raceTime(r) > now); }
 function renderCal(){
   const nx = nextRace();
   $('cal').innerHTML = races.map(r => {
@@ -695,7 +674,7 @@ async function renderMap(){
   svg.append('path').attr('d', path({type:'Sphere'})).attr('fill','#10141b');
   svg.append('path').attr('d', path(d3.geoGraticule10())).attr('fill','none').attr('stroke','#161b23');
   svg.append('g').selectAll('path').data(land.features).join('path').attr('d', path).attr('fill','#1d232d').attr('stroke','#2a313d').attr('stroke-width',.5);
-  const nx = nextRace(), tip=$('tip');
+  const nx = nextRace(), tip = $('tip');
   const pts = races.map(r => proj([+r.Circuit.Location.long, +r.Circuit.Location.lat]));
   svg.append('path').attr('d', d3.line().curve(d3.curveCatmullRom)(pts)).attr('fill','none').attr('stroke','rgba(225,6,0,.25)').attr('stroke-width',1.2).attr('stroke-dasharray','4 4');
   const g = svg.append('g').selectAll('g').data(races).join('g').attr('transform', (r,i) => `translate(${pts[i][0]},${pts[i][1]})`).style('cursor','pointer');
@@ -706,13 +685,13 @@ async function renderMap(){
     s.append('text').text(r.round).attr('x', 9).attr('y', 4).attr('fill', isNext?'#fff':'#8b94a7').attr('font-size', 11).attr('font-weight', 700).attr('font-family','Titillium Web');
   });
   g.on('mousemove', (ev, r) => {
-    const w = winners[r.round], box=$('map').getBoundingClientRect();
+    const w = winners[r.round], box = $('map').getBoundingClientRect();
     tip.innerHTML = `<b>${r.round}. ${esc(r.raceName)}</b>${esc(r.Circuit.circuitName)}<br><span class="dim">${raceTime(r).toLocaleDateString(t('locale'),{day:'numeric',month:'long',year:'numeric'})}</span>` +
       (w ? `<br>${t('winner_l')}: <b style="display:inline;color:${col(w.Constructor.constructorId)}">${esc(w.Driver.givenName)} ${esc(w.Driver.familyName)}</b> · ${esc(tname(w.Constructor))}` : '');
-    tip.style.display='block';
+    tip.style.display = 'block';
     const x = ev.clientX - box.left, y = ev.clientY - box.top;
     tip.style.left = Math.min(x+14, box.width-270)+'px'; tip.style.top = (y+14)+'px';
-  }).on('mouseleave', () => tip.style.display='none');
+  }).on('mouseleave', () => tip.style.display = 'none');
 }
 function renderStandings(dl, cl){
   if(dl) $('afterRound').textContent = t('after')(dl.round, races.length || '?');
@@ -720,25 +699,29 @@ function renderStandings(dl, cl){
   $('drivers').innerHTML = D.map(d => { const c = d.Constructors[d.Constructors.length-1];
     return `<tr><td class="p">${d.positionText}</td><td class="bar"><i style="background:${col(c.constructorId)}"></i></td>
       <td><b>${esc(d.Driver.givenName)} ${esc(d.Driver.familyName)}</b></td><td class="dim">${esc(tname(c))}</td><td class="num">${d.wins}</td><td class="num pts">${d.points}</td></tr>`; }).join('');
-  const max = Math.max(1, ...C.map(c => +c.points)), lead = Math.max(1, ...D.map(d => +d.points));
-  if(dl) $('miniDh').textContent = t('mini_d')(dl.round, races.length || '?');
-  $('miniD').innerHTML = D.slice(0, 10).map(d => { const c = d.Constructors[d.Constructors.length-1];
-    return `<tr><td>${d.positionText}</td><td><span class="sw" style="background:${col(c.constructorId)}"></span><b>${esc(d.Driver.code || d.Driver.familyName)}</b> <span class="dim" style="font-size:13px">${esc(tname(c))}</span></td>
-      <td style="width:32%"><span class="mbar" style="width:${(+d.points/lead*100).toFixed(0)}%;background:${col(c.constructorId)}"></span></td><td class="num pts">${d.points}</td></tr>`; }).join('');
-  $('miniC').innerHTML = C.slice(0, 10).map(c => `<tr><td>${c.positionText}</td><td><span class="sw" style="background:${col(c.Constructor.constructorId)}"></span>${esc(tname(c.Constructor))}</td><td class="num pts">${c.points}</td></tr>`).join('');
+  const max = Math.max(1, ...C.map(c => +c.points));
   $('teamsTable').innerHTML = C.map(c => `<tr><td class="p">${c.positionText}</td><td><b>${esc(tname(c.Constructor))}</b></td>
       <td><div class="cbar"><div class="t"><i style="width:${(+c.points/max*100).toFixed(1)}%;background:${col(c.Constructor.constructorId)}"></i></div></div></td><td class="num pts">${c.points}</td></tr>`).join('');
-  $('teams').innerHTML = C.map(c => {
-    const id = c.Constructor.constructorId;
-    const ds = D.filter(d => d.Constructors[d.Constructors.length-1].constructorId === id);
-    return `<div class="team"><div class="top" style="border-top-color:${col(id)}"><div class="nm">${esc(tname(c.Constructor))}</div>
-      <div class="meta">${t('t_meta')(c.positionText, c.points, c.wins, esc(c.Constructor.nationality))}</div></div>
-      ${ds.map(d => `<div class="drv"><span class="no" style="color:${col(id)}">${esc(d.Driver.permanentNumber||'')}</span>
-        <span class="who"><b>${esc(d.Driver.givenName)} ${esc(d.Driver.familyName)}</b><small>${esc(d.Driver.nationality)} · ${esc(d.Driver.code||'')}</small></span>
-        <span class="pt">${d.points}<small>${t('d_meta')(d.positionText, d.wins)}</small></span></div>`).join('')}</div>`;
-  }).join('');
 }
-$('lang').onclick = () => { LANG = LANG==='it' ? 'en' : 'it'; try{ localStorage.setItem('ftr.lang', LANG); }catch(e){} applyLang(); };
+
+async function main(){
+  applyLang();
+  if(AUTO) tabTimer = setInterval(() => showTab((CUR + 1) % TABS.length), 6000);
+  fetch('replay/replays.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : []).then(x => { RP = Array.isArray(x) ? x : []; renderTop(); showTab(CUR); }).catch(() => {});
+  fetch('f1/index.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : null).then(x => { F1IDX = x; renderLatest(); }).catch(() => {});
+  try{
+    const [rt, res] = await Promise.all([j('.json?limit=40'), j('/results/1.json?limit=100')]);
+    races = rt.RaceTable.Races;
+    $('season').textContent = rt.RaceTable.season;
+    for(const r of res.RaceTable.Races) winners[r.round] = r.Results[0];
+    renderTop(); renderCal(); await renderMap();
+  }catch(e){ $('cal').innerHTML = `<div class="err">${t('err_cal')}</div>`; renderTop(); }
+  try{
+    const [ds, cs] = await Promise.all([j('/driverstandings.json?limit=40'), j('/constructorstandings.json?limit=20')]);
+    lastStandings = [ds.StandingsTable.StandingsLists[0], cs.StandingsTable.StandingsLists[0]];
+    renderStandings(...lastStandings);
+  }catch(e){ $('drivers').innerHTML = `<tr><td colspan="6" class="err">${t('err_st')}</td></tr>`; }
+}
 main();
 </script>
 </body>
