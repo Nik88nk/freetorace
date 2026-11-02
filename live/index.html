@@ -399,7 +399,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261101-231845';
+const BUILD = '20261102-194333';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1356,9 +1356,11 @@ async function startDemo(){
     ev.sort((a,b)=>a[0]-b[0]);
     if(REPLAY){ const si = (ev.find(e => e[1]==='SessionInfo' && e[2] && e[2].Meeting) || [])[2] || {};
       what(esc((si.StartDate||'').slice(0,4)) || ''); }   // luogo e sessione sono gia' nella testata: qui solo l'anno
-    const st = ev.find(e => e[1]==='SessionData' && JSON.stringify(e[2]).includes('"Started"'));
-    rp = {ev, i:0, t:0, t0:ev[0][0], t1:ev[ev.length-1][0], start:(st?st[0]:ev[0][0]) - 20000, speed:1, paused:false, last:performance.now()};
-    rp.marks = demoMarks(ev, rp.t1);
+    rp = {ev, i:0, t:0, t0:ev[0][0], t1:ev[ev.length-1][0], speed:1, paused:false, last:performance.now()};
+    rp.marks = demoMarks(ev, rp.t0, rp.t1);
+    // si apre 20 s prima dei semafori spenti (come il programma per PC); registrazione cominciata a sessione
+    // gia' partita o senza partenza: dall'inizio
+    rp.start = (rp.marks.starts.length && !rp.marks.late ? rp.marks.starts[0] : rp.t0) - 20000;
     const pc = v => ((v - rp.t0)/(rp.t1 - rp.t0)*100).toFixed(2)+'%';
     $('#rpMarks').innerHTML = rp.marks.phases.map(x=>`<i class="${x.kind}" style="left:${pc(x.from)};width:max(3px,calc(${pc(x.to)} - ${pc(x.from)}))"></i>`).join('') + rp.marks.starts.map(x=>`<b style="left:${pc(x)}"></b>`).join('');
     seek(rp.start);
@@ -1366,19 +1368,29 @@ async function startDemo(){
   }catch(e){ $('#rpMsg').textContent = t('rpErr'); }
 }
 // partenze (semafori spenti) e tratti con SC, VSC e bandiera rossa: come nel programma per PC (Replay._marks);
-// la bandiera rossa dura fino alla ripartenza, anche se intanto la pista torna «libera»
-function demoMarks(ev, end){
-  const starts=[], phases=[]; let cur=null, red=null;
+// la bandiera rossa dura fino alla ripartenza, anche se intanto la pista torna «libera».
+// Ogni riconnessione del feed rimanda tutta la serie degli stati: ogni stato conta una volta sola, all'orario
+// scritto nella serie (Utc), e quelli di prima dell'inizio della registrazione (stati vecchi) non contano
+function demoMarks(ev, t0, end){
+  const starts=[], phases=[], seen=new Set(), after=[]; let cur=null, red=null;
   for(const [w,k,d] of ev){
     if(k==='SessionData'){ for(const e of asList((d||{}).StatusSeries)){ const st=e&&e.SessionStatus;
-        if(st==='Started'){ starts.push(w); if(red){ red.to=w; phases.push(red); red=null; } }
-        else if((st==='Aborted'||st==='Suspended') && !red) red={kind:'red', from:w};
-        else if(/^(Finished|Finalised|Ends)$/.test(st||'') && red){ red.to=w; phases.push(red); red=null; } } }
+        if(!st) continue;
+        const key=(e.Utc||'')+'|'+st; if(seen.has(key)) continue; seen.add(key);
+        let u = e.Utc ? Date.parse(/(Z|[+-]\d\d:?\d\d)$/.test(e.Utc) ? e.Utc : e.Utc+'Z') : w; if(isNaN(u)) u = w;
+        if(u < t0) continue;
+        after.push([u, st]);
+        if(st==='Started'){ starts.push(u); if(red){ red.to=u; phases.push(red); red=null; } }
+        else if((st==='Aborted'||st==='Suspended') && !red) red={kind:'red', from:u};
+        else if(/^(Finished|Finalised|Ends)$/.test(st) && red){ red.to=u; phases.push(red); red=null; } } }
     else if(k==='TrackStatus'){ const c=String((d||{}).Status||''); if(c==='5' && !red) red={kind:'red', from:w};
       const kind={'4':'sc','6':'vsc','7':'vsc'}[c]; if(cur && cur.kind!==kind){ cur.to=w; phases.push(cur); cur=null; } if(kind && !cur) cur={kind, from:w}; }
   }
   for(const o of [cur, red]) if(o){ o.to=end; phases.push(o); }
-  return {starts, phases};
+  phases.sort((a,b)=>a.from-b.from);
+  after.sort((a,b)=>a[0]-b[0]);
+  const late = after.length>0 && /^(Aborted|Suspended|Finished|Finalised|Ends)$/.test(after[0][1]);
+  return {starts, phases, late};
 }
 const isRaceS = () => (ST.SessionInfo||{}).Type==='Race';   // gara e Sprint: le sole con partenza da fermo
 function rpNote(){
