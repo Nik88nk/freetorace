@@ -399,7 +399,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261102-194333';
+const BUILD = '20261102-224629';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1262,6 +1262,48 @@ function drawBuildings(b, G, scene){
     b.fillStyle=col.roof; b.fill(); b.strokeStyle=col.edge; b.lineWidth=0.6; b.stroke();
   }
 }
+// Griglia di partenza (replay e demo): prima dei semafori spenti le auto stanno ferme in griglia, in ordine, a coppie
+// sfalsate; allo spegnimento partono da li' e passano alla stima dai minisettori al primo passaggio dopo il via.
+// Senza questo la stima usava gli ultimi passaggi del giro di formazione (02.11, gara del Messico: HAM oltre la curva 1).
+// GRID_M: metri dall'inizio del tracciato MultiViewer alla piazzola della pole, misurati con OpenF1 location 6 s prima
+// del via (gare 2025; Messico e Austin anche 2026: 219/219 e 294/291). Passo fra due piazzole: 8 m (mediana misurata 7,9).
+// Circuito non in tabella: pole 5 m dietro il traguardo disegnato. Lato della pole: a sinistra (non c'e' nei dati).
+const GRID_M = {10:-21, 49:176, 46:276, 63:221, 149:228, 6:202, 22:-17, 15:100, 19:96, 2:119, 4:30, 55:42, 39:303, 9:292, 65:219, 14:21, 152:59, 150:251, 70:102};
+function gridPhase(now){
+  if(!DEMO || !rp || !rp.marks || rp.marks.late || !rp.marks.starts.length || !isRaceS()) return null;
+  const s0 = rp.marks.starts[0]/1000;
+  return now < s0 ? {s0, pre:true} : now < s0 + 40 ? {s0, pre:false} : null;
+}
+function gridSlots(G, ds, finish){
+  const len = G.cumR[G.cumR.length-1]/10, pxm = G.k*10;          // metri del giro, pixel per metro
+  const key = +String(circuitKey).split('/')[0];
+  let pole = key in GRID_M ? GRID_M[key] : finish*len - 5;
+  // ordine di partenza: le posizioni del cronometraggio allo spegnimento dei semafori (dopo il via cambiano a ogni passaggio)
+  if(!rp.grid){ const o = {}, s0 = rp.marks.starts[0];
+    for(const [w,k,d] of rp.ev){ if(w > s0) break; if(k!=='TimingData') continue;
+      for(const [n,l] of Object.entries((d||{}).Lines||{})) if(l && l.Position!=null){ const v = parseInt(l.Position); if(!isNaN(v)) o[n] = v; } }
+    rp.grid = o; }
+  const gp = d => rp.grid[d.n] || d.pos;
+  const cars = ds.filter(d=>!d.out && gp(d)<99).sort((a,b)=>gp(a)-gp(b)), n = Math.max(1, cars.length - 1);
+  // a scala vera 22 auto occupano 170 m, sul telefono 30 px: un grumo. Le piazzole si allungano fino a 7 px l'una,
+  // restando sul rettilineo (direzione entro 20 gradi da quella della pole): se dietro non c'e' posto, la griglia
+  // avanza verso la prima curva; se non c'e' neanche cosi', il passo si accorcia (mai sotto gli 8 m veri)
+  if(!(gridSlots.c && gridSlots.c.G===G && gridSlots.c.key===key)){
+    const hd = m => { const a=G.at((m-5)/len), z=G.at((m+5)/len); return Math.atan2(z[1]-a[1], z[0]-a[0]); };
+    const h0 = hd(pole), off = m => Math.abs(((hd(m)-h0+3*Math.PI)%(2*Math.PI))-Math.PI) > 20*Math.PI/180;
+    let back = 0, fwd = 0; while(back < 1500 && !off(pole-back-10)) back += 10; while(fwd < 1500 && !off(pole+fwd+10)) fwd += 10;
+    gridSlots.c = {G, key, back:Math.max(0, back-20), fwd:Math.max(0, fwd-60)};   // margini: 20 m dalla curva dietro, 60 m dalla frenata davanti
+  }
+  const {back, fwd} = gridSlots.c;
+  let step = Math.max(8, 7/pxm);
+  if(n*step > back){ const sh = Math.min(n*step - back, fwd); pole += sh; if(n*step > back + sh) step = Math.max(8, (back + sh)/n); }
+  const w = Math.max(9*0.85, Math.min(26*0.85, 130*G.k)), lat = Math.max(3.5, w*0.4);
+  const out = {len, pxm, pole};
+  cars.forEach((d,i)=>{ out[d.n] = {f:(((pole - i*step)/len)%1+1)%1, lat:i%2 ? -lat : lat}; });
+  return out;
+}
+const launchM = t => { const u = Math.max(0, t - 0.5); return 120*(u - 10*(1 - Math.exp(-u/10))); };   // metri dopo il via (OpenF1: ~100 m a 5 s, ~870 a 15 s)
+const leftAt = (G, f) => { const a=G.at(f-0.0015), z=G.at(f+0.0015), l=Math.hypot(z[0]-a[0], z[1]-a[1])||1; return [(z[1]-a[1])/l, -(z[0]-a[0])/l]; };
 const disp = {};
 let lastFrame = performance.now();
 function drawMap(){
@@ -1272,14 +1314,19 @@ function drawMap(){
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,r.width,r.height);
   if(!circuit || !circuit.x){ $('#mapNote').textContent = circuitKey ? t('mapNone') : ''; return; }
   const G = mkGeo(r.width, r.height);
-  trackLayer(g, G, r.width, r.height, 0.85, dpr, cal && !cal.approx ? cal : null);   // pista, cordoli, box, curve, edifici
+  const tl = trackLayer(g, G, r.width, r.height, 0.85, dpr, cal && !cal.approx ? cal : null);   // pista, cordoli, box, curve, edifici
   $('#mapNote').textContent = trk.hasReal ? t('mapReal') : (cal && cal.approx ? t('mapApprox') : t('mapOk'));
   if(!isLive()) return;
   const real = performance.now(), dtr = Math.min(0.1, (real - lastFrame)/1000), dt = dtr * rate(), now = sessNow(); lastFrame = real;
   const ds = drivers().slice().reverse(), lines = ((ST.TimingData||{}).Lines)||{};
+  const gph = gridPhase(now), gsl = gph ? gridSlots(G, ds, tl.finish) : null;
+  const gridAt = d => { const s = gsl[d.n], m = gph.pre ? 0 : launchM(now - gph.s0), f = (s.f + m/gsl.len) % 1, lat = s.lat*Math.max(0, 1 - m/150);
+    const p = G.at(f), nv = leftAt(G, f); return {f, xy:[p[0] + nv[0]*lat, p[1] + nv[1]*lat], lab: s.lat > 0 ? nv : [-nv[0], -nv[1]]}; };   // nome dalla parte della propria fila
+  if(gsl && (gph.pre || now < gph.s0 + 10)){ const f=((gsl.pole+6)/gsl.len%1+1)%1, p=G.at(f), nv=leftAt(G, f), h=Math.max(9*0.85, Math.min(26*0.85, 130*G.k))/2+1;   // linea di partenza, davanti alla pole
+    g.strokeStyle='#ffffff'; g.lineWidth=2; g.beginPath(); g.moveTo(p[0]-nv[0]*h, p[1]-nv[1]*h); g.lineTo(p[0]+nv[0]*h, p[1]+nv[1]*h); g.stroke(); }
   for(const d of ds){
     if(d.out) continue;
-    let xy;
+    let xy, lab = null;
     if(trk.hasReal){                             // posizioni vere: interpolo fra due campioni un filo indietro, poi smusso (come il PC)
       const h = trk.rhist[d.n];
       if(h && h.length){
@@ -1292,15 +1339,24 @@ function drawMap(){
         if(!dd || Math.hypot(tgt[0]-dd.xy[0], tgt[1]-dd.xy[1])>80*sr) disp['v'+d.n]={xy:tgt};
         else { const k=Math.min(1, dtr*12*sr); dd.xy=[dd.xy[0]+(tgt[0]-dd.xy[0])*k, dd.xy[1]+(tgt[1]-dd.xy[1])*k]; }
         xy = disp['v'+d.n].xy;
+        // posizioni vere (demo): sul telefono la griglia a scala vera e' un grumo; prima del via la griglia allungata,
+        // dopo il via si passa alle posizioni vere in 8 s
+        if(gsl && gsl[d.n] && !(lines[d.n] && lines[d.n].InPit)){ const gq = gridAt(d), w = gph.pre ? 0 : Math.min(1, (now - gph.s0)/8);
+          xy = [gq.xy[0] + (xy[0]-gq.xy[0])*w, gq.xy[1] + (xy[1]-gq.xy[1])*w]; if(w < 0.5) lab = gq.lab; }
       }
     } else if(cal){                              // stima dai minisettori (diretta o archivio)
       const L = trk.last[d.n];
       if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
+      else if(gsl && gsl[d.n] && !(L && L[1] >= gph.s0)){   // in griglia, o partito ma non ancora passato da un minisettore dopo il via
+        const gq = gridAt(d); xy = gq.xy; lab = gq.lab;
+        disp[d.n] = {f:gq.f}; delete trk.ratio[d.n];              // da qui parte la stima; l'andatura del giro di formazione non vale
+      }
       else if(L){
         const ft = estFrac(L[0], now - L[1], pace(d.n));
         let q = disp[d.n]; const delta = q ? ((ft-q.f+0.5)%1+1)%1-0.5 : 1;
         // come nel programma per PC: si riposiziona solo se indietro di molto o avanti di moltissimo; poco avanti, rallenta
-        if(!q || delta>0.03 || delta<-0.08) q = disp[d.n] = {f:ft};
+        // nei 40 s dopo il via niente riposizionamenti: dalla griglia la stima si raggiunge senza salti
+        if(!q || (!(gph && !gph.pre) && (delta>0.03 || delta<-0.08))) q = disp[d.n] = {f:ft};
         else { const vt = Math.max(0, ((estFrac(L[0], now-L[1]+0.2, pace(d.n))-ft+0.5)%1+1)%1-0.5)/0.2;   // col segno: niente «quasi un giro» per uno scarto minuscolo
           q.f = (q.f + Math.max(0.25*vt, vt + delta/1.2)*dt) % 1; }
         xy = G.at(q.f);
@@ -1309,8 +1365,12 @@ function drawMap(){
     if(!xy) continue;
     const on = selNum===d.n, faded = selNum && !on;
     g.globalAlpha = faded ? .3 : 1;
-    g.fillStyle=d.color; g.beginPath(); g.arc(xy[0],xy[1],on?8:6,0,7); g.fill(); g.strokeStyle='#05070a'; g.lineWidth=1.5; g.stroke();
-    if(!faded){ g.font=`bold ${on?13:10}px Titillium Web`; g.fillStyle='rgba(11,13,18,.75)'; const w=g.measureText(d.tla).width; g.fillRect(xy[0]+8,xy[1]-17,w+6,14); g.fillStyle='#fff'; g.fillText(d.tla, xy[0]+11, xy[1]-6); }
+    g.fillStyle=d.color; g.beginPath(); g.arc(xy[0],xy[1],on?8:lab?4.5:6,0,7); g.fill(); g.strokeStyle='#05070a'; g.lineWidth=1.5; g.stroke();
+    if(!faded && lab){ g.font=`bold ${on?12:9}px Titillium Web`; const w=g.measureText(d.tla).width+4;   // a pettine: perpendicolare alla pista, fuori dalla propria fila
+      let a = Math.atan2(lab[1], lab[0]); const fl = Math.cos(a) < 0; if(fl) a += Math.PI;
+      g.save(); g.translate(xy[0]+lab[0]*7, xy[1]+lab[1]*7); g.rotate(a); const x0 = fl ? -w : 0;
+      g.fillStyle='rgba(11,13,18,.75)'; g.fillRect(x0, -6, w, 12); g.fillStyle='#fff'; g.fillText(d.tla, x0+2, 3.5); g.restore(); }
+    else if(!faded){ g.font=`bold ${on?13:10}px Titillium Web`; g.fillStyle='rgba(11,13,18,.75)'; const w=g.measureText(d.tla).width; g.fillRect(xy[0]+8,xy[1]-17,w+6,14); g.fillStyle='#fff'; g.fillText(d.tla, xy[0]+11, xy[1]-6); }
   }
   g.globalAlpha=1;
 }
