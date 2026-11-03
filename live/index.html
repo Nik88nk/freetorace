@@ -53,6 +53,7 @@ header .ev small{color:var(--dim);font-size:12px;text-transform:uppercase;letter
 #dctl #dBtn{min-width:58px}
 .dinfo{width:24px;height:24px;border-radius:50%;border:1px solid var(--dim)!important;background:none!important;color:var(--dim)!important;font:italic 700 13px Georgia,serif!important;padding:0!important;line-height:22px}
 #rtBand{display:none;padding:8px 12px;font-size:13.5px;line-height:1.3}#rtBand.pause{display:block;background:#1d3a66;color:#fff}#rtBand.lost{display:flex;gap:8px;align-items:center;background:#3a2d12;color:#ffe9b0}#rtBand.lost span{flex:1}#rtBand button{background:none;border:none;color:inherit;font:inherit;font-size:20px;font-weight:700;padding:0 4px}
+#preBand{display:none;align-items:center;gap:10px;padding:8px 12px;font-size:14px;background:#15202e;border-bottom:1px solid var(--line2)}#preBand.on{display:flex}#preBand span{flex:1}#preBand button{background:var(--accent);border:none;color:#fff;border-radius:8px;padding:6px 10px;font:inherit;font-weight:700;font-size:13px;white-space:nowrap}
 #dSh{position:fixed;inset:0;z-index:41;display:none}#dSh.on{display:block}
 #dSh .shade{position:absolute;inset:0;background:#000a}
 #dSh .sheet{position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;max-height:88vh;overflow:auto;background:var(--panel);border-top:3px solid var(--accent);border-radius:16px 16px 0 0;padding:6px 14px calc(env(safe-area-inset-bottom) + 16px);box-shadow:0 -10px 30px #000}
@@ -322,6 +323,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 <div id="instSheet"><div class="box" id="instBox"></div></div>
 <div id="conn"><i></i><span id="connTxt"></span><span class="grow"></span><span id="delayTxt" class="tn"></span><span class="dctl" id="dctl"><span data-t="tvDelay"></span><button id="dBtn" class="tn" aria-haspopup="dialog"></button><button id="dInfo" class="dinfo" aria-label="i">i</button></span></div>
 <div id="rtBand" role="status"></div>
+<div id="preBand" role="status"></div>
 <div id="dSh" role="dialog"><div class="shade" data-dx="1"></div><div class="sheet" id="dBox"></div></div>
 <div id="redBand" role="status"></div>
 <div id="rpBar" style="display:none"><button id="rpPlay">⏸</button><button id="rpSpeed">1×</button><span class="rpSeekW"><input type="range" id="rpSeek" min="0" max="1000" value="0"><span id="rpMarks"></span></span><span id="rpTime" class="tn"></span></div>
@@ -364,7 +366,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tStrat:'Strategy', stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
-  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
+  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
   alStartH:'Sync at the start', alStartB:'Tap when the cars start on TV', alStartS:'Before the start, keep your finger ready', alStartNo:'The start has not reached the data yet: tap when the cars start on TV.',
   alTvH:'Sync with the TV', alLapQ:'1. Which lap does the TV show?', alLapB:'2. Tap when the leader crosses the line', alLapS:'and the TV moves to lap {N}', alLapNo:'Lap {N} has not started in the data yet: check the lap you picked.',
   alDrvQ:'1. Pick a lap that is about to end on TV', alDrvB:'2. Tap when {NAME} ends the lap on TV', alDrvPick:'2. Pick a lap first', alDrvNone:'No laps completed since the app opened: use −1 / +1.',
@@ -392,7 +394,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tStrat:'Strategia', stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
-  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
+  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
   alStartH:'Allinea alla partenza', alStartB:'Tocca quando in TV le auto partono', alStartS:'Prima del via tieni il dito pronto', alStartNo:'Il via non è ancora arrivato dai dati: tocca quando in TV le auto partono.',
   alTvH:'Allinea alla TV', alLapQ:'1. Che giro segna la TV?', alLapB:'2. Tocca quando il primo passa il traguardo', alLapS:'e la TV passa al giro {N}', alLapNo:'Il giro {N} non è ancora iniziato nei dati: controlla il giro scelto.',
   alDrvQ:'1. Scegli un giro che in TV sta per chiudersi', alDrvB:'2. Tocca quando in TV {NAME} chiude il giro', alDrvPick:'2. Prima scegli un giro', alDrvNone:'Nessun giro chiuso da quando l’app è aperta: usa −1 / +1.',
@@ -433,7 +435,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261103-101903';
+const BUILD = '20261103-232822';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -478,8 +480,10 @@ const trk = {last:{}, ratio:{}, pitIn:{}, rhist:{}, hasReal:false};   // miniset
 let selNum = null, gapMode = 'gap', tab = 'times';
 
 // stato di una sessione da zero (dopo un salto nel replay, o quando in diretta il feed passa a un'altra sessione)
+let liveStart = null, liveGrid = null, preSeen = false;   // diretta: istante del via (orario mostrato) e ordine allo spegnimento
 function resetState(){
   for(const k of Object.keys(ST)) delete ST[k];
+  liveStart = liveGrid = null; preSeen = false; nearF.c = {};
   trk.last={}; trk.ratio={}; trk.pitIn={}; trk.rhist={}; for(const k of Object.keys(disp)) delete disp[k];
   LAPS.rec={}; LAPS.last={}; LAPS.fl={}; LAPS.sx={};
 }
@@ -501,6 +505,14 @@ function apply(topic, data, when){
     trk.hasReal = true; return;                 // non serve accumularle in ST
   }
   if(topic==='TimingData') passages(data, when);
+  // il via in diretta: la sessione passa da «Inactive» (visto prima) a «Started». Aperta a gara gia' partita: niente griglia
+  if(!DEMO && (topic==='SessionData' || topic==='SessionInfo') && liveStart==null){
+    const before = curStatus(); ST[topic] = merge(ST[topic], data); const after = curStatus();
+    if(after==='Inactive') preSeen = true;
+    if(preSeen && before!=='Started' && after==='Started'){ liveStart = when; liveGrid = {};
+      for(const [n,l] of Object.entries(((ST.TimingData||{}).Lines)||{})) if(l && l.Position!=null){ const v = parseInt(l.Position); if(!isNaN(v)) liveGrid[n] = v; } }
+    return;
+  }
   ST[topic] = merge(ST[topic], data);
   if(topic==='TimingData') safe('giri', () => lapsUpd(data));
   if(topic==='TrackStatus' && !tsOk()) for(const f of Object.values(LAPS.fl)) f.bad = true;
@@ -762,6 +774,10 @@ function showEff(){
   if(left >= 1){ h = esc(t('pauseB')).replace('{T}', '<b class="tn">' + fmtT(Math.ceil(left)) + '</b>'); c = 'pause'; }
   else if(lostNote && Date.now() - lostNote < 20000){ h = `<span>${esc(t('lostB'))}</span><button data-lostx="1" aria-label="×">×</button>`; c = 'lost'; }
   if(band._h !== h){ band.innerHTML = h; band._h = h; band.className = c; }
+  const pb = $('#preBand'), pre = preStart(); let ph = '';
+  if(pre){ const t0 = sessStartUtc(), left = t0==null ? 0 : (t0 - feedNowMs())/1000 + delay, race = isRaceS();
+    ph = `<span>${esc(t(race ? 'preRace' : 'preSess'))}${left >= 1 ? ` ${esc(t('preIn'))} <b class="tn">${fmtT(Math.ceil(left))}</b>` : ''}</span>` + (race ? `<button data-preal="1">${esc(t('alStartH'))}</button>` : ''); }
+  if(pb._h !== ph){ pb.innerHTML = ph; pb._h = ph; pb.classList.toggle('on', pre); }
   if(dOpen) dRender();
 }
 // ---------------- pannello del ritardo TV: rifinitura e allineamento ----------------
@@ -830,6 +846,7 @@ $('#dSh').addEventListener('click', e => {
 $('#dBtn').onclick = () => dShow('');
 $('#dInfo').onclick = () => dShow('help');
 $('#dAlign').onclick = e => { e.preventDefault(); dShow(''); };
+$('#preBand').addEventListener('click', e => { if(e.target.closest('[data-preal]')) dShow(''); });
 $('#rtBand').addEventListener('click', e => { if(e.target.closest('[data-lostx]')){ lostNote = 0; showEff(); } });
 // iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
 // pagina finiva sotto l'orologio, che i nuovi iOS velano e sfocano, e l'altezza escludeva la barra di stato (striscia
@@ -941,7 +958,28 @@ const fmtT = s => { s=Math.max(0,Math.round(s)); const h=Math.floor(s/3600), m=M
 function isLive(){
   if(DEMO) return !!ST.SessionInfo;
   const st = String((ST.SessionInfo||{}).SessionStatus || ((ST.SessionData||{}).StatusSeries ? asList(ST.SessionData.StatusSeries).map(x=>x.SessionStatus).filter(Boolean).pop() : '') || '');
-  return !/^(Finalised|Ends|Inactive)$/i.test(st) && !!ST.SessionInfo;
+  return (!/^(Finalised|Ends|Inactive)$/i.test(st) && !!ST.SessionInfo) || preStart();
+}
+// prima del via (03.11, Nikita): la sessione nel feed e' «Inactive» e non e' mai partita, e l'orario del calendario
+// e' entro 3 ore. Allora si mostra la schermata della sessione (classifica in ordine di griglia, fila sulla mappa) con
+// la fascia «Gara in partenza fra m:ss», non «Nessuna sessione». L'ora e' quella del feed (uguale a quella vera in diretta)
+const feedNowMs = () => { const o = feedOff(); if(o!=null) return (performance.now()/1000 - o)*1000;
+  const hb = uOf((ST.Heartbeat||{}).Utc); return hb!=null ? hb*1000 : Date.now(); };   // prima del primo messaggio: l'ora dello stato completo
+function sessStartUtc(){
+  const si = ST.SessionInfo || {}, d = Date.parse(String(si.StartDate||'').replace(/Z$/,'') + 'Z'); if(!isFinite(d)) return null;
+  const g = String(si.GmtOffset||'').match(/^(-?)(\d+):(\d+)/);
+  return d - (g ? (g[1] ? -1 : 1)*((+g[2])*60 + (+g[3]))*60e3 : 0);
+}
+// stato della sessione: l'ultimo della serie (il Messico 2026 aveva in SessionInfo un «Started» vecchio, di un'altra
+// sessione, e in serie «Inactive» fino al via), altrimenti quello di SessionInfo
+function curStatus(){
+  const ss = asList((ST.SessionData||{}).StatusSeries).map(x => x && x.SessionStatus).filter(Boolean);
+  return String(ss[ss.length-1] || (ST.SessionInfo||{}).SessionStatus || '');
+}
+function preStart(){
+  if(DEMO || !ST.SessionInfo || curStatus()!=='Inactive') return false;
+  const t0 = sessStartUtc(), n = feedNowMs();
+  return t0!=null && t0 - n < 3*3600e3 && n - t0 < 3*3600e3;
 }
 // classifica della diretta: un tocco apre la scheda del pilota (e lo evidenzia sulla mappa)
 let sheetN = null, koOpen = false;
@@ -1441,41 +1479,46 @@ function drawBuildings(b, G, scene){
 // Circuito non in tabella: pole 5 m dietro il traguardo disegnato. Lato della pole: a sinistra (non c'e' nei dati).
 const GRID_M = {10:-21, 49:176, 46:276, 63:221, 149:228, 6:202, 22:-17, 15:100, 19:96, 2:119, 4:30, 55:42, 39:303, 9:292, 65:219, 14:21, 152:59, 150:251, 70:102};
 function gridPhase(now){
-  if(!DEMO || !rp || !rp.marks || rp.marks.late || !rp.marks.starts.length || !isRaceS()) return null;
-  const s0 = rp.marks.starts[0]/1000;
-  return now < s0 ? {s0, pre:true} : now < s0 + 40 ? {s0, pre:false} : null;
+  if(!isRaceS()) return null;
+  if(DEMO){
+    if(!rp || !rp.marks || rp.marks.late || !rp.marks.starts.length) return null;
+    const s0 = rp.marks.starts[0]/1000;
+    return now < s0 ? {s0, pre:true} : now < s0 + 40 ? {s0, pre:false} : null;
+  }
+  if(liveStart==null) return preStart() ? {s0:Infinity, pre:true} : null;
+  return now < liveStart + 40 ? {s0:liveStart, pre:now < liveStart} : null;
 }
+// 03.11, Nikita: «un blob in fila indiana va bene, basta che il primo e l'ultimo siano nel posto giusto». Le auto stanno
+// sulla linea della pista, una casella ogni 8 m: la prima nella piazzola vera della pole, l'ultima nella piazzola vera
+// dell'ultima fila. (Prima: griglia allungata a 7 px per piazzola e, se dietro non c'era rettilineo, spostata in avanti
+// fino a 250 m ad Austin; dopo il via la fusione verso le posizioni vere riportava le prime auto indietro di 90 m.)
 function gridSlots(G, ds, finish){
   const len = G.cumR[G.cumR.length-1]/10, pxm = G.k*10;          // metri del giro, pixel per metro
   const key = +String(circuitKey).split('/')[0];
-  let pole = key in GRID_M ? GRID_M[key] : finish*len - 5;
+  const pole = key in GRID_M ? GRID_M[key] : finish*len - 5;
   // ordine di partenza: le posizioni del cronometraggio allo spegnimento dei semafori (dopo il via cambiano a ogni passaggio)
-  if(!rp.grid){ const o = {}, s0 = rp.marks.starts[0];
-    for(const [w,k,d] of rp.ev){ if(w > s0) break; if(k!=='TimingData') continue;
-      for(const [n,l] of Object.entries((d||{}).Lines||{})) if(l && l.Position!=null){ const v = parseInt(l.Position); if(!isNaN(v)) o[n] = v; } }
-    rp.grid = o; }
-  const gp = d => rp.grid[d.n] || d.pos;
-  const cars = ds.filter(d=>!d.out && gp(d)<99).sort((a,b)=>gp(a)-gp(b)), n = Math.max(1, cars.length - 1);
-  // a scala vera 22 auto occupano 170 m, sul telefono 30 px: un grumo. Le piazzole si allungano fino a 7 px l'una,
-  // restando sul rettilineo (direzione entro 20 gradi da quella della pole): se dietro non c'e' posto, la griglia
-  // avanza verso la prima curva; se non c'e' neanche cosi', il passo si accorcia (mai sotto gli 8 m veri)
-  if(!(gridSlots.c && gridSlots.c.G===G && gridSlots.c.key===key)){
-    const hd = m => { const a=G.at((m-5)/len), z=G.at((m+5)/len); return Math.atan2(z[1]-a[1], z[0]-a[0]); };
-    const h0 = hd(pole), off = m => Math.abs(((hd(m)-h0+3*Math.PI)%(2*Math.PI))-Math.PI) > 20*Math.PI/180;
-    let back = 0, fwd = 0; while(back < 1500 && !off(pole-back-10)) back += 10; while(fwd < 1500 && !off(pole+fwd+10)) fwd += 10;
-    gridSlots.c = {G, key, back:Math.max(0, back-20), fwd:Math.max(0, fwd-60)};   // margini: 20 m dalla curva dietro, 60 m dalla frenata davanti
-  }
-  const {back, fwd} = gridSlots.c;
-  let step = Math.max(8, 7/pxm);
-  if(n*step > back){ const sh = Math.min(n*step - back, fwd); pole += sh; if(n*step > back + sh) step = Math.max(8, (back + sh)/n); }
-  const w = Math.max(9*0.85, Math.min(26*0.85, 130*G.k)), lat = Math.max(3.5, w*0.4);
+  let ord = null;
+  if(DEMO){
+    if(!rp.grid){ const o = {}, s0 = rp.marks.starts[0];
+      for(const [w,k,d] of rp.ev){ if(w > s0) break; if(k!=='TimingData') continue;
+        for(const [n,l] of Object.entries((d||{}).Lines||{})) if(l && l.Position!=null){ const v = parseInt(l.Position); if(!isNaN(v)) o[n] = v; } }
+      rp.grid = o; }
+    ord = rp.grid;
+  } else ord = liveGrid || {};
+  const gp = d => ord[d.n] || d.pos;
+  const cars = ds.filter(d=>!d.out && gp(d)<99).sort((a,b)=>gp(a)-gp(b));
   const out = {len, pxm, pole};
-  cars.forEach((d,i)=>{ out[d.n] = {f:(((pole - i*step)/len)%1+1)%1, lat:i%2 ? -lat : lat}; });
+  cars.forEach((d,i)=>{ out[d.n] = {i, f:(((pole - i*8)/len)%1+1)%1, side:i%2 ? -1 : 1}; });
   return out;
 }
 const launchM = t => { const u = Math.max(0, t - 0.5); return 120*(u - 10*(1 - Math.exp(-u/10))); };   // metri dopo il via (OpenF1: ~100 m a 5 s, ~870 a 15 s)
 const leftAt = (G, f) => { const a=G.at(f-0.0015), z=G.at(f+0.0015), l=Math.hypot(z[0]-a[0], z[1]-a[1])||1; return [(z[1]-a[1])/l, -(z[0]-a[0])/l]; };
 const disp = {};
+// punto della pista piu' vicino a una posizione vera (frazione di giro), cercato attorno all'ultimo trovato
+function nearF(G, p, n){ const S = G.scr, N = S.length, c = nearF.c[n]; let best = 1e18, bi = 0;
+  const scan = (a,b) => { for(let j=a;j<=b;j++){ const k=((j%N)+N)%N, q=S[k], d=(q[0]-p[0])**2+(q[1]-p[1])**2; if(d<best){ best=d; bi=k; } } };
+  if(c==null) scan(0, N-1); else scan(c-60, c+60); nearF.c[n] = bi; return G.fracOf(bi); }
+nearF.c = {};
 let lastFrame = performance.now();
 function drawMap(){
   requestAnimationFrame(drawMap);
@@ -1491,9 +1534,9 @@ function drawMap(){
   const real = performance.now(), dtr = Math.min(0.1, (real - lastFrame)/1000), dt = dtr * rate(), now = sessNow(); lastFrame = real;
   const ds = drivers().slice().reverse(), lines = ((ST.TimingData||{}).Lines)||{};
   const gph = gridPhase(now), gsl = gph ? gridSlots(G, ds, tl.finish) : null;
-  const gridAt = d => { const s = gsl[d.n], m = gph.pre ? 0 : launchM(now - gph.s0), f = (s.f + m/gsl.len) % 1, lat = s.lat*Math.max(0, 1 - m/150);
-    const p = G.at(f), nv = leftAt(G, f); return {f, xy:[p[0] + nv[0]*lat, p[1] + nv[1]*lat], lab: s.lat > 0 ? nv : [-nv[0], -nv[1]]}; };   // nome dalla parte della propria fila
-  if(gsl && (gph.pre || now < gph.s0 + 10)){ const f=((gsl.pole+6)/gsl.len%1+1)%1, p=G.at(f), nv=leftAt(G, f), h=Math.max(9*0.85, Math.min(26*0.85, 130*G.k))/2+1;   // linea di partenza, davanti alla pole
+  const gridAt = d => { const s = gsl[d.n], m = gph.pre ? 0 : launchM(now - gph.s0), f = (s.f + m/gsl.len) % 1;
+    const nv = leftAt(G, f); return {f, xy:G.at(f), lab: s.side > 0 ? nv : [-nv[0], -nv[1]]}; };   // nomi a pettine, a lati alterni
+  if(gsl && (gph.pre || now < gph.s0 + 10)){ const f=((gsl.pole+4)/gsl.len%1+1)%1, p=G.at(f), nv=leftAt(G, f), h=Math.max(9*0.85, Math.min(26*0.85, 130*G.k))/2+1;   // linea di partenza, davanti alla pole
     g.strokeStyle='#ffffff'; g.lineWidth=2; g.beginPath(); g.moveTo(p[0]-nv[0]*h, p[1]-nv[1]*h); g.lineTo(p[0]+nv[0]*h, p[1]+nv[1]*h); g.stroke(); }
   for(const d of ds){
     if(d.out) continue;
@@ -1512,8 +1555,13 @@ function drawMap(){
         xy = disp['v'+d.n].xy;
         // posizioni vere (demo): sul telefono la griglia a scala vera e' un grumo; prima del via la griglia allungata,
         // dopo il via si passa alle posizioni vere in 8 s
-        if(gsl && gsl[d.n] && !(lines[d.n] && lines[d.n].InPit)){ const gq = gridAt(d), w = gph.pre ? 0 : Math.min(1, (now - gph.s0)/8);
-          xy = [gq.xy[0] + (xy[0]-gq.xy[0])*w, gq.xy[1] + (xy[1]-gq.xy[1])*w]; if(w < 0.5) lab = gq.lab; }
+        if(gsl && gsl[d.n] && !(lines[d.n] && lines[d.n].InPit)){ const gq = gridAt(d);
+          if(gph.pre){ xy = gq.xy; lab = gq.lab; delete disp['g'+d.n]; }
+          else {   // dalla casella con la curva di partenza verso la posizione vera in 8 s, mai all'indietro
+            const tt = now - gph.s0, real = nearF(G, xy, d.n), w = Math.min(1, tt/8);
+            let f = ((gq.f + ((((real - gq.f)%1)+1.5)%1-0.5)*w)%1+1)%1;
+            const q = disp['g'+d.n]; if(q!=null && ((f - q + 1.5)%1 - 0.5) < 0) f = q;
+            disp['g'+d.n] = f; xy = G.at(f); if(tt < 4) lab = gq.lab; } }
       }
     } else if(cal){                              // stima dai minisettori (diretta o archivio)
       const L = trk.last[d.n];
