@@ -53,6 +53,9 @@ header .ev small{color:var(--dim);font-size:12px;text-transform:uppercase;letter
 #dctl #dBtn{min-width:58px}
 .dinfo{width:24px;height:24px;border-radius:50%;border:1px solid var(--dim)!important;background:none!important;color:var(--dim)!important;font:italic 700 13px Georgia,serif!important;padding:0!important;line-height:22px}
 #rtBand{display:none;padding:8px 12px;font-size:13.5px;line-height:1.3}#rtBand.pause{display:block;background:#1d3a66;color:#fff}#rtBand.lost{display:flex;gap:8px;align-items:center;background:#3a2d12;color:#ffe9b0}#rtBand.lost span{flex:1}#rtBand button{background:none;border:none;color:inherit;font:inherit;font-size:20px;font-weight:700;padding:0 4px}
+#preBand .alBig{flex:1;background:var(--yellow);color:#111;font-size:16px;font-weight:900;padding:13px 10px;border-radius:12px;animation:alPulse 1s ease-in-out infinite;touch-action:manipulation}#preBand .x{background:none;color:var(--text);font-size:22px;padding:0 6px}
+@keyframes alPulse{50%{transform:scale(1.03);box-shadow:0 0 0 6px #ffd12e55}}
+.dgo.yel{background:var(--yellow);color:#111;animation:alPulse 1s ease-in-out infinite}.dlink{background:none;border:none;color:var(--dim);font:inherit;font-size:14px;text-decoration:underline;padding:8px 0}
 #preBand{display:none;align-items:center;gap:10px;padding:8px 12px;font-size:14px;background:#15202e;border-bottom:1px solid var(--line2)}#preBand.on{display:flex}#preBand span{flex:1}#preBand button{background:var(--accent);border:none;color:#fff;border-radius:8px;padding:6px 10px;font:inherit;font-weight:700;font-size:13px;white-space:nowrap}
 #dSh{position:fixed;inset:0;z-index:41;display:none}#dSh.on{display:block}
 #dSh .shade{position:absolute;inset:0;background:#000a}
@@ -366,13 +369,13 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tStrat:'Strategy', stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
-  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
+  tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', preHint:'TV runs behind the data: sync it at the start', alArmB:'Tap when the lights go out on TV', alStartS2:'Tap now, then again when the lights go out on TV', alHeldB:'Tap saved: applied as soon as the start reaches the data', alDoneB:'Synced: delay {D}', alUndo:'Undo', alCancel:'Cancel', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
   alStartH:'Sync at the start', alStartB:'Tap when the cars start on TV', alStartS:'Before the start, keep your finger ready', alStartNo:'The start has not reached the data yet: tap when the cars start on TV.',
   alTvH:'Sync with the TV', alLapQ:'1. Which lap does the TV show?', alLapB:'2. Tap when the leader crosses the line', alLapS:'and the TV moves to lap {N}', alLapNo:'Lap {N} has not started in the data yet: check the lap you picked.',
   alDrvQ:'1. Pick a lap that is about to end on TV', alDrvB:'2. Tap when {NAME} ends the lap on TV', alDrvPick:'2. Pick a lap first', alDrvNone:'No laps completed since the app opened: use −1 / +1.',
   alOk:'✓ Delay {D}. Fine-tune with −1 / +1 if needed.', alMax:'That would be more than 15:00 of delay: not possible.',
   pauseB:'⏸ Paused: TV catches up in {T}', lostB:'Connection lost in the background: back to live, delay reset',
-  dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>To sync:</b> at the start, tap the red button when the cars start on TV. During the race, pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
+  dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>To sync:</b> at the start, tap «Sync at the start» (even well before), then tap again when the lights go out on TV. During the race, pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
@@ -381,7 +384,7 @@ const T = {
   instInApp:'You are inside another app’s browser (Instagram, Facebook…), which cannot install. Tap <span class="k">⋯</span> or <span class="k">⋮</span> and choose <span class="k">Open in browser</span>, then come back here.',
   instPc:'Scan with your phone’s camera to open the app there and install it.', instPcProg:'On PC there is the full program:', pcDl:'⬇ Download for Windows', pc:'Free to Race for PC', coffee:'☕ Buy me a coffee',
   disc:'Unofficial fan project, not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V. Live data straight from the public F1 live timing to your phone. Circuit drawings: MultiViewer.',
-  live:'Live', idleConn:'Connected to F1 timing', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2025 United States GP, the whole race on your phone', demoSubGp:'NAME: the whole race on your phone, ahead of this weekend', weekend:'Weekend schedule (your time)', bug:'🐞 Report a problem', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied: paste it anywhere', shareShort:'Share', shareLive:'I’m following NAME with the live track map, free:', shareRp:'Watch NAME again with the track map, free:', calAlarm:'starts in 15 minutes', soon:'Starting any moment', waitF1:'Not on the F1 timing yet: it will show up here as soon as data arrives', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
+  live:'Live', idleConn:'Waiting for the next session', connecting:'Connecting…', reconnecting:'Reconnecting…', noSession:'No session live right now', last_:'Last session', next:'Next session', demo:'▶ Try the replay demo', demoSub:'2025 United States GP, the whole race on your phone', demoSubGp:'NAME: the whole race on your phone, ahead of this weekend', weekend:'Weekend schedule (your time)', bug:'🐞 Report a problem', introAgain:'▶ Watch the intro', privacy:'Privacy and safety: no account, no data collected', addCal:'📅 Add to calendar', share:'🔗 Share', shareTxt:'Free F1 live timing on your phone: times, track map and race control. No app to install.', copied:'Link copied: paste it anywhere', shareShort:'Share', shareLive:'I’m following NAME with the live track map, free:', shareRp:'Watch NAME again with the track map, free:', calAlarm:'starts in 15 minutes', soon:'Starting any moment', waitF1:'Not on the F1 timing yet: it will show up here as soon as data arrives', loadingCal:'Loading the calendar…', days:'days', hrs:'hrs', mins:'min', secsU:'sec', sess:{'Practice 1':'Practice 1','Practice 2':'Practice 2','Practice 3':'Practice 3','Sprint Qualifying':'Sprint Qualifying','Sprint':'Sprint','Qualifying':'Qualifying','Race':'Race'}, lap:'LAP', left:'LEFT',
   retired:'OUT', pit:'PIT', mapApprox:'Approximate map: it gets precise after the first session on this circuit.', mapNone:'Track layout not available.', mapOk:'Cars estimated from the official timing, about 10 m accuracy.', mapReal:'Real car positions, from the session.', noMsg:'No messages yet.', locale:'en-GB',
   redH:'RED FLAG', redP:'Race suspended: the cars are parked in the pit lane, nothing happens on track until the restart.', restartIn:'Restart in', skipRestart:'⏩ Skip', gridH:'START', gridP:'Cars on the grid, lights out in', goStart:'⏩ Go', goH:'LIGHTS OUT!', goP:'First lap: the order updates at every timing point.',
   rpLoading:'Loading the demo race…', rpWhat:'2025 United States GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
@@ -394,13 +397,13 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tStrat:'Strategia', stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
-  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
+  tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', preHint:'La TV arriva dopo i dati: allineala al via', alArmB:'Tocca quando in TV si spengono i semafori', alStartS2:'Tocca ora, poi di nuovo quando in TV si spengono i semafori', alHeldB:'Tocco registrato: vale appena arriva il via dai dati', alDoneB:'Allineato: ritardo {D}', alUndo:'Annulla', alCancel:'Annulla', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
   alStartH:'Allinea alla partenza', alStartB:'Tocca quando in TV le auto partono', alStartS:'Prima del via tieni il dito pronto', alStartNo:'Il via non è ancora arrivato dai dati: tocca quando in TV le auto partono.',
   alTvH:'Allinea alla TV', alLapQ:'1. Che giro segna la TV?', alLapB:'2. Tocca quando il primo passa il traguardo', alLapS:'e la TV passa al giro {N}', alLapNo:'Il giro {N} non è ancora iniziato nei dati: controlla il giro scelto.',
   alDrvQ:'1. Scegli un giro che in TV sta per chiudersi', alDrvB:'2. Tocca quando in TV {NAME} chiude il giro', alDrvPick:'2. Prima scegli un giro', alDrvNone:'Nessun giro chiuso da quando l’app è aperta: usa −1 / +1.',
   alOk:'✓ Ritardo {D}. Se serve, ritocca con −1 / +1.', alMax:'Sarebbe un ritardo oltre 15:00: non si può.',
   pauseB:'⏸ In pausa: la TV ti raggiunge fra {T}', lostB:'Collegamento perso in secondo piano: ripartito in diretta, ritardo azzerato',
-  dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Per allinearti:</b> al via, tocca il pulsante rosso quando in TV le auto partono. In gara, scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
+  dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Per allinearti:</b> al via, tocca «Allinea alla partenza» (anche molto prima), poi tocca di nuovo quando in TV si spengono i semafori. In gara, scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
@@ -409,7 +412,7 @@ const T = {
   instInApp:'Sei nel browser interno di un’altra app (Instagram, Facebook…), che non può installare. Tocca <span class="k">⋯</span> o <span class="k">⋮</span> e scegli <span class="k">Apri nel browser</span>, poi torna qui.',
   instPc:'Inquadra con la fotocamera del telefono: si apre l’app lì e la installi.', instPcProg:'Sul PC c’è il programma completo:', pcDl:'⬇ Scarica per Windows', pc:'Free to Race per PC', coffee:'☕ Offrimi un caffè',
   disc:'Progetto di appassionati non ufficiale, non associato in alcun modo alle società di Formula 1. F1, FORMULA ONE, FORMULA 1, GRAND PRIX e i marchi collegati appartengono a Formula One Licensing B.V. I dati arrivano al telefono direttamente dal cronometraggio pubblico F1. Disegni dei circuiti: MultiViewer.',
-  live:'In diretta', idleConn:'Collegato al cronometraggio F1', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP degli Stati Uniti 2025, tutta la gara sul telefono', demoSubGp:'NAME: tutta la gara sul telefono, per prepararsi al weekend', weekend:'Programma del weekend (tua ora)', bug:'🐞 Segnala un problema', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato: incollalo dove vuoi', shareShort:'Condividi', shareLive:'Sto seguendo NAME con la mappa in diretta, gratis:', shareRp:'Rivedi NAME con la mappa, gratis:', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', waitF1:'Non ancora sul cronometraggio F1: compare qui appena arrivano i dati', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
+  live:'In diretta', idleConn:'In attesa della prossima sessione', connecting:'Mi collego…', reconnecting:'Mi ricollego…', noSession:'Nessuna sessione in diretta adesso', last_:'Ultima sessione', next:'Prossima sessione', demo:'▶ Prova la demo in replay', demoSub:'GP degli Stati Uniti 2025, tutta la gara sul telefono', demoSubGp:'NAME: tutta la gara sul telefono, per prepararsi al weekend', weekend:'Programma del weekend (tua ora)', bug:'🐞 Segnala un problema', introAgain:'▶ Rivedi l’intro', privacy:'Privacy e sicurezza: niente account, nessun dato raccolto', addCal:'📅 Aggiungi al calendario', share:'🔗 Condividi', shareTxt:'Tempi F1 in diretta sul telefono, gratis: tempi, pista e direzione gara. Niente app da installare.', copied:'Link copiato: incollalo dove vuoi', shareShort:'Condividi', shareLive:'Sto seguendo NAME con la mappa in diretta, gratis:', shareRp:'Rivedi NAME con la mappa, gratis:', calAlarm:'inizia tra 15 minuti', soon:'Inizia a momenti', waitF1:'Non ancora sul cronometraggio F1: compare qui appena arrivano i dati', loadingCal:'Carico il calendario…', days:'giorni', hrs:'ore', mins:'min', secsU:'sec', sess:{'Practice 1':'Libere 1','Practice 2':'Libere 2','Practice 3':'Libere 3','Sprint Qualifying':'Qualifica Sprint','Sprint':'Sprint','Qualifying':'Qualifica','Race':'Gara'}, lap:'GIRO', left:'MANCANO',
   retired:'RIT', pit:'BOX', mapApprox:'Mappa approssimata: diventa precisa dopo la prima sessione su questo circuito.', mapNone:'Disegno della pista non disponibile.', mapOk:'Auto stimate dal cronometraggio ufficiale, precisione circa 10 m.', mapReal:'Posizioni vere delle auto, dalla sessione.', noMsg:'Ancora nessun messaggio.', locale:'it-IT',
   redH:'BANDIERA ROSSA', redP:'Gara sospesa: le auto sono ferme in corsia box, in pista non succede niente fino alla ripartenza.', restartIn:'Ripartenza fra', skipRestart:'⏩ Salta', gridH:'PARTENZA', gridP:'Auto schierate sulla griglia, semafori spenti fra', goStart:'⏩ Vai', goH:'VIA!', goP:'Primo giro: l’ordine si aggiorna a ogni passaggio cronometrato.',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP degli Stati Uniti 2025', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
@@ -429,13 +432,13 @@ const col = c => /^[0-9a-f]{6}$/i.test(String(c||'').replace('#','')) ? '#'+Stri
 const TYRE = {SOFT:['#ff3b3b','S'],MEDIUM:['#ffd12e','M'],HARD:['#f2f2f2','H'],INTERMEDIATE:['#43b047','I'],WET:['#2f7fd1','W']};
 const TRACKC = {'1':['#1f9d55','#fff'],'2':['#ffd12e','#111'],'4':['#ff9f1a','#111'],'5':['#e10600','#fff'],'6':['#ff9f1a','#111'],'7':['#ffd12e','#111']};
 const OK = new Set([2048,2049,2051,2064]);
-const REPLAY = (new URLSearchParams(location.search).get('replay')||'').replace(/[^\w]/g,'');   // replay pubblicato di una sessione (free-to-race.com/replay/)
+const REPLAY = (new URLSearchParams(location.search).get('replay')||'').replace(/[^\p{L}\p{N}_]/gu,'');   // lettere accentate comprese (São Paulo: 03.11)   // replay pubblicato di una sessione (free-to-race.com/replay/)
 const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // replay della gara della demo, senza diretta
 // Versione della pagina: va cambiata a ogni pubblicazione (strumenti/build_live.py lo fa da solo).
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261103-232822';
+const BUILD = '20261103-235059';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -485,7 +488,7 @@ function resetState(){
   for(const k of Object.keys(ST)) delete ST[k];
   liveStart = liveGrid = null; preSeen = false; nearF.c = {};
   trk.last={}; trk.ratio={}; trk.pitIn={}; trk.rhist={}; for(const k of Object.keys(disp)) delete disp[k];
-  LAPS.rec={}; LAPS.last={}; LAPS.fl={}; LAPS.sx={};
+  LAPS.rec={}; LAPS.last={}; LAPS.fl={}; LAPS.sx={}; LAPS.at={};
 }
 function apply(topic, data, when){
   if(topic.endsWith('.z')) return;
@@ -514,17 +517,17 @@ function apply(topic, data, when){
     return;
   }
   ST[topic] = merge(ST[topic], data);
-  if(topic==='TimingData') safe('giri', () => lapsUpd(data));
+  if(topic==='TimingData') safe('giri', () => lapsUpd(data, when));
   if(topic==='TrackStatus' && !tsOk()) for(const f of Object.values(LAPS.fl)) f.bad = true;
 }
 // ---------------- giri di ogni pilota, con la stessa regola del programma per PC (f1cruscotto.py, _laps e clean_laps) ----------------
 // Un giro si chiude quando NumberOfLaps cresce. Giro di entrata ai box = InPit senza PitOut, di uscita = PitOut; «bad» se durante il
 // giro la pista non e' stata verde o gialla (SC, VSC, rossa); il primo giro visto a sessione in corso e' incompleto.
-const LAPS = {rec:{}, last:{}, fl:{}, sx:{}};
+const LAPS = {rec:{}, last:{}, fl:{}, sx:{}, at:{}};   // at: istante (mostrato) in cui il pilota ha iniziato il giro
 const tsOk = () => ['1','2'].includes(String((ST.TrackStatus||{}).Status||'1'));
 const newFl = () => ({in:false, out:false, bad:!tsOk()});
 const median = a => { const s=a.slice().sort((x,y)=>x-y), m=s.length>>1; return s.length%2 ? s[m] : (s[m-1]+s[m])/2; };
-function lapsUpd(upd){
+function lapsUpd(upd, when){
   const lines = (upd && upd.Lines) || {}, full = ((ST.TimingData||{}).Lines) || {};
   for(const [n,u] of Object.entries(lines)){
     if(!u || typeof u!=='object') continue;
@@ -534,7 +537,7 @@ function lapsUpd(upd){
     if(u.Sectors && typeof u.Sectors==='object'){        // ultimo tempo di ogni settore, col colore di quando e' arrivato
       const S = line.Sectors, sx = LAPS.sx[n] || (LAPS.sx[n] = []);
       for(const i of Object.keys(u.Sectors)){ const s = Array.isArray(S) ? S[+i] : (S||{})[i];
-        if(s && s.Value) sx[+i] = {v:s.Value, c:s.OverallFastest ? 'p' : s.PersonalFastest ? 'g' : 'y'}; }
+        if(s && s.Value){ const o = sx[+i]; sx[+i] = {v:s.Value, c:s.OverallFastest ? 'p' : s.PersonalFastest ? 'g' : 'y', at: o && o.v===s.Value ? o.at : when}; } }   // at: quando e' arrivato il tempo (non i minisettori)
     }
     const lap = line.NumberOfLaps, prev = LAPS.last[n];
     if(typeof lap!=='number') continue;
@@ -542,7 +545,7 @@ function lapsUpd(upd){
       const first = prev==null && lap>1;
       const sts = asList((((ST.TimingAppData||{}).Lines||{})[n]||{}).Stints), cs = sts[sts.length-1];
       (LAPS.rec[n] || (LAPS.rec[n] = {}))[lap] = {lap, c:cs ? String(cs.Compound||'').toUpperCase() : '', t:secs((line.LastLapTime||{}).Value), pin:!first && fl.in && !fl.out, pout:!first && fl.out, bad:fl.bad, partial:first};
-      LAPS.last[n] = lap; LAPS.fl[n] = newFl();
+      LAPS.last[n] = lap; LAPS.fl[n] = newFl(); if(prev!=null) LAPS.at[n] = when;
     } else if('LastLapTime' in u){ const r = (LAPS.rec[n]||{})[lap]; if(r && r.t==null) r.t = secs((line.LastLapTime||{}).Value); }
   }
 }
@@ -774,10 +777,14 @@ function showEff(){
   if(left >= 1){ h = esc(t('pauseB')).replace('{T}', '<b class="tn">' + fmtT(Math.ceil(left)) + '</b>'); c = 'pause'; }
   else if(lostNote && Date.now() - lostNote < 20000){ h = `<span>${esc(t('lostB'))}</span><button data-lostx="1" aria-label="×">×</button>`; c = 'lost'; }
   if(band._h !== h){ band.innerHTML = h; band._h = h; band.className = c; }
-  const pb = $('#preBand'), pre = preStart(); let ph = '';
-  if(pre){ const t0 = sessStartUtc(), left = t0==null ? 0 : (t0 - feedNowMs())/1000 + delay, race = isRaceS();
-    ph = `<span>${esc(t(race ? 'preRace' : 'preSess'))}${left >= 1 ? ` ${esc(t('preIn'))} <b class="tn">${fmtT(Math.ceil(left))}</b>` : ''}</span>` + (race ? `<button data-preal="1">${esc(t('alStartH'))}</button>` : ''); }
-  if(pb._h !== ph){ pb.innerHTML = ph; pb._h = ph; pb.classList.toggle('on', pre); }
+  if(alHeld!=null){ const st = startT(); if(st!=null) alApply(alHeld, st); }   // tocco tenuto: il via e' arrivato
+  const pb = $('#preBand'), pre = preStart(), done = alDone && Date.now() - alDone.at < 15000; let ph = '';
+  if(alArm) ph = `<button class="alBig" data-al2="1">${esc(t('alArmB'))}</button><button class="x" data-alx="1" aria-label="×">×</button>`;
+  else if(alHeld!=null) ph = `<span>${esc(t('alHeldB'))}</span><button class="x" data-alx="1" aria-label="×">×</button>`;
+  else if(done) ph = `<span>✓ ${esc(t('alDoneB').replace('{D}', fmtD(alDone.d)))}</span><button data-alundo="1">${esc(t('alUndo'))}</button>`;
+  else if(pre){ const t0 = sessStartUtc(), left = t0==null ? 0 : (t0 - feedNowMs())/1000 + delay, race = isRaceS();
+    ph = `<span>${esc(t(race ? 'preRace' : 'preSess'))}${left >= 1 ? ` ${esc(t('preIn'))} <b class="tn">${fmtT(Math.ceil(left))}</b>` : ''}${race ? ' · ' + esc(t('preHint')) : ''}</span>` + (race ? `<button data-al1="1">${esc(t('alStartH'))}</button>` : ''); }
+  if(pb._h !== ph){ pb.innerHTML = ph; pb._h = ph; pb.classList.toggle('on', !!ph); }
   if(dOpen) dRender();
 }
 // ---------------- pannello del ritardo TV: rifinitura e allineamento ----------------
@@ -802,8 +809,13 @@ function dRender(){
     h += `<div class="dbig tn">${fmtD(delay)}</div><div class="dcap">${esc(t('dCap'))}</div>
       <div class="dsteps"><button data-d="-10">−10</button><button data-d="-1">−1</button><button data-d="1">+1</button><button data-d="10">+10</button><button data-d="0" data-r="1" class="z">${esc(t('dZero'))}</button></div>`;
     const race = RAW.type==='Race', st = startT();
-    if(race && (st==null || now - st < 900 || RAW.status==='Aborted'))   // anche a gara sospesa, per la ripartenza da ferma
-      h += `<h4>${esc(t('alStartH'))}</h4><button class="dgo" data-al="start">${esc(t('alStartB'))}<small>${esc(t('alStartS'))}</small></button>`;
+    if(race && (st==null || now - st < 900 || RAW.status==='Aborted' || alArm || alHeld!=null || alDone)){   // anche a gara sospesa, per la ripartenza
+      h += `<h4>${esc(t('alStartH'))}</h4>`;
+      if(alArm) h += `<button class="dgo yel" data-al2="1">${esc(t('alArmB'))}</button><button class="dlink" data-alx="1">${esc(t('alCancel'))}</button>`;
+      else if(alHeld!=null) h += `<p class="dq">${esc(t('alHeldB'))}</p><button class="dlink" data-alx="1">${esc(t('alCancel'))}</button>`;
+      else if(alDone && Date.now() - alDone.at < 15000) h += `<div class="dmsg ok">✓ ${esc(t('alDoneB').replace('{D}', fmtD(alDone.d)))} <button class="dlink" data-alundo="1">${esc(t('alUndo'))}</button></div>`;
+      else h += `<button class="dgo" data-al1="1">${esc(t('alStartH'))}<small>${esc(t('alStartS2'))}</small></button>`;
+    }
     if(race){
       const laps = lapChoices(), shown = +((ST.LapCount||{}).CurrentLap) || 0;
       if(!laps.includes(dSel)) dSel = laps.includes(shown) ? shown : laps[0] ?? null;
@@ -846,7 +858,23 @@ $('#dSh').addEventListener('click', e => {
 $('#dBtn').onclick = () => dShow('');
 $('#dInfo').onclick = () => dShow('help');
 $('#dAlign').onclick = e => { e.preventDefault(); dShow(''); };
-$('#preBand').addEventListener('click', e => { if(e.target.closest('[data-preal]')) dShow(''); });
+// primo tocco: si arma (in qualunque momento); secondo tocco, quando in TV si spengono i semafori: ritardo = tocco - via
+// del feed. Se il via non e' ancora arrivato, il tocco si tiene e si applica appena arriva
+let alArm = false, alHeld = null, alDone = null;
+function alStart1(){ alArm = true; alHeld = null; alDone = null; dMsg = ''; showEff(); dRender(); }
+function alCancel(){ alArm = false; alHeld = null; showEff(); dRender(); }
+function alStart2(tap){ alArm = false; const st = startT(); if(st==null || st > tap) alHeld = tap; else alApply(tap, st); showEff(); dRender(); }
+function alApply(tap, st){
+  alHeld = null; const d = Math.max(0, Math.round(tap - st));
+  if(d > DMAX){ dOk = false; dMsg = t('alMax'); dRender(); return; }
+  const prev = delay; setDelay(d); alDone = {d, prev, at: Date.now()}; dOk = true; dMsg = '';
+}
+document.addEventListener('pointerdown', e => { const b = e.target.closest('[data-al2]'); if(!b) return; e.preventDefault(); alStart2(performance.now()/1000); });
+document.addEventListener('click', e => {
+  if(e.target.closest('[data-al1]')) alStart1();
+  else if(e.target.closest('[data-alx]')) alCancel();
+  else if(e.target.closest('[data-alundo]') && alDone){ const p = alDone.prev; alDone = null; setDelay(p); showEff(); }
+});
 $('#rtBand').addEventListener('click', e => { if(e.target.closest('[data-lostx]')){ lostNote = 0; showEff(); } });
 // iPhone, app sulla schermata Home: barra di stato nera opaca (non «black-translucent»). Con quella trasparente la
 // pagina finiva sotto l'orologio, che i nuovi iOS velano e sfocano, e l'altezza escludeva la barra di stato (striscia
@@ -918,7 +946,7 @@ function render(){
   if(connected && !DEMO) setConn(live ? t('live') : t('idleConn'), true);
   // la barra di stato serve solo per ritardo, demo e collegamento fuori sessione: in diretta lo stato del feed e' il pallino
   // la barra resta sempre visibile: porta il comando del ritardo TV (in demo non serve)
-  $('#dctl').style.display = DEMO ? 'none' : '';
+  $('#dctl').style.display = DEMO || !live ? 'none' : '';   // senza sessione: solo «In attesa della prossima sessione»
   safe('testata', feedDot);
   flagAlert(live ? ts : null); wakeLock();
   // bandiera rossa: fascia fissa per tutta la sospensione. Il riquadro grande compare solo al cambio di bandiera,
@@ -1015,6 +1043,8 @@ function paceHtml(ds){
   if(!top.length) return head + `<div class="pw">${t('paceWait')}</div>`;
   return head + `<div class="pr">${top.map(([d,v],i) => `<div class="pc${i?'':' f'}" style="border-color:${d.color}"><b>${esc(d.tla)}</b> <span class="tn">${fmtLap(v)}</span><small class="tn">${i ? '+'+(v-top[0][1]).toFixed(2) : t('fastestNow')}</small></div>`).join('')}</div>`;
 }
+// settore del giro prima: si vede ancora per 5 s dall'inizio del giro nuovo, poi sparisce (03.11, Nikita)
+const secOld = (n, at) => { const a = LAPS.at[n]; return a!=null && sessNow() - a > 5 && (at==null || at <= a + 1); };
 // gara (G1): una riga per pilota; settori dell'ultimo passaggio impilati, colorati (giallo, verde personale, viola assoluto)
 function raceRows(ds){
   const head = `<div class="hd1"><span>P</span><span></span><span></span><span>${t('gap')}</span><span>${t('hdSec')}</span><span>${t('hdLast')}</span><span>${t('tyre')}</span><span>${t('hdStops')}</span></div>`;
@@ -1022,13 +1052,13 @@ function raceRows(ds){
     const sx = LAPS.sx[d.n] || [];
     const gap = d.pos===1 ? `<span class="g tn">Leader<small>&nbsp;</small></span>` : `<span class="g tn">${esc(d.gap)}<small>${d.int ? '↑ '+esc(d.int) : '&nbsp;'}</small></span>`;
     const sec = d.out ? `<span class="sx"><span class="tg">${t('retired')}</span></span>` : d.inPit ? `<span class="sx"><span class="tg box">${t('box')}</span></span>`
-      : `<span class="sx">${[0,1,2].map(i => sx[i] ? `<span class="c${sx[i].c}">${esc(sx[i].v)}</span>` : '<span class="ce">–</span>').join('')}</span>`;
+      : `<span class="sx">${[0,1,2].map(i => sx[i] && !secOld(d.n, sx[i].at) ? `<span class="c${sx[i].c}">${esc(sx[i].v)}</span>` : '<span class="ce">–</span>').join('')}</span>`;
     return `<div class="r1 ${selNum===d.n?'sel':''}" data-n="${esc(d.n)}"><span class="p tn">${d.pos<99?d.pos:''}</span><span class="bar" style="background:${d.color}"></span><span class="t">${esc(d.tla)}</span>${gap}${sec}<span class="l tn ${d.lastOb?'ob':d.lastPb?'pb':''}">${esc(d.last)}</span><span class="ty tn">${tyreHtml(d)}</span><span class="so tn">${d.pits}</span></div>`;
   }).join('');
 }
 // minisettori del giro in corso, con sotto il tempo di ogni settore: quello del giro prima resta grigio finche' non arriva il nuovo
 function msHtml(d){
-  return `<span class="ms">${[0,1,2].map(i => { const g = d.segs[i] || [], s = d.sec[i] || {}, v = s.v || s.pv, c = s.v ? (s.of ? 'p' : s.pf ? 'g' : 'y') : 'e';
+  return `<span class="ms">${[0,1,2].map(i => { const g = d.segs[i] || [], s = d.sec[i] || {}, v = s.v || (secOld(d.n) ? '' : s.pv), c = s.v ? (s.of ? 'p' : s.pf ? 'g' : 'y') : 'e';
     return `<span class="sg" style="flex:${Math.max(1, g.length)}"><span class="bb">${g.map(x => `<i style="background:${segColor(x)}"></i>`).join('')}</span><span class="tm c${c}"><small>S${i+1}</small>${esc(v)}</span></span>`; }).join('')}</span>`;
 }
 const qTag = d => d.out && !d.ko ? `<span class="tg">${t('retired')}</span>` : d.inPit ? `<span class="tg box">${t('box')}</span>` : d.segs.flat().some(x => x===2049 || x===2051) ? `<span class="tg push">${t('push')}</span>` : '';
@@ -1236,7 +1266,7 @@ function shareInfo(){
   const si = ST.SessionInfo || {}, m = si.Meeting || {}, gp = m.Name || m.Location || '';
   const what = y => [gp + y, t('sess')[si.Name] || si.Name || ''].filter(Boolean).join(' – ');
   if(REPLAY){ const y = /^\d{4}_/.test(REPLAY) ? ' ' + REPLAY.slice(0, 4) : '';
-    return {ev:'share-replay', url:'https://free-to-race.com/live/?replay=' + REPLAY, text: gp ? t('shareRp').replace('NAME', what(y)) : t('shareTxt')}; }
+    return {ev:'share-replay', url:'https://free-to-race.com/live/?replay=' + encodeURIComponent(REPLAY), text: gp ? t('shareRp').replace('NAME', what(y)) : t('shareTxt')}; }
   if(!DEMO && isLive() && gp) return {ev:'share-app', url:'https://free-to-race.com/live/', text:t('shareLive').replace('NAME', what(''))};
   return {ev:'share-app', url:'https://free-to-race.com/live/', text:t('shareTxt')};
 }
@@ -1618,7 +1648,7 @@ function texts(){ document.documentElement.lang=LANG; $$('[data-t]').forEach(e =
 // ---------------- demo: la gara di Monza 2026 rigiocata nel telefono ----------------
 async function startDemo(){
   $('#rpLoad').style.display='flex'; $('#rpMsg').textContent = t('rpLoading');
-  const base = REPLAY ? `../replay/${REPLAY}/` : '../demo/';
+  const base = REPLAY ? `../replay/${encodeURIComponent(REPLAY)}/` : '../demo/';
   const what = w => { $('#connTxt').innerHTML = `<b style="color:var(--accent)">${REPLAY?'REPLAY':'DEMO'}</b> ${w} · <a href="${base}?full=1" style="color:var(--text)">${t('rpFull')}</a>`; };
   $('#conn').classList.add('on'); what(REPLAY ? '' : t('rpWhat'));
   if(REPLAY) $('#rpLoad b').textContent = 'FREE TO RACE · REPLAY';
@@ -1872,7 +1902,7 @@ async function drawRis(){
   if(!show) return;
   box.querySelectorAll('[data-ris]').forEach(b => b.classList.toggle('on', b.dataset.ris === show));
   try{
-    const doc = RIS.docs[show] || (RIS.docs[show] = await (await fetch(`../risultati/${show}.json`, {cache:'no-cache'})).json());
+    const doc = RIS.docs[show] || (RIS.docs[show] = await (await fetch(`../risultati/${encodeURIComponent(show)}.json`, {cache:'no-cache'})).json());
     FTRRis.render($('#risBody'), doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: RIS.replays.has(show) ? `?replay=${encodeURIComponent(show)}` : null});
   }catch(e){ $('#risBody').innerHTML = ''; }
 }
