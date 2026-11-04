@@ -32,8 +32,9 @@
 /* Prima pagina «D2» (mockup\home_D2.html, scelto da Nikita il 02.11.2026), con due modifiche:
    - in diretta la fascia in alto diventa alta e rossa, con LIVE, la sessione e il pulsante «Segui la diretta»;
      il pulsante della demo diventa secondario;
-   - il pulsante della demo apre il replay dell'ultima gara pubblicata (replay/replays.json), e se il file non
-     risponde la demo del GP degli Stati Uniti 2025. */
+   - il pulsante della demo apre il replay della gara dell'anno prima sul circuito del prossimo GP, se e' fra
+     quelli pubblicati (replay/replays.json); se no quello dell'ultima gara disputata; se il file non risponde
+     la demo del GP degli Stati Uniti 2025 (regola di Nikita del 04.11.2026, uguale nell'app). */
 :root{
   --bg:#0b0d12; --panel:#14181f; --panel2:#1b2029; --line:#262c37; --line2:#1d222b; --text:#eef1f6; --dim:#8b94a7; --dim2:#5d6577;
   --accent:#e10600; --green:#22d36b; --yellow:#ffd12e;
@@ -535,16 +536,34 @@ function cdText(ms){
   return (d ? d + t('dd') + ' ' : '') + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
 }
 
-// ---------------- il pulsante: replay dell'ultima gara, altrimenti la demo ----------------
-// replay/replays.json lo riscrive il Raspberry a ogni replay pubblicato: la gara nuova compare da sola.
+// ---------------- il pulsante: la gara dell'anno prima sul circuito del prossimo GP, altrimenti l'ultima gara ----------------
+// Regola di Nikita (04.11.2026, uguale nell'app: sito/live, demoPick/prevYearRace): la gara dell'anno prima sul circuito
+// del prossimo GP, se il suo replay e' pubblicato; se no l'ultima gara disputata; se replays.json non risponde, la demo
+// di sempre (Austin 2025). L'abbinamento e' per circuito, non per nome: il calendario dice «Brazilian Grand Prix», il
+// replay «São Paulo Grand Prix». replay/replays.json lo riscrive il Raspberry a ogni replay pubblicato.
+// Chiavi dei circuiti del cronometraggio F1: dal circuito di Jolpica e dal nome del GP dei replay (finche' replays.json
+// non porta circuitKey). Stesse tabelle dell'app.
+const JOL_KEY = {albert_park:10, shanghai:49, suzuka:46, bahrain:63, jeddah:149, miami:151, villeneuve:23, monaco:22, catalunya:15, red_bull_ring:19,
+  silverstone:2, spa:7, hungaroring:4, zandvoort:55, monza:39, baku:144, marina_bay:61, americas:9, rodriguez:65, interlagos:14, vegas:152, losail:150, yas_marina:70, imola:6};
+const MEET_KEY = {'Australian Grand Prix':10, 'Chinese Grand Prix':49, 'Japanese Grand Prix':46, 'Bahrain Grand Prix':63, 'Saudi Arabian Grand Prix':149, 'Miami Grand Prix':151,
+  'Canadian Grand Prix':23, 'Monaco Grand Prix':22, 'Barcelona Grand Prix':15, 'Austrian Grand Prix':19, 'British Grand Prix':2, 'Belgian Grand Prix':7, 'Hungarian Grand Prix':4,
+  'Dutch Grand Prix':55, 'Italian Grand Prix':39, 'Azerbaijan Grand Prix':144, 'Singapore Grand Prix':61, 'United States Grand Prix':9, 'Mexico City Grand Prix':65, 'Mexican Grand Prix':65,
+  'São Paulo Grand Prix':14, 'Brazilian Grand Prix':14, 'Las Vegas Grand Prix':152, 'Qatar Grand Prix':150, 'Abu Dhabi Grand Prix':70, 'Emilia Romagna Grand Prix':6};
+const rpKey = x => x.circuitKey != null ? +x.circuitKey : x.meeting === 'Spanish Grand Prix' ? (+x.year <= 2025 ? 15 : null) : (MEET_KEY[x.meeting] ?? null);   // GP di Spagna: Barcellona fino al 2025, Madrid dal 2026
 function lastRace(){
   return RP.filter(x => x && x.session === 'Race' && x.name).sort((a, b) => (Date.parse(b.start) || 0) - (Date.parse(a.start) || 0))[0] || null;
+}
+function demoRace(){
+  const w = weekendNow(), key = w ? (JOL_KEY[w.r.Circuit && w.r.Circuit.circuitId] ?? null) : null;
+  const y = w ? (+w.r.season || new Date(w.r.date).getFullYear()) : 0;
+  const prev = key == null ? null : RP.find(x => x && x.name && x.session === 'Race' && rpKey(x) === key && +x.year === y - 1);
+  return prev || lastRace();
 }
 const rpUrl = (name, tab) => MOBILE ? `live/?replay=${encodeURIComponent(name)}` : `replay/${encodeURIComponent(name)}/#${tab}`;
 
 let topSig = '';
 function renderTop(){
-  const {live, next} = sessNow(), b = $('band'), lr = lastRace();
+  const {live, next} = sessNow(), b = $('band'), lr = demoRace();
   topSig = [LANG, races.length, RP.length, live && live.d, next && next.d, NARROW()].join('|');
   // fascia
   b.classList.toggle('live', !!live);
@@ -580,7 +599,7 @@ let CUR = 0, AUTO = true, tabTimer = null;
 function tabHref(f){
   if(f.abs) return f.abs;
   if(f.href) return f.href;
-  const lr = lastRace();
+  const lr = demoRace();
   if(lr) return rpUrl(lr.name, f.tab);
   return f.tab === 'pista' ? (MOBILE ? 'live/?demo' : 'demo/#pista') : 'replay/';
 }
