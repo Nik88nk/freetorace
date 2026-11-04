@@ -169,8 +169,19 @@ nav em{font-style:normal}
 #intro .skip{position:absolute;right:22px;bottom:22px;background:transparent;border:1px solid #262c37;color:#8b94a7;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;z-index:2}
 #intro .skip:hover{color:#fff}
 footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
-#ris{padding:4px 12px 0}#ris .rhd{display:flex;align-items:baseline;gap:8px;margin:14px 0 6px}#ris .rhd b{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}#ris .rhd a{margin-left:auto;font-size:13px;color:var(--dim)}
+#ris{padding:4px 12px 0;max-width:760px;margin:0 auto}#ris .rhd{display:flex;align-items:baseline;gap:8px;margin:14px 0 6px}#ris .rhd b{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}#ris .rhd a{margin-left:auto;font-size:13px;color:var(--dim)}
 #ris .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}#ris .chips button{flex:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:6px 11px;font:inherit;font-size:13px;font-weight:700;text-align:left;line-height:1.2}#ris .chips button small{display:block;font-size:11px;font-weight:600;color:var(--dim)}#ris .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}#ris .chips button.on small{color:#ffe1df}#ris .chips button.nx{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}#ris .chips button:disabled{opacity:1;color:var(--dim)}#ris .chips button.past{opacity:.55}#ris .nx1{text-align:center;padding:12px 0 2px}#ris .nx1 .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}#ris .nxl{font-size:17px;margin-top:4px}#ris .nxl b{font-size:19px}#ris .nx1 .where{color:var(--dim);font-size:13px}#ris .cdg{margin:10px 0 4px;gap:6px}#ris .cdg div{min-width:56px;padding:7px 3px 6px;border-radius:10px}#ris .cdg b{font-size:26px}#ris .cdg small{font-size:9px;margin-top:3px}
+/* apertura senza sessione (mockup app_apertura, 04.11): prossima sessione compatta, demo grande, primi 5 */
+#ris .nxc{padding:10px 0 0}#ris .nxc .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
+#ris .nxc .l1{font-size:16px;margin-top:2px;line-height:1.25}#ris .nxc .l1 b{font-size:18px}
+#ris .nxc .l2{display:flex;align-items:baseline;gap:8px;margin-top:3px;color:var(--dim);font-size:13.5px}#ris .nxc .l2 .cd{color:var(--text);font-weight:900;font-size:16px}
+#ris .nxc .l2 a{margin-left:auto;color:var(--dim);font-size:13px;text-decoration:none;white-space:nowrap}#ris .nxc .chips{margin-top:9px}
+.dm{display:flex;gap:12px;align-items:center;margin:16px 0 4px;padding:14px 16px;border-radius:12px;background:var(--accent);color:#fff;text-decoration:none;box-shadow:0 6px 22px #e1060040}
+.dm .i{flex:none;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;padding-left:3px}
+.dm .kk{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;opacity:.85}.dm b{display:block;font-size:20px;font-weight:900;line-height:1.15}.dm small{display:block;font-size:13px;opacity:.9;line-height:1.25}
+.top5{padding-bottom:6px}.top5 h3{font-size:16px;margin:0 0 6px}.top5 .all{display:block;width:100%;text-align:center;padding:9px;color:var(--text);font:inherit;font-weight:700;font-size:14px;background:none;border:0;border-top:1px solid var(--line);cursor:pointer}
+.top5 .tile{margin-top:8px}#ris .less{display:block;margin:10px auto 0;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:8px 14px;font:inherit;font-weight:700;font-size:14px}
+#ris .uffI{color:var(--dim2);font-size:11px;padding:16px 0 18px}
 #instBar{display:none;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(90deg,#3a0a0a,#14181f);border-bottom:1px solid var(--line2);font-size:14px}
 #instBar.on{display:flex}
 #instBar img{width:28px;height:28px;border-radius:6px}
@@ -376,6 +387,9 @@ const T = {
   alOk:'✓ Delay {D}. Fine-tune with −1 / +1 if needed.', alMax:'That would be more than 15:00 of delay: not possible.',
   pauseB:'⏸ Paused: TV catches up in {T}', lostB:'Connection lost in the background: back to live, delay reset',
   dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>To sync:</b> at the start, tap «Sync at the start» (even well before), then tap again when the lights go out on TV. During the race, pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
+  d2K:'Demo in your browser · nothing to install', d2Ka:'Demo · race replay', d2H:'2025 United States GP', d2P:'The whole race, with the map, timing and strategy',
+  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', allRows:'See the full order →', lessRows:'Show less ↑',
+  rPos:'Pos', rDrv:'Driver', rStart:'Start', rChg:'Places', rPts:'Points', rTime:'Time', rFl:'Fastest lap', rLap:'lap',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
   instIos:['Tap <span class="k">Share ⬆</span> (the square with the arrow, at the bottom of Safari)','Scroll down and tap <span class="k">Add to Home Screen</span>','Tap <span class="k">Add</span>'],
@@ -404,6 +418,9 @@ const T = {
   alOk:'✓ Ritardo {D}. Se serve, ritocca con −1 / +1.', alMax:'Sarebbe un ritardo oltre 15:00: non si può.',
   pauseB:'⏸ In pausa: la TV ti raggiunge fra {T}', lostB:'Collegamento perso in secondo piano: ripartito in diretta, ritardo azzerato',
   dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Per allinearti:</b> al via, tocca «Allinea alla partenza» (anche molto prima), poi tocca di nuovo quando in TV si spengono i semafori. In gara, scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
+  d2K:'Demo nel browser · niente da installare', d2Ka:'Demo · replay della gara', d2H:'GP degli Stati Uniti 2025', d2P:'Tutta la gara, con mappa, tempi e strategia',
+  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
+  rPos:'Pos', rDrv:'Pilota', rStart:'Partenza', rChg:'Posizioni', rPts:'Punti', rTime:'Tempo', rFl:'Giro più veloce', rLap:'giro',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
   instIos:['Tocca <span class="k">Condividi ⬆</span> (il quadrato con la freccia, in basso in Safari)','Scorri e tocca <span class="k">Aggiungi alla schermata Home</span>','Tocca <span class="k">Aggiungi</span>'],
@@ -438,7 +455,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261103-235059';
+const BUILD = '20261104-232851';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1218,7 +1235,7 @@ async function loadNext(){
   try{ const r = await (await fetch('https://api.jolpi.ca/ergast/f1/current/races/?limit=40')).json(); const now=Date.now(), out=[];
     for(const race of r.MRData.RaceTable.Races){
       const c = race.Circuit || {}, loc = c.Location || {};
-      const wk = {name:race.raceName, circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
+      const wk = {name:race.raceName, cid:c.circuitId||'', circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
       for(const [k,lbl] of [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']]){
         const x = k ? race[k] : {date:race.date, time:race.time}; if(!x || !x.date) continue;
         const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); wk.sessions.push({d, s:lbl});
@@ -1293,29 +1310,7 @@ document.addEventListener('click', e => {
   if(e.target.closest('[data-share],#shareH')){ e.preventDefault(); share(); }
   if(e.target.closest('[data-cal]')){ e.preventDefault(); addCalendar(); }
 });
-function idleHtml(){
-  const si = ST.SessionInfo || {}, m = si.Meeting || {};
-  let h = `<div class="idle">`;
-  if(RIS.ok) return h + idleRest(si, m);
-  if(nextSess){
-    h += `<div class="kick">${t('next')}</div><h2>${esc(nextSess.name)}</h2>${weekend && weekend.circuit ? `<div class="where">${esc(weekend.circuit)}${weekend.place?' · '+esc(weekend.place):''}</div>` : ''}
-      <div class="when">${esc(t('sess')[nextSess.s]||nextSess.s)} · ${new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'})}</div>
-      <div class="cdg tn" id="cdg">${cdHtml()}</div>`;
-  } else h += `<div class="kick">${t('noSession')}</div><div class="when" style="margin:14px 0 22px">${t('loadingCal')}</div>`;
-  h += demoBtn();
-  if(weekend){
-    const now = Date.now(), nx = nextSess && weekend.sessions.find(y => y.d === nextSess.d && y.s === nextSess.s);
-    const fmt = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'});
-    h += `<div class="wk"><h4>${t('weekend')}</h4>${weekend.sessions.map(x => `<div class="${x===nx?'nx':x.d<now?'done':''}"><span>${esc(t('sess')[x.s]||x.s)}</span><span class="tn">${esc(fmt(x.d))}</span></div>`).join('')}</div>`;
-  }
-  return h + idleRest(si, m);
-}
-function idleRest(si, m){     // demo e pulsanti, sotto (o al posto di) programma e risultati
-  let h = RIS.ok ? demoBtn() : '';
-  h += `<div class="acts">${STANDALONE?'':`<a class="btn" href="#" data-install="1">${t('instBtn')}</a>`}${weekend?`<a class="btn" href="#" data-cal="1">${t('addCal')}</a>`:''}<a class="btn" href="#" data-share="1">${t('share')}</a></div>`;
-  if(m.Name) h += `<div class="last">${t('last_')}: ${esc(m.Name)} · ${esc(si.Name||'')}</div>`;
-  return h + `</div>`;
-}
+function idleHtml(){ return ''; }   // 04.11: l'apertura senza sessione la disegna tutta drawRis (#ris)
 // conto alla rovescia: giorni, ore, minuti, secondi
 function cdHtml(){
   const left = Math.max(0, Math.floor((nextSess.d - Date.now())/1000));
@@ -1324,7 +1319,7 @@ function cdHtml(){
   while(parts.length > 3 && parts[0][0] === 0) parts.shift();   // senza giorni: ore, minuti, secondi
   return parts.map(([v,u],i)=>`<div><b>${i?String(v).padStart(2,'0'):v}</b><small>${u}</small></div>`).join('');
 }
-setInterval(()=>{ if(CAL.length && !isLive()) pickNext(); const c=$('#cdg'); if(c && nextSess && !isLive()) c.innerHTML = cdHtml(); }, 1000);
+setInterval(()=>{ if(CAL.length && !isLive()) pickNext(); if(nextSess && !isLive()) for(const c of $$('#cdl')) c.innerHTML = cdLine(); }, 1000);
 
 // ---------------- direzione gara ----------------
 const FLAG = {GREEN:'#22d36b',YELLOW:'#ffd12e','DOUBLE YELLOW':'#ffd12e',RED:'#e10600',BLUE:'#3d8bff',CLEAR:'#22d36b',CHEQUERED:'#fff'};
@@ -1341,8 +1336,10 @@ async function loadCircuit(key, year){
   try{ const r = await fetch(`../circuiti/${key}_${year}.json`); if(r.ok) cal = await r.json(); }catch(e){}
   if(!cal) try{ const r = await fetch(`../circuiti/${key}_${year-1}.json`); if(r.ok) cal = await r.json(); }catch(e){}   // prima sessione su un circuito (o replay subito dopo): taratura dell'anno prima, stesso tracciato
   if(cal && cal.track) circuit = cal.track;
+  geo = null;   // la corsia box viene dalla taratura: la geometria fatta prima del suo arrivo non l'aveva (04.11: LAW nella corsia o in fila a seconda di cosa arrivava prima)
   try{ const r = await fetch(`../circuiti/${key}_scena.json`); if(r.ok) SCENE = await r.json(); }catch(e){}
   if(!cal) cal = approximate();
+  geo = null;
 }
 function approximate(){       // senza taratura: minisettori uguali, velocita' costante
   const live = asList((Object.values(((ST.TimingData||{}).Lines)||{})[0]||{}).Sectors).map(s=>asList((s||{}).Segments).length);
@@ -1595,11 +1592,13 @@ function drawMap(){
       }
     } else if(cal){                              // stima dai minisettori (diretta o archivio)
       const L = trk.last[d.n];
-      if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
-      else if(gsl && gsl[d.n] && !(L && L[1] >= gph.s0)){   // in griglia, o partito ma non ancora passato da un minisettore dopo il via
+      // in griglia, o partito ma non ancora passato da un minisettore dopo il via. Prima della corsia box: chi parte
+      // dalla corsia (Messico 2026, LAW: «InPit» fino al via) resta in fondo alla fila e non davanti alla pole all'uscita box
+      if(gsl && gsl[d.n] && !(L && L[1] >= gph.s0)){
         const gq = gridAt(d); xy = gq.xy; lab = gq.lab;
         disp[d.n] = {f:gq.f}; delete trk.ratio[d.n];              // da qui parte la stima; l'andatura del giro di formazione non vale
       }
+      else if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
       else if(L){
         const ft = estFrac(L[0], now - L[1], pace(d.n));
         let q = disp[d.n]; const delta = q ? ((ft-q.f+0.5)%1+1)%1-0.5 : 1;
@@ -1851,12 +1850,92 @@ function playIntro(force){
 // In cima: la prossima sessione col conto alla rovescia; poi il programma del weekend, dove le sessioni gia' corse
 // hanno la spunta e aprono i loro risultati (sito/risultati, disegnati da risultati.js); sotto, i risultati scelti.
 const RIS = {idx: [], cur: null, docs: {}, replays: new Set(), rplist: [], ok: false};
-// la demo e' la gara dell'anno prima sul circuito del prossimo weekend, se il suo replay e' pubblicato; altrimenti Austin 2025
+// nomi dei GP come nella prima pagina del sito: [inglese breve, italiano]; un nome che manca diventa «<nome> GP»
+const GP = {
+  'Australian Grand Prix':['Australian GP','GP d’Australia'], 'Chinese Grand Prix':['Chinese GP','GP della Cina'], 'Japanese Grand Prix':['Japanese GP','GP del Giappone'],
+  'Bahrain Grand Prix':['Bahrain GP','GP del Bahrein'], 'Bahrain Grand Prix in Malaysia':['Bahrain GP in Malaysia','GP del Bahrein in Malesia'],
+  'Saudi Arabian Grand Prix':['Saudi Arabian GP','GP dell’Arabia Saudita'], 'Miami Grand Prix':['Miami GP','GP di Miami'], 'Canadian Grand Prix':['Canadian GP','GP del Canada'],
+  'Monaco Grand Prix':['Monaco GP','GP di Monaco'], 'Barcelona Grand Prix':['Barcelona GP','GP di Barcellona'], 'Spanish Grand Prix':['Spanish GP','GP di Spagna'],
+  'Austrian Grand Prix':['Austrian GP','GP d’Austria'], 'British Grand Prix':['British GP','GP di Gran Bretagna'], 'Belgian Grand Prix':['Belgian GP','GP del Belgio'],
+  'Hungarian Grand Prix':['Hungarian GP','GP d’Ungheria'], 'Dutch Grand Prix':['Dutch GP','GP d’Olanda'], 'Italian Grand Prix':['Italian GP','GP d’Italia'],
+  'Emilia Romagna Grand Prix':['Emilia Romagna GP','GP dell’Emilia-Romagna'], 'Azerbaijan Grand Prix':['Azerbaijan GP','GP dell’Azerbaigian'],
+  'Singapore Grand Prix':['Singapore GP','GP di Singapore'], 'United States Grand Prix':['United States GP','GP degli Stati Uniti'],
+  'Mexico City Grand Prix':['Mexico City GP','GP del Messico'], 'Brazilian Grand Prix':['Brazilian GP','GP del Brasile'], 'São Paulo Grand Prix':['São Paulo GP','GP del Brasile'],
+  'Las Vegas Grand Prix':['Las Vegas GP','GP di Las Vegas'], 'Qatar Grand Prix':['Qatar GP','GP del Qatar'], 'Abu Dhabi Grand Prix':['Abu Dhabi GP','GP di Abu Dhabi']
+};
+const gpName = m => { const g = GP[m] || [String(m||'').replace(/ Grand Prix$/, ' GP')]; return LANG === 'it' ? (g[1] || g[0]) : g[0]; };
+const gpYear = (m, y) => LANG === 'it' ? `${gpName(m)} ${y}` : `${y} ${gpName(m)}`;
+// LA DEMO (regola di Nikita, 04.11, uguale per app e sito): la gara dell'anno prima sul circuito del prossimo GP, se il suo
+// replay e' pubblicato; se no l'ultima gara disputata (pubblicata in replays.json); se replays.json non risponde, la demo
+// di sempre (Austin 2025, ?demo=1). Mai un 404. L'abbinamento e' per circuito, non per nome: il calendario dice
+// «Brazilian Grand Prix», il replay «São Paulo Grand Prix». DEMO_RACE: forzatura facoltativa, vuota di norma.
+const DEMO_RACE = '';
+// chiavi dei circuiti del cronometraggio F1 (riscontrate su MultiViewer, 04.11): dal circuito di Jolpica e dal nome del GP
+// dei replay (finche' replays.json non porta circuitKey)
+const JOL_KEY = {albert_park:10, shanghai:49, suzuka:46, bahrain:63, jeddah:149, miami:151, villeneuve:23, monaco:22, catalunya:15, red_bull_ring:19,
+  silverstone:2, spa:7, hungaroring:4, zandvoort:55, monza:39, baku:144, marina_bay:61, americas:9, rodriguez:65, interlagos:14, vegas:152, losail:150, yas_marina:70, imola:6};
+const MEET_KEY = {'Australian Grand Prix':10, 'Chinese Grand Prix':49, 'Japanese Grand Prix':46, 'Bahrain Grand Prix':63, 'Saudi Arabian Grand Prix':149, 'Miami Grand Prix':151,
+  'Canadian Grand Prix':23, 'Monaco Grand Prix':22, 'Barcelona Grand Prix':15, 'Austrian Grand Prix':19, 'British Grand Prix':2, 'Belgian Grand Prix':7, 'Hungarian Grand Prix':4,
+  'Dutch Grand Prix':55, 'Italian Grand Prix':39, 'Azerbaijan Grand Prix':144, 'Singapore Grand Prix':61, 'United States Grand Prix':9, 'Mexico City Grand Prix':65, 'Mexican Grand Prix':65,
+  'São Paulo Grand Prix':14, 'Brazilian Grand Prix':14, 'Las Vegas Grand Prix':152, 'Qatar Grand Prix':150, 'Abu Dhabi Grand Prix':70, 'Emilia Romagna Grand Prix':6};
+const rpKey = x => x.circuitKey != null ? +x.circuitKey : x.meeting === 'Spanish Grand Prix' ? (+x.year <= 2025 ? 15 : null) : (MEET_KEY[x.meeting] ?? null);   // GP di Spagna: Barcellona fino al 2025, Madrid dal 2026
+function demoPick(){
+  const l = (RIS.rplist || []).filter(x => x && x.name && x.session === 'Race');
+  const forced = DEMO_RACE && l.find(x => x.name === DEMO_RACE); if(forced) return forced;
+  const wkKey = weekend ? (JOL_KEY[weekend.cid] ?? null) : null, y = nextSess ? new Date(nextSess.d).getFullYear() : new Date().getFullYear();
+  return prevYearRace(l, wkKey, y) || l.sort((a,b) => (Date.parse(b.start)||0) - (Date.parse(a.start)||0))[0] || null;
+}
+// la gara dell'anno prima sullo stesso circuito (chiave F1 del circuito): riusabile anche dalla prima pagina del sito
+function prevYearRace(list, key, year){
+  return key == null ? null : list.filter(x => x.session === 'Race' && rpKey(x) === key && +x.year === year - 1)[0] || null;
+}
+// il pulsante: stesso testo del pulsante della prima pagina del sito; nell'app installata niente «niente da installare»
 function demoBtn(){
-  const y = nextSess ? new Date(nextSess.d).getFullYear() : 0;
-  const r = weekend && RIS.rplist.filter(x => x.session === 'Race' && x.meeting === weekend.name && +x.year < y).sort((a,b) => b.year - a.year)[0];
-  return r ? `<a class="btn main big" href="?replay=${encodeURIComponent(r.name)}">${t('demo')}</a><div class="sub">${esc(t('demoSubGp').replace('NAME', r[LANG] || r.en))}</div>`
-           : `<a class="btn main big" href="?demo=1">${t('demo')}</a><div class="sub">${t('demoSub')}</div>`;
+  const r = demoPick(), app = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  return `<a class="dm" id="demoBtn" href="${r ? '?replay=' + encodeURIComponent(r.name) : '?demo=1'}"><span class="i">▶</span><span><span class="kk">${t(app ? 'd2Ka' : 'd2K')}</span>`
+    + `<b>${esc(r ? gpYear(r.meeting, r.year) : t('d2H'))}</b><small>${t('d2P')}</small></span></a>`;
+}
+// prossima sessione in due righe (nome, GP, giorno e ora; conto alla rovescia) e sotto il programma del weekend
+function cdLine(){
+  const left = Math.max(0, Math.floor((nextSess.d - Date.now())/1000));
+  if(!left) return `<span class="cd">${t('soon')}</span>${Date.now() > nextSess.d + 5*60e3 ? ` · ${t('waitF1')}` : ''}`;
+  const d = Math.floor(left/86400), h = Math.floor(left%86400/3600), m = Math.floor(left%3600/60), sec = left%60;
+  const v = d ? `${d} ${t('dU')} ${h} ${t('hU')} ${String(m).padStart(2,'0')} ${t('mU')}` : h ? `${h} ${t('hU')} ${String(m).padStart(2,'0')} ${t('mU')}` : `${m}:${String(sec).padStart(2,'0')}`;
+  return `${t('inP')} <span class="cd tn">${v}</span>`;
+}
+function nextHtml(wk){
+  if(!nextSess) return '';
+  const when = new Date(nextSess.d).toLocaleString(t('locale'), {weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}).replace(',', '');
+  const fmtD = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'}).replace(',', '');
+  const byS = {}; if(wk && wk.same) for(const x of wk.items) byS[x.session] = x;
+  const now = Date.now();
+  let h = `<div class="nxc"><div class="kick">${t('next')}</div><div class="l1"><b>${esc(t('sess')[nextSess.s]||nextSess.s)}</b> · ${esc(gpName(nextSess.name))} · ${esc(when)}</div>
+    <div class="l2"><span id="cdl">${cdLine()}</span>${weekend ? `<a href="#" data-cal="1">${t('calShort')}</a>` : ''}</div>`;
+  if(weekend) h += `<div class="chips">` + weekend.sessions.map(x => { const r = byS[x.s], isNext = x.d === nextSess.d && x.s === nextSess.s;
+      return `<button ${r ? `data-ris="${esc(r.name)}"` : 'disabled'} class="${isNext ? 'nx' : ''} ${!r && x.d < now ? 'past' : ''}">${r ? '✓ ' : ''}${esc(t('sess')[x.s]||x.s)}<small>${esc(fmtD(x.d))}</small></button>`; }).join('') + `</div>`;
+  return h + `</div>`;
+}
+const fmtRT = v => v==null || !isFinite(v) ? '' : v >= 60 ? `${Math.floor(v/60)}:${(v%60).toFixed(3).padStart(6,'0')}` : v.toFixed(3);
+// primi 5 della sessione scelta (di solito la gara dell'ultimo weekend), con l'ordine completo a richiesta
+function top5Html(doc){
+  const D = doc.drivers || {}, drv = n => { const d = D[n] || {}; return `<td class="l"><span class="sw" style="background:${esc(d.color||'#555')}"></span><span class="b">${esc(d.tla||n)}</span></td>`; };
+  let head, rows;
+  if(doc.kind === 'race'){
+    head = [t('rPos'), t('rDrv'), t('rStart'), t('rChg'), t('gap'), t('rPts')];
+    rows = (doc.arrivo || []).slice(0, 5).map(a => `<tr><td>${a.pos}</td>${drv(a.n)}<td>${a.grid ?? ''}</td><td class="${a.delta>0?'up':a.delta<0?'dn':''}">${a.delta>0?'▲'+a.delta:a.delta<0?'▼'+(-a.delta):a.delta===0?'=':''}</td><td>${esc(a.gap||'')}</td><td>${a.pts||''}</td></tr>`);
+  } else if(doc.kind === 'quali'){
+    head = [t('rPos'), t('rDrv'), t('rTime'), t('gap')];
+    rows = (doc.griglia || []).slice(0, 5).map(a => `<tr><td>${a.pos}</td>${drv(a.n)}<td>${fmtRT(a.q3 ?? a.q2 ?? a.q1)}</td><td>${a.gap ? '+' + a.gap.toFixed(3) : ''}</td></tr>`);
+  } else {
+    head = [t('rPos'), t('rDrv'), t('rTime'), t('gap')];
+    rows = (doc.classifica || []).slice(0, 5).map(a => `<tr><td>${a.pos}</td>${drv(a.n)}<td>${fmtRT(a.best)}</td><td>${a.gap ? '+' + a.gap.toFixed(3) : ''}</td></tr>`);
+  }
+  if(!rows.length) return '';
+  const f = doc.giroVeloce, fd = f && D[f.n];
+  return `<div class="ris top5"><h3>${esc(gpYear(doc.meeting, doc.year))} · ${esc(t('sess')[doc.session]||doc.session)}</h3>
+    <div class="rw"><table><tbody><tr>${head.map((x,i) => `<th class="${i===1?'l':''}">${x}</th>`).join('')}</tr>${rows.join('')}</tbody></table>
+    <button class="all" data-full="1">${t('allRows')}</button></div>
+    ${fd ? `<div class="tile">${t('rFl')}: <b>${esc(fd.tla)}</b> ${fmtRT(f.t)} <span class="dim">· ${t('rLap')} ${f.lap??''}</span></div>` : ''}</div>`;
 }
 async function loadRis(){
   if(DEMO || !window.FTRRis) return;
@@ -1878,35 +1957,32 @@ function risWeek(){                     // risultati del weekend in programma, o
 }
 async function drawRis(){
   const box = $('#ris');
-  if(DEMO || !RIS.ok){ box.innerHTML = ''; return; }
-  const wk = risWeek(), byS = {}; for(const x of wk.items) byS[x.session] = x;
-  const fmtD = d => new Date(d).toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'});
-  let h = '';
-  if(nextSess){
-    h += `<div class="nx1"><div class="kick">${t('next')}</div><div class="nxl"><b>${esc(t('sess')[nextSess.s]||nextSess.s)}</b> · ${esc(new Date(nextSess.d).toLocaleString(t('locale'),{weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'}))}</div>
-      <div class="where">${esc(nextSess.name)}${weekend && weekend.place ? ' · ' + esc(weekend.place) : ''}</div><div class="cdg tn" id="cdg">${cdHtml()}</div></div>`;
-  }
-  if(weekend){
-    const now = Date.now();
-    h += `<div class="rhd"><b>${t('weekend')}</b><a href="../risultati/${RIS.cur ? '?s=' + encodeURIComponent(RIS.cur) : ''}">${t('risAll')} →</a></div><div class="chips">` +
-      weekend.sessions.map(x => { const r = wk.same ? byS[x.s] : null, isNext = nextSess && x.d === nextSess.d && x.s === nextSess.s;
-        return `<button ${r ? `data-ris="${esc(r.name)}"` : 'disabled'} class="${isNext ? 'nx' : ''} ${!r && x.d < now ? 'past' : ''}">${r ? '✓ ' : ''}${esc(t('sess')[x.s]||x.s)}<small>${esc(fmtD(x.d))}</small></button>`; }).join('') + `</div>`;
-  }
-  if(wk.items.length && !wk.same){
-    h += `<div class="rhd"><b>${t('lastWk')} · ${esc(wk.items[0].meeting)}</b></div><div class="chips">` +
-      wk.items.map(x => `<button data-ris="${esc(x.name)}">${esc(t('sess')[x.session]||x.session)}</button>`).join('') + `</div>`;
-  }
+  if(DEMO){ box.innerHTML = ''; return; }
+  // senza i risultati (index.json non raggiungibile): prossima sessione e demo
+  if(!RIS.ok){ box.innerHTML = (nextSess ? nextHtml(null) : `<div class="nxc"><div class="kick">${t('noSession')}</div><div class="l2">${t('loadingCal')}</div></div>`) + demoBtn() + `<div class="uffI">${t('uff')}</div>`; return; }
+  const wk = risWeek();
   const show = RIS.cur && wk.items.some(x => x.name === RIS.cur) ? RIS.cur : (wk.items.length ? wk.items[wk.items.length - 1].name : null);
   RIS.cur = show;
-  box.innerHTML = h + `<div id="risBody"></div>`;
+  let h = nextHtml(wk) + demoBtn();
+  if(wk.items.length) h += `<div class="rhd"><b>${t(wk.same ? 'thisWk' : 'lastWk')} · ${esc(gpName(wk.items[0].meeting))}</b><a href="../risultati/${show ? '?s=' + encodeURIComponent(show) : ''}">${t('risAll')} →</a></div>`;
+  box.innerHTML = h + `<div id="risBody"></div><div class="uffI">${t('uff')}</div>`;
   if(!show) return;
   box.querySelectorAll('[data-ris]').forEach(b => b.classList.toggle('on', b.dataset.ris === show));
   try{
     const doc = RIS.docs[show] || (RIS.docs[show] = await (await fetch(`../risultati/${encodeURIComponent(show)}.json`, {cache:'no-cache'})).json());
-    FTRRis.render($('#risBody'), doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: RIS.replays.has(show) ? `?replay=${encodeURIComponent(show)}` : null});
-  }catch(e){ $('#risBody').innerHTML = ''; }
+    if(RIS.cur !== show) return;
+    const body = $('#risBody'); if(!body) return;
+    if(RIS.full === show){   // ordine completo e il resto dei risultati, senza «Rivedi la sessione» (la demo sta sopra)
+      FTRRis.render(body, doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: null});
+      body.insertAdjacentHTML('beforeend', `<button class="less" data-full="0">${t('lessRows')}</button>`);
+    } else { if(!document.getElementById('risCss')) FTRRis.render(document.createElement('div'), doc, LANG, {});   // lo stile delle tabelle lo mette risultati.js al primo disegno
+      body.innerHTML = top5Html(doc) || (FTRRis.render(body, doc, LANG, {sessName: t('sess')[doc.session] || doc.session, replay: null}), body.innerHTML); }
+  }catch(e){ const b = $('#risBody'); if(b) b.innerHTML = ''; }
 }
-$('#ris').addEventListener('click', e => { const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; drawRis(); });
+$('#ris').addEventListener('click', e => {
+  const f = e.target.closest('[data-full]');
+  if(f){ const open = f.dataset.full === '1'; RIS.full = open ? RIS.cur : null; drawRis().then(() => { if(!open) $('#ris .rhd') && $('#ris .rhd').scrollIntoView({block:'start'}); }); return; }
+  const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; RIS.full = null; drawRis(); });
 loadRis();
 
 // ---------------- avvisi per le bandiere, schermo acceso, classifica compatta ----------------
@@ -1982,7 +2058,7 @@ document.addEventListener('click', e => {
 });
 const INSTALL_ASK = new URLSearchParams(location.search).has('install');   // arrivati dal pulsante del sito
 if(STANDALONE) $('#instSet').style.display = 'none';
-else if(INSTALL_ASK || Date.now() - (+store.get('ftr.instX', 0)) > 7*86400e3) $('#instBar').classList.add('on');   // chiusa: ricompare dopo una settimana
+else if(INSTALL_ASK) $('#instBar').classList.add('on');   // 04.11: in apertura niente invito a installare, che sta in Impostazioni; solo arrivando dal pulsante del sito
 
 texts(); showDelay(); render();
 if(DEMO){ startDemo(); $$('[data-d]').forEach(b => { const st = b.closest('.set'); if(st) st.style.display='none'; }); }
