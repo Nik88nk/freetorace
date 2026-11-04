@@ -100,6 +100,16 @@
   "laps": 26
  },
  {
+  "name": "2025_São_Paulo_Race",
+  "start": "2025-11-09T17:00:00+00:00",
+  "year": "2025",
+  "meeting": "São Paulo Grand Prix",
+  "session": "Race",
+  "it": "São Paulo Grand Prix 2025 · Gara",
+  "en": "2025 São Paulo Grand Prix · Race",
+  "laps": 71
+ },
+ {
   "name": "2025_Mexico_City_Race",
   "start": "2025-10-26T20:00:00+00:00",
   "year": "2025",
