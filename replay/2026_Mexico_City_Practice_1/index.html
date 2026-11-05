@@ -1627,6 +1627,7 @@ function drawMap(){
   const {finish} = trackLayer(g, G, W, Hh, sc, dpr, cal);
   // auto
   const pos=carPositions(), leader=S.drivers[0];
+  for(const d of S.drivers) if(d.retired||d.stopped) delete pos[d.num];   // ritirati: via dalla mappa e dalla striscia (05.11)
   for(const d of S.drivers.slice().reverse()){
     const c=pos[d.num]; if(!c||!c.xy) continue; const [x,y]=c.xy;
     const on=sel.includes(d.num), faded=sel.length&&!on;
