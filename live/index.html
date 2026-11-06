@@ -179,7 +179,7 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 .dm{display:flex;gap:12px;align-items:center;margin:16px 0 4px;padding:14px 16px;border-radius:12px;background:var(--accent);color:#fff;text-decoration:none;box-shadow:0 6px 22px #e1060040}
 .dm .i{flex:none;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;padding-left:3px}
 .dm .kk{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;opacity:.85}.dm b{display:block;font-size:20px;font-weight:900;line-height:1.15}.dm small{display:block;font-size:13px;opacity:.9;line-height:1.25}
-.top5{padding-bottom:6px}.top5 h3{font-size:16px;margin:0 0 6px}.top5 .all{display:block;width:100%;text-align:center;padding:9px;color:var(--text);font:inherit;font-weight:700;font-size:14px;background:none;border:0;border-top:1px solid var(--line);cursor:pointer}
+.top5{padding-bottom:6px}.top5 .prov{font-size:11px;font-weight:700;color:#111;background:var(--yellow);border-radius:4px;padding:1px 6px;vertical-align:2px;text-transform:uppercase;letter-spacing:.5px}.top5 h3{font-size:16px;margin:0 0 6px}.top5 .all{display:block;width:100%;text-align:center;padding:9px;color:var(--text);font:inherit;font-weight:700;font-size:14px;background:none;border:0;border-top:1px solid var(--line);cursor:pointer}
 .top5 .tile{margin-top:8px}#ris .less{display:block;margin:10px auto 0;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:8px 14px;font:inherit;font-weight:700;font-size:14px}
 #ris .uffI{color:var(--dim2);font-size:11px;padding:16px 0 18px}
 #instBar{display:none;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(90deg,#3a0a0a,#14181f);border-bottom:1px solid var(--line2);font-size:14px}
@@ -388,7 +388,7 @@ const T = {
   pauseB:'⏸ Paused: TV catches up in {T}', lostB:'Connection lost in the background: back to live, delay reset',
   dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>To sync:</b> at the start, tap «Sync at the start» (even well before), then tap again when the lights go out on TV. During the race, pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
   d2K:'Demo in your browser · nothing to install', d2Ka:'Demo · race replay', d2H:'2025 United States GP', d2P:'The whole race, with the map, timing and strategy',
-  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', allRows:'See the full order →', lessRows:'Show less ↑',
+  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', prov:'provisional', allRows:'See the full order →', lessRows:'Show less ↑',
   rPos:'Pos', rDrv:'Driver', rStart:'Start', rChg:'Places', rPts:'Points', rTime:'Time', rFl:'Fastest lap', rLap:'lap',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
@@ -419,7 +419,7 @@ const T = {
   pauseB:'⏸ In pausa: la TV ti raggiunge fra {T}', lostB:'Collegamento perso in secondo piano: ripartito in diretta, ritardo azzerato',
   dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Per allinearti:</b> al via, tocca «Allinea alla partenza» (anche molto prima), poi tocca di nuovo quando in TV si spengono i semafori. In gara, scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
   d2K:'Demo nel browser · niente da installare', d2Ka:'Demo · replay della gara', d2H:'GP degli Stati Uniti 2025', d2P:'Tutta la gara, con mappa, tempi e strategia',
-  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
+  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', prov:'provvisori', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
   rPos:'Pos', rDrv:'Pilota', rStart:'Partenza', rChg:'Posizioni', rPts:'Punti', rTime:'Tempo', rFl:'Giro più veloce', rLap:'giro',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
@@ -455,7 +455,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261104-232851';
+const BUILD = '20261106-215316';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1255,7 +1255,7 @@ function sessDone(x){
 }
 function pickNext(){
   const was = nextSess; nextSess = CAL.find(x => !sessDone(x)) || null; weekend = nextSess ? nextSess.wk : null;
-  if(nextSess !== was){ render(); drawRis(); }
+  if(nextSess !== was){ render(); drawRis(); if(was) loadRis(); }   // sessione finita: i suoi risultati arrivano dopo (si rileggono anche ogni 5 minuti)
 }
 // file .ics con tutte le sessioni del weekend e un promemoria 15 minuti prima: il telefono lo apre nel calendario
 function icsWeekend(){
@@ -1932,7 +1932,7 @@ function top5Html(doc){
   }
   if(!rows.length) return '';
   const f = doc.giroVeloce, fd = f && D[f.n];
-  return `<div class="ris top5"><h3>${esc(gpYear(doc.meeting, doc.year))} · ${esc(t('sess')[doc.session]||doc.session)}</h3>
+  return `<div class="ris top5"><h3>${esc(gpYear(doc.meeting, doc.year))} · ${esc(t('sess')[doc.session]||doc.session)}${doc.provvisoria ? ` <span class="prov">${t('prov')}</span>` : ''}</h3>
     <div class="rw"><table><tbody><tr>${head.map((x,i) => `<th class="${i===1?'l':''}">${x}</th>`).join('')}</tr>${rows.join('')}</tbody></table>
     <button class="all" data-full="1">${t('allRows')}</button></div>
     ${fd ? `<div class="tile">${t('rFl')}: <b>${esc(fd.tla)}</b> ${fmtRT(f.t)} <span class="dim">· ${t('rLap')} ${f.lap??''}</span></div>` : ''}</div>`;
@@ -1942,11 +1942,18 @@ async function loadRis(){
   try{
     const [idx, rp] = await Promise.all([fetch('../risultati/index.json', {cache:'no-cache'}).then(r => r.json()),
                                          fetch('../replay/replays.json', {cache:'no-cache'}).then(r => r.json()).catch(() => [])]);
-    RIS.idx = idx; RIS.replays = new Set(rp.map(x => x.name)); RIS.rplist = rp; RIS.ok = true;
-    if(!RIS.cur && idx.length) RIS.cur = idx[0].name;                  // l'ultima sessione pubblicata
+    const sig = JSON.stringify(idx.map(x => x.name)) + rp.length;
+    if(RIS.ok && sig === RIS.sig) return;                              // niente di nuovo
+    RIS.sig = sig; RIS.idx = idx; RIS.replays = new Set(rp.map(x => x.name)); RIS.rplist = rp; RIS.ok = true;
+    for(const [k, d] of Object.entries(RIS.docs)) if(d && d.provvisoria) delete RIS.docs[k];   // i provvisori si rileggono
+    if((!RIS.cur || !RIS.picked) && idx.length) RIS.cur = idx[0].name; // l'ultima sessione pubblicata, se non se n'e' scelta una
     render(); drawRis();
   }catch(e){}
 }
+// 06.11, FP2 di San Paolo: l'app aperta prima della pubblicazione restava sulle Libere 1 (risultati letti una volta sola,
+// all'apertura). Si rileggono ogni 5 minuti fuori dalla diretta, al ritorno in primo piano e quando finisce una sessione.
+setInterval(() => { if(!document.hidden && !isLive()) loadRis(); }, 300e3);
+document.addEventListener('visibilitychange', () => { if(!document.hidden && !isLive()) loadRis(); });
 function risWeek(){                     // risultati del weekend in programma, o dell'ultimo weekend pubblicato
   if(!RIS.idx.length) return {same: false, items: []};
   const near = x => weekend && Math.abs(Date.parse(x.start) - weekend.sessions[0].d) < 5*86400e3;
@@ -1982,7 +1989,7 @@ async function drawRis(){
 $('#ris').addEventListener('click', e => {
   const f = e.target.closest('[data-full]');
   if(f){ const open = f.dataset.full === '1'; RIS.full = open ? RIS.cur : null; drawRis().then(() => { if(!open) $('#ris .rhd') && $('#ris .rhd').scrollIntoView({block:'start'}); }); return; }
-  const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; RIS.full = null; drawRis(); });
+  const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; RIS.picked = true; RIS.full = null; drawRis(); });
 loadRis();
 
 // ---------------- avvisi per le bandiere, schermo acceso, classifica compatta ----------------
