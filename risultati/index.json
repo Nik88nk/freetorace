@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_São_Paulo_Practice_1",
+  "kind": "practice",
+  "meeting": "São Paulo Grand Prix",
+  "location": "São Paulo",
+  "year": "2026",
+  "session": "Practice 1",
+  "start": "2026-11-06T12:30:00"
+ },
+ {
   "name": "2026_Mexico_City_Race",
   "kind": "race",
   "meeting": "Mexico City Grand Prix",

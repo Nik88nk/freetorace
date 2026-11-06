@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_São_Paulo_Practice_1",
+  "start": "2026-11-06T12:30:00",
+  "year": "2026",
+  "meeting": "São Paulo Grand Prix",
+  "session": "Practice 1",
+  "it": "São Paulo Grand Prix 2026 · Libere 1",
+  "en": "2026 São Paulo Grand Prix · Practice 1",
+  "laps": 34
+ },
+ {
   "name": "2026_Mexico_City_Race",
   "start": "2026-11-01T14:00:00",
   "year": "2026",
