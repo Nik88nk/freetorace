@@ -1,6 +1,70 @@
 {
  "sessions": [
   {
+   "name": "2026_São_Paulo_Qualifying",
+   "url": "/f1/2026/sao-paulo/qualifying/",
+   "year": "2026",
+   "meeting": "São Paulo Grand Prix",
+   "session": "Qualifying",
+   "start": "2026-11-07T15:00:00",
+   "kind": "quali",
+   "lead": [
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "1:27.470"
+    },
+    {
+     "name": "George Russell",
+     "tla": "RUS",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.204"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.625"
+    }
+   ]
+  },
+  {
+   "name": "2026_São_Paulo_Practice_3",
+   "url": "/f1/2026/sao-paulo/practice-3/",
+   "year": "2026",
+   "meeting": "São Paulo Grand Prix",
+   "session": "Practice 3",
+   "start": "2026-11-07T11:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "1:11.622"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.025"
+    },
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "+0.131"
+    }
+   ]
+  },
+  {
    "name": "2026_São_Paulo_Practice_2",
    "url": "/f1/2026/sao-paulo/practice-2/",
    "year": "2026",
@@ -391,6 +455,8 @@
  "pages": {
   "f1/2026/sao-paulo/practice-1/": "2026-11-07",
   "f1/2026/sao-paulo/practice-2/": "2026-11-07",
+  "f1/2026/sao-paulo/practice-3/": "2026-11-07",
+  "f1/2026/sao-paulo/qualifying/": "2026-11-07",
   "f1/2026/sao-paulo/": "2026-11-07",
   "f1/2026/mexico-city/practice-1/": "2026-11-02",
   "f1/2026/mexico-city/practice-2/": "2026-11-02",
