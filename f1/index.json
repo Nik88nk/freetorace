@@ -1,6 +1,70 @@
 {
  "sessions": [
   {
+   "name": "2026_São_Paulo_Practice_2",
+   "url": "/f1/2026/sao-paulo/practice-2/",
+   "year": "2026",
+   "meeting": "São Paulo Grand Prix",
+   "session": "Practice 2",
+   "start": "2026-11-06T16:00:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "1:10.763"
+    },
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "+0.253"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.259"
+    }
+   ]
+  },
+  {
+   "name": "2026_São_Paulo_Practice_1",
+   "url": "/f1/2026/sao-paulo/practice-1/",
+   "year": "2026",
+   "meeting": "São Paulo Grand Prix",
+   "session": "Practice 1",
+   "start": "2026-11-06T12:30:00",
+   "kind": "practice",
+   "lead": [
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": "1:11.717"
+    },
+    {
+     "name": "Kimi Antonelli",
+     "tla": "ANT",
+     "team": "Mercedes",
+     "color": "#00D7B6",
+     "v": "+0.082"
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+0.236"
+    }
+   ]
+  },
+  {
    "name": "2026_Mexico_City_Race",
    "url": "/f1/2026/mexico-city/race/",
    "year": "2026",
@@ -325,6 +389,9 @@
   "2026"
  ],
  "pages": {
+  "f1/2026/sao-paulo/practice-1/": "2026-11-07",
+  "f1/2026/sao-paulo/practice-2/": "2026-11-07",
+  "f1/2026/sao-paulo/": "2026-11-07",
   "f1/2026/mexico-city/practice-1/": "2026-11-02",
   "f1/2026/mexico-city/practice-2/": "2026-11-02",
   "f1/2026/mexico-city/practice-3/": "2026-11-02",
@@ -337,6 +404,6 @@
   "f1/2026/united-states/qualifying/": "2026-11-01",
   "f1/2026/united-states/race/": "2026-11-01",
   "f1/2026/united-states/": "2026-11-01",
-  "f1/2026/": "2026-11-02"
+  "f1/2026/": "2026-11-07"
  }
 }
