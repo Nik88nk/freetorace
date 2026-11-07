@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_São_Paulo_Qualifying",
+  "start": "2026-11-07T15:00:00",
+  "year": "2026",
+  "meeting": "São Paulo Grand Prix",
+  "session": "Qualifying",
+  "it": "São Paulo Grand Prix 2026 · Qualifica",
+  "en": "2026 São Paulo Grand Prix · Qualifying",
+  "laps": 24
+ },
+ {
   "name": "2026_São_Paulo_Practice_3",
   "start": "2026-11-07T11:30:00",
   "year": "2026",

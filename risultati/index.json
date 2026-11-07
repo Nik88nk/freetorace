@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_São_Paulo_Qualifying",
+  "kind": "quali",
+  "meeting": "São Paulo Grand Prix",
+  "location": "São Paulo",
+  "year": "2026",
+  "session": "Qualifying",
+  "start": "2026-11-07T15:00:00"
+ },
+ {
   "name": "2026_São_Paulo_Practice_3",
   "kind": "practice",
   "meeting": "São Paulo Grand Prix",
