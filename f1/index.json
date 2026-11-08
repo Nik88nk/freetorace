@@ -1,6 +1,38 @@
 {
  "sessions": [
   {
+   "name": "2026_São_Paulo_Race",
+   "url": "/f1/2026/sao-paulo/race/",
+   "year": "2026",
+   "meeting": "São Paulo Grand Prix",
+   "session": "Race",
+   "start": "2026-11-08T14:00:00",
+   "kind": "race",
+   "lead": [
+    {
+     "name": "Lando Norris",
+     "tla": "NOR",
+     "team": "McLaren",
+     "color": "#F47600",
+     "v": ""
+    },
+    {
+     "name": "Max Verstappen",
+     "tla": "VER",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+14.602"
+    },
+    {
+     "name": "Isack Hadjar",
+     "tla": "HAD",
+     "team": "Red Bull Racing",
+     "color": "#4781D7",
+     "v": "+24.485"
+    }
+   ]
+  },
+  {
    "name": "2026_São_Paulo_Qualifying",
    "url": "/f1/2026/sao-paulo/qualifying/",
    "year": "2026",
@@ -453,11 +485,12 @@
   "2026"
  ],
  "pages": {
-  "f1/2026/sao-paulo/practice-1/": "2026-11-07",
-  "f1/2026/sao-paulo/practice-2/": "2026-11-07",
-  "f1/2026/sao-paulo/practice-3/": "2026-11-07",
-  "f1/2026/sao-paulo/qualifying/": "2026-11-07",
-  "f1/2026/sao-paulo/": "2026-11-07",
+  "f1/2026/sao-paulo/practice-1/": "2026-11-08",
+  "f1/2026/sao-paulo/practice-2/": "2026-11-08",
+  "f1/2026/sao-paulo/practice-3/": "2026-11-08",
+  "f1/2026/sao-paulo/qualifying/": "2026-11-08",
+  "f1/2026/sao-paulo/race/": "2026-11-08",
+  "f1/2026/sao-paulo/": "2026-11-08",
   "f1/2026/mexico-city/practice-1/": "2026-11-02",
   "f1/2026/mexico-city/practice-2/": "2026-11-02",
   "f1/2026/mexico-city/practice-3/": "2026-11-02",
@@ -470,6 +503,6 @@
   "f1/2026/united-states/qualifying/": "2026-11-01",
   "f1/2026/united-states/race/": "2026-11-01",
   "f1/2026/united-states/": "2026-11-01",
-  "f1/2026/": "2026-11-07"
+  "f1/2026/": "2026-11-08"
  }
 }
