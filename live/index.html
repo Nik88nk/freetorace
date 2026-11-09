@@ -404,7 +404,7 @@ const T = {
   redH:'RED FLAG', redP:'Race suspended: the cars are parked in the pit lane, nothing happens on track until the restart.', restartIn:'Restart in', skipRestart:'⏩ Skip', gridH:'START', gridP:'Cars on the grid, lights out in', goStart:'⏩ Go', goH:'LIGHTS OUT!', goP:'First lap: the order updates at every timing point.',
   rpLoading:'Loading the demo race…', rpWhat:'2025 United States GP replay', rpFull:'full version', rpErr:'The demo could not load. Try again later.',
   pace5:'Recent pace · fastest now', top10:'top 10', fastestNow:'fastest', paceWait:'Pace shows after two clean laps.', trackHide:'▴ hide', trackShow:'▾ show',
-  hdSec:'Sectors', hdLast:'Last lap', hdStops:'Stops', air:'air', trk:'track', dry:'dry', rain:'rain', stale:'data stopped N s ago · reconnecting…',
+  hdSec:'Sectors', hdLast:'Last lap', hdStops:'Stops', air:'air', trk:'track', dry:'dry', wet:'wet', rain:'rain', stale:'data stopped N s ago · reconnecting…',
   uff:'Free to Race · unofficial, not associated with the Formula 1 companies', cut:'elimination zone', koIn:'Knocked out in', koBoth:'Knocked out in Q1 and Q2', outIn:'Out in', open:'▾ open', close:'▴ close',
   qHead:'Best lap · minisectors and sectors', q3Head:'gap to pole', pole:'pole', noTime:'no time', fpHead:'Best lap · pace · laps · tyre', push:'PUSH', box:'PIT', lapsU:'laps',
   lastLap:'Last lap', paceK:'Pace 5 laps', onX:'vs NAME', toX:'to NAME', stints:'Stints', ghost:'If he stops now he rejoins', behind:'behind', aheadOf:'ahead of', by:'by',
@@ -435,7 +435,7 @@ const T = {
   redH:'BANDIERA ROSSA', redP:'Gara sospesa: le auto sono ferme in corsia box, in pista non succede niente fino alla ripartenza.', restartIn:'Ripartenza fra', skipRestart:'⏩ Salta', gridH:'PARTENZA', gridP:'Auto schierate sulla griglia, semafori spenti fra', goStart:'⏩ Vai', goH:'VIA!', goP:'Primo giro: l’ordine si aggiorna a ogni passaggio cronometrato.',
   rpLoading:'Carico la gara della demo…', rpWhat:'replay del GP degli Stati Uniti 2025', rpFull:'versione completa', rpErr:'La demo non si è caricata. Riprova più tardi.',
   pace5:'Passo recente · i più veloci adesso', top10:'primi 10', fastestNow:'il più veloce', paceWait:'Il passo compare dopo due giri puliti.', trackHide:'▴ nascondi', trackShow:'▾ mostra',
-  hdSec:'Settori', hdLast:'Ult. giro', hdStops:'Soste', air:'aria', trk:'asfalto', dry:'asciutto', rain:'pioggia', stale:'dati fermi da N s · ricollego…',
+  hdSec:'Settori', hdLast:'Ult. giro', hdStops:'Soste', air:'aria', trk:'asfalto', dry:'asciutta', wet:'bagnata', rain:'pioggia', stale:'dati fermi da N s · ricollego…',
   uff:'Free to Race · non ufficiale, non associato alle società di Formula 1', cut:'zona eliminazione', koIn:'Eliminati in', koBoth:'Eliminati in Q1 e Q2', outIn:'Fuori in', open:'▾ apri', close:'▴ chiudi',
   qHead:'Miglior tempo · minisettori e settori', q3Head:'distacco dalla pole', pole:'pole', noTime:'senza tempo', fpHead:'Miglior tempo · passo · giri · gomma', push:'GIRO', box:'BOX', lapsU:'giri',
   lastLap:'Ultimo giro', paceK:'Passo 5 giri', onX:'su NAME', toX:'da NAME', stints:'Stint', ghost:'Se si ferma ora rientra', behind:'dietro', aheadOf:'davanti a', by:'di',
@@ -456,7 +456,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261108-213959';
+const BUILD = '20261109-201922';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -982,11 +982,11 @@ function render(){
   $('#hicon').style.display = live ? 'none' : '';
   // meteo compatto: solo i valori che ci sono (mai «NaN°»)
   safe('meteo', () => { const w = ST.WeatherData || {}, num = v => v!=null && v!=='' && isFinite(+v) ? Math.round(+v) : null;
-    const a = live ? num(w.AirTemp) : null, k = live ? num(w.TrackTemp) : null, r = live && w.Rainfall!=null && w.Rainfall!=='' ? String(w.Rainfall)!=='0' : null;
+    const a = live ? num(w.AirTemp) : null, k = live ? num(w.TrackTemp) : null, r = live ? trackWet() : null;
     const temps = [a!=null ? `${t('air')} <b>${a}°</b>` : '', k!=null ? `${t('trk')} <b>${k}°</b>` : ''].filter(Boolean).join(' · ');
     const on = !!(temps || r!=null);
     $('#wx').classList.toggle('on', on);
-    $('#wx').innerHTML = on ? (temps ? `<span>${temps}</span>` : '') + (r!=null ? `<span class="${r?'rain':'dry'}">${r?t('rain'):t('dry')}</span>` : '') : ''; });
+    $('#wx').innerHTML = on ? (temps ? `<span>${temps}</span>` : '') + (r!=null ? `<span class="${r?'rain':'dry'}">${r?t('wet'):t('dry')}</span>` : '') : ''; });
   const susp = DEMO && rp && rp.marks && rp.marks.phases.some(x=>x.kind==='red' && rp.t>=x.from && rp.t<x.to);   // sospensione: la pista torna «libera» prima della ripartenza
   // gara sospesa: il feed rimette la pista «AllClear» dopo 2 minuti mentre la sessione resta «Aborted» fino alla
   // ripartenza (1.11, rossa del Messico): la bandiera rossa la da' lo stato della sessione
@@ -1039,6 +1039,29 @@ function remaining(){
   return r;
 }
 const fmtT = s => { s=Math.max(0,Math.round(s)); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0'); };
+// pista bagnata (09.11, gara del Brasile partita bagnata con «Rainfall» a 0: il sensore dice solo se piove adesso).
+// Stessa regola del motore (f1cruscotto.pista_bagnata): bagnata se piove, OPPURE piu' della meta' delle auto in pista
+// monta intermedie o da bagnato, OPPURE l'ultima dichiarazione della direzione gara sullo stato della pista e'
+// «bagnata» (una «asciutta» la spegne). «Low grip» non conta. null se non si sa niente.
+const RC_WET = /TRACK SURFACE (IS )?WET|DECLARED (A )?WET|WET RACE|WET TRACK/, RC_DRY = /TRACK SURFACE (IS )?DRY|DECLARED (A )?DRY|DRY RACE|DRY TRACK/;
+function trackWet(){
+  const w = ST.WeatherData || {}, rain = String(w.Rainfall ?? '').trim();
+  let why = rain!=='' && rain!=='0';
+  const lines = (ST.TimingData||{}).Lines || {}, app = (ST.TimingAppData||{}).Lines || {};
+  let on = 0, wet = 0;
+  for(const [n,l] of Object.entries(lines)){
+    if(!l || typeof l!=='object' || l.Retired || l.Stopped || l.KnockedOut) continue;
+    const sts = asList((app[n]||{}).Stints), c = sts.length ? String((sts[sts.length-1]||{}).Compound||'').toUpperCase() : '';
+    if(!c || c==='UNKNOWN') continue;
+    on++; if(c==='INTERMEDIATE' || c==='WET') wet++;
+  }
+  if(on >= 3 && wet*2 > on) why = true;
+  let rc = null;
+  for(const m of asList((ST.RaceControlMessages||{}).Messages)){ const x = String((m||{}).Message||'').toUpperCase();
+    if(RC_WET.test(x)) rc = true; else if(RC_DRY.test(x)) rc = false; }
+  if(rc) why = true;
+  return (Object.keys(w).length || on >= 3 || rc!=null) ? why : null;
+}
 function isLive(){
   if(DEMO) return !!ST.SessionInfo;
   const st = String((ST.SessionInfo||{}).SessionStatus || ((ST.SessionData||{}).StatusSeries ? asList(ST.SessionData.StatusSeries).map(x=>x.SessionStatus).filter(Boolean).pop() : '') || '');
@@ -1585,11 +1608,27 @@ function gridSlots(G, ds, finish){
     ord = rp.grid;
   } else ord = liveGrid || {};
   const gp = d => ord[d.n] || d.pos;
-  const cars = ds.filter(d=>!d.out && gp(d)<99).sort((a,b)=>gp(a)-gp(b));
+  const cars = ds.filter(d=>!d.out && gp(d)<99 && !pitStart(d.n)).sort((a,b)=>gp(a)-gp(b));   // chi e' ai box non e' in griglia
   const out = {len, pxm, pole};
   cars.forEach((d,i)=>{ out[d.n] = {i, f:(((pole - i*8)/len)%1+1)%1, side:i%2 ? -1 : 1}; });
   return out;
 }
+// chi e' ai box allo spegnimento dei semafori (09.11, Brasile: BOT ai box dalle 16:56, ritirato alle 17:05:24, correva
+// con la curva di lancio fino alle curve 4-5; Messico 2026: LAW parte dalla corsia box) non e' in griglia e non prende la
+// curva di lancio: resta in corsia box, poi fermo all'uscita finche' non passa da un minisettore; da ritirato sparisce.
+// L'elenco si fissa sull'ultimo stato visto prima del via (o sul primo dopo, se si e' saltati oltre).
+const pitGrid = {s0:null, set:new Set(), fixed:false};
+function pitGridUpd(gph){
+  if(!gph){ return; }
+  const key = gph.s0===Infinity ? 'pre' : gph.s0;
+  if(pitGrid.s0!==key && !(pitGrid.s0==='pre' && !gph.pre)){ pitGrid.s0 = key; pitGrid.set = new Set(); pitGrid.fixed = false; }
+  if(pitGrid.s0==='pre' && !gph.pre) pitGrid.s0 = key;
+  if(pitGrid.fixed) return;
+  const lines = ((ST.TimingData||{}).Lines)||{};
+  pitGrid.set = new Set(Object.keys(lines).filter(n => lines[n] && lines[n].InPit));
+  if(!gph.pre) pitGrid.fixed = true;
+}
+const pitStart = n => pitGrid.set.has(n);
 const launchM = t => { const u = Math.max(0, t - 0.5); return 120*(u - 10*(1 - Math.exp(-u/10))); };   // metri dopo il via (OpenF1: ~100 m a 5 s, ~870 a 15 s)
 const leftAt = (G, f) => { const a=G.at(f-0.0015), z=G.at(f+0.0015), l=Math.hypot(z[0]-a[0], z[1]-a[1])||1; return [(z[1]-a[1])/l, -(z[0]-a[0])/l]; };
 const disp = {};
@@ -1612,7 +1651,7 @@ function drawMap(){
   if(!isLive()) return;
   const real = performance.now(), dtr = Math.min(0.1, (real - lastFrame)/1000), dt = dtr * rate(), now = sessNow(); lastFrame = real;
   const ds = drivers().slice().reverse(), lines = ((ST.TimingData||{}).Lines)||{};
-  const gph = gridPhase(now), gsl = gph ? gridSlots(G, ds, tl.finish) : null;
+  const gph = gridPhase(now); pitGridUpd(gph); const gsl = gph ? gridSlots(G, ds, tl.finish) : null;
   const gridAt = d => { const s = gsl[d.n], m = gph.pre ? 0 : launchM(now - gph.s0), f = (s.f + m/gsl.len) % 1;
     const nv = leftAt(G, f); return {f, xy:G.at(f), lab: s.side > 0 ? nv : [-nv[0], -nv[1]]}; };   // nomi a pettine, a lati alterni
   if(gsl && (gph.pre || now < gph.s0 + 10)){ const f=((gsl.pole+4)/gsl.len%1+1)%1, p=G.at(f), nv=leftAt(G, f), h=Math.max(9*0.85, Math.min(26*0.85, 130*G.k))/2+1;   // linea di partenza, davanti alla pole
@@ -1650,7 +1689,9 @@ function drawMap(){
         const gq = gridAt(d); xy = gq.xy; lab = gq.lab;
         disp[d.n] = {f:gq.f}; delete trk.ratio[d.n];              // da qui parte la stima; l'andatura del giro di formazione non vale
       }
-      else if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
+      else if(pitStart(d.n) && typeof pitGrid.s0==='number' && !(L && L[1] >= pitGrid.s0) && !(lines[d.n] && lines[d.n].InPit)){   // uscito dai box dopo il via: fermo all'uscita fino al primo passaggio
+        if(!G.lane) continue; xy = G.lane[G.lane.length-2]; delete disp[d.n]; }
+      else if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(pitStart(d.n) ? 0.5 : 0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); /* chi parte dai box sta a meta' corsia */ const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
       else if(L){
         const ft = estFrac(L[0], now - L[1], pace(d.n));
         let q = disp[d.n]; const delta = q ? ((ft-q.f+0.5)%1+1)%1-0.5 : 1;
