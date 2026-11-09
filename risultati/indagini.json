@@ -1,0 +1,257 @@
+{
+ "meeting": "São Paulo Grand Prix",
+ "year": "2026",
+ "aggiornato": "2026-11-09T20:06:15Z",
+ "items": [
+  {
+   "n": "51",
+   "tla": "CAM",
+   "session": "Practice 2",
+   "utc": "2026-11-06T19:35:07",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 15 INCIDENT INVOLVING CAR 51 (CAM) WILL BE INVESTIGATED AFTER THE SESSION - IMPEDING (16:31:58)",
+   "reason": "IMPEDING",
+   "decision": {
+    "utc": null,
+    "session": "Practice 2",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 51 (CAM) - IMPEDING",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_51_-_unnecessarily_impeding_of_car_16.pdf"
+   }
+  },
+  {
+   "n": "11",
+   "tla": "PER",
+   "session": "Practice 3",
+   "utc": "2026-11-07T15:26:23",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 8 INCIDENT INVOLVING CAR 11 (PER) WILL BE INVESTIGATED AFTER THE SESSION - UNSAFE CONDITION (12:22:16)",
+   "reason": "UNSAFE CONDITION",
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "FIA STEWARDS: WARNING FOR CAR 11 (PER) - UNSAFE CONDITION",
+    "type": "avvertimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_11_-_driving_in_an_unsafe_condition.pdf"
+   }
+  },
+  {
+   "n": "87",
+   "tla": "BEA",
+   "session": "Qualifying",
+   "utc": "2026-11-07T18:15:35",
+   "when": "now",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 87 (BEA) UNDER INVESTIGATION - REVERSING IN THE PIT LANE (14:59:59)",
+   "reason": "REVERSING IN THE PIT LANE",
+   "decision": {
+    "utc": "2026-11-07T18:17:08",
+    "session": "Qualifying",
+    "msg": "FIA STEWARDS: REPRIMAND (DRIVING) FOR CAR 87 (BEA) - REVERSING IN THE PIT LANE (14:59:59)",
+    "type": "ammonimento"
+   }
+  },
+  {
+   "n": "27",
+   "tla": "HUL",
+   "session": "Race",
+   "utc": "2026-11-08T16:24:20",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 27 (HUL) WILL BE INVESTIGATED AFTER THE RACE - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT (13:20:45)",
+   "reason": "FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 27 (HUL) - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_27_-_failure_to_follow_race_directors_instruction_-_practice_start.pdf"
+   }
+  },
+  {
+   "n": "11",
+   "tla": "PER",
+   "session": "Race",
+   "utc": "2026-11-08T16:36:05",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 11 (PER) WILL BE INVESTIGATED AFTER THE RACE - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT (13:21:07)",
+   "reason": "FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 11 (PER) - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_11_-_failure_to_follow_race_directors_instruction_-_practice_start.pdf"
+   }
+  },
+  {
+   "n": "6",
+   "tla": "HAD",
+   "session": "Race",
+   "utc": "2026-11-08T16:36:38",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 6 (HAD) WILL BE INVESTIGATED AFTER THE RACE - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT (13:24:09)",
+   "reason": "FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 6 (HAD) - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_6_-_failure_to_follow_race_directors_instruction_-_practice_start.pdf"
+   }
+  },
+  {
+   "n": "77",
+   "tla": "BOT",
+   "session": "Race",
+   "utc": "2026-11-08T16:37:04",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 77 (BOT) WILL BE INVESTIGATED AFTER THE RACE - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT (13:29:30)",
+   "reason": "FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 77 (BOT) - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_77_-_failure_to_follow_race_directors_instruction_-_practice_start.pdf"
+   }
+  },
+  {
+   "n": "18",
+   "tla": "STR",
+   "session": "Race",
+   "utc": "2026-11-08T16:37:52",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 18 (STR) WILL BE INVESTIGATED AFTER THE RACE - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT (13:26:44)",
+   "reason": "FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 18 (STR) - FAILING TO FOLLOW RACE DIRECTORS INSTRUCTIONS – PRACTICE START INFRINGEMENT",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_18_-_failure_to_follow_race_directors_instruction_-_practice_start.pdf"
+   }
+  },
+  {
+   "n": "44",
+   "tla": "HAM",
+   "session": "Race",
+   "utc": "2026-11-08T17:13:27",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 5 INCIDENT INVOLVING CAR 44 (HAM) UNDER INVESTIGATION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (14:04:04)",
+   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
+   "decision": {
+    "utc": "2026-11-08T17:14:56",
+    "session": "Race",
+    "msg": "FIA STEWARDS: TURN 5 INCIDENT INVOLVING CAR 44 (HAM) NO FURTHER ACTION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (14:04:04)",
+    "type": "nessuna azione"
+   }
+  },
+  {
+   "n": "11",
+   "tla": "PER",
+   "session": "Race",
+   "utc": "2026-11-08T17:39:39",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 1 INCIDENT INVOLVING CAR 11 (PER) UNDER INVESTIGATION - YELLOW FLAG INFRINGEMENT (14:28:03)",
+   "reason": "YELLOW FLAG INFRINGEMENT",
+   "decision": {
+    "utc": "2026-11-08T17:45:00",
+    "session": "Race",
+    "msg": "FIA STEWARDS: TURN 1 INCIDENT INVOLVING CAR 11 (PER) NO FURTHER ACTION - YELLOW FLAG INFRINGEMENT (14:28:03)",
+    "type": "nessuna azione"
+   }
+  },
+  {
+   "n": "23",
+   "tla": "ALB",
+   "session": "Race",
+   "utc": "2026-11-08T17:56:40",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 1 INCIDENT INVOLVING CARS 23 (ALB) AND 10 (GAS) UNDER INVESTIGATION (14:50:05)",
+   "reason": null,
+   "decision": {
+    "utc": "2026-11-08T18:00:05",
+    "session": "Race",
+    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 23 (ALB) - REJOINING UNSAFELY (14:50:05)",
+    "type": "penalita"
+   }
+  },
+  {
+   "n": "10",
+   "tla": "GAS",
+   "session": "Race",
+   "utc": "2026-11-08T17:56:40",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 1 INCIDENT INVOLVING CARS 23 (ALB) AND 10 (GAS) UNDER INVESTIGATION (14:50:05)",
+   "reason": null,
+   "decision": {
+    "utc": "2026-11-08T18:00:05",
+    "session": "Race",
+    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 23 (ALB) - REJOINING UNSAFELY (14:50:05)",
+    "type": "nessuna azione"
+   }
+  },
+  {
+   "n": "27",
+   "tla": "HUL",
+   "session": "Race",
+   "utc": "2026-11-08T18:12:05",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 1 INCIDENT INVOLVING CAR 27 (HUL) UNDER INVESTIGATION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (15:09:09)",
+   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
+   "decision": {
+    "utc": "2026-11-08T18:14:06",
+    "session": "Race",
+    "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 27 (HUL) - LEAVING THE TRACK AND GAINING AN ADVANTAGE (15:09:09)",
+    "type": "penalita"
+   }
+  },
+  {
+   "n": "12",
+   "tla": "ANT",
+   "session": "Race",
+   "utc": "2026-11-08T18:32:24",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 12 (ANT) WILL BE INVESTIGATED AFTER THE RACE - UNSAFE RELEASE (15:26:15)",
+   "reason": "UNSAFE RELEASE",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 12 (ANT) - UNSAFE RELEASE",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_12_-_unsafe_release.pdf"
+   }
+  },
+  {
+   "n": "16",
+   "tla": "LEC",
+   "session": "Race",
+   "utc": "2026-11-08T18:43:45",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 12 INCIDENT INVOLVING CARS 16 (LEC) AND 30 (LAW) WILL BE INVESTIGATED AFTER THE RACE - CAUSING A COLLISION (15:36:34)",
+   "reason": "CAUSING A COLLISION",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 16 (LEC) - CAUSING A COLLISION",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_16_-_causing_a_collision.pdf"
+   }
+  },
+  {
+   "n": "30",
+   "tla": "LAW",
+   "session": "Race",
+   "utc": "2026-11-08T18:43:45",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 12 INCIDENT INVOLVING CARS 16 (LEC) AND 30 (LAW) WILL BE INVESTIGATED AFTER THE RACE - CAUSING A COLLISION (15:36:34)",
+   "reason": "CAUSING A COLLISION",
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 16 (LEC) - CAUSING A COLLISION",
+    "type": "nessuna azione",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_16_-_causing_a_collision.pdf"
+   }
+  }
+ ]
+}
