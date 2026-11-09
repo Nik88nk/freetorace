@@ -116,6 +116,9 @@ nav em{font-style:normal}
 .msg{padding:9px 12px;border-bottom:1px solid var(--line2);display:flex;gap:8px;font-size:13px}
 .msg .f{width:6px;border-radius:2px;flex:none}
 .msg .w{color:var(--dim);font-size:11px;min-width:44px}
+.bk{margin-top:14px;border-top:1px solid var(--line)}.bh{display:flex;align-items:baseline;gap:8px;padding:12px 12px 6px}.bh b{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:900}.bh .dim{font-size:12px}
+.inv{margin:0 12px 8px;background:var(--panel);border:1px solid var(--line2);border-left:4px solid var(--yellow);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.35;overflow-wrap:anywhere}.inv.done{border-left-color:var(--dim)}
+.inv b{font-weight:900}.inv small{display:block;color:var(--dim);font-size:11.5px;margin-top:2px}.inv .st{float:right;font-size:11px;font-weight:700;color:var(--yellow);border:1px solid #ffd12e66;border-radius:4px;padding:0 5px;margin-left:6px}.inv.done .st{color:var(--dim);border-color:var(--line2)}
 .idle{padding:26px 16px 18px;text-align:center}
 .idle .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:900}
 .idle h2{margin:6px 0 4px;font-size:24px;line-height:1.15}
@@ -389,7 +392,7 @@ const T = {
   pauseB:'⏸ Paused: TV catches up in {T}', lostB:'Connection lost in the background: back to live, delay reset',
   dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>At the start:</b> if you opened the app before the start and have not chosen yet, when the start reaches the data the screen stays on the grid. Tap the yellow button when the lights go out on TV and the race starts together with the TV; «Show live» shows it without delay.</p><p><b>To sync during the race:</b> pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
   d2K:'Demo in your browser · nothing to install', d2Ka:'Demo · race replay', d2H:'2025 United States GP', d2P:'The whole race, with the map, timing and strategy',
-  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', prov:'provisional', allRows:'See the full order →', lessRows:'Show less ↑',
+  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', wkRp:'Watch the last session again', wkRpS:'Replay with the map, timing and laps', wkLast:'Last session', invH:'Investigations', invWait:'pending', invAfter:'investigated after the session', invNow:'under investigation', invDec:'decided', msgH:'Messages', prov:'provisional', allRows:'See the full order →', lessRows:'Show less ↑',
   rPos:'Pos', rDrv:'Driver', rStart:'Start', rChg:'Places', rPts:'Points', rTime:'Time', rFl:'Fastest lap', rLap:'lap',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
@@ -420,7 +423,7 @@ const T = {
   pauseB:'⏸ In pausa: la TV ti raggiunge fra {T}', lostB:'Collegamento perso in secondo piano: ripartito in diretta, ritardo azzerato',
   dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Al via:</b> se hai aperto l’app prima della partenza e non hai ancora scelto, quando il via arriva dai dati lo schermo resta fermo sulla griglia. Tocca il pulsante giallo quando in TV si spengono i semafori e la gara parte insieme alla TV; «Mostra la diretta» la fa vedere senza ritardo.</p><p><b>Per allinearti in gara:</b> scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
   d2K:'Demo nel browser · niente da installare', d2Ka:'Demo · replay della gara', d2H:'GP degli Stati Uniti 2025', d2P:'Tutta la gara, con mappa, tempi e strategia',
-  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', prov:'provvisori', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
+  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', wkRp:'Rivedi l’ultima sessione', wkRpS:'Replay con mappa, tempi e giri', wkLast:'Ultima sessione', invH:'Indagini', invWait:'in attesa', invAfter:'indagine dopo la sessione', invNow:'sotto indagine', invDec:'decisa', msgH:'Messaggi', prov:'provvisori', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
   rPos:'Pos', rDrv:'Pilota', rStart:'Partenza', rChg:'Posizioni', rPts:'Punti', rTime:'Tempo', rFl:'Giro più veloce', rLap:'giro',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
@@ -456,7 +459,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261109-201922';
+const BUILD = '20261109-210226';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1398,7 +1401,42 @@ setInterval(()=>{ if(CAL.length && !isLive()) pickNext(); if(nextSess && !isLive
 
 // ---------------- direzione gara ----------------
 const FLAG = {GREEN:'#22d36b',YELLOW:'#ffd12e','DOUBLE YELLOW':'#ffd12e',RED:'#e10600',BLUE:'#3d8bff',CLEAR:'#22d36b',CHEQUERED:'#fff'};
+const msgRow = m => `<div class="msg"><span class="f" style="background:${FLAG[m.Flag]||(m.Category==='SafetyCar'?'#ff9f1a':'#3a4150')}"></span><span class="w tn">${m.Lap?(LANG==='it'?'G':'L')+m.Lap:''}<br>${m.Utc?new Date(/(Z|[+-]\d\d:?\d\d)$/.test(String(m.Utc))?m.Utc:m.Utc+'Z').toLocaleTimeString(t('locale'),{hour:'2-digit',minute:'2-digit'}):''}</span><span>${esc(m.Message)}</span></div>`;
+// Fuori sessione (09.11, Nikita: mockup app_schede 2c, blocco 1): le indagini del weekend e i messaggi dell'ultima
+// sessione pubblicata. Dati di f2r-dati: «messaggi» in risultati/<sessione>.json (stesse chiavi del feed: Utc, Lap,
+// Category, Flag, Message) e risultati/indagini.json (formato in DIARIO_interfaccia 09.11). Se mancano, la sezione
+// non c'e'.
+const RC = {inv: null, invAt: 0};
+async function loadInv(){
+  if(DEMO || Date.now() - RC.invAt < 60e3) return; RC.invAt = Date.now();
+  try{ const r = await fetch('../risultati/indagini.json', {cache:'no-cache'}); RC.inv = r.ok ? await r.json() : null; }catch(e){ RC.inv = null; }
+}
+let rcOffH = '';
+async function renderRcOff(){
+  if(DEMO || !RIS.ok) return;
+  await loadInv();
+  const wk = risWeek(), last = wk.items.length ? wk.items[wk.items.length - 1] : null;
+  let doc = null;
+  if(last) try{ doc = RIS.docs[last.name] || (RIS.docs[last.name] = await (await fetch(`../risultati/${encodeURIComponent(last.name)}.json`, {cache:'no-cache'})).json()); }catch(e){}
+  if(isLive()) return;
+  const sn = x => t('sess')[x] || x || '', when = u => { const d = new Date(/(Z|[+-]\d\d:?\d\d)$/.test(String(u)) ? u : u + 'Z');
+    return isNaN(d) ? '' : d.toLocaleString(t('locale'), {weekday:'short', hour:'2-digit', minute:'2-digit'}).replace(',', ''); };
+  let h = '';
+  const iv = RC.inv && last && RC.inv.meeting === last.meeting && String(RC.inv.year) === String(last.year) ? asList(RC.inv.items) : [];
+  if(iv.length){
+    const open = iv.filter(x => !x.decision), done = iv.filter(x => x.decision);
+    h += `<div class="bk" style="margin-top:0;border-top:none"><div class="bh"><b>${t('invH')}</b><span class="dim">${open.length ? `${open.length} ${t('invWait')}` : ''}</span></div>`
+      + open.concat(done).map(x => `<div class="inv${x.decision ? ' done' : ''}"><span class="st">${x.decision ? t('invDec') : t('invWait')}</span><b>${esc(x.tla || x.n || '')}</b> <span class="dim">· ${esc(sn(x.session))}</span><br>${esc(x.msg || '')}`
+        + `<small>${x.decision ? `${esc(x.decision.msg || '')}${x.decision.utc ? ' · ' + esc(when(x.decision.utc)) : ''}` : `${t(x.when === 'now' ? 'invNow' : 'invAfter')}${x.utc ? ' · ' + esc(when(x.utc)) : ''}`}</small></div>`).join('') + `</div>`;
+  }
+  const ms = doc ? asList(doc.messaggi).slice().reverse() : [];
+  if(ms.length) h += `<div class="bk"${iv.length ? '' : ' style="margin-top:0;border-top:none"'}><div class="bh"><b>${t('msgH')} · ${esc(sn(last.session))}</b><span class="dim">${ms.length}</span></div>${ms.map(msgRow).join('')}</div>`;
+  if(!h) h = `<div class="note">${t('noMsg')}</div>`;
+  if(h !== rcOffH){ rcOffH = h; $('#rc').innerHTML = h; }
+}
 function renderRc(){
+  if(!DEMO && !isLive()){ renderRcOff(); return; }
+  rcOffH = '';
   const ms = asList((ST.RaceControlMessages||{}).Messages).slice(-60).reverse();
   $('#rc').innerHTML = ms.map(m => `<div class="msg"><span class="f" style="background:${FLAG[m.Flag]||(m.Category==='SafetyCar'?'#ff9f1a':'#3a4150')}"></span><span class="w tn">${m.Lap?(LANG==='it'?'G':'L')+m.Lap:''}<br>${m.Utc?new Date(/(Z|[+-]\d\d:?\d\d)$/.test(String(m.Utc))?m.Utc:m.Utc+'Z').toLocaleTimeString(t('locale'),{hour:'2-digit',minute:'2-digit'}):''}</span><span>${esc(m.Message)}</span></div>`).join('') || `<div class="note">${t('noMsg')}</div>`;
 }
@@ -1731,7 +1769,7 @@ $('#bugBtn').onclick = e => {
 $('#v3d').onclick = () => { view3d=!view3d; store.set('ftr.v3d', view3d?'1':'0'); geo=null; $('#v3d').classList.toggle('on', view3d); };
 
 // ---------------- schede, ritardo, lingua ----------------
-$$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); placeMap(); });
+$$('nav [data-tab]').forEach(b => b.onclick = () => { tab=b.dataset.tab; $$('nav [data-tab]').forEach(x=>x.classList.toggle('on',x===b)); $$('.pane').forEach(p=>p.classList.toggle('on', p.id==='p-'+tab)); placeMap(); if(tab==='rc') renderRc(); });
 // demo e replay si aprono sui tempi, dove in cima c'e' la mappa
 function showDelay(){ $('#delayV').textContent = fmtD(delay); showEff(); }
 // tasti del ritardo (barra, pannello, impostazioni): un solo ascoltatore, i pulsanti del pannello si ridisegnano
@@ -1990,6 +2028,12 @@ function demoBtn(){
   return `<a class="dm" id="demoBtn" href="${r ? '?replay=' + encodeURIComponent(r.name) : '?demo=1'}"><span class="i">▶</span><span><span class="kk">${t(app ? 'd2Ka' : 'd2K')}</span>`
     + `<b>${esc(r ? gpYear(r.meeting, r.year) : t('d2H'))}</b><small>${t('d2P')}</small></span></a>`;
 }
+// nel weekend, fra una sessione e l'altra (09.11, Nikita: mockup app_schede 2a): al posto della demo il replay
+// dell'ultima sessione del weekend, appena e' pubblicato
+function lastBtn(x){
+  return `<a class="dm" id="demoBtn" href="?replay=${encodeURIComponent(x.name)}"><span class="i">▶</span><span><span class="kk">${t('wkRpS')}</span>`
+    + `<b>${t('wkRp')}</b><small>${esc(t('sess')[x.session]||x.session)} · ${esc(gpYear(x.meeting, x.year))}</small></span></a>`;
+}
 // prossima sessione in due righe (nome, GP, giorno e ora; conto alla rovescia) e sotto il programma del weekend
 function cdLine(){
   const left = Math.max(0, Math.floor((nextSess.d - Date.now())/1000));
@@ -2066,8 +2110,9 @@ async function drawRis(){
   const wk = risWeek();
   const show = RIS.cur && wk.items.some(x => x.name === RIS.cur) ? RIS.cur : (wk.items.length ? wk.items[wk.items.length - 1].name : null);
   RIS.cur = show;
-  let h = nextHtml(wk) + demoBtn();
-  if(wk.items.length) h += `<div class="rhd"><b>${t(wk.same ? 'thisWk' : 'lastWk')} · ${esc(gpName(wk.items[0].meeting))}</b><a href="../risultati/${show ? '?s=' + encodeURIComponent(show) : ''}">${t('risAll')} →</a></div>`;
+  const last = wk.same && wk.items.length ? wk.items[wk.items.length - 1] : null;
+  let h = nextHtml(wk) + (last && RIS.replays.has(last.name) ? lastBtn(last) : demoBtn());
+  if(wk.items.length) h += `<div class="rhd"><b>${last && show === last.name ? `${t('wkLast')} · ${esc(t('sess')[last.session]||last.session)}` : `${t(wk.same ? 'thisWk' : 'lastWk')} · ${esc(gpName(wk.items[0].meeting))}`}</b><a href="../risultati/${show ? '?s=' + encodeURIComponent(show) : ''}">${t('risAll')} →</a></div>`;
   box.innerHTML = h + `<div id="risBody"></div><div class="uffI">${t('uff')}</div>`;
   if(!show) return;
   box.querySelectorAll('[data-ris]').forEach(b => b.classList.toggle('on', b.dataset.ris === show));
