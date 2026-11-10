@@ -268,6 +268,12 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 .lr .p{font-weight:900;text-align:right}.lr .t{font-weight:900}.lr .runs{display:flex;flex-wrap:wrap;gap:4px 12px}.lr .run{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.lr .run small{color:var(--dim);font-size:11px}
 .lr .ti{width:18px;height:18px;border-width:2px;font-size:9px}
 .lr .run.u{opacity:.7}
+.wkt{padding:14px 12px 12px;border-bottom:1px solid var(--line)}.wkt .k{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:900}.wkt h2{margin:4px 0 2px;font-size:20px}.wkt p{margin:0;color:var(--dim);font-size:13px}
+.wkc{display:flex;align-items:center;gap:8px;padding:12px 12px 4px;flex-wrap:wrap}.wkc b{font-size:14px}.wkc span{margin-left:auto;color:var(--dim);font-size:12px}
+.wkr{display:grid;grid-template-columns:4px 36px 1fr 58px 30px;gap:7px;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wkr .t{font-weight:900}.wkr .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.wkr .bar i{display:block;height:100%;border-radius:4px;opacity:.75}.wkr .v{text-align:right;font-weight:700}.wkr .n{text-align:right;color:var(--dim);font-size:12px}
+.wksg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));column-gap:16px;padding:0 0 4px}.wks{display:grid;grid-template-columns:4px 36px 1fr;gap:7px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wks .t{font-weight:900}.wks .ics{display:flex;flex-wrap:wrap;gap:3px}.wks .ti{width:18px;height:18px;border-width:2px;font-size:9px}
+.wkw{max-width:760px;margin:0 auto}
+.wkm{display:block;background:none;border:none;color:var(--dim);font:inherit;font-size:13px;padding:8px 12px;cursor:pointer}
 .cy{color:var(--yellow)}.cg{color:var(--green)}.cp{color:var(--purple)}.ce{color:var(--dim2)}
 /* gara: una riga per pilota, settori impilati in una colonna stretta */
 .r1,.hd1{display:grid;grid-template-columns:20px 4px 36px 1fr 44px 62px 40px 26px;align-items:center;gap:7px;padding:4px 12px}
@@ -386,7 +392,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 // per PC, senza server in mezzo). Tempi, gomme, mappa con le auto stimate dai minisettori, direzione gara.
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
-  tStrat:'Strategy', stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
+  tStrat:'Strategy', tWk:'Weekend', wkTitle:'What practice says', wkAfter:'After {s}. Updates after every session.', wkWait:'Long-run pace shows up here after Practice 1.', wkPr:'Practice', wkAnd:' and ', wkPace:'Long-run pace', wkPaceN:'Average of the clean laps in long runs, by compound; laps of the run in brackets; longer bar = faster.', wkDeg:'median degradation {d} s/lap over {r} {u}', wkRun:'run', wkRuns:'runs', wkMore:'+{n} more', wkLess:'Show fewer', wkSets:'New tyre sets used', wkSetsN:'Sets fitted new so far ({s}), one circle per set. Drivers who handed their car to a rookie in Practice 1 have fewer.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermediate',WET:'Wet'}, stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', preHint:'TV runs behind the data: sync it at the start', alArmB:'Tap when the lights go out on TV', alStartS2:'Tap now, then again when the lights go out on TV', alHeldB:'Tap saved: applied as soon as the start reaches the data', alDoneB:'Synced: delay {D}', alUndo:'Undo', viaLive:'Show live', viaHoldB:'Start received: the screen waits for your TV', alCancel:'Cancel', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
   alStartH:'Sync at the start', alStartB:'Tap when the cars start on TV', alStartS:'Before the start, keep your finger ready', alStartNo:'The start has not reached the data yet: tap when the cars start on TV.',
   alTvH:'Sync with the TV', alLapQ:'1. Which lap does the TV show?', alLapB:'2. Tap when the leader crosses the line', alLapS:'and the TV moves to lap {N}', alLapNo:'Lap {N} has not started in the data yet: check the lap you picked.',
@@ -417,7 +423,7 @@ const T = {
   plM:'pit loss measured in this race', plD:'estimated pit loss (not measured yet)', lapAbbr:'L', noLaps:'No complete laps yet.', noGhost:'Rejoin position: shown under green flag, with the gap to the leader.',
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
-  tStrat:'Strategia', stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
+  tStrat:'Strategia', tWk:'Weekend', wkTitle:'Cosa dicono le libere', wkAfter:'Dopo {s}. Si aggiorna dopo ogni sessione.', wkWait:'Il passo dei long run compare qui dopo le Libere 1.', wkPr:'Libere', wkAnd:' e ', wkPace:'Passo dei long run', wkPaceN:'Media dei giri puliti nelle serie lunghe, per mescola; tra parentesi i giri della serie; barra più lunga = più veloce.', wkDeg:'degrado mediano {d} s/giro su {r} {u}', wkRun:'serie', wkRuns:'serie', wkMore:'+{n} altri', wkLess:'Mostra meno', wkSets:'Set di gomme nuovi usati', wkSetsN:'Set nuovi montati finora ({s}), un cerchio per set. Chi ha ceduto l’auto a un esordiente nelle Libere 1 ne ha di meno.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermedie',WET:'Da bagnato'}, stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', preHint:'La TV arriva dopo i dati: allineala al via', alArmB:'Tocca quando in TV si spengono i semafori', alStartS2:'Tocca ora, poi di nuovo quando in TV si spengono i semafori', alHeldB:'Tocco registrato: vale appena arriva il via dai dati', alDoneB:'Allineato: ritardo {D}', alUndo:'Annulla', viaLive:'Mostra la diretta', viaHoldB:'Via ricevuto: lo schermo aspetta la tua TV', alCancel:'Annulla', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
   alStartH:'Allinea alla partenza', alStartB:'Tocca quando in TV le auto partono', alStartS:'Prima del via tieni il dito pronto', alStartNo:'Il via non è ancora arrivato dai dati: tocca quando in TV le auto partono.',
   alTvH:'Allinea alla TV', alLapQ:'1. Che giro segna la TV?', alLapB:'2. Tocca quando il primo passa il traguardo', alLapS:'e la TV passa al giro {N}', alLapNo:'Il giro {N} non è ancora iniziato nei dati: controlla il giro scelto.',
@@ -462,7 +468,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261110-215857';
+const BUILD = '20261110-223016';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1291,9 +1297,74 @@ function stratQ(ds){
 }
 function stratRender(ds, kind){
   const box = $('#strat');
-  const h = kind==='race' ? stratRace(ds) : kind==='fp' ? stratFp(ds) : kind==='quali' ? stratQ(ds) : `<div class="note" style="padding:24px 12px">${t('stIdle')}</div>`;
+  const w = kind ? null : wkCur(), nb = $('nav [data-tab="strat"] em');
+  if(nb && nb.dataset.t !== (w ? 'tWk' : 'tStrat')){ nb.dataset.t = w ? 'tWk' : 'tStrat'; nb.innerHTML = t(nb.dataset.t); }
+  const h = kind==='race' ? stratRace(ds) : kind==='fp' ? stratFp(ds) : kind==='quali' ? stratQ(ds) : w ? wkHtml(w) : `<div class="note" style="padding:24px 12px">${t('stIdle')}</div>`;
   if(box._h !== h){ box.innerHTML = h; box._h = h; }
 }
+// SCHEDA WEEKEND (fuori sessione, dalle 00:00 del giorno delle Libere 1 alle 00:00 del lunedì dopo la gara, ora del telefono):
+// passo dei long run e degrado dell'ultima sessione di libere pubblicata (risultati: passo, degrado). Fuori dal weekend resta «Strategia».
+let WKS = [];                           // tutti i weekend del calendario (Jolpica), anche quelli finiti
+const WKO = new Set(), WKP = new Set(); // mescole aperte per intero; risultati in lettura
+function wkCur(){
+  if(DEMO) return null; const now = Date.now();
+  for(const w of WKS){ if(!w.sessions.length) continue;
+    const a = new Date(w.sessions[0].d); a.setHours(0, 0, 0, 0);
+    const b = new Date(w.sessions[w.sessions.length - 1].d); b.setHours(24, 0, 0, 0);
+    if(now >= a && now < b) return w; }
+  return null;
+}
+function wkDoc(name){                   // il documento dei risultati, letto una volta; poi si ridisegna
+  if(name in RIS.docs || WKP.has(name)) return RIS.docs[name];
+  WKP.add(name);
+  fetch(`../risultati/${encodeURIComponent(name)}.json`, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(j => { RIS.docs[name] = j; WKP.delete(name); render(); });
+}
+function wkHtml(w){
+  const t0 = w.sessions[0].d;
+  const fp = (RIS.idx || []).filter(x => /^Practice \d/.test(x.session) && Math.abs(Date.parse(x.start) - t0) < 5*86400e3).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+  // passo: le Libere 2 se ci sono (la simulazione di gara), se no l'ultima sessione di libere con i long run
+  const ok = [];
+  for(const x of fp){ const d = wkDoc(x.name); if(d === undefined) return $('#strat')._h || ''; if(d && d.passo && Object.keys(d.passo).length) ok.push([x, d]); }
+  const [use, doc] = ok.find(p => p[0].session === 'Practice 2') || ok[ok.length - 1] || [null, null];
+  const nums = fp.map(x => x.session.slice(-1));
+  const after = nums.length ? t('wkPr') + ' ' + (nums.length > 1 ? nums.slice(0, -1).join(', ') + t('wkAnd') + nums[nums.length - 1] : nums[0]) : '';
+  let h = `<div class="wkt"><div class="k">Weekend · ${esc(gpName(w.name))}</div><h2>${t('wkTitle')}</h2><p>${doc ? t('wkAfter').replace('{s}', after) : t('wkWait')}</p></div>`;
+  if(doc) h += wkPace(doc, use);
+  return `<div class="wkw">${h + wkSets(t0)}</div>`;
+}
+// set di gomme nuovi montati nel weekend (risultati/gomme.json, uno solo per l'ultimo weekend); solo i titolari dell'ultima sessione
+const WKG = {at: 0, d: null};
+function wkSets(t0){
+  if(Date.now() - WKG.at > 60e3){ WKG.at = Date.now();
+    fetch('../risultati/gomme.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null).then(j => { const was = JSON.stringify(WKG.d); WKG.d = j; if(JSON.stringify(j) !== was) render(); }); }
+  const g = WKG.d, its = (RIS.idx || []).filter(x => Math.abs(Date.parse(x.start) - t0) < 5*86400e3).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+  const last = its[its.length - 1]; if(!g || !g.piloti || !last || g.meeting !== last.meeting || String(g.year) !== String(last.year)) return '';
+  const doc = wkDoc(last.name); if(!doc || !doc.drivers) return '';
+  const D = doc.drivers, ord = [...new Set((doc.arrivo || doc.griglia || doc.classifica || []).map(x => String(x.n)).concat(Object.keys(D)))].filter(n => D[n]);
+  const rows = ord.map(n => { const p = g.piloti[n], nv = (p && p.nuovi) || {}, d = D[n];
+    const ic = ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET'].map(c => tyreHtml({tyre:c}, false).repeat(Math.max(0, +nv[c] || 0))).join('');
+    return [!!ic, `<div class="wks"><span style="height:16px;border-radius:2px;background:${esc(d.color || '#555')}"></span><span class="t">${esc(d.tla || n)}</span><span class="ics">${ic || '<span class="dim">—</span>'}</span></div>`]; });
+  if(!rows.some(r => r[0])) return '';
+  const ss = asList(g.sessioni).map(x => t('sess')[x.session] || x.session), sl = ss.length > 1 ? ss.slice(0, -1).join(', ') + t('wkAnd') + ss[ss.length - 1] : ss[0] || '';
+  return `<div class="bh" style="margin-top:14px;border-top:1px solid var(--line)"><b>${t('wkSets')}</b></div><div class="stl0">${t('wkSetsN').replace('{s}', esc(sl))}</div><div class="wksg">${rows.map(r => r[1]).join('')}</div>`;
+}
+function wkPace(doc, use){
+  let h = '';
+  const D = doc.drivers || {}, P = doc.passo, all = Object.values(P).flat().map(x => x.avg).filter(isFinite);
+  const lo = Math.min(...all), hi = Math.max(...all), num = (v, k) => v.toLocaleString(t('locale'), {minimumFractionDigits:k, maximumFractionDigits:k});
+  h += `<div class="bh"><b>${t('wkPace')} · ${esc(t('sess')[use.session] || use.session)}</b></div><div class="stl0">${t('wkPaceN')}</div>`;
+  for(const c of ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET'].concat(Object.keys(P).filter(k => !TYRE[k]))){
+    const rs = (P[c] || []).filter(x => isFinite(x.avg)).sort((a, b) => a.avg - b.avg); if(!rs.length) continue;
+    const g = (doc.degrado || {})[c], col = (TYRE[c] || ['#8b94a7'])[0], open = WKO.has(c);
+    h += `<div class="wkc">${tyreHtml({tyre:c}, false)}<b>${esc(t('cmp')[c] || c)}</b>${g && isFinite(g.median) ? `<span>${t('wkDeg').replace('{d}', num(g.median, 3)).replace('{r}', g.runs).replace('{u}', t(g.runs === 1 ? 'wkRun' : 'wkRuns'))}</span>` : ''}</div>`;
+    h += (open ? rs : rs.slice(0, 6)).map(x => { const d = D[x.n] || {}, f = hi > lo ? 100 - 80*(x.avg - lo)/(hi - lo) : 100;
+      return `<div class="wkr"><span style="height:16px;border-radius:2px;background:${esc(d.color || '#555')}"></span><span class="t">${esc(d.tla || x.n)}</span><span class="bar"><i style="width:${f.toFixed(1)}%;background:${col}"></i></span><span class="v tn">${fmtLap(x.avg)}</span><span class="n tn">(${x.laps})</span></div>`; }).join('');
+    if(rs.length > 6) h += `<button class="wkm" data-wko="${c}">${open ? t('wkLess') : t('wkMore').replace('{n}', rs.length - 6)}</button>`;
+  }
+  return h;
+}
+$('#strat').addEventListener('click', e => { const b = e.target.closest('[data-wko]'); if(!b) return; const c = b.dataset.wko; WKO.has(c) ? WKO.delete(c) : WKO.add(c); render(); });
 // mappa nella pagina dei tempi (solo gara), richiudibile; la scelta resta sul telefono
 let mapOpen = store.get('ftr.tmap', '1')==='1';
 $('#tmapBar').onclick = () => { mapOpen = !mapOpen; store.set('ftr.tmap', mapOpen ? '1' : '0'); render(); };
@@ -1314,14 +1385,16 @@ const WDC = {d: null, c: null, round: 0, races: 0, tab: store.get('ftr.wdcTab', 
 let nextSess = null, weekend = null, CAL = [];   // prossima sessione, programma del suo weekend, sessioni dal calendario
 const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};   // minuti, per il calendario
 async function loadNext(){
-  try{ const r = await (await fetch('https://api.jolpi.ca/ergast/f1/current/races/?limit=40')).json(); const now=Date.now(), out=[];
+  try{ const r = await (await fetch('https://api.jolpi.ca/ergast/f1/current/races/?limit=40')).json(); const now=Date.now(), out=[], wks=[];
     for(const race of r.MRData.RaceTable.Races){
       const c = race.Circuit || {}, loc = c.Location || {};
       const wk = {name:race.raceName, cid:c.circuitId||'', circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
       for(const [k,lbl] of [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']]){
         const x = k ? race[k] : {date:race.date, time:race.time}; if(!x || !x.date) continue;
         const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); wk.sessions.push({d, s:lbl});
-        if(d > now - 3*3600e3) out.push({d, name:race.raceName, s:lbl, wk}); } }
+        if(d > now - 3*3600e3) out.push({d, name:race.raceName, s:lbl, wk}); }
+      wk.sessions.sort((a,b)=>a.d-b.d); wks.push(wk); }
+    WKS = wks;
     WDC.races = r.MRData.RaceTable.Races.length;
     out.sort((a,b)=>a.d-b.d); CAL = out; for(const w of new Set(out.map(x => x.wk))) w.sessions.sort((a,b)=>a.d-b.d);
     nextSess = CAL.find(x => !sessDone(x)) || null; weekend = nextSess ? nextSess.wk : null;
