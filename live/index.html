@@ -185,6 +185,9 @@ footer{font-size:11px;color:var(--dim2);padding:16px 12px 24px;line-height:1.4}
 .dm .kk{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;opacity:.85}.dm b{display:block;font-size:20px;font-weight:900;line-height:1.15}.dm small{display:block;font-size:13px;opacity:.9;line-height:1.25}
 .top5{padding-bottom:6px}.top5 .prov{font-size:11px;font-weight:700;color:#111;background:var(--yellow);border-radius:4px;padding:1px 6px;vertical-align:2px;text-transform:uppercase;letter-spacing:.5px}.top5 h3{font-size:16px;margin:0 0 6px}.top5 .all{display:block;width:100%;text-align:center;padding:9px;color:var(--text);font:inherit;font-weight:700;font-size:14px;background:none;border:0;border-top:1px solid var(--line);cursor:pointer}
 .top5 .tile{margin-top:8px}#ris .less{display:block;margin:10px auto 0;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:8px 14px;font:inherit;font-weight:700;font-size:14px}
+#ris .wdc{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}#ris .wdc .wh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}#ris .wdc .wh b{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}#ris .wdc .wh span{color:var(--dim);font-size:13px}#ris .wdc .wh button{margin-left:auto;background:none;border:0;color:var(--dim);font:inherit;font-size:13px;padding:0;cursor:pointer}
+#ris .wdc .tg{display:inline-flex;gap:4px;margin:10px 0 6px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}#ris .wdc .tg button{background:none;border:0;border-radius:7px;padding:6px 14px;color:var(--dim);font:inherit;font-size:14px;font-weight:700;cursor:pointer}#ris .wdc .tg button.on{background:var(--panel);color:var(--text);box-shadow:0 0 0 1px var(--line)}
+#ris .wdc table{width:100%;border-collapse:collapse;font-size:14px}#ris .wdc th{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);font-weight:700;text-align:right;padding:4px 6px;border-bottom:1px solid var(--line)}#ris .wdc td{text-align:right;padding:7px 6px;border-bottom:1px solid var(--line);white-space:nowrap}#ris .wdc .l{text-align:left;width:100%}#ris .wdc td.l{overflow:hidden;text-overflow:ellipsis;max-width:0}#ris .wdc .sw{display:inline-block;width:4px;height:15px;border-radius:2px;margin-right:7px;vertical-align:-2px}#ris .wdc .pt{font-weight:900}#ris .wdc .dim{color:var(--dim)}
 #ris .uffI{color:var(--dim2);font-size:11px;padding:16px 0 18px}
 #instBar{display:none;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(90deg,#3a0a0a,#14181f);border-bottom:1px solid var(--line2);font-size:14px}
 #instBar.on{display:flex}
@@ -392,7 +395,7 @@ const T = {
   pauseB:'⏸ Paused: TV catches up in {T}', lostB:'Connection lost in the background: back to live, delay reset',
   dHelp:'<p>It lets you see the timing together with your TV, without spoilers. TV is usually 30-60 seconds behind, sometimes minutes.</p><p><b>Change the delay and it applies at once.</b> Increase it and the app goes back; decrease it and it jumps ahead.</p><p><b>In the background</b> the delay stays. If the phone drops the connection, when you come back the app restarts live with delay 0 and tells you.</p><p><b>Close the app:</b> when you reopen it, it starts live with delay 0.</p><p><b>At the start:</b> if you opened the app before the start and have not chosen yet, when the start reaches the data the screen stays on the grid. Tap the yellow button when the lights go out on TV and the race starts together with the TV; «Show live» shows it without delay.</p><p><b>To sync during the race:</b> pick the lap the TV shows and tap when the leader crosses the line. Then fine-tune with −1 / +1.</p><p><b>Delay longer than the time the app has been open:</b> that data does not exist. The app pauses and resumes when the TV catches up.</p>', chqH:'CHEQUERED FLAG', chqRace:'Race over. Provisional classification: the official one comes after the stewards’ checks.', chqSess:'Session over. Provisional times.',
   d2K:'Demo in your browser · nothing to install', d2Ka:'Demo · race replay', d2H:'2025 United States GP', d2P:'The whole race, with the map, timing and strategy',
-  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', wkRp:'Watch the last session again', wkRpS:'Replay with the map, timing and laps', wkLast:'Last session', invH:'Investigations', invWait:'pending', invAfter:'investigated after the session', invNow:'under investigation', invDec:'decided', msgH:'Messages', prov:'provisional', allRows:'See the full order →', lessRows:'Show less ↑',
+  inP:'in', dU:'d', hU:'h', mU:'min', calShort:'📅 Calendar', thisWk:'This weekend', wkRp:'Watch the last session again', wkRpS:'Replay with the map, timing and laps', wkLast:'Last session', wdcH:'Championship', wdcAfter:'after {r} of {n} races', wdcAfter1:'after {r} races', wdcD:'Drivers', wdcC:'Constructors', wdcTeam:'Team', wdcWins:'Wins', wdcAll:'Full standings →', wdcLess:'Top 5 ↑', invH:'Investigations', invWait:'pending', invAfter:'investigated after the session', invNow:'under investigation', invDec:'decided', msgH:'Messages', prov:'provisional', allRows:'See the full order →', lessRows:'Show less ↑',
   rPos:'Pos', rDrv:'Driver', rStart:'Start', rChg:'Places', rPts:'Points', rTime:'Time', rFl:'Fastest lap', rLap:'lap',
   langH:'Language', risAll:'All results', lastWk:'Last weekend', viewH:'Display', optDense:'Compact standings: one line per driver, tap a driver for team and best lap', optWake:'Keep the screen on during sessions and replays', optVib:'Banner and vibration for Safety Car, VSC and red flag', homeH:'On your home screen', instBtn:'📲 Install the app', instShort:'Install', instBar:'<b>Free to Race</b> on your home screen, like an app', instDone:'Installed: you will find it on your home screen',
   instH:'Install Free to Race', instGo:'📲 Install', instClose:'Close', instOk:'It opens like an app, full screen, from its icon. Free, no store, no account.',
@@ -423,7 +426,7 @@ const T = {
   pauseB:'⏸ In pausa: la TV ti raggiunge fra {T}', lostB:'Collegamento perso in secondo piano: ripartito in diretta, ritardo azzerato',
   dHelp:'<p>Serve a vedere i tempi insieme alla TV, senza spoiler. La TV di solito è indietro di 30-60 secondi, a volte di minuti.</p><p><b>Cambi il ritardo e vale subito.</b> Se lo aumenti l’app torna indietro, se lo diminuisci salta avanti.</p><p><b>Secondo piano:</b> il ritardo resta. Se il telefono chiude il collegamento, al ritorno l’app riparte in diretta con ritardo 0 e te lo dice.</p><p><b>Chiudi l’app:</b> alla riapertura riparte in diretta, ritardo 0.</p><p><b>Al via:</b> se hai aperto l’app prima della partenza e non hai ancora scelto, quando il via arriva dai dati lo schermo resta fermo sulla griglia. Tocca il pulsante giallo quando in TV si spengono i semafori e la gara parte insieme alla TV; «Mostra la diretta» la fa vedere senza ritardo.</p><p><b>Per allinearti in gara:</b> scegli il giro che segna la TV e tocca quando il primo passa il traguardo. Poi ritocca con −1 / +1.</p><p><b>Ritardo più lungo del tempo da cui l’app è aperta:</b> quei dati non ci sono. L’app si mette in pausa e riparte quando la TV la raggiunge.</p>', chqH:'BANDIERA A SCACCHI', chqRace:'Gara finita. Classifica provvisoria: quella ufficiale arriva dopo le verifiche dei commissari.', chqSess:'Sessione finita. Tempi provvisori.',
   d2K:'Demo nel browser · niente da installare', d2Ka:'Demo · replay della gara', d2H:'GP degli Stati Uniti 2025', d2P:'Tutta la gara, con mappa, tempi e strategia',
-  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', wkRp:'Rivedi l’ultima sessione', wkRpS:'Replay con mappa, tempi e giri', wkLast:'Ultima sessione', invH:'Indagini', invWait:'in attesa', invAfter:'indagine dopo la sessione', invNow:'sotto indagine', invDec:'decisa', msgH:'Messaggi', prov:'provvisori', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
+  inP:'fra', dU:'g', hU:'h', mU:'min', calShort:'📅 Calendario', thisWk:'Questo weekend', wkRp:'Rivedi l’ultima sessione', wkRpS:'Replay con mappa, tempi e giri', wkLast:'Ultima sessione', wdcH:'Mondiale', wdcAfter:'dopo {r} gare su {n}', wdcAfter1:'dopo {r} gare', wdcD:'Piloti', wdcC:'Costruttori', wdcTeam:'Squadra', wdcWins:'Vitt.', wdcAll:'Classifica completa →', wdcLess:'Primi 5 ↑', invH:'Indagini', invWait:'in attesa', invAfter:'indagine dopo la sessione', invNow:'sotto indagine', invDec:'decisa', msgH:'Messaggi', prov:'provvisori', allRows:'Vedi l’ordine completo →', lessRows:'Mostra meno ↑',
   rPos:'Pos', rDrv:'Pilota', rStart:'Partenza', rChg:'Posizioni', rPts:'Punti', rTime:'Tempo', rFl:'Giro più veloce', rLap:'giro',
   langH:'Lingua', risAll:'Tutti i risultati', lastWk:'Ultimo weekend', viewH:'Visualizzazione', optDense:'Classifica compatta: una riga per pilota, tocca un pilota per squadra e miglior giro', optWake:'Schermo sempre acceso durante sessioni e replay', optVib:'Avviso e vibrazione per Safety Car, VSC e bandiera rossa', homeH:'Sulla schermata Home', instBtn:'📲 Installa l’app', instShort:'Installa', instBar:'<b>Free to Race</b> sulla schermata Home, come un’app', instDone:'Installata: la trovi sulla schermata Home',
   instH:'Installa Free to Race', instGo:'📲 Installa', instClose:'Chiudi', instOk:'Si apre come un’app, a schermo intero, dalla sua icona. Gratis, senza store e senza account.',
@@ -459,7 +462,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261109-210226';
+const BUILD = '20261110-215857';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1307,6 +1310,7 @@ $('#mapX').onclick = e => { e.stopPropagation(); mapFull(false); };
 $$('#gapMode [data-g]').forEach(b => b.onclick = () => { gapMode=b.dataset.g; $$('#gapMode [data-g]').forEach(x=>x.classList.toggle('on',x===b)); render(); });
 
 // nessuna sessione in diretta: l'ultima e la prossima (calendario Jolpica)
+const WDC = {d: null, c: null, round: 0, races: 0, tab: store.get('ftr.wdcTab', 'd') === 'c' ? 'c' : 'd', all: false};   // Mondiale (Jolpica), disegnato in drawRis
 let nextSess = null, weekend = null, CAL = [];   // prossima sessione, programma del suo weekend, sessioni dal calendario
 const DUR = {'Practice 1':60,'Practice 2':60,'Practice 3':60,'Sprint Qualifying':45,'Sprint':60,'Qualifying':60,'Race':120};   // minuti, per il calendario
 async function loadNext(){
@@ -1318,6 +1322,7 @@ async function loadNext(){
         const x = k ? race[k] : {date:race.date, time:race.time}; if(!x || !x.date) continue;
         const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); wk.sessions.push({d, s:lbl});
         if(d > now - 3*3600e3) out.push({d, name:race.raceName, s:lbl, wk}); } }
+    WDC.races = r.MRData.RaceTable.Races.length;
     out.sort((a,b)=>a.d-b.d); CAL = out; for(const w of new Set(out.map(x => x.wk))) w.sessions.sort((a,b)=>a.d-b.d);
     nextSess = CAL.find(x => !sessDone(x)) || null; weekend = nextSess ? nextSess.wk : null;
     render(); drawRis();
@@ -2106,14 +2111,14 @@ async function drawRis(){
   const box = $('#ris');
   if(DEMO){ box.innerHTML = ''; return; }
   // senza i risultati (index.json non raggiungibile): prossima sessione e demo
-  if(!RIS.ok){ box.innerHTML = (nextSess ? nextHtml(null) : `<div class="nxc"><div class="kick">${t('noSession')}</div><div class="l2">${t('loadingCal')}</div></div>`) + demoBtn() + `<div class="uffI">${t('uff')}</div>`; return; }
+  if(!RIS.ok){ box.innerHTML = (nextSess ? nextHtml(null) : `<div class="nxc"><div class="kick">${t('noSession')}</div><div class="l2">${t('loadingCal')}</div></div>`) + demoBtn() + `<div id="wdc">${wdcHtml()}</div><div class="uffI">${t('uff')}</div>`; return; }
   const wk = risWeek();
   const show = RIS.cur && wk.items.some(x => x.name === RIS.cur) ? RIS.cur : (wk.items.length ? wk.items[wk.items.length - 1].name : null);
   RIS.cur = show;
   const last = wk.same && wk.items.length ? wk.items[wk.items.length - 1] : null;
   let h = nextHtml(wk) + (last && RIS.replays.has(last.name) ? lastBtn(last) : demoBtn());
   if(wk.items.length) h += `<div class="rhd"><b>${last && show === last.name ? `${t('wkLast')} · ${esc(t('sess')[last.session]||last.session)}` : `${t(wk.same ? 'thisWk' : 'lastWk')} · ${esc(gpName(wk.items[0].meeting))}`}</b><a href="../risultati/${show ? '?s=' + encodeURIComponent(show) : ''}">${t('risAll')} →</a></div>`;
-  box.innerHTML = h + `<div id="risBody"></div><div class="uffI">${t('uff')}</div>`;
+  box.innerHTML = h + `<div id="risBody"></div><div id="wdc">${wdcHtml()}</div><div class="uffI">${t('uff')}</div>`;
   if(!show) return;
   box.querySelectorAll('[data-ris]').forEach(b => b.classList.toggle('on', b.dataset.ris === show));
   try{
@@ -2128,10 +2133,45 @@ async function drawRis(){
   }catch(e){ const b = $('#risBody'); if(b) b.innerHTML = ''; }
 }
 $('#ris').addEventListener('click', e => {
+  const w = e.target.closest('[data-wdc]');
+  if(w){ const v = w.dataset.wdc; if(v === 'all') WDC.all = !WDC.all; else WDC.tab = v; store.set('ftr.wdcTab', WDC.tab); drawWdc(); return; }
   const f = e.target.closest('[data-full]');
   if(f){ const open = f.dataset.full === '1'; RIS.full = open ? RIS.cur : null; drawRis().then(() => { if(!open) $('#ris .rhd') && $('#ris .rhd').scrollIntoView({block:'start'}); }); return; }
   const b = e.target.closest('[data-ris]'); if(!b) return; RIS.cur = b.dataset.ris; RIS.picked = true; RIS.full = null; drawRis(); });
 loadRis();
+
+// Mondiale piloti e costruttori (Jolpica), sotto l'ultimo weekend nella scheda Tempi; senza risposta non compare
+const TEAMC = {mercedes:'#00D7B6', ferrari:'#ED1131', red_bull:'#4781D7', mclaren:'#F47600', rb:'#6C98FF', alpine:'#00A1E8',
+  haas:'#9C9FA2', audi:'#F50537', sauber:'#01C00E', williams:'#1868DB', aston_martin:'#229971', cadillac:'#909090'};
+const TEAMN = {red_bull:'Red Bull Racing', rb:'Racing Bulls', haas:'Haas', alpine:'Alpine', cadillac:'Cadillac', sauber:'Sauber'};
+const teamName = c => TEAMN[c.constructorId] || String(c.name || '').replace(/ F1 Team$/, '');
+function wdcHtml(){
+  if(!WDC.d && !WDC.c) return '';
+  const drv = WDC.tab !== 'c' && !!WDC.d, list = drv ? WDC.d : WDC.c; if(!list || !list.length) return '';
+  const lead = +list[0].points, rows = (WDC.all ? list : list.slice(0, 5)).map(x => {
+    const c = drv ? (x.Constructors || []).slice(-1)[0] || {} : x.Constructor || {}, gap = +x.points - lead;
+    const who = drv ? `<b>${esc(x.Driver.code || x.Driver.familyName)}</b> <span class="dim">${esc(x.Driver.familyName)}</span>` : `<b>${esc(teamName(c))}</b>`;
+    return `<tr><td>${esc(x.positionText || x.position)}</td><td class="l"><span class="sw" style="background:${TEAMC[c.constructorId] || '#555'}"></span>${who}</td><td class="pt">${esc(x.points)}</td><td class="dim">${gap ? '−' + (-gap) : ''}</td><td class="dim">${esc(x.wins)}</td></tr>`; });
+  const after = WDC.round ? (WDC.races >= WDC.round ? t('wdcAfter').replace('{n}', WDC.races) : t('wdcAfter1')).replace('{r}', WDC.round) : '';
+  const tab = (k, l) => `<button data-wdc="${k}" class="${(k === 'c') === !drv ? 'on' : ''}">${t(l)}</button>`;
+  return `<div class="wdc"><div class="wh"><b>${t('wdcH')}</b><span>${after}</span>${list.length > 5 ? `<button data-wdc="all">${t(WDC.all ? 'wdcLess' : 'wdcAll')}</button>` : ''}</div>
+    <div class="tg">${WDC.d ? tab('d', 'wdcD') : ''}${WDC.c ? tab('c', 'wdcC') : ''}</div>
+    <table><tbody><tr><th>${t('rPos')}</th><th class="l">${t(drv ? 'rDrv' : 'wdcTeam')}</th><th>${t('rPts')}</th><th></th><th>${t('wdcWins')}</th></tr>${rows.join('')}</tbody></table></div>`;
+}
+function drawWdc(){ const b = $('#wdc'); if(b) b.innerHTML = wdcHtml(); }
+async function loadWdc(){
+  if(DEMO) return;
+  const get = async k => { const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 15e3);
+    try{ const r = await (await fetch(`https://api.jolpi.ca/ergast/f1/current/${k}/?limit=40`, {signal: ac.signal})).json();
+      const L = r.MRData.StandingsTable.StandingsLists[0]; return L ? {round: +L.round || 0, list: L.DriverStandings || L.ConstructorStandings || []} : null; }
+    catch(e){ return null; } finally{ clearTimeout(tm); } };
+  const [d, c] = await Promise.all([get('driverStandings'), get('constructorStandings')]);
+  if(d){ WDC.d = d.list; WDC.round = d.round; } if(c){ WDC.c = c.list; WDC.round = Math.max(WDC.round, c.round); }
+  if(!WDC.d && WDC.tab === 'd') WDC.tab = 'c'; if(!WDC.c && WDC.tab === 'c') WDC.tab = 'd';
+  drawWdc();
+}
+loadWdc();
+setInterval(() => { if(!document.hidden && !isLive()) loadWdc(); }, 1800e3);   // dopo una gara la classifica si aggiorna da sola
 
 // ---------------- avvisi per le bandiere, schermo acceso, classifica compatta ----------------
 const opt = k => store.get('ftr.' + k, '1') === '1';
