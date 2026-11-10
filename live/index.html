@@ -273,6 +273,18 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 .wkr{display:grid;grid-template-columns:4px 36px 1fr 58px 30px;gap:7px;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wkr .t{font-weight:900}.wkr .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.wkr .bar i{display:block;height:100%;border-radius:4px;opacity:.75}.wkr .v{text-align:right;font-weight:700}.wkr .n{text-align:right;color:var(--dim);font-size:12px}
 .wksg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));column-gap:16px;padding:0 0 4px}.wks{display:grid;grid-template-columns:4px 36px 1fr;gap:7px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wks .t{font-weight:900}.wks .ics{display:flex;flex-wrap:wrap;gap:3px}.wks .ti{width:18px;height:18px;border-width:2px;font-size:9px}
 .wkw{max-width:760px;margin:0 auto}
+.pvb{display:flex;gap:12px;align-items:center;margin:12px 12px 2px;padding:10px 14px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);color:inherit;text-decoration:none}
+.pvb .i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;padding-left:2px}
+.pvb .kk{display:block;font-size:10px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;color:var(--dim)}.pvb b{display:block;font-size:16px;font-weight:900;line-height:1.2}
+.pv .srow,.pv .shd{grid-template-columns:20px 4px 36px 1fr 34px 30px}.pv .srow .pc{text-align:right;color:var(--dim)}.pv .srow .pc.out{color:var(--accent);font-weight:900;font-size:11px}
+.pv .sbar i.u{background-image:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.35) 6px 8px)!important;background-blend-mode:normal}
+.pv .sbar em{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,#ff9f1a 0 2px,transparent 2px 5px);opacity:.85;pointer-events:none}.pv .sbar em.r{background:repeating-linear-gradient(135deg,#ff3b3b 0 2px,transparent 2px 5px)}
+.pvlg{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px 12px;font-size:12px;color:var(--dim)}.pvlg span{display:inline-flex;align-items:center;gap:5px}.pvlg .ti{width:16px;height:16px;border-width:2px;font-size:8px}
+.pvlg .hz{display:inline-block;width:20px;height:12px;border-radius:2px;background:repeating-linear-gradient(135deg,#ff9f1a 0 2px,transparent 2px 5px)}.pvlg .hz.r{background:repeating-linear-gradient(135deg,#ff3b3b 0 2px,transparent 2px 5px)}.pvlg .hu{display:inline-block;width:20px;height:12px;border-radius:2px;background:#ffd12e repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.35) 6px 8px)}
+.pvc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 12px 8px;font-size:13px}.pvc>span{padding:4px 10px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}.pvc>span .ti{width:16px;height:16px;border-width:2px;font-size:8px;vertical-align:-3px;margin-right:4px}.pvc .lb{background:none;border:0;padding:4px 4px 4px 0;color:var(--dim)}
+.pvk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:4px 12px 10px}.pvk div{padding:8px 10px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}.pvk small{display:block;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);font-weight:700}.pvk b{font-size:20px;font-weight:900}
+.pvn{padding:2px 12px 10px;font-size:11px;color:var(--dim)}
+.pvs{margin:6px 12px 10px;padding:4px 0 2px;border:1px solid var(--line);border-radius:12px}.pvs .bh{border:0}.pvs .pvc{padding-bottom:4px}.pvs p{margin:0;padding:2px 12px 8px;font-size:13px;color:var(--dim)}
 .wkm{display:block;background:none;border:none;color:var(--dim);font:inherit;font-size:13px;padding:8px 12px;cursor:pointer}
 .cy{color:var(--yellow)}.cg{color:var(--green)}.cp{color:var(--purple)}.ce{color:var(--dim2)}
 /* gara: una riga per pilota, settori impilati in una colonna stretta */
@@ -392,7 +404,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 // per PC, senza server in mezzo). Tempi, gomme, mappa con le auto stimate dai minisettori, direzione gara.
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
-  tStrat:'Strategy', tWk:'Weekend', wkTitle:'What practice says', wkAfter:'After {s}. Updates after every session.', wkWait:'Long-run pace shows up here after Practice 1.', wkPr:'Practice', wkAnd:' and ', wkPace:'Long-run pace', wkPaceN:'Average of the clean laps in long runs, by compound; laps of the run in brackets; longer bar = faster.', wkDeg:'median degradation {d} s/lap over {r} {u}', wkRun:'run', wkRuns:'runs', wkMore:'+{n} more', wkLess:'Show fewer', wkSets:'New tyre sets used', wkSetsN:'Sets fitted new so far ({s}), one circle per set. Drivers who handed their car to a rookie in Practice 1 have fewer.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermediate',WET:'Wet'}, stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
+  tPv:'Preview', pvK:'Preview', pvH:'How it went here in {y}', pvSub:'{l} laps at {c}. {w} won from P{g}', pvGain:'; biggest climb: {d} from P{a} to P{b}', pvRpK:'Replay with map, timing and strategy', pvRp:'Watch the {y} race again', pvStrat:'{y} race strategies', pvStratN:'Each bar is a driver’s race, in finishing order: colour = compound, number = laps on the set, vertical lines = used set. Diagonal stripes: laps under safety car, VSC or red flag.', pvStint:'Stints · {n} laps', pvGrid:'Grid', pvPL:'PL', pvDsq:'DSQ', pvDns:'DNS', pvUsed:'used set', pvRed:'red flag', pvBrief:'In short', pvStop0:'no stops', pvStop1:'1 stop', pvStopN:'{n} stops', pvStart:'Tyres at the start', pvBriefN:'Stops of the classified drivers.', pvPit:'Time lost in the pits', pvOne:'A stop costs', pvSC:'Under safety car', pvVSC:'Under VSC', pvLane:'Pit lane ({y})', pvMed:'median over {n} stops', pvFast:'fastest', pvCheap:'“Cheap” stops (under SC or VSC)', pvL:'L', pvPass:'Not counted: {n} trips through the pit lane without a tyre change (drive-throughs, field sent through the pit lane).', pvPitN:'Stop cost: MultiViewer estimate. Pit lane times and stops under SC: {y} race (OpenF1).', pvSprint:'{y} Sprint · {n} laps', pvSprW:'{w} won from P{g}.', pvNoNz:'No safety car or VSC.', pvNzL:'{t} laps {a}–{b}', pvNz1:'{t} lap {a}', pvFirstH:'New on the calendar', pvFirst:'First edition, no data from last year.', pvSrc:'Source: OpenF1 and Jolpica.', tStrat:'Strategy', tWk:'Weekend', wkTitle:'What practice says', wkAfter:'After {s}. Updates after every session.', wkWait:'Long-run pace shows up here after Practice 1.', wkPr:'Practice', wkAnd:' and ', wkPace:'Long-run pace', wkPaceN:'Average of the clean laps in long runs, by compound; laps of the run in brackets; longer bar = faster.', wkDeg:'median degradation {d} s/lap over {r} {u}', wkRun:'run', wkRuns:'runs', wkMore:'+{n} more', wkLess:'Show fewer', wkSets:'New tyre sets used', wkSetsN:'Sets fitted new so far ({s}), one circle per set. Drivers who handed their car to a rookie in Practice 1 have fewer.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermediate',WET:'Wet'}, stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', preHint:'TV runs behind the data: sync it at the start', alArmB:'Tap when the lights go out on TV', alStartS2:'Tap now, then again when the lights go out on TV', alHeldB:'Tap saved: applied as soon as the start reaches the data', alDoneB:'Synced: delay {D}', alUndo:'Undo', viaLive:'Show live', viaHoldB:'Start received: the screen waits for your TV', alCancel:'Cancel', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
   alStartH:'Sync at the start', alStartB:'Tap when the cars start on TV', alStartS:'Before the start, keep your finger ready', alStartNo:'The start has not reached the data yet: tap when the cars start on TV.',
   alTvH:'Sync with the TV', alLapQ:'1. Which lap does the TV show?', alLapB:'2. Tap when the leader crosses the line', alLapS:'and the TV moves to lap {N}', alLapNo:'Lap {N} has not started in the data yet: check the lap you picked.',
@@ -423,7 +435,7 @@ const T = {
   plM:'pit loss measured in this race', plD:'estimated pit loss (not measured yet)', lapAbbr:'L', noLaps:'No complete laps yet.', noGhost:'Rejoin position: shown under green flag, with the gap to the leader.',
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
-  tStrat:'Strategia', tWk:'Weekend', wkTitle:'Cosa dicono le libere', wkAfter:'Dopo {s}. Si aggiorna dopo ogni sessione.', wkWait:'Il passo dei long run compare qui dopo le Libere 1.', wkPr:'Libere', wkAnd:' e ', wkPace:'Passo dei long run', wkPaceN:'Media dei giri puliti nelle serie lunghe, per mescola; tra parentesi i giri della serie; barra più lunga = più veloce.', wkDeg:'degrado mediano {d} s/giro su {r} {u}', wkRun:'serie', wkRuns:'serie', wkMore:'+{n} altri', wkLess:'Mostra meno', wkSets:'Set di gomme nuovi usati', wkSetsN:'Set nuovi montati finora ({s}), un cerchio per set. Chi ha ceduto l’auto a un esordiente nelle Libere 1 ne ha di meno.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermedie',WET:'Da bagnato'}, stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
+  tPv:'Anteprima', pvK:'Anteprima', pvH:'Com’è andata qui nel {y}', pvSub:'{l} giri a {c}. Ha vinto {w} partito {g}°', pvGain:'; la rimonta più lunga: {d} da {a}° a {b}°', pvRpK:'Replay con mappa, tempi e strategia', pvRp:'Rivedi la gara del {y}', pvStrat:'Strategie della gara {y}', pvStratN:'Ogni barra è la gara di un pilota, in ordine d’arrivo: colore = mescola, numero = giri sul treno, righe verticali = treno usato. A strisce oblique i giri con safety car, VSC o bandiera rossa.', pvStint:'Stint · {n} giri', pvGrid:'Part.', pvPL:'BOX', pvDsq:'SQ', pvDns:'NP', pvUsed:'treno usato', pvRed:'bandiera rossa', pvBrief:'In breve', pvStop0:'nessuna sosta', pvStop1:'1 sosta', pvStopN:'{n} soste', pvStart:'Gomme al via', pvBriefN:'Soste dei piloti classificati.', pvPit:'Distacchi decisi ai box', pvOne:'Una sosta costa', pvSC:'Con safety car', pvVSC:'Con VSC', pvLane:'In corsia box ({y})', pvMed:'mediana su {n} soste', pvFast:'la più rapida', pvCheap:'Soste «scontate» (sotto SC o VSC)', pvL:'g', pvPass:'Non contati: {n} passaggi in corsia senza cambio gomme (drive-through, gruppo fatto passare in corsia).', pvPitN:'Costo della sosta: stima di MultiViewer. Tempi in corsia box e soste sotto SC: gara del {y} (OpenF1).', pvSprint:'Sprint {y} · {n} giri', pvSprW:'Ha vinto {w} partito {g}°.', pvNoNz:'Nessuna safety car né VSC.', pvNzL:'{t} giri {a}–{b}', pvNz1:'{t} giro {a}', pvFirstH:'Nuovo in calendario', pvFirst:'Prima edizione, nessun dato dell’anno scorso.', pvSrc:'Fonte: OpenF1 e Jolpica.', tStrat:'Strategia', tWk:'Weekend', wkTitle:'Cosa dicono le libere', wkAfter:'Dopo {s}. Si aggiorna dopo ogni sessione.', wkWait:'Il passo dei long run compare qui dopo le Libere 1.', wkPr:'Libere', wkAnd:' e ', wkPace:'Passo dei long run', wkPaceN:'Media dei giri puliti nelle serie lunghe, per mescola; tra parentesi i giri della serie; barra più lunga = più veloce.', wkDeg:'degrado mediano {d} s/giro su {r} {u}', wkRun:'serie', wkRuns:'serie', wkMore:'+{n} altri', wkLess:'Mostra meno', wkSets:'Set di gomme nuovi usati', wkSetsN:'Set nuovi montati finora ({s}), un cerchio per set. Chi ha ceduto l’auto a un esordiente nelle Libere 1 ne ha di meno.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermedie',WET:'Da bagnato'}, stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', preHint:'La TV arriva dopo i dati: allineala al via', alArmB:'Tocca quando in TV si spengono i semafori', alStartS2:'Tocca ora, poi di nuovo quando in TV si spengono i semafori', alHeldB:'Tocco registrato: vale appena arriva il via dai dati', alDoneB:'Allineato: ritardo {D}', alUndo:'Annulla', viaLive:'Mostra la diretta', viaHoldB:'Via ricevuto: lo schermo aspetta la tua TV', alCancel:'Annulla', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
   alStartH:'Allinea alla partenza', alStartB:'Tocca quando in TV le auto partono', alStartS:'Prima del via tieni il dito pronto', alStartNo:'Il via non è ancora arrivato dai dati: tocca quando in TV le auto partono.',
   alTvH:'Allinea alla TV', alLapQ:'1. Che giro segna la TV?', alLapB:'2. Tocca quando il primo passa il traguardo', alLapS:'e la TV passa al giro {N}', alLapNo:'Il giro {N} non è ancora iniziato nei dati: controlla il giro scelto.',
@@ -468,7 +480,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261110-223016';
+const BUILD = '20261110-231405';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1298,9 +1310,100 @@ function stratQ(ds){
 function stratRender(ds, kind){
   const box = $('#strat');
   const w = kind ? null : wkCur(), nb = $('nav [data-tab="strat"] em');
-  if(nb && nb.dataset.t !== (w ? 'tWk' : 'tStrat')){ nb.dataset.t = w ? 'tWk' : 'tStrat'; nb.innerHTML = t(nb.dataset.t); }
-  const h = kind==='race' ? stratRace(ds) : kind==='fp' ? stratFp(ds) : kind==='quali' ? stratQ(ds) : w ? wkHtml(w) : `<div class="note" style="padding:24px 12px">${t('stIdle')}</div>`;
+  const p = kind || w || DEMO || !weekend ? null : weekend, lb = w ? 'tWk' : p ? 'tPv' : 'tStrat';
+  if(nb && nb.dataset.t !== lb){ nb.dataset.t = lb; nb.innerHTML = t(lb); }
+  const h = kind==='race' ? stratRace(ds) : kind==='fp' ? stratFp(ds) : kind==='quali' ? stratQ(ds) : w ? wkHtml(w) : p ? pvHtml(p) : `<div class="note" style="padding:24px 12px">${t('stIdle')}</div>`;
   if(box._h !== h){ box.innerHTML = h; box._h = h; }
+}
+// SCHEDA ANTEPRIMA (fuori sessione, dal lunedì dopo la gara alle 00:00 fino al weekend dopo; mockup app_schede 1b):
+// la gara dell'anno prima sullo stesso circuito da risultati/anteprima/<circuit_key>.json (strumenti/anteprima.py),
+// costo della sosta da MultiViewer (pitLoss). Senza gara dell'anno prima (circuito nuovo): una riga, niente scheda vuota.
+const PV = {}, PVL = {};                // documenti per chiave del circuito (null = assente); pitLoss di MultiViewer
+function pvDoc(key){
+  if(key in PV) return PV[key];
+  PV[key] = undefined;
+  fetch(`../risultati/anteprima/${key}.json`, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null).then(j => { PV[key] = j; render(); });
+  return undefined;
+}
+function pvLoss(key, year){
+  if(key in PVL) return PVL[key];
+  PVL[key] = null;
+  const get = y => fetch(`https://api.multiviewer.app/api/v1/circuits/${key}/${y}`).then(r => r.ok ? r.json() : null).catch(() => null);
+  get(year).then(j => j && j.pitLoss ? j : get(year - 1)).then(j => { const l = j && j.pitLoss; if(l && isFinite(+l.normal)){ PVL[key] = l; render(); } });
+  return null;
+}
+const pvTeam = s => { s = String(s || '').toLowerCase();
+  const k = /red bull/.test(s) ? 'red_bull' : /^rb|racing bulls|visa/.test(s) ? 'rb' : /aston/.test(s) ? 'aston_martin' : /alpine/.test(s) ? 'alpine' : /haas/.test(s) ? 'haas'
+    : /sauber|kick/.test(s) ? 'sauber' : /audi/.test(s) ? 'audi' : /mclaren/.test(s) ? 'mclaren' : /ferrari/.test(s) ? 'ferrari' : /mercedes/.test(s) ? 'mercedes'
+    : /williams/.test(s) ? 'williams' : /cadillac/.test(s) ? 'cadillac' : '';
+  return TEAMC[k] || '#555'; };
+const pvNum = (v, k = 1) => (+v).toLocaleString(t('locale'), {minimumFractionDigits:k, maximumFractionDigits:k});
+function pvStops(ps, f){                // «1 sosta: 2 · 2 soste: 13», solo i classificati
+  const c = {}; for(const x of ps) if(x.classificato){ const n = f(x); c[n] = (c[n] || 0) + 1; }
+  return Object.keys(c).sort((a, b) => a - b).map(n => `<span>${+n === 0 ? t('pvStop0') : +n === 1 ? t('pvStop1') : t('pvStopN').replace('{n}', n)}: <b>${c[n]}</b></span>`).join('');
+}
+const pvStart = g => Object.entries(g || {}).sort((a, b) => b[1] - a[1]).map(([c, n]) => `<span>${tyreHtml({tyre:c}, false) || esc(c)}<b>${n}</b></span>`).join('');
+const pvNz = nz => nz.map(z => (z.fino && z.fino !== z.giro ? t('pvNzL').replace('{b}', z.fino) : t('pvNz1')).replace('{t}', z.tipo === 'ROSSA' ? t('pvRed') : z.tipo).replace('{a}', z.giro)).join(' · ');
+function pvBars(g){
+  const tot = Math.max(+g.giri || 1, 1), ord = g.piloti.slice().sort((a, b) => (b.classificato - a.classificato) || (a.arrivo || 99) - (b.arrivo || 99));
+  const hz = (g.neutralizzazioni || []).map(z => `<em class="${z.tipo === 'ROSSA' ? 'r' : ''}" style="left:${((z.giro - 1)/tot*100).toFixed(2)}%;width:${(((z.fino || z.giro) - z.giro + 1)/tot*100).toFixed(2)}%"></em>`).join('');
+  let h = `<div class="shd"><span>P</span><span></span><span></span><span>${t('pvStint').replace('{n}', tot)}</span><span>${t('pvGrid')}</span><span>${t('stStops')}</span></div>`;
+  for(const d of ord){
+    let at = 1;
+    const bl = (d.stint || []).map(s => { const pad = s.da > at ? `<i style="width:${((s.da - at)/tot*100).toFixed(2)}%;background:transparent"></i>` : '', n = s.a - s.da + 1, w = n/tot*100; at = s.a + 1;
+      return pad + `<i class="${s.nuovo === false ? 'u' : ''}" style="width:${w.toFixed(2)}%;background:${tyreBg(s.mescola)}">${w > 7 ? (TYRE[s.mescola] ? TYRE[s.mescola][1] : '') + n : ''}</i>`; }).join('');
+    const st = d.stato === 'Disqualified' ? t('pvDsq') : d.stato === 'Did not start' ? t('pvDns') : t('retired');
+    const right = d.classificato ? (d.partenza === 0 ? t('pvPL') : d.partenza || '') : st;
+    const ns = d.soste ? d.soste.length : d.n_soste != null ? d.n_soste : '';
+    h += `<div class="srow"><span class="p tn">${d.classificato ? d.arrivo : ''}</span><span style="height:16px;border-radius:2px;background:${pvTeam(d.squadra)}"></span><span class="t">${esc(d.tla)}</span>`
+      + `<span class="sbar">${bl}${hz}</span><span class="pc tn${d.classificato ? '' : ' out'}">${right}</span><span class="so tn">${ns}</span></div>`;
+  }
+  const cs = new Set(), ty = new Set((g.neutralizzazioni || []).map(z => z.tipo === 'ROSSA' ? 'r' : 'y'));
+  for(const d of g.piloti) for(const s of d.stint || []) if(TYRE[s.mescola]) cs.add(s.mescola);
+  const used = g.piloti.some(d => (d.stint || []).some(s => s.nuovo === false));
+  return h + `<div class="pvlg">${['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET'].filter(c => cs.has(c)).map(c => `<span>${tyreHtml({tyre:c}, false)}${esc(t('cmp')[c])}</span>`).join('')}`
+    + (used ? `<span><i class="hu"></i>${t('pvUsed')}</span>` : '') + (ty.has('y') ? `<span><i class="hz"></i>SC / VSC</span>` : '') + (ty.has('r') ? `<span><i class="hz r"></i>${t('pvRed')}</span>` : '') + `</div>`;
+}
+function pvHtml(wk){
+  const key = JOL_KEY[wk.cid], year = new Date(wk.sessions[0].d).getFullYear();
+  const head = (h2, p) => `<div class="wkt"><div class="k">${t('pvK')} · ${esc(gpName(wk.name))}</div><h2>${h2}</h2>${p ? `<p>${p}</p>` : ''}</div>`;
+  const doc = key == null ? null : pvDoc(key);
+  if(doc === undefined) return $('#strat')._h || '';
+  const g = doc && doc.gara;
+  if(!g || !g.piloti || !g.piloti.length) return `<div class="wkw pv">${head(t('pvFirstH'), t('pvFirst'))}</div>`;
+  const y = doc.anno || year - 1, ps = g.piloti, win = ps.find(x => x.classificato && x.arrivo === 1);
+  let gain = null; for(const x of ps) if(x.classificato && x.partenza > 0 && x.partenza - x.arrivo >= 3 && (!gain || x.partenza - x.arrivo > gain.partenza - gain.arrivo)) gain = x;
+  let sub = win ? t('pvSub').replace('{l}', g.giri).replace('{c}', esc(doc.circuito || wk.circuit)).replace('{w}', esc(win.tla)).replace('{g}', win.partenza || t('pvPL')) : '';
+  if(sub) sub += (gain && gain !== win ? t('pvGain').replace('{d}', esc(gain.tla)).replace('{a}', gain.partenza).replace('{b}', gain.arrivo) : '') + '.';
+  let h = head(t('pvH').replace('{y}', y), sub);
+  const rp = prevYearRace(RIS.rplist || [], key, year);
+  if(rp) h += `<a class="pvb" href="?replay=${encodeURIComponent(rp.name)}"><span class="i">▶</span><span><span class="kk">${t('pvRpK')}</span><b>${t('pvRp').replace('{y}', esc(rp.year))}</b></span></a>`;
+  h += `<div class="bh"><b>${t('pvStrat').replace('{y}', y)}</b></div><div class="stl0">${t('pvStratN')}</div>${pvBars(g)}`;
+  h += `<div class="bh"><b>${t('pvBrief')}</b></div><div class="pvc">${pvStops(ps, x => (x.soste || []).length)}</div>`;
+  if(g.in_breve && g.in_breve.gomme_al_via) h += `<div class="pvc"><span class="lb">${t('pvStart')}</span>${pvStart(g.in_breve.gomme_al_via)}</div>`;
+  if(g.neutralizzazioni && g.neutralizzazioni.length) h += `<div class="pvc"><span class="lb">${pvNz(g.neutralizzazioni)}</span></div>`;
+  const pl = pvLoss(key, year), cb = g.corsia_box;
+  if(pl || cb){
+    h += `<div class="bh"><b>${t('pvPit')}</b></div>`;
+    if(pl) h += `<div class="pvk">${[['pvOne', pl.normal], ['pvSC', pl.sc], ['pvVSC', pl.vsc]].filter(x => isFinite(+x[1]) && +x[1] > 0).map(([k, v]) => `<div><small>${t(k)}</small><b class="tn">${pvNum(v)} s</b></div>`).join('')}</div>`;
+    if(cb && cb.soste){
+      h += `<div class="pvc"><span class="lb">${t('pvLane').replace('{y}', y)}</span><span><b>${pvNum(cb.mediana_s)} s</b> ${t('pvMed').replace('{n}', cb.soste)}</span>`
+        + (cb.piu_rapida ? `<span>${t('pvFast')} <b>${esc(cb.piu_rapida.tla)} ${pvNum(cb.piu_rapida.s)} s</b></span>` : '') + `</div>`;
+      const sn = cb.sotto_neutralizzazione || [];
+      if(sn.length) h += `<div class="pvc"><span class="lb">${t('pvCheap')}</span>${sn.map(x => `<span><b>${esc(x.tla)}</b> ${t('pvL')}${x.giro} ${esc(x.tipo)}</span>`).join('')}</div>`;
+    }
+    const np = ps.reduce((a, x) => a + (+x.passaggi_corsia || 0), 0);
+    h += `<div class="pvn">${pl ? t('pvPitN').replace('{y}', y) : ''}${np ? ' ' + t('pvPass').replace('{n}', np) : ''}</div>`;
+  }
+  const s = doc.sprint;
+  if(s && s.piloti && s.piloti.length){
+    const sw = s.piloti.find(x => x.classificato && x.arrivo === 1);
+    h += `<div class="pvs"><div class="bh"><b>${t('pvSprint').replace('{y}', y).replace('{n}', s.giri)}</b></div>`
+      + (sw ? `<p>${t('pvSprW').replace('{w}', esc(sw.tla)).replace('{g}', sw.partenza || t('pvPL'))} ${s.neutralizzazioni && s.neutralizzazioni.length ? pvNz(s.neutralizzazioni) + '.' : t('pvNoNz')}</p>` : '')
+      + `<div class="pvc">${pvStops(s.piloti, x => +x.n_soste || 0)}</div>`
+      + (s.in_breve && s.in_breve.gomme_al_via ? `<div class="pvc"><span class="lb">${t('pvStart')}</span>${pvStart(s.in_breve.gomme_al_via)}</div>` : '') + `</div>`;
+  }
+  return `<div class="wkw pv">${h}<div class="pvn">${t('pvSrc')}</div></div>`;
 }
 // SCHEDA WEEKEND (fuori sessione, dalle 00:00 del giorno delle Libere 1 alle 00:00 del lunedì dopo la gara, ora del telefono):
 // passo dei long run e degrado dell'ultima sessione di libere pubblicata (risultati: passo, degrado). Fuori dal weekend resta «Strategia».
@@ -2084,7 +2187,7 @@ const DEMO_RACE = '';
 // chiavi dei circuiti del cronometraggio F1 (riscontrate su MultiViewer, 04.11): dal circuito di Jolpica e dal nome del GP
 // dei replay (finche' replays.json non porta circuitKey)
 const JOL_KEY = {albert_park:10, shanghai:49, suzuka:46, bahrain:63, jeddah:149, miami:151, villeneuve:23, monaco:22, catalunya:15, red_bull_ring:19,
-  silverstone:2, spa:7, hungaroring:4, zandvoort:55, monza:39, baku:144, marina_bay:61, americas:9, rodriguez:65, interlagos:14, vegas:152, losail:150, yas_marina:70, imola:6};
+  silverstone:2, spa:7, hungaroring:4, zandvoort:55, monza:39, baku:144, marina_bay:61, americas:9, rodriguez:65, interlagos:14, vegas:152, losail:150, yas_marina:70, imola:6, madring:153, sepang:12};
 const MEET_KEY = {'Australian Grand Prix':10, 'Chinese Grand Prix':49, 'Japanese Grand Prix':46, 'Bahrain Grand Prix':63, 'Saudi Arabian Grand Prix':149, 'Miami Grand Prix':151,
   'Canadian Grand Prix':23, 'Monaco Grand Prix':22, 'Barcelona Grand Prix':15, 'Austrian Grand Prix':19, 'British Grand Prix':2, 'Belgian Grand Prix':7, 'Hungarian Grand Prix':4,
   'Dutch Grand Prix':55, 'Italian Grand Prix':39, 'Azerbaijan Grand Prix':144, 'Singapore Grand Prix':61, 'United States Grand Prix':9, 'Mexico City Grand Prix':65, 'Mexican Grand Prix':65,
