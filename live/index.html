@@ -490,7 +490,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261112-213949';
+const BUILD = '20261112-225444';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -2003,6 +2003,25 @@ function pitGridUpd(gph){
   if(!gph.pre) pitGrid.fixed = true;
 }
 const pitStart = n => pitGrid.set.has(n);
+// Box delle squadre lungo la corsia (12.11, punto aperto del 06.11: nelle libere e in qualifica l'auto ferma al garage stava
+// a fine corsia, a 75-87 m da quella vera). I garage seguono la classifica costruttori dell'anno prima, dall'ingresso verso
+// l'uscita: misurato a Las Vegas 2025 (qualifica, posizioni OpenF1 delle auto ferme): McLaren a 0,38 della corsia, Red Bull
+// 0,52, Mercedes 0,56, Aston Martin 0,64, Alpine 0,67, Racing Bulls 0,77, Williams 0,82 (frazioni di lunghezza).
+// Dove non e' misurato il box e' a meta' corsia per tutti.
+const GAR_ORD = {2025:['mclaren','ferrari','redbull','mercedes','aston','alpine','haas','rb','williams','sauber'],
+  2026:['mclaren','mercedes','redbull','ferrari','williams','rb','aston','haas','sauber','alpine','cadillac']};
+const GAR_SPAN = {'152':[0.38,0.87]};
+const garTeam = s => { s = String(s||'').toLowerCase(); return /mclaren/.test(s) ? 'mclaren' : /mercedes/.test(s) ? 'mercedes'
+  : /racing bulls|\brb\b|visa|alphatauri/.test(s) ? 'rb' : /red ?bull/.test(s) ? 'redbull' : /ferrari/.test(s) ? 'ferrari'
+  : /williams/.test(s) ? 'williams' : /aston/.test(s) ? 'aston' : /haas/.test(s) ? 'haas' : /sauber|audi|kick/.test(s) ? 'sauber'
+  : /alpine/.test(s) ? 'alpine' : /cadillac/.test(s) ? 'cadillac' : ''; };
+function garIdx(team){   // posizione del box come frazione degli indici dei punti della corsia (cosi' la disegna l'app)
+  const [ck, yr] = circuitKey.split('/'), sp = GAR_SPAN[ck], o = GAR_ORD[yr] || GAR_ORD[2026], j = o.indexOf(garTeam(team));
+  const fd = !sp ? 0.5 : j < 0 ? (sp[0]+sp[1])/2 : sp[0] + (sp[1]-sp[0])*j/(o.length-1), X = cal.pitLane.x, Y = cal.pitLane.y;
+  let c = [0]; for(let i=1;i<X.length;i++) c.push(c[i-1] + Math.hypot(X[i]-X[i-1], Y[i]-Y[i-1]));
+  const d = fd*c[c.length-1]; let i = 0; while(i < c.length-2 && c[i+1] < d) i++;
+  return (i + (d-c[i])/((c[i+1]-c[i])||1))/(X.length-1);
+}
 const launchM = t => { const u = Math.max(0, t - 0.5); return 120*(u - 10*(1 - Math.exp(-u/10))); };   // metri dopo il via (OpenF1: ~100 m a 5 s, ~870 a 15 s)
 const leftAt = (G, f) => { const a=G.at(f-0.0015), z=G.at(f+0.0015), l=Math.hypot(z[0]-a[0], z[1]-a[1])||1; return [(z[1]-a[1])/l, -(z[0]-a[0])/l]; };
 const disp = {};
@@ -2065,7 +2084,14 @@ function drawMap(){
       }
       else if(pitStart(d.n) && typeof pitGrid.s0==='number' && !(L && L[1] >= pitGrid.s0) && !(lines[d.n] && lines[d.n].InPit)){   // uscito dai box dopo il via: fermo all'uscita fino al primo passaggio
         if(!G.lane) continue; xy = G.lane[G.lane.length-2]; delete disp[d.n]; }
-      else if(lines[d.n] && lines[d.n].InPit && G.lane){ const f=Math.min(pitStart(d.n) ? 0.5 : 0.98, (now - (trk.pitIn[d.n]||now))/(cal.pitTime||25)); /* chi parte dai box sta a meta' corsia */ const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
+      else if(lines[d.n] && lines[d.n].InPit && G.lane){ const T=cal.pitTime||25, el=(now - (trk.pitIn[d.n]||now));
+        let f = Math.min(pitStart(d.n) ? 0.5 : 0.98, el/T);   /* chi parte dai box sta a meta' corsia */
+        if(!isRaceS()){ const g = garIdx(d.team); f = Math.min(g, el/T); disp['p'+d.n] = el/T > g + 2/T ? {g} : null; }   // libere e qualifica: fermo al suo box
+        const i=Math.min(G.lane.length-2, Math.floor(f*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
+      else if(disp['p'+d.n] && G.lane){   // uscito dal garage: dal box all'uscita della corsia in 2 s (InPit si spegne gia' all'uscita), poi in pista
+        const p = disp['p'+d.n]; if(p.t==null) p.t = now; const f = p.g + (0.98 - p.g)*(now - p.t)/2;
+        if(f >= 0.98 || now < p.t) delete disp['p'+d.n];
+        const i=Math.min(G.lane.length-2, Math.floor(Math.min(0.98, f)*(G.lane.length-1))); xy=G.lane[i]; delete disp[d.n]; }
       else if(L){
         const ft = estFrac(L[0], now - L[1], pace(d.n));
         let q = disp[d.n]; const delta = q ? ((ft-q.f+0.5)%1+1)%1-0.5 : 1;
