@@ -1,0 +1,12 @@
+{
+ "formato": 1,
+ "fonte": "FIA, Competition Notes - Circuit Map dell'evento (riquadro STRAIGHT MODE e OVERTAKE)",
+ "controllato": "2026-11-12",
+ "nota": "punto = {curva, metri}: metri > 0 dopo la curva, < 0 prima; curva 0 = linea di partenza; uscita_box true se la FIA scrive anche 'Pit Exit'. La FIA da' solo i punti di attivazione: la zona finisce alla frenata della curva indicata in fine_prima_della_curva (letta sulla mappa FIA), null se non indicata.",
+ "elenco_documenti": "https://www.fia.com/documents/championships/fia-formula-one-world-championship-14/season/season-2026-2072",
+ "circuiti": {
+  "152": {"gp": "Las Vegas Grand Prix", "stato": "non ancora pubblicate", "documento": null, "zone": null, "overtake": null},
+  "150": {"gp": "Qatar Grand Prix", "stato": "non ancora pubblicate", "documento": null, "zone": null, "overtake": null},
+  "70": {"gp": "Abu Dhabi Grand Prix", "stato": "non ancora pubblicate", "documento": null, "zone": null, "overtake": null}
+ }
+}
