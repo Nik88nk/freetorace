@@ -273,6 +273,14 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 .wkr{display:grid;grid-template-columns:4px 36px 1fr 58px 30px;gap:7px;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wkr .t{font-weight:900}.wkr .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.wkr .bar i{display:block;height:100%;border-radius:4px;opacity:.75}.wkr .v{text-align:right;font-weight:700}.wkr .n{text-align:right;color:var(--dim);font-size:12px}
 .wksg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));column-gap:16px;padding:0 0 4px}.wks{display:grid;grid-template-columns:4px 36px 1fr;gap:7px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line2);font-size:13px}.wks .t{font-weight:900}.wks .ics{display:flex;flex-wrap:wrap;gap:3px}.wks .ti{width:18px;height:18px;border-width:2px;font-size:9px}
 .wkw{max-width:760px;margin:0 auto}
+.ci .cimw{margin:10px 12px 2px;padding:8px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}.ci .cimap{display:block;width:100%;height:auto;max-height:440px}
+.cik{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:8px 12px 10px}.cik div{padding:8px 12px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}.cik small{display:block;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);font-weight:700}.cik b{font-size:22px;font-weight:900}.cik b small{text-transform:none;letter-spacing:0;font-weight:400;font-size:12px}
+@media(min-width:700px){.cik{grid-template-columns:repeat(3,1fr)}}
+.ci .ciaero{font-size:13px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+.cis>div{display:grid;grid-template-columns:44px 1fr;gap:8px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line2);font-size:13px}.cis.sp>div{grid-template-columns:44px 1.6fr 1fr}
+.cis .hd{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);font-weight:700;padding:4px 12px;border-bottom:1px solid var(--line)}.cis .y{font-weight:900;font-size:15px}.cis .ev{display:flex;flex-wrap:wrap;gap:4px}
+.cis .sc{display:inline-block;padding:2px 7px;border-radius:6px;font-size:12px;font-weight:900;background:#ff9f1a;color:#111;white-space:nowrap}.cis .sc.v{background:none;color:#ff9f1a;border:1.5px solid #ff9f1a;padding:1px 6px}.cis .sc.r{background:#e10600;color:#fff}
+.ciw{display:grid;grid-template-columns:34px 1fr auto 58px;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line2)}.ciw .ic{font-size:24px;line-height:1}.ciw b{display:block;font-size:15px}.ciw small{display:block;color:var(--dim);font-size:12px}.ciw .tp{font-size:17px;font-weight:700}.ciw .pr{text-align:right}.ciw .pr b{color:var(--blue);font-size:15px}
 .pvb{display:flex;gap:12px;align-items:center;margin:12px 12px 2px;padding:10px 14px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);color:inherit;text-decoration:none}
 .pvb .i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;padding-left:2px}
 .pvb .kk{display:block;font-size:10px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;color:var(--dim)}.pvb b{display:block;font-size:16px;font-weight:900;line-height:1.2}
@@ -405,6 +413,7 @@ header .ev small.stale{color:#ff6b6b;text-transform:none;letter-spacing:0;font-w
 const T = {
  en:{gapLeader:'Gap to leader', gapAhead:'Interval', driver:'Driver', gap:'Gap', gapBest:'To best', last:'Last', tyre:'Tyre',
   tPv:'Preview', pvK:'Preview', pvH:'How it went here in {y}', pvSub:'{l} laps at {c}. {w} won from P{g}', pvGain:'; biggest climb: {d} from P{a} to P{b}', pvRpK:'Replay with map, timing and strategy', pvRp:'Watch the {y} race again', pvStrat:'{y} race strategies', pvStratN:'Each bar is a driver’s race, in finishing order: colour = compound, number = laps on the set, vertical lines = used set. Diagonal stripes: laps under safety car, VSC or red flag.', pvStint:'Stints · {n} laps', pvGrid:'Grid', pvPL:'PL', pvDsq:'DSQ', pvDns:'DNS', pvUsed:'used set', pvRed:'red flag', pvBrief:'In short', pvStop0:'no stops', pvStop1:'1 stop', pvStopN:'{n} stops', pvStart:'Tyres at the start', pvBriefN:'Stops of the classified drivers.', pvPit:'Time lost in the pits', pvOne:'A stop costs', pvSC:'Under safety car', pvVSC:'Under VSC', pvLane:'Pit lane ({y})', pvMed:'median over {n} stops', pvFast:'fastest', pvCheap:'“Cheap” stops (under SC or VSC)', pvL:'L', pvPass:'Not counted: {n} trips through the pit lane without a tyre change (drive-throughs, field sent through the pit lane).', pvPitN:'Stop cost: MultiViewer estimate. Pit lane times and stops under SC: {y} race (OpenF1).', pvSprint:'{y} Sprint · {n} laps', pvSprW:'{w} won from P{g}.', pvNoNz:'No safety car or VSC.', pvNzL:'{t} laps {a}–{b}', pvNz1:'{t} lap {a}', pvFirstH:'New on the calendar', pvFirst:'First edition, no data from last year.', pvSrc:'Source: OpenF1 and Jolpica.', tStrat:'Strategy', tWk:'Weekend', wkTitle:'What practice says', wkAfter:'After {s}. Updates after every session.', wkWait:'Long-run pace shows up here after Practice 1.', wkPr:'Practice', wkAnd:' and ', wkPace:'Long-run pace', wkPaceN:'Average of the clean laps in long runs, by compound; laps of the run in brackets; longer bar = faster.', wkDeg:'median degradation {d} s/lap over {r} {u}', wkRun:'run', wkRuns:'runs', wkMore:'+{n} more', wkLess:'Show fewer', wkSets:'New tyre sets used', wkSetsN:'Sets fitted new so far ({s}), one circle per set. Drivers who handed their car to a rookie in Practice 1 have fewer.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermediate',WET:'Wet'}, stRace:'How to read: one bar per driver over the race distance, a block per set of tyres (compound and laps); the white line is the current lap. On the right, the pace of the current stint (clean laps only) and the stops made.', stFp:'How to read: long runs only, i.e. series of at least 5 clean laps on the same tyres (no pit laps, no laps over 107%), with the average lap time. Counted from when you opened the app.', stQ:'How to read: the sets of tyres each driver has used in this session, with the laps on each set (N new, U used).', stIdle:'Strategy shows up here during sessions.', stPace:'pace now', stStops:'stops', stNone:'No long runs yet.', stNoRun:'No long run:', newU:'N', usedU:'U',
+  tCi:'Circuit', ciK:'Circuit', ciCcw:'Anticlockwise. Numbers = corners.', ciCw:'Clockwise. Numbers = corners.', ciNum:'Numbers = corners.', ciMapS:'Drawing and corners: MultiViewer.', ciLen:'Length', ciLaps:'Laps', ciDist:'Race distance', ciTurns:'Corners', ciRec:'Race lap record', ciInfoS:'Length, laps, distance, lap record and first Grand Prix: formula1.com.', ciAeroL:'Green: active aero zones.', ciFirst:'First Grand Prix', ciAero:'Active aero zones', ciAeroNo:'Active aero zones: FIA notes not published yet.', ciAeroN:'Straights where the wings open, from the FIA event notes.', ciSc:'Safety cars and red flags', ciYear:'Year', ciRace:'Race', ciNone:'none', ciRed:'RED', ciPre:'red flag before the start', ciScSum:'Safety car or VSC in {a} of {n} races · red flag in {b} of {n}', ciScN:'SC = safety car · VSC = virtual safety car · numbers = laps (from–to). Source: race control messages (OpenF1).', ciScNew:'No race here in recent years: no safety car history.', ciWx:'Weather forecast', ciRain:'rain', ciWxN:'Hourly Open-Meteo forecast at the circuit, for the session start time.',
   tTimes:'Times', tMap:'Track', tRc:'Race control', tSet:'Settings', delayH:'Delay', delayP:'Shows everything later, in sync with your TV, without spoilers. Every time you open the app it starts from 0.', lagWait:'⏸ resumes in N s', tvDelay:'TV delay', preRace:'Race starting', preSess:'Session starting', preIn:'in', preHint:'TV runs behind the data: sync it at the start', alArmB:'Tap when the lights go out on TV', alStartS2:'Tap now, then again when the lights go out on TV', alHeldB:'Tap saved: applied as soon as the start reaches the data', alDoneB:'Synced: delay {D}', alUndo:'Undo', viaLive:'Show live', viaHoldB:'Start received: the screen waits for your TV', alCancel:'Cancel', dCap:'minutes:seconds behind live', dZero:'Reset', alignBtn:'Sync with the TV…',
   alStartH:'Sync at the start', alStartB:'Tap when the cars start on TV', alStartS:'Before the start, keep your finger ready', alStartNo:'The start has not reached the data yet: tap when the cars start on TV.',
   alTvH:'Sync with the TV', alLapQ:'1. Which lap does the TV show?', alLapB:'2. Tap when the leader crosses the line', alLapS:'and the TV moves to lap {N}', alLapNo:'Lap {N} has not started in the data yet: check the lap you picked.',
@@ -436,6 +445,7 @@ const T = {
   track:{'1':'Track clear','2':'Yellow','4':'Safety Car','5':'Red flag','6':'VSC','7':'VSC ending'}},
  it:{gapLeader:'Dal primo', gapAhead:'Da chi precede', driver:'Pilota', gap:'Distacco', gapBest:'Dal migliore', last:'Ultimo', tyre:'Gomma',
   tPv:'Anteprima', pvK:'Anteprima', pvH:'Com’è andata qui nel {y}', pvSub:'{l} giri a {c}. Ha vinto {w} partito {g}°', pvGain:'; la rimonta più lunga: {d} da {a}° a {b}°', pvRpK:'Replay con mappa, tempi e strategia', pvRp:'Rivedi la gara del {y}', pvStrat:'Strategie della gara {y}', pvStratN:'Ogni barra è la gara di un pilota, in ordine d’arrivo: colore = mescola, numero = giri sul treno, righe verticali = treno usato. A strisce oblique i giri con safety car, VSC o bandiera rossa.', pvStint:'Stint · {n} giri', pvGrid:'Part.', pvPL:'BOX', pvDsq:'SQ', pvDns:'NP', pvUsed:'treno usato', pvRed:'bandiera rossa', pvBrief:'In breve', pvStop0:'nessuna sosta', pvStop1:'1 sosta', pvStopN:'{n} soste', pvStart:'Gomme al via', pvBriefN:'Soste dei piloti classificati.', pvPit:'Distacchi decisi ai box', pvOne:'Una sosta costa', pvSC:'Con safety car', pvVSC:'Con VSC', pvLane:'In corsia box ({y})', pvMed:'mediana su {n} soste', pvFast:'la più rapida', pvCheap:'Soste «scontate» (sotto SC o VSC)', pvL:'g', pvPass:'Non contati: {n} passaggi in corsia senza cambio gomme (drive-through, gruppo fatto passare in corsia).', pvPitN:'Costo della sosta: stima di MultiViewer. Tempi in corsia box e soste sotto SC: gara del {y} (OpenF1).', pvSprint:'Sprint {y} · {n} giri', pvSprW:'Ha vinto {w} partito {g}°.', pvNoNz:'Nessuna safety car né VSC.', pvNzL:'{t} giri {a}–{b}', pvNz1:'{t} giro {a}', pvFirstH:'Nuovo in calendario', pvFirst:'Prima edizione, nessun dato dell’anno scorso.', pvSrc:'Fonte: OpenF1 e Jolpica.', tStrat:'Strategia', tWk:'Weekend', wkTitle:'Cosa dicono le libere', wkAfter:'Dopo {s}. Si aggiorna dopo ogni sessione.', wkWait:'Il passo dei long run compare qui dopo le Libere 1.', wkPr:'Libere', wkAnd:' e ', wkPace:'Passo dei long run', wkPaceN:'Media dei giri puliti nelle serie lunghe, per mescola; tra parentesi i giri della serie; barra più lunga = più veloce.', wkDeg:'degrado mediano {d} s/giro su {r} {u}', wkRun:'serie', wkRuns:'serie', wkMore:'+{n} altri', wkLess:'Mostra meno', wkSets:'Set di gomme nuovi usati', wkSetsN:'Set nuovi montati finora ({s}), un cerchio per set. Chi ha ceduto l’auto a un esordiente nelle Libere 1 ne ha di meno.', cmp:{SOFT:'Soft',MEDIUM:'Medium',HARD:'Hard',INTERMEDIATE:'Intermedie',WET:'Da bagnato'}, stRace:'Come si legge: una barra per pilota sulla durata della gara, un blocco per treno di gomme (mescola e giri); la riga bianca è il giro attuale. A destra il passo dello stint in corso (solo giri puliti) e le soste fatte.', stFp:'Come si legge: solo i long run, cioè serie di almeno 5 giri puliti con le stesse gomme (niente giri ai box, niente giri oltre il 107%), col tempo medio. Contati da quando hai aperto l’app.', stQ:'Come si legge: i treni di gomme usati da ogni pilota in questa sessione, coi giri fatti su ognuno (N nuove, U usate).', stIdle:'La strategia compare qui durante le sessioni.', stPace:'passo ora', stStops:'soste', stNone:'Ancora nessun long run.', stNoRun:'Senza long run:', newU:'N', usedU:'U',
+  tCi:'Circuito', ciK:'Circuito', ciCcw:'Senso antiorario. Numeri = curve.', ciCw:'Senso orario. Numeri = curve.', ciNum:'Numeri = curve.', ciMapS:'Disegno e curve: MultiViewer.', ciLen:'Lunghezza', ciLaps:'Giri', ciDist:'Distanza gara', ciTurns:'Curve', ciRec:'Record in gara', ciInfoS:'Lunghezza, giri, distanza, record e prima edizione: formula1.com.', ciAeroL:'In verde le zone di aerodinamica attiva.', ciFirst:'Prima edizione', ciAero:'Zone di aerodinamica attiva', ciAeroNo:'Zone di aerodinamica attiva: note FIA non ancora pubblicate.', ciAeroN:'I rettilinei dove si aprono le ali, dalle note FIA dell’evento.', ciSc:'Safety car e bandiere rosse', ciYear:'Anno', ciRace:'Gara', ciNone:'nessuna', ciRed:'ROSSA', ciPre:'rossa prima del via', ciScSum:'Safety car o VSC in {a} gare su {n} · bandiera rossa in {b} su {n}', ciScN:'SC = safety car · VSC = virtual safety car · numeri = giri (dal–al). Fonte: messaggi della direzione gara (OpenF1).', ciScNew:'Nessuna gara qui negli ultimi anni: niente storia di safety car.', ciWx:'Meteo previsto', ciRain:'pioggia', ciWxN:'Previsione oraria Open-Meteo sul circuito, all’ora d’inizio della sessione.',
   tTimes:'Tempi', tMap:'Pista', tRc:'Direzione gara', tSet:'Impostazioni', delayH:'Ritardo', delayP:'Mostra tutto in ritardo, insieme alla TV, senza spoiler. Ogni volta che apri l’app riparte da 0.', lagWait:'⏸ riparte tra N s', tvDelay:'Ritardo TV', preRace:'Gara in partenza', preSess:'Sessione in partenza', preIn:'fra', preHint:'La TV arriva dopo i dati: allineala al via', alArmB:'Tocca quando in TV si spengono i semafori', alStartS2:'Tocca ora, poi di nuovo quando in TV si spengono i semafori', alHeldB:'Tocco registrato: vale appena arriva il via dai dati', alDoneB:'Allineato: ritardo {D}', alUndo:'Annulla', viaLive:'Mostra la diretta', viaHoldB:'Via ricevuto: lo schermo aspetta la tua TV', alCancel:'Annulla', dCap:'minuti:secondi dietro la diretta', dZero:'Azzera', alignBtn:'Allinea alla TV…',
   alStartH:'Allinea alla partenza', alStartB:'Tocca quando in TV le auto partono', alStartS:'Prima del via tieni il dito pronto', alStartNo:'Il via non è ancora arrivato dai dati: tocca quando in TV le auto partono.',
   alTvH:'Allinea alla TV', alLapQ:'1. Che giro segna la TV?', alLapB:'2. Tocca quando il primo passa il traguardo', alLapS:'e la TV passa al giro {N}', alLapNo:'Il giro {N} non è ancora iniziato nei dati: controlla il giro scelto.',
@@ -480,7 +490,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261110-231405';
+const BUILD = '20261112-213949';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1491,7 +1501,7 @@ async function loadNext(){
   try{ const r = await (await fetch('https://api.jolpi.ca/ergast/f1/current/races/?limit=40')).json(); const now=Date.now(), out=[], wks=[];
     for(const race of r.MRData.RaceTable.Races){
       const c = race.Circuit || {}, loc = c.Location || {};
-      const wk = {name:race.raceName, cid:c.circuitId||'', circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
+      const wk = {name:race.raceName, cid:c.circuitId||'', lat:parseFloat(loc.lat), lon:parseFloat(loc.long), circuit:c.circuitName||'', place:[loc.locality, loc.country].filter(Boolean).join(', '), sessions:[]};
       for(const [k,lbl] of [['FirstPractice','Practice 1'],['SecondPractice','Practice 2'],['ThirdPractice','Practice 3'],['SprintQualifying','Sprint Qualifying'],['Sprint','Sprint'],['Qualifying','Qualifying'],['','Race']]){
         const x = k ? race[k] : {date:race.date, time:race.time}; if(!x || !x.date) continue;
         const d = Date.parse(x.date+'T'+(x.time||'12:00:00Z')); wk.sessions.push({d, s:lbl});
@@ -1615,7 +1625,152 @@ async function renderRcOff(){
   if(!h) h = `<div class="note">${t('noMsg')}</div>`;
   if(h !== rcOffH){ rcOffH = h; $('#rc').innerHTML = h; }
 }
+// SCHEDA CIRCUITO (fuori sessione e fuori dal weekend, dal lunedì dopo la gara alle 00:00, come l'Anteprima; mockup app_schede 1c):
+// il circuito del GP successivo. Disegno e curve da MultiViewer; scheda dati da f2r-dati; safety car e rosse degli ultimi anni
+// da risultati/circuito/safety_car.json (strumenti/safety_car.py); meteo di qualifica e gara da Open-Meteo, chiamato dall'app. Nel
+// weekend la scheda resta «Direzione gara». Ogni parte che manca non compare.
+const ciWk = () => DEMO || isLive() || wkCur() ? null : weekend;
+const CI = {mv: {}, sc: undefined, wx: {}};
+function ciMv(key, year){                      // MultiViewer: l'anno del GP, se no l'anno prima
+  if(key in CI.mv) return CI.mv[key];
+  CI.mv[key] = undefined;
+  const get = y => fetch(`https://api.multiviewer.app/api/v1/circuits/${key}/${y}`).then(r => r.ok ? r.json() : null).catch(() => null);
+  get(year).then(j => j && j.x ? j : get(year - 1)).then(j => { CI.mv[key] = j && j.x && j.x.length > 10 ? j : null; render(); });
+  return undefined;
+}
+function ciSc(){
+  if(CI.sc !== undefined || CI.scP) return CI.sc;
+  CI.scP = 1;
+  fetch('../risultati/circuito/safety_car.json', {cache:'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null).then(j => { CI.sc = j || null; render(); });
+  return undefined;
+}
+// Open-Meteo: previsione oraria (16 giorni), riletta al più ogni 30 minuti; tempo massimo 12 s; senza risposta il riquadro non c'è
+function ciWx(wk){
+  if(!isFinite(wk.lat) || !isFinite(wk.lon)) return null;
+  const k = wk.lat + ',' + wk.lon, o = CI.wx[k];
+  if(o && (o.busy || Date.now() - o.at < 30*60e3)) return o.d;
+  const c = CI.wx[k] = {at: Date.now(), busy: 1, d: o ? o.d : null}, ac = new AbortController(), to = setTimeout(() => ac.abort(), 12e3);
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${wk.lat}&longitude=${wk.lon}&hourly=temperature_2m,precipitation_probability,weather_code&timezone=GMT&forecast_days=16`, {signal: ac.signal})
+    .then(r => r.ok ? r.json() : null).catch(() => null).then(j => { clearTimeout(to); c.busy = 0; c.d = j && j.hourly && j.hourly.time ? j.hourly : null; c.at = Date.now(); render(); });
+  return c.d;
+}
+const ciIcon = c => c <= 1 ? '☀️' : c === 2 ? '⛅' : c === 3 ? '☁️' : c <= 48 ? '🌫️' : c >= 95 ? '⛈️' : (c >= 71 && c <= 77) || c === 85 || c === 86 ? '🌨️' : '🌧️';
+function ciWxHtml(wk){
+  const hr = ciWx(wk); if(!hr) return '';
+  const rows = [];
+  for(const s of ['Qualifying', 'Race']){
+    const x = wk.sessions.find(z => z.s === s); if(!x) continue;
+    const iso = new Date(Math.floor(x.d / 3600e3) * 3600e3).toISOString().slice(0, 13) + ':00', i = hr.time.indexOf(iso);
+    if(i < 0 || hr.temperature_2m[i] == null) continue;
+    const p = hr.precipitation_probability ? hr.precipitation_probability[i] : null;
+    const when = new Date(x.d).toLocaleString(t('locale'), {weekday:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}).replace(',', '');
+    rows.push(`<div class="ciw"><span class="ic">${ciIcon(+hr.weather_code[i])}</span><span><b>${esc(t('sess')[s] || s)}</b><small>${esc(when)}</small></span>`
+      + `<span class="tp tn">${Math.round(hr.temperature_2m[i])} °C</span>${p != null ? `<span class="pr tn"><b>${p}%</b><small>${t('ciRain')}</small></span>` : '<span></span>'}</div>`);
+  }
+  return rows.length ? `<div class="bk"><div class="bh"><b>${t('ciWx')}</b></div>${rows.join('')}<div class="pvn">${t('ciWxN')}</div></div>` : '';
+}
+// disegno: x/y di MultiViewer ruotati come nel suo sito (y in su); tondini delle curve dal lato che dà MultiViewer
+function ciMap(mv, zones){
+  const rot = (mv.rotation || 0) * Math.PI / 180, c = Math.cos(rot), s = Math.sin(rot), tr = (x, y) => [x*c - y*s, -(x*s + y*c)];
+  const P = mv.x.map((x, i) => tr(x, mv.y[i]));
+  let mx = 1e18, my = 1e18, Mx = -1e18, My = -1e18;
+  for(const [x, y] of P){ mx = Math.min(mx, x); my = Math.min(my, y); Mx = Math.max(Mx, x); My = Math.max(My, y); }
+  const span = Math.max(Mx - mx, My - my), pad = span * 0.03, r = span * 0.026, off = span * 0.05, sw = span * 0.012;
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(0) + ' ' + p[1].toFixed(0)).join('');
+  const d = line(P) + 'Z';
+  let z = '';
+  for(const [a, b] of zones || []){            // zone di aerodinamica attiva: dal punto a al punto b, nel senso di marcia
+    const n = P.length, pts = [];
+    for(let i = a; pts.length <= n; i++){ pts.push(P[i % n]); if(i % n === b) break; }
+    if(pts.length > 1) z += `<path d="${line(pts)}" stroke="#22d36b" stroke-width="${(sw*1.5).toFixed(0)}" fill="none" stroke-linecap="round"/>`;
+  }
+  const a0 = P[0], a1 = P[2] || P[1], dx = a1[0] - a0[0], dy = a1[1] - a0[1], l = Math.hypot(dx, dy) || 1, nx = -dy / l * sw * 2.2, ny = dx / l * sw * 2.2;
+  let h = `<path d="${d}" stroke="#05070a" stroke-width="${(sw*2.8).toFixed(0)}" fill="none" stroke-linejoin="round"/><path d="${d}" stroke="#8a93a5" stroke-width="${(sw*1.9).toFixed(0)}" fill="none" stroke-linejoin="round"/>`
+    + `<path d="${d}" stroke="#2a303a" stroke-width="${sw.toFixed(0)}" fill="none" stroke-linejoin="round"/>${z}`
+    + `<line x1="${(a0[0]-nx).toFixed(0)}" y1="${(a0[1]-ny).toFixed(0)}" x2="${(a0[0]+nx).toFixed(0)}" y2="${(a0[1]+ny).toFixed(0)}" stroke="#fff" stroke-width="${(sw*0.8).toFixed(0)}"/>`;
+  for(const k of mv.corners || []){ const tp = k.trackPosition; if(!tp) continue;
+    const ang = (k.angle || 0) * Math.PI / 180, [x, y] = tr(tp.x + Math.cos(ang) * off, tp.y + Math.sin(ang) * off), txt = String(k.number) + (k.letter || '');
+    h += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(txt.length > 2 ? r * 1.25 : r).toFixed(0)}" fill="#1b2029" stroke="#e10600" stroke-width="${(r*0.16).toFixed(0)}"/>`
+      + `<text x="${x.toFixed(0)}" y="${y.toFixed(0)}" font-size="${(r*1.1).toFixed(0)}" fill="#fff" font-weight="900" text-anchor="middle" dominant-baseline="central">${esc(txt)}</text>`; }
+  const e = pad + off + r;
+  return `<svg class="cimap" viewBox="${(mx - e).toFixed(0)} ${(my - e).toFixed(0)} ${(Mx - mx + 2*e).toFixed(0)} ${(My - my + 2*e).toFixed(0)}" role="img" aria-label="${esc(mv.circuitName || '')}">${h}</svg>`;
+}
+// senso di marcia: area con segno del tracciato nell'ordine di MultiViewer (positiva = antiorario; riscontrato su Interlagos, Las Vegas, Monza)
+const ciDir = mv => { let a = 0; const n = mv.x.length; for(let i = 0; i < n; i++){ const j = (i + 1) % n; a += mv.x[i]*mv.y[j] - mv.x[j]*mv.y[i]; } return a > 0 ? 'ciCcw' : 'ciCw'; };
+const ciEv = e => e.prima_del_via ? `<span class="sc r">${t('ciPre')}</span>`
+  : `<span class="sc${e.tipo === 'ROSSA' ? ' r' : e.tipo === 'VSC' ? ' v' : ''}">${e.tipo === 'ROSSA' ? t('ciRed') : esc(e.tipo)} <b class="tn">${e.giro}${e.fino && e.fino !== e.giro && e.tipo !== 'ROSSA' ? '–' + e.fino : ''}</b></span>`;
+function ciScHtml(key){
+  const sc = ciSc(); if(sc === undefined) return null; if(!sc || !sc.circuiti) return '';
+  const c = sc.circuiti[String(key)]; if(!c) return '';
+  const ss = asList(c.sessioni);
+  let h = `<div class="bk"><div class="bh"><b>${t('ciSc')}</b></div>`;
+  if(!ss.length) return h + `<div class="pvn" style="font-size:13px">${t('ciScNew')}</div></div>`;
+  const yrs = [...new Set(ss.map(x => x.anno))].sort((a, b) => b - a), spr = ss.some(x => x.sessione === 'Sprint');
+  const cell = (y, k) => { const x = ss.find(z => z.anno === y && z.sessione === k); if(!x) return '<span class="dim">—</span>';
+    const ev = asList(x.eventi); return ev.length ? ev.map(ciEv).join('') : `<span class="dim">${t('ciNone')}</span>`; };
+  h += `<div class="cis${spr ? ' sp' : ''}"><div class="hd"><span>${t('ciYear')}</span><span>${t('ciRace')}</span>${spr ? `<span>Sprint</span>` : ''}</div>`
+    + yrs.map(y => `<div><span class="y tn">${y}</span><span class="ev">${cell(y, 'Race')}</span>${spr ? `<span class="ev">${cell(y, 'Sprint')}</span>` : ''}</div>`).join('') + `</div>`;
+  const gr = ss.filter(x => x.sessione === 'Race'), n = gr.length;
+  if(n) h += `<div class="pvn" style="font-size:13px;padding-top:8px">${t('ciScSum').replace(/\{n\}/g, n).replace('{a}', gr.filter(x => asList(x.eventi).some(e => e.tipo !== 'ROSSA')).length).replace('{b}', gr.filter(x => asList(x.eventi).some(e => e.tipo === 'ROSSA')).length)}</div>`;
+  return h + `<div class="pvn">${t('ciScN')}</div></div>`;
+}
+let ciH = '';
+function ciHtml(wk){
+  const key = JOL_KEY[wk.cid], year = new Date(wk.sessions[0].d).getFullYear();
+  const mv = key == null ? null : ciMv(key, year), sc = key == null ? '' : ciScHtml(key), fx = key == null ? null : ciFacts(key), pv = key == null ? null : pvDoc(key);
+  if(mv === undefined || sc === null || fx === undefined || pv === undefined) return ciH;   // aspetta le letture, poi disegna una volta
+  let h = `<div class="wkt"><div class="k">${t('ciK')} · ${esc(gpName(wk.name))}</div><h2>${esc(wk.circuit || '')}</h2><p>${mv ? t(ciDir(mv)) : ''}</p></div>`;
+  const fi = fx && fx.info || {}, len = +fi.lunghezza_km || null;
+  const zones = mv ? ciZones(mv, fx && fx.aero, len) : null;
+  if(mv) h += `<div class="cimw">${ciMap(mv, zones)}</div><div class="pvn">${t('ciMapS')}${zones ? ' ' + t('ciAeroL') : ''}</div>`;
+  // scheda dati: solo ciò che c'è (curve: dal disegno MultiViewer, formula1.com non le dà)
+  const laps = +fi.giri || (pv && pv.gara && pv.gara.giri) || null, rec = fi.record;
+  const turns = +fi.curve || (mv && mv.corners && mv.corners.length ? new Set(mv.corners.map(k => k.number + (k.letter || ''))).size : null);
+  const tiles = [];
+  if(len) tiles.push(['ciLen', `${pvNum(len, 3)} km`]);
+  if(laps) tiles.push(['ciLaps', laps]);
+  if(len && laps) tiles.push(['ciDist', `${pvNum(+fi.distanza_km || len * laps, 1)} km`]);
+  if(turns) tiles.push(['ciTurns', turns]);
+  if(rec && rec.tempo) tiles.push(['ciRec', `${esc(rec.tempo)}<small>${esc([String(rec.pilota || '').split(' ').slice(-1)[0], rec.anno].filter(Boolean).join(' · '))}</small>`]);
+  if(fi.prima_edizione) tiles.push(['ciFirst', esc(fi.prima_edizione)]);
+  if(tiles.length) h += `<div class="cik">${tiles.map(([k, v]) => `<div><small>${t(k)}</small><b class="tn">${v}</b></div>`).join('')}</div>`
+    + (fi.fonte ? `<div class="pvn">${t('ciInfoS')}</div>` : '');
+  h += zones ? `<div class="bk"><div class="bh"><b>${t('ciAero')}</b><span class="dim">${zones.length}</span></div><div class="pvn" style="font-size:13px">${t('ciAeroN')}</div></div>`
+    : `<div class="pvn ciaero">${t('ciAeroNo')}</div>`;
+  h += sc + ciWxHtml(wk);
+  return ciH = `<div class="wkw ci">${h}</div>`;
+}
+// scheda dati e zone di aerodinamica attiva di f2r-dati (formato in DIARIO_dati 12.11): risultati/circuito/circuiti_info.json e aero_attiva.json
+function ciFacts(key){
+  for(const f of ['circuiti_info', 'aero_attiva']) if(!(f in CI) && !CI['p' + f]){ CI['p' + f] = 1;
+    fetch(`../risultati/circuito/${f}.json`, {cache:'no-cache'}).then(r => r.ok ? r.json() : null).catch(() => null).then(j => { CI[f] = j && j.circuiti || null; render(); }); }
+  if(!('circuiti_info' in CI) || !('aero_attiva' in CI)) return undefined;
+  return {info: CI.circuiti_info && CI.circuiti_info[String(key)] || null, aero: CI.aero_attiva && CI.aero_attiva[String(key)] || null};
+}
+// zone: dal punto di attivazione {curva, metri} (curva 0 = primo punto del disegno) fino a 60 m prima della curva indicata
+// (fine_prima_della_curva), se no fino alla curva dopo; metri convertiti con la lunghezza ufficiale. Indici dei punti di MultiViewer.
+function ciZones(mv, aero, lenKm){
+  const zs = aero && Array.isArray(aero.zone) ? aero.zone : []; if(!zs.length) return null;
+  const n = mv.x.length, cum = [0]; for(let i = 1; i <= n; i++) cum.push(cum[i - 1] + Math.hypot(mv.x[i % n] - mv.x[i - 1], mv.y[i % n] - mv.y[i - 1]));
+  const L = cum[n], u = lenKm ? L / (lenKm * 1000) : 10;      // unità di MultiViewer per metro (circa 10)
+  const cs = (mv.corners || []).map(k => { let bi = 0, bd = 1e18; for(let i = 0; i < n; i++){ const d = (mv.x[i] - k.trackPosition.x)**2 + (mv.y[i] - k.trackPosition.y)**2; if(d < bd){ bd = d; bi = i; } } return {n: k.number, s: cum[bi]}; });
+  const at = c => c === 0 ? 0 : (cs.find(k => k.n === c) || {}).s;
+  const idx = d => { d = ((d % L) + L) % L; let i = 0; while(i < n - 1 && cum[i + 1] < d) i++; return i; };
+  const out = [];
+  for(const z of zs){ const p = z.inizio; if(!p || at(p.curva) == null) continue;
+    const a = at(p.curva) + (+p.metri || 0) * u;
+    let b = z.fine_prima_della_curva != null && at(z.fine_prima_della_curva) != null ? at(z.fine_prima_della_curva) - 60 * u : null;
+    if(b == null){ const nx = cs.map(k => ((k.s - a) % L + L) % L).filter(d => d > 30 * u).sort((x, y) => x - y)[0]; if(nx == null) continue; b = a + nx - 60 * u; }
+    out.push([idx(a), idx(b)]); }
+  return out.length ? out : null;
+}
+let rcCiH = '';
+function renderCi(wk){ const h = ciHtml(wk); if(h && h !== rcCiH){ rcCiH = h; $('#rc').innerHTML = h; } }
 function renderRc(){
+  const cw = ciWk(), nb = $('nav [data-tab="rc"] em'), lb = cw ? 'tCi' : 'tRc';
+  if(nb && nb.dataset.t !== lb){ nb.dataset.t = lb; nb.innerHTML = t(lb); }
+  if(cw){ rcOffH = ''; renderCi(cw); return; }
+  rcCiH = '';
   if(!DEMO && !isLive()){ renderRcOff(); return; }
   rcOffH = '';
   const ms = asList((ST.RaceControlMessages||{}).Messages).slice(-60).reverse();

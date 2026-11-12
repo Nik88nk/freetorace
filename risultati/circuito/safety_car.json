@@ -1,0 +1,1404 @@
+{
+ "fonte": "OpenF1 race_control",
+ "creato": "2026-11-10T21:01:11+00:00",
+ "calendario": 2026,
+ "anni": [
+  2023,
+  2025
+ ],
+ "nota": "giro = giro del leader al messaggio di ingresso; fino = giro del messaggio di rientro",
+ "circuiti": {
+  "10": {
+   "nome": "Melbourne",
+   "gp": "Australian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 7787,
+     "messaggi": 111,
+     "giri_max_messaggi": 58,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 3
+      },
+      {
+       "tipo": "SC",
+       "giro": 7,
+       "fino": 8
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 8,
+       "fino": null
+      },
+      {
+       "tipo": "VSC",
+       "giro": 18,
+       "fino": 19
+      },
+      {
+       "tipo": "SC",
+       "giro": 54,
+       "fino": 55
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 55,
+       "fino": null
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 57,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9488,
+     "messaggi": 84,
+     "giri_max_messaggi": 58,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 17,
+       "fino": 18
+      },
+      {
+       "tipo": "VSC",
+       "giro": 58,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9693,
+     "messaggi": 115,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 7
+      },
+      {
+       "tipo": "SC",
+       "giro": 34,
+       "fino": 41
+      },
+      {
+       "tipo": "SC",
+       "giro": 47,
+       "fino": 51
+      }
+     ]
+    }
+   ]
+  },
+  "49": {
+   "nome": "Shanghai",
+   "gp": "Chinese Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9672,
+     "messaggi": 21,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9673,
+     "messaggi": 58,
+     "giri_max_messaggi": 56,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 22,
+       "fino": 23
+      },
+      {
+       "tipo": "SC",
+       "giro": 23,
+       "fino": 26
+      },
+      {
+       "tipo": "SC",
+       "giro": 27,
+       "fino": 31
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 9993,
+     "messaggi": 29,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9998,
+     "messaggi": 58,
+     "giri_max_messaggi": 56,
+     "eventi": []
+    }
+   ]
+  },
+  "46": {
+   "nome": "Suzuka",
+   "gp": "Japanese Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9173,
+     "messaggi": 73,
+     "giri_max_messaggi": 53,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 4
+      },
+      {
+       "tipo": "VSC",
+       "giro": 14,
+       "fino": 14
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9496,
+     "messaggi": 70,
+     "giri_max_messaggi": 53,
+     "eventi": [
+      {
+       "tipo": "ROSSA",
+       "giro": 1,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 10006,
+     "messaggi": 25,
+     "giri_max_messaggi": 53,
+     "eventi": []
+    }
+   ]
+  },
+  "63": {
+   "nome": "Sakhir",
+   "gp": "Bahrain Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 7953,
+     "messaggi": 75,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 41,
+       "fino": 42
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9472,
+     "messaggi": 71,
+     "giri_max_messaggi": 57,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 10014,
+     "messaggi": 93,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 32,
+       "fino": 35
+      }
+     ]
+    }
+   ]
+  },
+  "149": {
+   "nome": "Jeddah",
+   "gp": "Saudi Arabian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 7779,
+     "messaggi": 58,
+     "giri_max_messaggi": 50,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 18,
+       "fino": 20
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9480,
+     "messaggi": 68,
+     "giri_max_messaggi": 50,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 7,
+       "fino": 9
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 10022,
+     "messaggi": 67,
+     "giri_max_messaggi": 50,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 3
+      }
+     ]
+    }
+   ]
+  },
+  "151": {
+   "nome": "Miami",
+   "gp": "Miami Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9078,
+     "messaggi": 40,
+     "giri_max_messaggi": 57,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9506,
+     "messaggi": 58,
+     "giri_max_messaggi": 19,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 3
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9507,
+     "messaggi": 77,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 23,
+       "fino": 23
+      },
+      {
+       "tipo": "SC",
+       "giro": 28,
+       "fino": 32
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 10028,
+     "messaggi": 109,
+     "giri_max_messaggi": 18,
+     "eventi": [
+      {
+       "tipo": "ROSSA",
+       "giro": 1,
+       "fino": null,
+       "prima_del_via": true
+      },
+      {
+       "tipo": "SC",
+       "giro": 15,
+       "fino": 18
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 10033,
+     "messaggi": 78,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 3
+      },
+      {
+       "tipo": "VSC",
+       "giro": 29,
+       "fino": 30
+      },
+      {
+       "tipo": "VSC",
+       "giro": 33,
+       "fino": 34
+      }
+     ]
+    }
+   ]
+  },
+  "23": {
+   "nome": "Montreal",
+   "gp": "Canadian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9110,
+     "messaggi": 77,
+     "giri_max_messaggi": 70,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 8,
+       "fino": 8
+      },
+      {
+       "tipo": "SC",
+       "giro": 12,
+       "fino": 16
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9531,
+     "messaggi": 130,
+     "giri_max_messaggi": 70,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 25,
+       "fino": 29
+      },
+      {
+       "tipo": "SC",
+       "giro": 54,
+       "fino": 58
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9963,
+     "messaggi": 98,
+     "giri_max_messaggi": 70,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 67,
+       "fino": null
+      }
+     ]
+    }
+   ]
+  },
+  "22": {
+   "nome": "Monte Carlo",
+   "gp": "Monaco Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9094,
+     "messaggi": 244,
+     "giri_max_messaggi": 78,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9523,
+     "messaggi": 122,
+     "giri_max_messaggi": 78,
+     "eventi": [
+      {
+       "tipo": "ROSSA",
+       "giro": 1,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9979,
+     "messaggi": 198,
+     "giri_max_messaggi": 78,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 4
+      }
+     ]
+    }
+   ]
+  },
+  "15": {
+   "nome": "Catalunya",
+   "gp": "Barcelona Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9102,
+     "messaggi": 49,
+     "giri_max_messaggi": 66,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9539,
+     "messaggi": 107,
+     "giri_max_messaggi": 66,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9971,
+     "messaggi": 102,
+     "giri_max_messaggi": 66,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 55,
+       "fino": 60
+      }
+     ]
+    }
+   ]
+  },
+  "19": {
+   "nome": "Spielberg",
+   "gp": "Austrian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9117,
+     "messaggi": 46,
+     "giri_max_messaggi": 24,
+     "eventi": []
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9118,
+     "messaggi": 212,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 3
+      },
+      {
+       "tipo": "VSC",
+       "giro": 14,
+       "fino": 16
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9549,
+     "messaggi": 16,
+     "giri_max_messaggi": 23,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9550,
+     "messaggi": 125,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 66,
+       "fino": 66
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9955,
+     "messaggi": 119,
+     "giri_max_messaggi": 70,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 3
+      }
+     ]
+    }
+   ]
+  },
+  "2": {
+   "nome": "Silverstone",
+   "gp": "British Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9126,
+     "messaggi": 46,
+     "giri_max_messaggi": 52,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 33,
+       "fino": 33
+      },
+      {
+       "tipo": "SC",
+       "giro": 33,
+       "fino": 38
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9558,
+     "messaggi": 110,
+     "giri_max_messaggi": 52,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9947,
+     "messaggi": 158,
+     "giri_max_messaggi": 52,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 4
+      },
+      {
+       "tipo": "VSC",
+       "giro": 5,
+       "fino": 7
+      },
+      {
+       "tipo": "SC",
+       "giro": 14,
+       "fino": 17
+      },
+      {
+       "tipo": "SC",
+       "giro": 18,
+       "fino": 21
+      }
+     ]
+    }
+   ]
+  },
+  "7": {
+   "nome": "Spa-Francorchamps",
+   "gp": "Belgian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9140,
+     "messaggi": 86,
+     "giri_max_messaggi": 11,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 3,
+       "fino": 5
+      }
+     ]
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9141,
+     "messaggi": 56,
+     "giri_max_messaggi": 44,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9574,
+     "messaggi": 23,
+     "giri_max_messaggi": 44,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 9934,
+     "messaggi": 83,
+     "giri_max_messaggi": 15,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9939,
+     "messaggi": 117,
+     "giri_max_messaggi": 44,
+     "eventi": [
+      {
+       "tipo": "ROSSA",
+       "giro": 1,
+       "fino": null,
+       "prima_del_via": true
+      }
+     ]
+    }
+   ]
+  },
+  "4": {
+   "nome": "Hungaroring",
+   "gp": "Hungarian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9133,
+     "messaggi": 87,
+     "giri_max_messaggi": 70,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9566,
+     "messaggi": 75,
+     "giri_max_messaggi": 70,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9928,
+     "messaggi": 95,
+     "giri_max_messaggi": 70,
+     "eventi": []
+    }
+   ]
+  },
+  "55": {
+   "nome": "Zandvoort",
+   "gp": "Dutch Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9149,
+     "messaggi": 78,
+     "giri_max_messaggi": 72,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 16,
+       "fino": 21
+      },
+      {
+       "tipo": "VSC",
+       "giro": 64,
+       "fino": 64
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 64,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9582,
+     "messaggi": 84,
+     "giri_max_messaggi": 72,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9920,
+     "messaggi": 110,
+     "giri_max_messaggi": 72,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 23,
+       "fino": 26
+      },
+      {
+       "tipo": "VSC",
+       "giro": 31,
+       "fino": 32
+      },
+      {
+       "tipo": "SC",
+       "giro": 53,
+       "fino": 57
+      },
+      {
+       "tipo": "SC",
+       "giro": 65,
+       "fino": 68
+      }
+     ]
+    }
+   ]
+  },
+  "39": {
+   "nome": "Monza",
+   "gp": "Italian Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9157,
+     "messaggi": 45,
+     "giri_max_messaggi": 51,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9590,
+     "messaggi": 61,
+     "giri_max_messaggi": 53,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9912,
+     "messaggi": 73,
+     "giri_max_messaggi": 53,
+     "eventi": []
+    }
+   ]
+  },
+  "153": {
+   "nome": "Madring",
+   "gp": "Spanish Grand Prix",
+   "sessioni": []
+  },
+  "144": {
+   "nome": "Baku",
+   "gp": "Azerbaijan Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9069,
+     "messaggi": 50,
+     "giri_max_messaggi": 17,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 3
+      },
+      {
+       "tipo": "SC",
+       "giro": 3,
+       "fino": 5
+      }
+     ]
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9070,
+     "messaggi": 54,
+     "giri_max_messaggi": 51,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 11,
+       "fino": 13
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9598,
+     "messaggi": 115,
+     "giri_max_messaggi": 51,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 51,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9904,
+     "messaggi": 73,
+     "giri_max_messaggi": 51,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 4
+      }
+     ]
+    }
+   ]
+  },
+  "12": {
+   "nome": "Kuala Lumpur",
+   "gp": "Bahrain Grand Prix",
+   "sessioni": []
+  },
+  "61": {
+   "nome": "Singapore",
+   "gp": "Singapore Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9165,
+     "messaggi": 76,
+     "giri_max_messaggi": 62,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 20,
+       "fino": 22
+      },
+      {
+       "tipo": "VSC",
+       "giro": 44,
+       "fino": 45
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9606,
+     "messaggi": 63,
+     "giri_max_messaggi": 62,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9896,
+     "messaggi": 121,
+     "giri_max_messaggi": 62,
+     "eventi": []
+    }
+   ]
+  },
+  "9": {
+   "nome": "Austin",
+   "gp": "United States Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9212,
+     "messaggi": 40,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9213,
+     "messaggi": 81,
+     "giri_max_messaggi": 56,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9616,
+     "messaggi": 53,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9617,
+     "messaggi": 120,
+     "giri_max_messaggi": 56,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 3,
+       "fino": 5
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 9883,
+     "messaggi": 71,
+     "giri_max_messaggi": 19,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 5
+      },
+      {
+       "tipo": "SC",
+       "giro": 16,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9888,
+     "messaggi": 81,
+     "giri_max_messaggi": 56,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 7,
+       "fino": 8
+      }
+     ]
+    }
+   ]
+  },
+  "65": {
+   "nome": "Mexico City",
+   "gp": "Mexico City Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9181,
+     "messaggi": 100,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 5,
+       "fino": 5
+      },
+      {
+       "tipo": "SC",
+       "giro": 33,
+       "fino": 34
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 34,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9625,
+     "messaggi": 120,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 6
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9877,
+     "messaggi": 78,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 70,
+       "fino": 71
+      }
+     ]
+    }
+   ]
+  },
+  "14": {
+   "nome": "Interlagos",
+   "gp": "São Paulo Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9204,
+     "messaggi": 12,
+     "giri_max_messaggi": 24,
+     "eventi": []
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9205,
+     "messaggi": 55,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 2
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 2,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9635,
+     "messaggi": 22,
+     "giri_max_messaggi": 24,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 22,
+       "fino": 24
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9636,
+     "messaggi": 111,
+     "giri_max_messaggi": 69,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 28,
+       "fino": 28
+      },
+      {
+       "tipo": "SC",
+       "giro": 30,
+       "fino": 32
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 32,
+       "fino": null
+      },
+      {
+       "tipo": "SC",
+       "giro": 39,
+       "fino": 42
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 9864,
+     "messaggi": 54,
+     "giri_max_messaggi": 24,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 6,
+       "fino": 7
+      },
+      {
+       "tipo": "ROSSA",
+       "giro": 7,
+       "fino": null
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9869,
+     "messaggi": 58,
+     "giri_max_messaggi": 71,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 2,
+       "fino": 5
+      },
+      {
+       "tipo": "VSC",
+       "giro": 7,
+       "fino": 8
+      }
+     ]
+    }
+   ]
+  },
+  "152": {
+   "nome": "Las Vegas",
+   "gp": "Las Vegas Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9189,
+     "messaggi": 75,
+     "giri_max_messaggi": 50,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 1,
+       "fino": 2
+      },
+      {
+       "tipo": "SC",
+       "giro": 3,
+       "fino": 6
+      },
+      {
+       "tipo": "SC",
+       "giro": 26,
+       "fino": 28
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9644,
+     "messaggi": 37,
+     "giri_max_messaggi": 50,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9858,
+     "messaggi": 63,
+     "giri_max_messaggi": 50,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 4
+      },
+      {
+       "tipo": "VSC",
+       "giro": 16,
+       "fino": 16
+      }
+     ]
+    }
+   ]
+  },
+  "150": {
+   "nome": "Lusail",
+   "gp": "Qatar Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Sprint",
+     "session_key": 9220,
+     "messaggi": 65,
+     "giri_max_messaggi": 19,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 2
+      },
+      {
+       "tipo": "SC",
+       "giro": 3,
+       "fino": 6
+      },
+      {
+       "tipo": "SC",
+       "giro": 11,
+       "fino": 14
+      }
+     ]
+    },
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9221,
+     "messaggi": 137,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 4
+      }
+     ]
+    },
+    {
+     "anno": 2024,
+     "sessione": "Sprint",
+     "session_key": 9654,
+     "messaggi": 29,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9655,
+     "messaggi": 112,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 1,
+       "fino": 4
+      },
+      {
+       "tipo": "SC",
+       "giro": 35,
+       "fino": 39
+      },
+      {
+       "tipo": "VSC",
+       "giro": 40,
+       "fino": 40
+      },
+      {
+       "tipo": "SC",
+       "giro": 40,
+       "fino": 42
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Sprint",
+     "session_key": 9845,
+     "messaggi": 63,
+     "giri_max_messaggi": 19,
+     "eventi": []
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9850,
+     "messaggi": 81,
+     "giri_max_messaggi": 57,
+     "eventi": [
+      {
+       "tipo": "SC",
+       "giro": 7,
+       "fino": 10
+      }
+     ]
+    }
+   ]
+  },
+  "70": {
+   "nome": "Yas Marina Circuit",
+   "gp": "Abu Dhabi Grand Prix",
+   "sessioni": [
+    {
+     "anno": 2023,
+     "sessione": "Race",
+     "session_key": 9197,
+     "messaggi": 67,
+     "giri_max_messaggi": 58,
+     "eventi": []
+    },
+    {
+     "anno": 2024,
+     "sessione": "Race",
+     "session_key": 9662,
+     "messaggi": 131,
+     "giri_max_messaggi": 58,
+     "eventi": [
+      {
+       "tipo": "VSC",
+       "giro": 2,
+       "fino": 3
+      }
+     ]
+    },
+    {
+     "anno": 2025,
+     "sessione": "Race",
+     "session_key": 9839,
+     "messaggi": 109,
+     "giri_max_messaggi": 58,
+     "eventi": []
+    }
+   ]
+  }
+ },
+ "ricalcolato": "2026-11-10T21:03:14+00:00"
+}
