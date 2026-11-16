@@ -1,7 +1,7 @@
 {
  "meeting": "São Paulo Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-09T20:06:15Z",
+ "aggiornato": "2026-11-15T17:35:42Z",
  "items": [
   {
    "n": "51",
@@ -186,8 +186,11 @@
    "decision": {
     "utc": "2026-11-08T18:00:05",
     "session": "Race",
-    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 23 (ALB) - REJOINING UNSAFELY (14:50:05)",
-    "type": "nessuna azione"
+    "msg": "NO FURTHER ACTION FOR CAR 10 (GAS)",
+    "type": "nessuna azione",
+    "others": [
+     "ALB"
+    ]
    }
   },
   {
@@ -248,9 +251,11 @@
    "decision": {
     "utc": null,
     "session": "Race",
-    "msg": "FIA STEWARDS: 5 SECOND TIME PENALTY FOR CAR 16 (LEC) - CAUSING A COLLISION",
+    "msg": "NO FURTHER ACTION FOR CAR 30 (LAW)",
     "type": "nessuna azione",
-    "doc": "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_16_-_causing_a_collision.pdf"
+    "others": [
+     "LEC"
+    ]
    }
   }
  ]
