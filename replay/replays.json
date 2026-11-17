@@ -150,6 +150,16 @@
   "laps": 26
  },
  {
+  "name": "2025_Las_Vegas_Race",
+  "start": "2025-11-23T04:00:00+00:00",
+  "year": "2025",
+  "meeting": "Las Vegas Grand Prix",
+  "session": "Race",
+  "it": "Las Vegas Grand Prix 2025 · Gara",
+  "en": "2025 Las Vegas Grand Prix · Race",
+  "laps": 50
+ },
+ {
   "name": "2025_São_Paulo_Race",
   "start": "2025-11-09T17:00:00+00:00",
   "year": "2025",
