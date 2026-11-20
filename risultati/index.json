@@ -9,6 +9,15 @@
   "start": "2026-11-19T20:00:00"
  },
  {
+  "name": "2026_Las_Vegas_Practice_1",
+  "kind": "practice",
+  "meeting": "Las Vegas Grand Prix",
+  "location": "Las Vegas",
+  "year": "2026",
+  "session": "Practice 1",
+  "start": "2026-11-19T16:30:00"
+ },
+ {
   "name": "2026_São_Paulo_Race",
   "kind": "race",
   "meeting": "São Paulo Grand Prix",
