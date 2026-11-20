@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_Las_Vegas_Practice_2",
+  "start": "2026-11-19T20:00:00",
+  "year": "2026",
+  "meeting": "Las Vegas Grand Prix",
+  "session": "Practice 2",
+  "it": "Las Vegas Grand Prix 2026 · Libere 2",
+  "en": "2026 Las Vegas Grand Prix · Practice 2",
+  "laps": 28
+ },
+ {
   "name": "2026_São_Paulo_Race",
   "start": "2026-11-08T14:00:00",
   "year": "2026",
