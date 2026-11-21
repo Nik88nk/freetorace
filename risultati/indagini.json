@@ -1,6 +1,67 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-20T05:02:36Z",
- "items": []
+ "aggiornato": "2026-11-21T01:32:09Z",
+ "items": [
+  {
+   "n": "3",
+   "tla": "VER",
+   "session": "Practice 3",
+   "utc": "2026-11-21T00:40:39",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 16 INCIDENT INVOLVING CARS 3 (VER) AND 43 (COL) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (16:33:22)",
+   "reason": "DRIVING ERRATICALLY",
+   "decision": null
+  },
+  {
+   "n": "43",
+   "tla": "COL",
+   "session": "Practice 3",
+   "utc": "2026-11-21T00:40:39",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 16 INCIDENT INVOLVING CARS 3 (VER) AND 43 (COL) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (16:33:22)",
+   "reason": "DRIVING ERRATICALLY",
+   "decision": null
+  },
+  {
+   "n": "23",
+   "tla": "ALB",
+   "session": "Practice 3",
+   "utc": "2026-11-21T01:15:29",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
+   "reason": "DRIVING ERRATICALLY",
+   "decision": null
+  },
+  {
+   "n": "6",
+   "tla": "HAD",
+   "session": "Practice 3",
+   "utc": "2026-11-21T01:15:29",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
+   "reason": "DRIVING ERRATICALLY",
+   "decision": null
+  },
+  {
+   "n": "3",
+   "tla": "VER",
+   "session": "Practice 3",
+   "utc": "2026-11-21T01:27:56",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
+   "reason": null,
+   "decision": null
+  },
+  {
+   "n": "63",
+   "tla": "RUS",
+   "session": "Practice 3",
+   "utc": "2026-11-21T01:27:56",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
+   "reason": null,
+   "decision": null
+  }
+ ]
 }
