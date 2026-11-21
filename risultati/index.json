@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Las_Vegas_Qualifying",
+  "kind": "quali",
+  "meeting": "Las Vegas Grand Prix",
+  "location": "Las Vegas",
+  "year": "2026",
+  "session": "Qualifying",
+  "start": "2026-11-20T20:00:00"
+ },
+ {
   "name": "2026_Las_Vegas_Practice_3",
   "kind": "practice",
   "meeting": "Las Vegas Grand Prix",
