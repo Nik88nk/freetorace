@@ -9,7 +9,8 @@ const T = {
    h3:'Squadre: distacco dal migliore', n3:'Miglior giro della squadra e distacco in % dal più veloce. S1-S2-S3: posizione della squadra nel miglior settore (1 = la più veloce in quel tratto).',
    h4:'Degrado delle gomme', n4:'Secondi persi in media a ogni giro di vita della gomma, sulle serie di almeno 8 giri. Non corretto per la benzina che si consuma (che fa guadagnare qualche centesimo a giro).',
    h5:'Velocità massima', n5:'Velocità più alta al rilevamento sul rettilineo (speed trap), in km/h. Dipende anche dalla scia.'},
-  quali:{h1:'Griglia', n1:'Ordine ufficiale. Tempo migliore in ciascuna parte; distacco dalla pole per chi è arrivato in Q3.',
+  quali:{h1:'Qualifica', n1:'Ordine ufficiale della qualifica, prima delle penalità in griglia. Tempo migliore in ciascuna parte; distacco dal primo per chi è arrivato in Q3.',
+   h0:'Griglia di partenza', n0:'Posizioni al via della gara, con le penalità in griglia decise dalla FIA dopo la qualifica.', qpos:'Qualifica', pen:'Penalità', places:'posizioni',
    h2:'Chi è passato e chi no', n2:'Il tempo da battere è quello del più lento fra chi è passato. Negativo = sotto il taglio di tanto così; positivo = quanto è mancato.',
    h3:'Giro ideale', n3:'Somma dei migliori settori di ciascun pilota: quanto avrebbe potuto fare mettendoli insieme nello stesso giro. Tempo lasciato = miglior giro − giro ideale.',
    h4:'Settori: dove va forte ciascuno', n4:'Miglior tempo in ogni settore e posizione fra tutti (1 = il più veloce in quel tratto).',
@@ -26,7 +27,8 @@ const T = {
    h3:'Teams: gap to the fastest', n3:'Team best lap and gap in % to the fastest. S1-S2-S3: team rank in each best sector (1 = fastest there).',
    h4:'Tyre degradation', n4:'Seconds lost on average for every lap of tyre life, on runs of at least 8 laps. Not corrected for the fuel burnt (worth a few hundredths per lap).',
    h5:'Top speed', n5:'Highest speed at the straight-line speed trap, km/h. Slipstream counts too.'},
-  quali:{h1:'Grid', n1:'Official order. Best time in each part; gap to pole for the Q3 drivers.',
+  quali:{h1:'Qualifying', n1:'Official qualifying order, before grid penalties. Best time in each part; gap to the fastest for the Q3 drivers.',
+   h0:'Starting grid', n0:'Race start positions, with the grid penalties applied by the FIA after qualifying.', qpos:'Qualifying', pen:'Penalty', places:'places',
    h2:'Who made the cut', n2:'The time to beat is the slowest among those who went through. Negative = how far under the cut; positive = how much was missing.',
    h3:'Ideal lap', n3:'Sum of each driver’s best sectors: what was possible putting them in one lap. Time left = best lap − ideal lap.',
    h4:'Sectors: where each driver is fast', n4:'Best time in each sector and rank among all (1 = fastest there).',
@@ -82,9 +84,11 @@ function render(el, doc, lang, opt){
     const v = doc.velocita || [], vmax = Math.max(...v.map(x=>x.st), 1), vmin = Math.min(...v.map(x=>x.st), vmax) - 5;
     if(v.length) h += sec(K.h5, K.n5, table([[L.driver,'l'],['km/h'],['','l']], v.map(x=>`<tr>${who(x.n, wide)}<td class="b">${x.st}</td>${bar(x.st - vmin, vmax - vmin)}</tr>`)));
   } else if(doc.kind === 'quali'){
-    const g = doc.griglia || [];
+    const g = doc.griglia || [], pa = doc.partenza || [];
+    if(pa.length) h += sec(K.h0, K.n0 + (doc.partenzaNota ? ' ' + esc(doc.partenzaNota) : ''), table([[L.pos],[L.driver,'l'],[K.qpos],[K.pen,'l']],
+      pa.map(x=>`<tr><td class="b">${x.pos}</td>${who(x.n, wide)}<td class="${x.qpos!==x.pos?'dim':''}">${esc(x.qpos)}</td><td class="l ${x.pen?'dn':''}">${x.pen?(x.pen>=22?esc(x.motivo||''):'+'+x.pen+' '+K.places+(x.motivo?' · '+esc(x.motivo):'')):''}</td></tr>`)));
     h += sec(K.h1, K.n1, table([[L.pos],[L.driver,'l'],['Q1'],['Q2'],['Q3'],[L.gap]],
-      g.map(x=>`<tr><td>${x.pos}</td>${who(x.n, wide)}<td>${fmt(x.q1)}</td><td>${fmt(x.q2)}</td><td class="${x.pos===1?'b':''}">${fmt(x.q3)}</td><td>${x.pos===1?K.pole:plus(x.gap)}</td></tr>`)));
+      g.map(x=>`<tr><td>${x.pos}</td>${who(x.n, wide)}<td>${fmt(x.q1)}</td><td>${fmt(x.q2)}</td><td class="${x.pos===1?'b':''}">${fmt(x.q3)}</td><td>${x.pos===1?(pa.length?'':K.pole):plus(x.gap)}</td></tr>`)));
     for(const c of doc.tagli || []){
       h += sec(`${K.h2} · ${esc(c.part)}`, `${K.cut}: <b style="color:var(--text)">${fmt(c.cut)}</b>. ${K.n2}`, table([[L.pos],[L.driver,'l'],[c.part],[K.toCut],['','l']],
         c.rows.map((x,i)=>`<tr class="${x.out && (i===0 || !c.rows[i-1].out) ? 'cut' : ''}"><td>${x.pos}</td>${who(x.n, wide)}<td>${fmt(x.t)}</td><td class="b">${x.toCut==null?'—':plus(x.toCut)||'0.000'}</td><td class="l ${x.out?'dn':'up'}">${x.out?K.out:K.passes}</td></tr>`)));
