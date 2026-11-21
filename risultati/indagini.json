@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-21T05:04:12Z",
+ "aggiornato": "2026-11-21T06:49:01Z",
  "items": [
   {
    "n": "3",
@@ -99,7 +99,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: PIT LANE INCIDENT INVOLVING CAR 41 (LIN) WILL BE INVESTIGATED AFTER THE SESSION - UNSAFE RELEASE (20:29:59)",
    "reason": "UNSAFE RELEASE",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Qualifying",
+    "msg": "FIA STEWARDS: FINE FOR CAR 41 (LIN) - UNSAFE RELEASE",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_41_unsafe_release.pdf"
+   }
   }
  ]
 }
