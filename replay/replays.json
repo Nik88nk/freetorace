@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_Las_Vegas_Qualifying",
+  "start": "2026-11-20T20:00:00",
+  "year": "2026",
+  "meeting": "Las Vegas Grand Prix",
+  "session": "Qualifying",
+  "it": "Las Vegas Grand Prix 2026 · Qualifica",
+  "en": "2026 Las Vegas Grand Prix · Qualifying",
+  "laps": 26
+ },
+ {
   "name": "2026_Las_Vegas_Practice_3",
   "start": "2026-11-20T16:30:00",
   "year": "2026",
