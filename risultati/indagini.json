@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-21T01:32:09Z",
+ "aggiornato": "2026-11-21T04:25:30Z",
  "items": [
   {
    "n": "3",
@@ -31,7 +31,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
    "reason": "DRIVING ERRATICALLY",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 23 (ALB) - DRIVING ERRATICALLY",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_23_-_erratic_driving_in_turn_17.pdf"
+   }
   },
   {
    "n": "6",
@@ -41,7 +47,15 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
    "reason": "DRIVING ERRATICALLY",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "NO FURTHER ACTION FOR CAR 6 (HAD)",
+    "type": "nessuna azione",
+    "others": [
+     "ALB"
+    ]
+   }
   },
   {
    "n": "3",
@@ -51,7 +65,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "FIA STEWARDS: WARNING FOR CAR 3 (VER)",
+    "type": "avvertimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_3_-_erratic_driving_in_turn_14.pdf"
+   }
   },
   {
    "n": "63",
@@ -61,7 +81,15 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "NO FURTHER ACTION FOR CAR 63 (RUS)",
+    "type": "nessuna azione",
+    "others": [
+     "VER"
+    ]
+   }
   }
  ]
 }
