@@ -10,7 +10,7 @@ const T = {
    h4:'Degrado delle gomme', n4:'Secondi persi in media a ogni giro di vita della gomma, sulle serie di almeno 8 giri. Non corretto per la benzina che si consuma (che fa guadagnare qualche centesimo a giro).',
    h5:'Velocità massima', n5:'Velocità più alta al rilevamento sul rettilineo (speed trap), in km/h. Dipende anche dalla scia.'},
   quali:{h1:'Qualifica', n1:'Ordine ufficiale della qualifica, prima delle penalità in griglia. Tempo migliore in ciascuna parte; distacco dal primo per chi è arrivato in Q3.',
-   h0:'Griglia di partenza', n0:'Posizioni al via della gara, con le penalità in griglia decise dalla FIA dopo la qualifica.', qpos:'Qualifica', pen:'Penalità', places:'posizioni',
+   h0:'Griglia di partenza', n0:'Posizioni al via della gara, con le penalità in griglia decise dalla FIA dopo la qualifica.', qpos:'Qualifica', pen:'Penalità', places:'posizioni', pitlane:'parte dalla corsia box',
    h2:'Chi è passato e chi no', n2:'Il tempo da battere è quello del più lento fra chi è passato. Negativo = sotto il taglio di tanto così; positivo = quanto è mancato.',
    h3:'Giro ideale', n3:'Somma dei migliori settori di ciascun pilota: quanto avrebbe potuto fare mettendoli insieme nello stesso giro. Tempo lasciato = miglior giro − giro ideale.',
    h4:'Settori: dove va forte ciascuno', n4:'Miglior tempo in ogni settore e posizione fra tutti (1 = il più veloce in quel tratto).',
@@ -28,7 +28,7 @@ const T = {
    h4:'Tyre degradation', n4:'Seconds lost on average for every lap of tyre life, on runs of at least 8 laps. Not corrected for the fuel burnt (worth a few hundredths per lap).',
    h5:'Top speed', n5:'Highest speed at the straight-line speed trap, km/h. Slipstream counts too.'},
   quali:{h1:'Qualifying', n1:'Official qualifying order, before grid penalties. Best time in each part; gap to the fastest for the Q3 drivers.',
-   h0:'Starting grid', n0:'Race start positions, with the grid penalties applied by the FIA after qualifying.', qpos:'Qualifying', pen:'Penalty', places:'places',
+   h0:'Starting grid', n0:'Race start positions, with the grid penalties applied by the FIA after qualifying.', qpos:'Qualifying', pen:'Penalty', places:'places', pitlane:'pit lane start',
    h2:'Who made the cut', n2:'The time to beat is the slowest among those who went through. Negative = how far under the cut; positive = how much was missing.',
    h3:'Ideal lap', n3:'Sum of each driver’s best sectors: what was possible putting them in one lap. Time left = best lap − ideal lap.',
    h4:'Sectors: where each driver is fast', n4:'Best time in each sector and rank among all (1 = fastest there).',
@@ -50,7 +50,7 @@ const CSS = `.ris{--rbar:#5b8def}.ris h3{font-size:16px;margin:22px 0 2px}.ris .
 .ris .bar{display:inline-block;height:9px;border-radius:0 4px 4px 0;background:var(--rbar);vertical-align:middle}.ris td.bc{text-align:left;width:34%;min-width:70px}
 .ris .ty{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:900;margin-right:3px;vertical-align:-3px}
 .ris .st{display:flex;gap:2px;min-width:160px}.ris .st span{height:18px;border-radius:3px;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.ris .up{color:#22b35a}.ris .dn{color:#e5484d}.ris .cut td{border-top:2px solid var(--text)}
+.ris td.wr{white-space:normal;min-width:120px}.ris .up{color:#22b35a}.ris .dn{color:#e5484d}.ris .cut td{border-top:2px solid var(--text)}
 .ris .rh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 6px}.ris .rh b{font-size:18px}.ris .rh a{margin-left:auto;font-weight:700;color:var(--text)}
 @media (max-width:520px){.ris th,.ris td{padding:6px 5px}.ris td.bc{min-width:34px;width:16%}.ris table{font-size:13.5px}}
 .ris .tile{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--panel);margin:4px 0}`;
@@ -85,8 +85,15 @@ function render(el, doc, lang, opt){
     if(v.length) h += sec(K.h5, K.n5, table([[L.driver,'l'],['km/h'],['','l']], v.map(x=>`<tr>${who(x.n, wide)}<td class="b">${x.st}</td>${bar(x.st - vmin, vmax - vmin)}</tr>`)));
   } else if(doc.kind === 'quali'){
     const g = doc.griglia || [], pa = doc.partenza || [];
-    if(pa.length) h += sec(K.h0, K.n0 + (doc.partenzaNota ? ' ' + esc(doc.partenzaNota) : ''), table([[L.pos],[L.driver,'l'],[K.qpos],[K.pen,'l']],
-      pa.map(x=>`<tr><td class="b">${x.pos}</td>${who(x.n, wide)}<td class="${x.qpos!==x.pos?'dim':''}">${esc(x.qpos)}</td><td class="l ${x.pen?'dn':''}">${x.pen?(x.pen>=22?esc(x.motivo||''):'+'+x.pen+' '+K.places+(x.motivo?' · '+esc(x.motivo):'')):''}</td></tr>`)));
+    // testi in inglese solo dai campi inglesi (motivoEn, partenzaNotaEn): senza, niente testo italiano nella pagina inglese
+    const en = lang === 'en', nota = en ? doc.partenzaNotaEn : doc.partenzaNota;
+    const penCell = x => { const m = en ? x.motivoEn : x.motivo, p = [];
+      if(x.pen) p.push(x.pen >= 22 ? '' : '+' + x.pen + ' ' + K.places);
+      if(x.pen && m) p.push(esc(m));
+      if(x.pitlane) p.push(K.pitlane);
+      return p.filter(Boolean).join(' · '); };
+    if(pa.length) h += sec(K.h0, K.n0 + (nota ? ' ' + esc(nota) : ''), table([[L.pos],[L.driver,'l'],[K.qpos],[K.pen,'l']],
+      pa.map(x=>`<tr><td class="b">${x.pos}</td>${who(x.n, wide)}<td class="${x.qpos!==x.pos?'dim':''}">${esc(x.qpos)}</td><td class="l wr ${x.pen||x.pitlane?'dn':''}">${penCell(x)}</td></tr>`)));
     h += sec(K.h1, K.n1, table([[L.pos],[L.driver,'l'],['Q1'],['Q2'],['Q3'],[L.gap]],
       g.map(x=>`<tr><td>${x.pos}</td>${who(x.n, wide)}<td>${fmt(x.q1)}</td><td>${fmt(x.q2)}</td><td class="${x.pos===1?'b':''}">${fmt(x.q3)}</td><td>${x.pos===1?(pa.length?'':K.pole):plus(x.gap)}</td></tr>`)));
     for(const c of doc.tagli || []){

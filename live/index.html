@@ -490,7 +490,7 @@ const DEMO = new URLSearchParams(location.search).has('demo') || !!REPLAY;   // 
 // Il sito dice ai browser di tenere la pagina fino a 10 minuti e le icone sulla schermata Home anche di piu':
 // all'apertura, e tornando all'app dopo un po', si chiede al sito la versione attuale (senza memoria) e,
 // se e' cambiata, si ricarica con ?v=<versione>, un indirizzo nuovo che il telefono non ha in memoria.
-const BUILD = '20261116-234822';
+const BUILD = '20261122-121315';
 async function checkBuild(){
   try{
     const r = await fetch(location.pathname + '?check=' + Date.now(), {cache:'no-store'});
@@ -1839,6 +1839,14 @@ function estFrac(idx, age, pc){
   const pr=cal.profile[nx], x=tau*(pr.length-1), j=Math.min(pr.length-2, Math.floor(x)), sv=pr[j]+(pr[j+1]-pr[j])*(x-j);
   return (a + (((z-a)%1)+1)%1*sv) % 1;
 }
+// velocita' media del minisettore in cui la stima mette l'auto (frazioni di giro al secondo); 0 se il passaggio dopo
+// tarda oltre una volta e mezza il tempo previsto (auto forse ferma: la stima si ferma come prima)
+function estVel(idx, age, pc){
+  const N=cal.refDur.length; let i=idx, tt=Math.max(0,age);
+  for(let k=0;k<2;k++){ const d=Math.max(0.3, cal.refDur[(i+1)%N]*pc); if(tt<=d) break; tt-=d; i=(i+1)%N; }
+  const nx=(i+1)%N, d=Math.max(0.3, cal.refDur[nx]*pc);
+  return tt > 1.5*d ? 0 : (((cal.bounds[nx]-cal.bounds[i])%1)+1)%1/d;
+}
 // Vista 3D come nel programma: proiezione obliqua inclinata di TILT gradi, tutto passa da P.
 let view3d = store.get('ftr.v3d','0')==='1';
 const TILT = 52*Math.PI/180;
@@ -2081,6 +2089,7 @@ function drawMap(){
     const nv = leftAt(G, f); return {f, xy:G.at(f), lab: s.side > 0 ? nv : [-nv[0], -nv[1]]}; };   // nomi a pettine, a lati alterni
   if(gsl && (gph.pre || now < gph.s0 + 10)){ const f=((gsl.pole+4)/gsl.len%1+1)%1, p=G.at(f), nv=leftAt(G, f), h=Math.max(9*0.85, Math.min(26*0.85, 130*G.k))/2+1;   // linea di partenza, davanti alla pole
     g.strokeStyle='#ffffff'; g.lineWidth=2; g.beginPath(); g.moveTo(p[0]-nv[0]*h, p[1]-nv[1]*h); g.lineTo(p[0]+nv[0]*h, p[1]+nv[1]*h); g.stroke(); }
+  const dots = [], labs = [];
   for(const d of ds){
     if(d.out) continue;
     let xy, lab = null;
@@ -2133,7 +2142,11 @@ function drawMap(){
         else { const vt = Math.max(0, ((estFrac(L[0], now-L[1]+0.2, pace(d.n))-ft+0.5)%1+1)%1-0.5)/0.2;   // col segno: niente «quasi un giro» per uno scarto minuscolo
           // inseguimento morbido (08.11, yo-yo del Brasile, simulazione di f2r-dati): l'errore si recupera in 4 s e l'auto
           // non scende sotto il 60% della velocita' stimata (prima 1,2 s e 25%: si fermava quasi e poi scattava)
-          q.f = (q.f + Math.max(0.6*vt, vt + delta/4)*dt) % 1; }
+          // 22.11 (audit del 15.11 F4, yo-yo nel primo giro): il 60% si prende anche dalla velocita' media del minisettore,
+          // perche' il profilo del minisettore finisce piatto (Las Vegas, minisettore 7: l'ultimo decimo fermo) e la stima
+          // si fermava in attesa del passaggio dopo: l'auto si fermava e poi ripartiva
+          const vf = Math.max(vt, estVel(L[0], now-L[1], pace(d.n)));
+          q.f = (q.f + Math.max(0.6*vf, vt + delta/4)*dt) % 1; }
         xy = G.at(q.f);
       }
     }
@@ -2141,13 +2154,38 @@ function drawMap(){
     const on = selNum===d.n, faded = selNum && !on;
     g.globalAlpha = faded ? .3 : 1;
     g.fillStyle=d.color; g.beginPath(); g.arc(xy[0],xy[1],on?8:lab?4.5:6,0,7); g.fill(); g.strokeStyle='#05070a'; g.lineWidth=1.5; g.stroke();
-    if(!faded && lab){ g.font=`bold ${on?12:9}px Titillium Web`; const w=g.measureText(d.tla).width+4;   // a pettine: perpendicolare alla pista, fuori dalla propria fila
-      let a = Math.atan2(lab[1], lab[0]); const fl = Math.cos(a) < 0; if(fl) a += Math.PI;
-      g.save(); g.translate(xy[0]+lab[0]*7, xy[1]+lab[1]*7); g.rotate(a); const x0 = fl ? -w : 0;
-      g.fillStyle='rgba(11,13,18,.75)'; g.fillRect(x0, -6, w, 12); g.fillStyle='#fff'; g.fillText(d.tla, x0+2, 3.5); g.restore(); }
-    else if(!faded){ g.font=`bold ${on?13:10}px Titillium Web`; g.fillStyle='rgba(11,13,18,.75)'; const w=g.measureText(d.tla).width; g.fillRect(xy[0]+8,xy[1]-17,w+6,14); g.fillStyle='#fff'; g.fillText(d.tla, xy[0]+11, xy[1]-6); }
+    dots.push(xy); if(!faded) labs.push({d, xy, lab, on});
   }
   g.globalAlpha=1;
+  mapLabels(g, labs, dots, r.width, r.height);
+}
+// Sigle sulla mappa (22.11, audit del 15.11 R2: sigle una sopra l'altra in griglia, alla prima curva e nei gruppi).
+// Si mettono dopo tutti i pallini, in ordine di importanza (l'auto scelta, poi la classifica), ciascuna nel primo di sei
+// posti attorno al pallino che non copre una sigla gia' messa (preferito quello che non copre altri pallini); se non ce
+// n'e' uno libero la sigla non si scrive, il pallino resta. A pettine (griglia, primi secondi dopo il via) un posto solo.
+function mapLabels(g, labs, dots, W, H){
+  const put = [], hit = (b, l) => b[0] < l[2]-1 && l[0] < b[2]-1 && b[1] < l[3]-1 && l[1] < b[3]-1;
+  const dotHits = (b, self) => dots.reduce((s, p) => s + (p!==self && p[0]+5 > b[0] && p[0]-5 < b[2] && p[1]+5 > b[1] && p[1]-5 < b[3] ? 1 : 0), 0);
+  labs.sort((a, b) => (b.on - a.on) || ((a.d.pos||99) - (b.d.pos||99)));
+  for(const it of labs){ const {d, xy, lab, on} = it;
+    if(lab){ g.font=`bold ${on?12:9}px Titillium Web`; const w=g.measureText(d.tla).width+4;   // a pettine: perpendicolare alla pista, fuori dalla propria fila
+      let a = Math.atan2(lab[1], lab[0]); const fl = Math.cos(a) < 0; if(fl) a += Math.PI;
+      const cx = xy[0]+lab[0]*7, cy = xy[1]+lab[1]*7, x0 = fl ? -w : 0, ca = Math.cos(a), sa = Math.sin(a);
+      const pts = [[x0,-6],[x0+w,-6],[x0,6],[x0+w,6]].map(([u,v]) => [cx+u*ca-v*sa, cy+u*sa+v*ca]);
+      const b = [Math.min(...pts.map(p=>p[0])), Math.min(...pts.map(p=>p[1])), Math.max(...pts.map(p=>p[0])), Math.max(...pts.map(p=>p[1]))];
+      if(!on && put.some(l => hit(b, l))) continue; put.push(b);
+      g.save(); g.translate(cx, cy); g.rotate(a);
+      g.fillStyle='rgba(11,13,18,.75)'; g.fillRect(x0, -6, w, 12); g.fillStyle='#fff'; g.fillText(d.tla, x0+2, 3.5); g.restore(); continue; }
+    g.font=`bold ${on?13:10}px Titillium Web`; const w=g.measureText(d.tla).width, bw=w+6, x=xy[0], y=xy[1];
+    const cand = [[x+8, y-17], [x+8, y+3], [x-8-bw, y-17], [x-8-bw, y+3], [x-bw/2, y-24], [x-bw/2, y+10]];   // il primo e' il posto di sempre
+    let best = null, bs = 1e9;
+    for(let k=0;k<cand.length;k++){ const [x0, y0] = cand[k], b = [x0, y0, x0+bw, y0+14];
+      if(put.some(l => hit(b, l))) continue;
+      const s = dotHits(b, xy)*10 + (x0 < 0 || y0 < 0 || x0+bw > W || y0+14 > H ? 5 : 0) + k*0.1;
+      if(s < bs){ bs = s; best = b; } if(s < 1) break; }
+    if(!best){ if(!on) continue; best = [cand[0][0], cand[0][1], cand[0][0]+bw, cand[0][1]+14]; }
+    put.push(best);
+    g.fillStyle='rgba(11,13,18,.75)'; g.fillRect(best[0], best[1], bw, 14); g.fillStyle='#fff'; g.fillText(d.tla, best[0]+3, best[1]+11); }
 }
 requestAnimationFrame(drawMap);
 $('#v3d').classList.toggle('on', view3d);
@@ -2196,9 +2234,15 @@ async function startDemo(){
     // si apre 20 s prima dei semafori spenti (come il programma per PC); registrazione cominciata a sessione
     // gia' partita o senza partenza: dall'inizio
     rp.start = (rp.marks.starts.length && !rp.marks.late ? rp.marks.starts[0] : rp.t0) - 20000;
+    // libere e qualifiche (22.11, audit del 15.11 R4): all'apertura della corsia box le auto sono tutte ai box e per minuti
+    // non c'e' un tempo; si apre 10 s prima del primo giro cronometrato. L'orologio del replay resta quello della sessione.
+    let open = rp.start;
+    const typ = ((ev.find(e => e[1]==='SessionInfo' && e[2] && e[2].Type) || [])[2] || {}).Type;
+    if(typ && typ!=='Race'){ const lap = ev.find(([w,k,d]) => w > rp.start && k==='TimingData' && Object.values((d||{}).Lines||{}).some(l => l && l.LastLapTime && l.LastLapTime.Value));
+      if(lap) open = Math.max(rp.start, lap[0] - 10000); }
     const pc = v => ((v - rp.t0)/(rp.t1 - rp.t0)*100).toFixed(2)+'%';
     $('#rpMarks').innerHTML = rp.marks.phases.map(x=>`<i class="${x.kind}" style="left:${pc(x.from)};width:max(3px,calc(${pc(x.to)} - ${pc(x.from)}))"></i>`).join('') + rp.marks.starts.map(x=>`<b style="left:${pc(x)}"></b>`).join('');
-    seek(rp.start);
+    seek(open);
     $('#rpLoad').style.display='none'; $('#rpBar').style.display='flex';
   }catch(e){ $('#rpMsg').textContent = t('rpErr'); }
 }
