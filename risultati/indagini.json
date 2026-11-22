@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-22T08:20:02Z",
+ "aggiornato": "2026-11-22T10:35:35Z",
  "items": [
   {
    "n": "3",
@@ -111,40 +111,6 @@
    "n": "44",
    "tla": "HAM",
    "session": "Race",
-   "utc": null,
-   "when": "now",
-   "msg": "",
-   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
-   "decision": {
-    "utc": null,
-    "session": "Race",
-    "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 44 (HAM) - LEAVING THE TRACK AND GAINING AN ADVANTAGE",
-    "type": "penalita",
-    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_44_-_leaving_the_track_and_gaining_an_advantage.pdf"
-   }
-  },
-  {
-   "n": "1",
-   "tla": "NOR",
-   "session": "Race",
-   "utc": null,
-   "when": "now",
-   "msg": "",
-   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
-   "decision": {
-    "utc": null,
-    "session": "Race",
-    "msg": "NO FURTHER ACTION FOR CAR 1 (NOR)",
-    "type": "nessuna azione",
-    "others": [
-     "HAM"
-    ]
-   }
-  },
-  {
-   "n": "44",
-   "tla": "HAM",
-   "session": "Race",
    "utc": "2026-11-22T04:26:44",
    "when": "now",
    "msg": "FIA STEWARDS: TURN 8 INCIDENT INVOLVING CARS 44 (HAM) AND 1 (NOR) UNDER INVESTIGATION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (20:22:42)",
@@ -153,7 +119,8 @@
     "utc": "2026-11-22T04:31:29",
     "session": "Race",
     "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 44 (HAM) - LEAVING THE TRACK AND GAINING AN ADVANTAGE (20:22:42)",
-    "type": "penalita"
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_44_-_leaving_the_track_and_gaining_an_advantage.pdf"
    }
   },
   {
@@ -254,7 +221,8 @@
     "utc": "2026-11-22T05:18:11",
     "session": "Race",
     "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 16 (LEC) - CAUSING A COLLISON (21:11:03)",
-    "type": "penalita"
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_16_-_causing_a_collision_with_car_44.pdf"
    }
   },
   {
