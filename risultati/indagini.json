@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-22T07:18:32Z",
+ "aggiornato": "2026-11-22T08:20:02Z",
  "items": [
   {
    "n": "3",
@@ -216,7 +216,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: INCIDENT INVOLVING CARS 6 (HAD) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE RACE (20:35:11)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "FIA STEWARDS: 10 SECONDS TIME PENALTY. (10 SECONDS ADDED TO ELAPSED RACE TIMEY. FOR CAR 6 (HAD)",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_6_-_driving_unnecessarily_slowly.pdf"
+   }
   },
   {
    "n": "63",
@@ -226,7 +232,15 @@
    "when": "after",
    "msg": "FIA STEWARDS: INCIDENT INVOLVING CARS 6 (HAD) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE RACE (20:35:11)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Race",
+    "msg": "NO FURTHER ACTION FOR CAR 63 (RUS)",
+    "type": "nessuna azione",
+    "others": [
+     "HAD"
+    ]
+   }
   },
   {
    "n": "16",
