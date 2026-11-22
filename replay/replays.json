@@ -1,5 +1,15 @@
 [
  {
+  "name": "2026_Las_Vegas_Race",
+  "start": "2026-11-21T20:00:00",
+  "year": "2026",
+  "meeting": "Las Vegas Grand Prix",
+  "session": "Race",
+  "it": "Las Vegas Grand Prix 2026 · Gara",
+  "en": "2026 Las Vegas Grand Prix · Race",
+  "laps": 50
+ },
+ {
   "name": "2026_Las_Vegas_Qualifying",
   "start": "2026-11-20T20:00:00",
   "year": "2026",
