@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-22T05:33:27Z",
+ "aggiornato": "2026-11-22T05:35:07Z",
  "items": [
   {
    "n": "3",
@@ -31,7 +31,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
    "reason": "DRIVING ERRATICALLY",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "FIA STEWARDS: REPRIMAND FOR CAR 23 (ALB) - DRIVING ERRATICALLY",
+    "type": "ammonimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_23_-_erratic_driving_in_turn_17.pdf"
+   }
   },
   {
    "n": "6",
@@ -41,7 +47,15 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 17 INCIDENT INVOLVING CARS 23 (ALB) AND 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - DRIVING ERRATICALLY (17:03:26)",
    "reason": "DRIVING ERRATICALLY",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "NO FURTHER ACTION FOR CAR 6 (HAD)",
+    "type": "nessuna azione",
+    "others": [
+     "ALB"
+    ]
+   }
   },
   {
    "n": "3",
@@ -51,7 +65,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "FIA STEWARDS: WARNING FOR CAR 3 (VER)",
+    "type": "avvertimento",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_3_-_erratic_driving_in_turn_14.pdf"
+   }
   },
   {
    "n": "63",
@@ -61,7 +81,15 @@
    "when": "after",
    "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 3 (VER) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE SESSION (17:23:52)",
    "reason": null,
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 3",
+    "msg": "NO FURTHER ACTION FOR CAR 63 (RUS)",
+    "type": "nessuna azione",
+    "others": [
+     "VER"
+    ]
+   }
   },
   {
    "n": "41",
@@ -71,7 +99,119 @@
    "when": "after",
    "msg": "FIA STEWARDS: PIT LANE INCIDENT INVOLVING CAR 41 (LIN) WILL BE INVESTIGATED AFTER THE SESSION - UNSAFE RELEASE (20:29:59)",
    "reason": "UNSAFE RELEASE",
+   "decision": {
+    "utc": null,
+    "session": "Qualifying",
+    "msg": "FIA STEWARDS: FINE FOR CAR 41 (LIN) - UNSAFE RELEASE",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_41_unsafe_release.pdf"
+   }
+  },
+  {
+   "n": "44",
+   "tla": "HAM",
+   "session": "Race",
+   "utc": "2026-11-22T04:26:44",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 8 INCIDENT INVOLVING CARS 44 (HAM) AND 1 (NOR) UNDER INVESTIGATION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (20:22:42)",
+   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
+   "decision": {
+    "utc": "2026-11-22T04:31:29",
+    "session": "Race",
+    "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 44 (HAM) - LEAVING THE TRACK AND GAINING AN ADVANTAGE (20:22:42)",
+    "type": "penalita"
+   }
+  },
+  {
+   "n": "1",
+   "tla": "NOR",
+   "session": "Race",
+   "utc": "2026-11-22T04:26:44",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 8 INCIDENT INVOLVING CARS 44 (HAM) AND 1 (NOR) UNDER INVESTIGATION - LEAVING THE TRACK AND GAINING AN ADVANTAGE (20:22:42)",
+   "reason": "LEAVING THE TRACK AND GAINING AN ADVANTAGE",
+   "decision": {
+    "utc": "2026-11-22T04:31:29",
+    "session": "Race",
+    "msg": "NO FURTHER ACTION FOR CAR 1 (NOR)",
+    "type": "nessuna azione",
+    "others": [
+     "HAM"
+    ]
+   }
+  },
+  {
+   "n": "11",
+   "tla": "PER",
+   "session": "Race",
+   "utc": "2026-11-22T04:44:06",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 11 (PER) AND 51 (CAM) WILL BE INVESTIGATED AFTER THE RACE - CAUSING A COLLISION (20:33:38)",
+   "reason": "CAUSING A COLLISION",
    "decision": null
+  },
+  {
+   "n": "51",
+   "tla": "CAM",
+   "session": "Race",
+   "utc": "2026-11-22T04:44:06",
+   "when": "after",
+   "msg": "FIA STEWARDS: TURN 14 INCIDENT INVOLVING CARS 11 (PER) AND 51 (CAM) WILL BE INVESTIGATED AFTER THE RACE - CAUSING A COLLISION (20:33:38)",
+   "reason": "CAUSING A COLLISION",
+   "decision": null
+  },
+  {
+   "n": "6",
+   "tla": "HAD",
+   "session": "Race",
+   "utc": "2026-11-22T05:01:31",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CARS 6 (HAD) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE RACE (20:35:11)",
+   "reason": null,
+   "decision": null
+  },
+  {
+   "n": "63",
+   "tla": "RUS",
+   "session": "Race",
+   "utc": "2026-11-22T05:01:31",
+   "when": "after",
+   "msg": "FIA STEWARDS: INCIDENT INVOLVING CARS 6 (HAD) AND 63 (RUS) WILL BE INVESTIGATED AFTER THE RACE (20:35:11)",
+   "reason": null,
+   "decision": null
+  },
+  {
+   "n": "16",
+   "tla": "LEC",
+   "session": "Race",
+   "utc": "2026-11-22T05:16:12",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 7 INCIDENT INVOLVING CARS 16 (LEC) AND 44 (HAM) UNDER INVESTIGATION - CAUSING A COLLISION (21:11:03)",
+   "reason": null,
+   "decision": {
+    "utc": "2026-11-22T05:18:11",
+    "session": "Race",
+    "msg": "FIA STEWARDS: 10 SECOND TIME PENALTY FOR CAR 16 (LEC) - CAUSING A COLLISON (21:11:03)",
+    "type": "penalita"
+   }
+  },
+  {
+   "n": "44",
+   "tla": "HAM",
+   "session": "Race",
+   "utc": "2026-11-22T05:16:12",
+   "when": "now",
+   "msg": "FIA STEWARDS: TURN 7 INCIDENT INVOLVING CARS 16 (LEC) AND 44 (HAM) UNDER INVESTIGATION - CAUSING A COLLISION (21:11:03)",
+   "reason": null,
+   "decision": {
+    "utc": "2026-11-22T05:18:11",
+    "session": "Race",
+    "msg": "NO FURTHER ACTION FOR CAR 44 (HAM)",
+    "type": "nessuna azione",
+    "others": [
+     "LEC"
+    ]
+   }
   }
  ]
 }

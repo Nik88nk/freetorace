@@ -1,7 +1,7 @@
 {
  "meeting": "Las Vegas Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-21T05:04:12Z",
+ "aggiornato": "2026-11-22T05:35:07Z",
  "sessioni": [
   {
    "name": "2026_Las_Vegas_Practice_1",
@@ -18,11 +18,231 @@
   {
    "name": "2026_Las_Vegas_Qualifying",
    "session": "Qualifying"
+  },
+  {
+   "name": "2026_Las_Vegas_Race",
+   "session": "Race"
   }
  ],
  "piloti": {
   "1": {
    "tla": "NOR",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 1,
+    "SOFT": 7,
+    "MEDIUM": 2
+   },
+   "sessioni": {
+    "Practice 2": {
+     "WET": 1,
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "SOFT": 2,
+     "MEDIUM": 1
+    },
+    "Qualifying": {
+     "SOFT": 4
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
+    }
+   }
+  },
+  "3": {
+   "tla": "VER",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 1,
+    "SOFT": 8,
+    "MEDIUM": 1
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "SOFT": 3
+    },
+    "Qualifying": {
+     "SOFT": 5
+    },
+    "Race": {
+     "MEDIUM": 1
+    }
+   }
+  },
+  "5": {
+   "tla": "BOR",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 1,
+    "MEDIUM": 2,
+    "SOFT": 6
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "MEDIUM": 1,
+     "SOFT": 3
+    },
+    "Qualifying": {
+     "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
+    }
+   }
+  },
+  "6": {
+   "tla": "HAD",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 1,
+    "SOFT": 7,
+    "MEDIUM": 1
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "SOFT": 2
+    },
+    "Qualifying": {
+     "SOFT": 5
+    },
+    "Race": {
+     "MEDIUM": 1
+    }
+   }
+  },
+  "10": {
+   "tla": "GAS",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 2,
+    "SOFT": 8,
+    "MEDIUM": 1
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "INTERMEDIATE": 2
+    },
+    "Practice 3": {
+     "SOFT": 3
+    },
+    "Qualifying": {
+     "SOFT": 5
+    },
+    "Race": {
+     "MEDIUM": 1
+    }
+   }
+  },
+  "11": {
+   "tla": "PER",
+   "nuovi": {
+    "WET": 1,
+    "INTERMEDIATE": 1,
+    "MEDIUM": 1,
+    "SOFT": 5
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "MEDIUM": 1,
+     "SOFT": 2
+    },
+    "Qualifying": {
+     "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1
+    }
+   }
+  },
+  "12": {
+   "tla": "ANT",
+   "nuovi": {
+    "WET": 2,
+    "INTERMEDIATE": 1,
+    "MEDIUM": 2,
+    "SOFT": 6
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "WET": 1,
+     "INTERMEDIATE": 1
+    },
+    "Practice 3": {
+     "MEDIUM": 1,
+     "SOFT": 2
+    },
+    "Qualifying": {
+     "SOFT": 4
+    },
+    "Race": {
+     "MEDIUM": 1
+    }
+   }
+  },
+  "16": {
+   "tla": "LEC",
+   "nuovi": {
+    "WET": 2,
+    "INTERMEDIATE": 2,
+    "SOFT": 5,
+    "MEDIUM": 2
+   },
+   "sessioni": {
+    "Practice 1": {
+     "WET": 1
+    },
+    "Practice 2": {
+     "WET": 1,
+     "INTERMEDIATE": 2
+    },
+    "Practice 3": {
+     "SOFT": 2,
+     "MEDIUM": 1
+    },
+    "Qualifying": {
+     "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
+    }
+   }
+  },
+  "18": {
+   "tla": "STR",
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
@@ -35,195 +255,14 @@
      "INTERMEDIATE": 1
     },
     "Practice 3": {
-     "SOFT": 2,
+     "SOFT": 3
+    },
+    "Qualifying": {
+     "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1,
      "MEDIUM": 1
-    },
-    "Qualifying": {
-     "SOFT": 4
-    }
-   }
-  },
-  "3": {
-   "tla": "VER",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 1,
-    "SOFT": 8
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "SOFT": 3
-    },
-    "Qualifying": {
-     "SOFT": 5
-    }
-   }
-  },
-  "5": {
-   "tla": "BOR",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 1,
-    "MEDIUM": 1,
-    "SOFT": 5
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "MEDIUM": 1,
-     "SOFT": 3
-    },
-    "Qualifying": {
-     "SOFT": 2
-    }
-   }
-  },
-  "6": {
-   "tla": "HAD",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 1,
-    "SOFT": 7
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "SOFT": 2
-    },
-    "Qualifying": {
-     "SOFT": 5
-    }
-   }
-  },
-  "10": {
-   "tla": "GAS",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 2,
-    "SOFT": 8
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "INTERMEDIATE": 2
-    },
-    "Practice 3": {
-     "SOFT": 3
-    },
-    "Qualifying": {
-     "SOFT": 5
-    }
-   }
-  },
-  "11": {
-   "tla": "PER",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 1,
-    "MEDIUM": 1,
-    "SOFT": 4
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "MEDIUM": 1,
-     "SOFT": 2
-    },
-    "Qualifying": {
-     "SOFT": 2
-    }
-   }
-  },
-  "12": {
-   "tla": "ANT",
-   "nuovi": {
-    "WET": 2,
-    "INTERMEDIATE": 1,
-    "MEDIUM": 1,
-    "SOFT": 6
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "WET": 1,
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "MEDIUM": 1,
-     "SOFT": 2
-    },
-    "Qualifying": {
-     "SOFT": 4
-    }
-   }
-  },
-  "16": {
-   "tla": "LEC",
-   "nuovi": {
-    "WET": 2,
-    "INTERMEDIATE": 2,
-    "SOFT": 4,
-    "MEDIUM": 1
-   },
-   "sessioni": {
-    "Practice 1": {
-     "WET": 1
-    },
-    "Practice 2": {
-     "WET": 1,
-     "INTERMEDIATE": 2
-    },
-    "Practice 3": {
-     "SOFT": 2,
-     "MEDIUM": 1
-    },
-    "Qualifying": {
-     "SOFT": 2
-    }
-   }
-  },
-  "18": {
-   "tla": "STR",
-   "nuovi": {
-    "WET": 1,
-    "INTERMEDIATE": 1,
-    "SOFT": 5
-   },
-   "sessioni": {
-    "Practice 2": {
-     "WET": 1,
-     "INTERMEDIATE": 1
-    },
-    "Practice 3": {
-     "SOFT": 3
-    },
-    "Qualifying": {
-     "SOFT": 2
     }
    }
   },
@@ -232,7 +271,7 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
-    "SOFT": 6
+    "SOFT": 7
    },
    "sessioni": {
     "Practice 1": {
@@ -246,6 +285,9 @@
     },
     "Qualifying": {
      "SOFT": 3
+    },
+    "Race": {
+     "SOFT": 1
     }
    }
   },
@@ -254,8 +296,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
-    "MEDIUM": 1,
-    "SOFT": 5
+    "MEDIUM": 2,
+    "SOFT": 6
    },
    "sessioni": {
     "Practice 1": {
@@ -270,6 +312,10 @@
     },
     "Qualifying": {
      "SOFT": 3
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -278,7 +324,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 3,
-    "SOFT": 7
+    "SOFT": 8,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 2": {
@@ -290,6 +337,10 @@
     },
     "Qualifying": {
      "SOFT": 4
+    },
+    "Race": {
+     "MEDIUM": 1,
+     "SOFT": 1
     }
    }
   },
@@ -320,7 +371,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 2,
-    "SOFT": 7
+    "SOFT": 8,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 2": {
@@ -332,6 +384,10 @@
     },
     "Qualifying": {
      "SOFT": 4
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -340,7 +396,7 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
-    "MEDIUM": 1,
+    "MEDIUM": 2,
     "SOFT": 7
    },
    "sessioni": {
@@ -356,6 +412,9 @@
     },
     "Qualifying": {
      "SOFT": 5
+    },
+    "Race": {
+     "MEDIUM": 1
     }
    }
   },
@@ -375,8 +434,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
-    "MEDIUM": 2,
-    "SOFT": 3
+    "MEDIUM": 3,
+    "SOFT": 5
    },
    "sessioni": {
     "Practice 1": {
@@ -391,6 +450,10 @@
     },
     "Qualifying": {
      "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 2,
+     "MEDIUM": 1
     }
    }
   },
@@ -399,8 +462,8 @@
    "nuovi": {
     "WET": 2,
     "INTERMEDIATE": 1,
-    "MEDIUM": 1,
-    "SOFT": 5
+    "MEDIUM": 2,
+    "SOFT": 6
    },
    "sessioni": {
     "Practice 1": {
@@ -416,6 +479,10 @@
     },
     "Qualifying": {
      "SOFT": 3
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -424,7 +491,7 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 2,
-    "MEDIUM": 1,
+    "MEDIUM": 2,
     "SOFT": 6
    },
    "sessioni": {
@@ -440,6 +507,9 @@
     },
     "Qualifying": {
      "SOFT": 4
+    },
+    "Race": {
+     "MEDIUM": 1
     }
    }
   },
@@ -448,7 +518,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 1,
-    "SOFT": 4
+    "SOFT": 6,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
@@ -462,6 +533,10 @@
     },
     "Qualifying": {
      "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 2,
+     "MEDIUM": 1
     }
    }
   },
@@ -470,8 +545,8 @@
    "nuovi": {
     "WET": 1,
     "INTERMEDIATE": 3,
-    "SOFT": 6,
-    "MEDIUM": 1
+    "SOFT": 7,
+    "MEDIUM": 2
    },
    "sessioni": {
     "Practice 2": {
@@ -484,6 +559,10 @@
     },
     "Qualifying": {
      "SOFT": 4
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -491,7 +570,8 @@
    "tla": "ALO",
    "nuovi": {
     "INTERMEDIATE": 1,
-    "SOFT": 5
+    "SOFT": 6,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 2": {
@@ -502,6 +582,10 @@
     },
     "Qualifying": {
      "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -509,8 +593,8 @@
    "tla": "HAM",
    "nuovi": {
     "INTERMEDIATE": 2,
-    "SOFT": 4,
-    "MEDIUM": 1
+    "SOFT": 5,
+    "MEDIUM": 2
    },
    "sessioni": {
     "Practice 2": {
@@ -522,6 +606,10 @@
     },
     "Qualifying": {
      "SOFT": 2
+    },
+    "Race": {
+     "SOFT": 1,
+     "MEDIUM": 1
     }
    }
   },
@@ -529,8 +617,8 @@
    "tla": "BEA",
    "nuovi": {
     "INTERMEDIATE": 1,
-    "SOFT": 3,
-    "MEDIUM": 1
+    "SOFT": 4,
+    "MEDIUM": 2
    },
    "sessioni": {
     "Practice 2": {
@@ -541,6 +629,10 @@
      "MEDIUM": 1
     },
     "Qualifying": {
+     "SOFT": 1
+    },
+    "Race": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
