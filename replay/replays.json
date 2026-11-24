@@ -190,6 +190,16 @@
   "laps": 26
  },
  {
+  "name": "2025_Lusail_Race",
+  "start": "2025-11-30T16:00:00+00:00",
+  "year": "2025",
+  "meeting": "Qatar Grand Prix",
+  "session": "Race",
+  "it": "Qatar Grand Prix 2025 · Gara",
+  "en": "2025 Qatar Grand Prix · Race",
+  "laps": 57
+ },
+ {
   "name": "2025_Las_Vegas_Race",
   "start": "2025-11-23T04:00:00+00:00",
   "year": "2025",
