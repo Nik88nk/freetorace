@@ -1,5 +1,14 @@
 [
  {
+  "name": "2026_Lusail_Practice_2",
+  "kind": "practice",
+  "meeting": "Qatar Grand Prix",
+  "location": "Lusail",
+  "year": "2026",
+  "session": "Practice 2",
+  "start": "2026-11-27T20:00:00"
+ },
+ {
   "name": "2026_Lusail_Practice_1",
   "kind": "practice",
   "meeting": "Qatar Grand Prix",

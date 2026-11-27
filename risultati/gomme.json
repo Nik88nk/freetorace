@@ -1,11 +1,15 @@
 {
  "meeting": "Qatar Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-27T14:32:15Z",
+ "aggiornato": "2026-11-27T18:14:54Z",
  "sessioni": [
   {
    "name": "2026_Lusail_Practice_1",
    "session": "Practice 1"
+  },
+  {
+   "name": "2026_Lusail_Practice_2",
+   "session": "Practice 2"
   }
  ],
  "piloti": {
@@ -13,11 +17,16 @@
    "tla": "NOR",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -25,12 +34,16 @@
   "3": {
    "tla": "VER",
    "nuovi": {
-    "MEDIUM": 2,
-    "SOFT": 1
+    "MEDIUM": 3,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
      "MEDIUM": 2,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -39,11 +52,16 @@
    "tla": "BOR",
    "nuovi": {
     "MEDIUM": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "HARD": 1
    },
    "sessioni": {
     "Practice 1": {
      "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "HARD": 1,
      "SOFT": 1
     }
    }
@@ -51,11 +69,15 @@
   "6": {
    "tla": "HAD",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -64,22 +86,31 @@
   "10": {
    "tla": "GAS",
    "nuovi": {
-    "MEDIUM": 1
+    "MEDIUM": 2,
+    "SOFT": 1
    },
    "sessioni": {
     "Practice 1": {
      "MEDIUM": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
+     "SOFT": 1
     }
    }
   },
   "11": {
    "tla": "PER",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -88,11 +119,15 @@
   "12": {
    "tla": "ANT",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -101,11 +136,15 @@
   "16": {
    "tla": "LEC",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -115,11 +154,16 @@
    "tla": "STR",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -127,11 +171,15 @@
   "23": {
    "tla": "ALB",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -141,11 +189,16 @@
    "tla": "HUL",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -153,11 +206,15 @@
   "30": {
    "tla": "LAW",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -179,11 +236,15 @@
   "41": {
    "tla": "LIN",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -192,11 +253,15 @@
   "43": {
    "tla": "COL",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -205,12 +270,16 @@
   "44": {
    "tla": "HAM",
    "nuovi": {
-    "MEDIUM": 2,
-    "SOFT": 1
+    "MEDIUM": 3,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
      "MEDIUM": 2,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -219,11 +288,16 @@
    "tla": "CAM",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -231,11 +305,15 @@
   "55": {
    "tla": "SAI",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -244,11 +322,15 @@
   "63": {
    "tla": "RUS",
    "nuovi": {
-    "MEDIUM": 1,
-    "SOFT": 1
+    "MEDIUM": 2,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
+     "MEDIUM": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
      "MEDIUM": 1,
      "SOFT": 1
     }
@@ -257,12 +339,16 @@
   "77": {
    "tla": "BOT",
    "nuovi": {
-    "MEDIUM": 2,
-    "SOFT": 1
+    "MEDIUM": 3,
+    "SOFT": 2
    },
    "sessioni": {
     "Practice 1": {
      "MEDIUM": 2,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -271,11 +357,16 @@
    "tla": "PIA",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 2,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
@@ -284,11 +375,29 @@
    "tla": "BEA",
    "nuovi": {
     "HARD": 1,
-    "SOFT": 1
+    "SOFT": 3,
+    "MEDIUM": 1
    },
    "sessioni": {
     "Practice 1": {
      "HARD": 1,
+     "SOFT": 1
+    },
+    "Practice 2": {
+     "MEDIUM": 1,
+     "SOFT": 2
+    }
+   }
+  },
+  "14": {
+   "tla": "ALO",
+   "nuovi": {
+    "MEDIUM": 1,
+    "SOFT": 1
+   },
+   "sessioni": {
+    "Practice 2": {
+     "MEDIUM": 1,
      "SOFT": 1
     }
    }
