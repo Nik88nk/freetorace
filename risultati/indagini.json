@@ -1,7 +1,7 @@
 {
  "meeting": "Qatar Grand Prix",
  "year": "2026",
- "aggiornato": "2026-11-27T14:32:15Z",
+ "aggiornato": "2026-11-27T16:45:31Z",
  "items": [
   {
    "n": "6",
@@ -11,7 +11,13 @@
    "when": "after",
    "msg": "FIA STEWARDS: INCIDENT INVOLVING CAR 6 (HAD) WILL BE INVESTIGATED AFTER THE SESSION - UNSAFE RELEASE (16:44:57)",
    "reason": "UNSAFE RELEASE",
-   "decision": null
+   "decision": {
+    "utc": null,
+    "session": "Practice 1",
+    "msg": "FIA STEWARDS: FINE FOR CAR 6 (HAD) - UNSAFE RELEASE",
+    "type": "penalita",
+    "doc": "https://www.fia.com/system/files/decision-document/2026_qatar_grand_prix_-_infringement_-_car_6_-_unsafe_act.pdf"
+   }
   }
  ]
 }
